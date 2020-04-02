@@ -1,0 +1,66 @@
+
+
+
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <h5 class="display">Productos</h5>
+    <div class="col text-right">
+      <button routerLink="/producto/agregar" class="btn btn-info mr-1" >
+       <i class="fas fa-plus"></i> Agregar
+      </button>  
+    </div>
+  </div>
+
+<table class="table table-hover">
+  <thead>
+    <tr >
+      <th class=" text-center" *ngFor="let item of dataGridColumns" sortable="item.modelo" (sort)="onSort($event)" >{{item.titulo}}</th>
+      <th class=" text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of data$" >
+      
+      <td class=" text-center" *ngFor="let columna of dataGridColumns" >
+        <ngb-highlight [result]="item[columna.modelo]" ></ngb-highlight>
+      </td>
+      <td class=" text-center" >
+        <button class="btn" data-action-type = "accion1" ><i class="fas fa-bars"> </i></button>
+        <button class="btn" data-action-type = "accion2"><i class="fas fa-trash"></i></button>
+        <button class="btn" data-action-type = "accion3"><i class="fas fa-edit"></i></button>
+      </td>
+    </tr>
+    </tbody>
+
+ <!--  <tbody>
+    <tr *ngFor="let prod of productos; let i = index  ">
+      <td>{{ i + 1}}</td>
+      <td>{{ prod.codigo}}</td>
+      <td>{{ prod.descripcion}}</td>
+      <td>{{ prod.costo}}</td>
+      <td>{{ prod.precioVenta}}</td>
+      <td>{{ prod.stockActual}}</td>
+      <td>
+        <button class="btn btn-info mr-1"
+         [routerLink]="['/producto/modificar', prod.productoId ]">
+          <i class="fas fa-pencil-alt"></i>
+        </button>
+      </td>
+      <td>
+        <button class="btn btn-info mr-1" (click)="borrar(prod.productoId, i)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody> -->
+</table>
+<div *ngIf="productos.length == 0" class="alertalert-warning text-center mt-3">
+  <h4 class="alert-heading">No hay registros</h4>  
+  <p>
+    <i class="fa fa-exclamation fa-2x"></i>
+  </p>
+</div>
+
+
+</div>

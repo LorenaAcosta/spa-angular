@@ -1,0 +1,46 @@
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <h5 class="display">Medios de Pago</h5>
+    <div class="col text-right">
+      <button routerLink="/medios-pago/agregar" class="btn btn-info mr-1" >
+       <i class="fas fa-plus"></i> Agregar
+      </button>  
+    </div>
+  </div>
+ <table *ngIf="medioPago.length > 0" class="table table-hover animated fadedIn faster">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Codigo</th>
+        <th scope="col">Descripción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of medioPago; let i = index">
+        <td>{{ i + 1 }}</td>
+        <td>{{ item.codigo }}</td>
+        <td>{{ item.descripcion}}</td>
+        <td>
+            <button class="btn btn-info mr-1"
+             [routerLink]="['/medios-pago/modificar', item.medioPagoId ]">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-info mr-1" (click)="borrar(item.medioPagoId, i)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="medioPago.length == 0" class="alertalert-warning text-center mt-3">
+    <h4 class="alert-heading">No hay registros</h4>  
+    <p>
+      <i class="fa fa-exclamation fa-2x"></i>
+    </p>
+  </div>
+
+<div>

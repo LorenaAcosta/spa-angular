@@ -1,0 +1,75 @@
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <h5 class="display">Nuevo Servicio</h5>
+    <div class="col text-right">
+      <button routerLink="/servicio/listar" class="btn btn-info mr-1" >
+       <i class="fas fa-arrow-left"></i> Regresar
+      </button>  
+    </div>
+  </div>
+</div>
+<hr>
+
+<div class="container-fluid">
+  <form [formGroup]="form">
+    <div class="form-group row">
+      <div class="form-group col-sm-6">
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre</label>
+          <input formControlName="nombre" type="nombre" class="form-control" id="nombre" required>
+        </div> 
+      </div>
+      <div class="form-group row">
+        <div class="form-group col-sm-6">
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Descripción</label>
+          <input formControlName="descripcion" type="descripcion" class="form-control" id="descripcion" required>
+        </div>
+      </div>
+   
+      <div class="form-row">
+        <div class="form-group col-md-2">
+          <label for="inputCity">Fecha Vigencia Inicio</label>
+          <input type="date"  formControlName="fechaVigenciaIni" class="form-control" id="fechaVigenciaIni">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputState">Fecha Vigencia Fin</label>
+          <input type="date"  formControlName="fechaVigenciaFin" class="form-control" id="fechaVigenciaFin">
+        </div>
+        <div class="form-group col-md-2">
+          <label for="inputZip">Estado</label>
+          <select id="estado"  formControlName="estado" class="form-control" required>
+            <option selected>...</option>
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="form-group col-md-6">
+        <label for="inputState">Categoria</label>
+        <select id="categoria"  formControlName="categoriaId" class="form-control" required>
+          <option *ngFor="let cat of categorias" [value]="cat.categoriaId">{{ cat.descripcion}}</option>
+        </select>
+        </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group col-md-2">
+        <label for="inputCity">Duracion</label>
+        <input  formControlName="duracion" type="text" class="form-control" id="duracion" required>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="inputState">Costo</label>
+        <input  formControlName="costo" type="text" class="form-control" id="costo" required>
+      </div>
+      <div class="form-group col-md-2">
+        <label for="inputZip">% Comisión</label>
+        <input formControlName="porcComision"  type="text" class="form-control" id="porcComision" required>
+      </div>
+    </div>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary" (click)="guardar()" >Guardar</button>
+        </div>
+      </div>
+    </form>
+</div>
