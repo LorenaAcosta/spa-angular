@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ServicioService } from '../../../services/servicios/servicio.service';
 import { ActivatedRoute } from '@angular/router';
-import { CategoriaModel } from '../../../models/categoria.model';
 import { CategoriaService } from '../../../services/servicios/categoria.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -25,41 +24,68 @@ export class ServicioEditComponent implements OnInit {
     costo: ['', Validators.required],
     porcComision: ['', Validators.required]
   });
-  productos: any[] = [];
+  // categorias$: Observable<any>;
   categorias: any[] = [];
+  selectedPersonId = 'Elegir';
 
   constructor(private fb: FormBuilder,
               private servicioService: ServicioService,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute) {
-                this.form = this.fb.group({
-                  nombre: ['', Validators.required],
-                  descripcion: ['', Validators.required],
-                  fechaVigenciaIni: ['', Validators.required],
-                  fechaVigenciaFin: ['', Validators.required],
-                  estado: ['', Validators.required],
-                  categoriaId: ['', Validators.required],
-                  duracion: ['', Validators.required],
-                  costo: ['', Validators.required],
-                  porcComision: ['', Validators.required]
-                });
+
+      this.form = this.fb.group({
+        nombre: ['', Validators.required],
+        descripcion: ['', Validators.required],
+        fechaVigenciaIni: ['', Validators.required],
+        fechaVigenciaFin: ['', Validators.required],
+        estado: ['', Validators.required],
+        categoriaId: ['', Validators.required],
+        duracion: ['', Validators.required],
+        costo: ['', Validators.required],
+        porcComision: ['', Validators.required]
+      });
               }
 
   ngOnInit() {
-    this.categoriaService.listarRecurso().subscribe( (resp: any[]) =>  this.categorias = resp );
+   // this.categorias$ = this.categoriaService.listarRecurso();
+     this.categoriaService.listarRecurso().subscribe( (resp: any[]) =>  this.categorias = resp );
+     const id = this.route.snapshot.params.id;
+     if (typeof id !== 'undefined') {
+      this.form = this.fb.group({
+        nombre: ['', Validators.required],
+        descripcion: ['', Validators.required],
+        fechaVigenciaIni: ['', Validators.required],
+        fechaVigenciaFin: ['', Validators.required],
+        estado: ['', Validators.required],
+        categoriaId: ['', Validators.required],
+        duracion: ['', Validators.required],
+        costo: ['', Validators.required],
+        porcComision: ['', Validators.required]
+      });
+      this.servicioService.getRecurso(id)
+       .subscribe ((data: any) => {
+        this.form.controls.nombre.setValue(data.nombre);
+        this.form.controls.descripcion.setValue(data.descripcion);
+        this.form.controls.fechaVigenciaIni.setValue(data.fechaVigenciaIni);
+        this.form.controls.fechaVigenciaFin.setValue(data.fechaVigenciaFin);
+        this.form.controls.estado.setValue(data.estado);
+        this.form.controls.categoriaId.setValue(data.categoriaId.categoriaId);
+        this.form.controls.duracion.setValue(data.duracion);
+        this.form.controls.costo.setValue(data.costo);
+        this.form.controls.porcComision.setValue(data.porcComision);
+       });
+    }
   }
   guardar() {
-      console.log(this.form.value);
-     /* const id = this.route.snapshot.params.id;
-      let peticion: Observable<any>;
-      console.log(id);
-      console.log(typeof id);
-      if (typeof id === 'undefined') {
+    //  console.warn(this.form.value);
+     const id = this.route.snapshot.params.id;
+     let peticion: Observable<any>;
+     if (typeof id === 'undefined') {
         peticion = this.servicioService.agregarRecurso(this.form.value);
         peticion.subscribe((result: any) =>  {
           Swal.fire(
             'Guardado!',
-            'Se actualizaron los datos!',
+            'Se guardaron los datos!',
             'success'
           );
         });
@@ -72,7 +98,6 @@ export class ServicioEditComponent implements OnInit {
             'success'
           );
         });
-      } */
+      }
     }
-
 }

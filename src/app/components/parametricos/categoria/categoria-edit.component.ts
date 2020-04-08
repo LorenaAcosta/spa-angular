@@ -16,9 +16,6 @@ export class CategoriaEditComponent implements OnInit {
     codigo: ['', Validators.required],
     descripcion: ['', Validators.required]
   });
-
-  categoria: any[] = [];
-
   constructor(private fb: FormBuilder,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute) {
@@ -47,7 +44,7 @@ export class CategoriaEditComponent implements OnInit {
   }
 
   ver() {
-    alert(this.form.value.codigo);
+    console.warn(this.form.value);
   }
 
   guardar() {
@@ -60,7 +57,7 @@ export class CategoriaEditComponent implements OnInit {
       peticion.subscribe((result: any) =>  {
         Swal.fire(
           'Guardado!',
-          'Se actualizaron los datos!',
+          'Se guardaron  los datos!',
           'success'
         );
       });
@@ -73,7 +70,7 @@ export class CategoriaEditComponent implements OnInit {
           'success'
         );
       });
-    } 
+    }
   }
 
 }

@@ -8,39 +8,40 @@
       </button>  
     </div>
   </div>
-  <table *ngIf="categoria.length>0" class="table table-hover">
+  
+  <div class="card mb-4">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Categorias</div>
+  <div class="card-body">
+  <div class="table-responsive">
+  <table class="table table-bordered">
     <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">Codigo</th>
-        <th scope="col">Descripción</th>
+      <tr >
+        <th class=" text-center" *ngFor="let item of dataGridColumns" sortable="item.modelo" (sort)="onSort($event)" >{{item.titulo}}</th>
+        <th class=" text-center">Acciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let cat of categoria; let i = index  ">
-        <td>{{ i + 1}}</td>
-        <td>{{ cat.codigo}}</td>
-        <td>{{ cat.descripcion}}</td>
-        <td>
-          <button class="btn btn-info mr-1"
-           [routerLink]="['/categoria/modificar', cat.categoriaId ]">
-            <i class="fas fa-pencil-alt"></i>
-          </button>
+      <tr *ngFor="let item of data$" >        
+        <td class=" text-center" *ngFor="let columna of dataGridColumns" >
+          <ngb-highlight [result]="item[columna.modelo]" ></ngb-highlight>
         </td>
-        <td>
-          <button class="btn btn-info mr-1" (click)="borrar(cat.categoriaId, i)">
-            <i class="fas fa-trash"></i>
-          </button>
+        <td class=" text-center" >
+          <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId)"> <i class="fas fa-trash"></i></button>
+          <button class="btn btn-info mr-1" [routerLink]="['/categoria/modificar', item.categoriaId ]"> <i class="fas fa-pencil-alt"></i></button>
         </td>
       </tr>
-    </tbody>
-  </table>
-  <div *ngIf="categoria.length == 0" class="alertalert-warning text-center mt-3">
-    <h4 class="alert-heading">No hay registros</h4>  
-    <p>
-      <i class="fa fa-exclamation fa-2x"></i>
-    </p>
+      </tbody>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item"><button class="page-link" (click)="cargarPagina(this.page)">Previous</button></li>
+          <li class="page-item"><button class="page-link" (click)="onSort(columna.modelo, 'ASC') ")>1</button></li>
+          <li class="page-item"><button class="page-link" href="#">2</button></li>
+          <li class="page-item"><button class="page-link" href="#">3</button></li>
+          <li class="page-item"><button class="page-link" (click)="cargarPagina(this.page)">Next</button></li>
+        </ul>
+      </nav>
+    </table>
   </div>
-
-
-  </div>
+</div>
+</div>
+</div>

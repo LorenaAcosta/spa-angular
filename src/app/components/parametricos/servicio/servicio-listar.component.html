@@ -8,19 +8,93 @@
       </button>  
     </div>
   </div>
+  <div class="card mb-4">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Servicios</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered display" id="dataTable" *ngIf="servicios.length>0" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Nombre</th>
+                      <th>Descripción</th>
+                      <th>Estado</th>
+                      <th>Categoria</th>
+                      <th>Duracion</th>
+                      <th>Costo</th>
+                      <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <tr>
+                      <th>#</th>
+                      <th>Nombre</th>
+                      <th>Descripción</th>
+                      <th>Estado</th>
+                      <th>Categoria</th>
+                      <th>Duracion</th>
+                      <th>Costo</th>
+                      <th>Opciones</th>
+                    </tr>
+                </tfoot>
+                <tbody *ngFor="let s of servicios; let i = index  ">
+                    <tr>
+                      <td>{{ i + 1}}</td>
+                      <td>{{ s.nombre}}</td>
+                      <td>{{ s.descripcion}}</td>
+                      <td>{{ s.estado}}</td>
+                      <td>{{ s.categoriaId.descripcion}}</td>
+                      <td>{{ s.duracion}}</td>
+                      <td>{{ s.costo}}</td>
+                      <td>
+                        <button class="btn btn-info mr-1"
+                         [routerLink]="['/servicio/modificar', s.servicioId ]">
+                          <i class="fas fa-pencil-alt"></i>
+                        </button>
+                        <button class="btn btn-info mr-1" (click)="borrar(s.servicioId, i)">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </td>
+                    </tr>
+                    </tbody>
+                    </table>
+                    </div>
+                  </div>
+                </div>
+</div>
+<div *ngIf="servicios.length == 0" class="alertalert-warning text-center mt-3">
+  <h4 class="alert-heading">No hay registros</h4>  
+  <p>
+    <i class="fa fa-exclamation fa-2x"></i>
+  </p>
+</div>
+
+  <!--
+
+
+
+
 <table *ngIf="servicios.length>0" class="table table-hover">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Codigo</th>
+      <th scope="col">Nombre</th>
       <th scope="col">Descripción</th>
+      <th scope="col">Estado</th>
+      <th scope="col">Categoria</th>
+      <th scope="col">Duracion</th>
+      <th scope="col">Costo</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let cat of servicios; let i = index  ">
       <td>{{ i + 1}}</td>
-      <td>{{ cat.codigo}}</td>
+      <td>{{ cat.nombre}}</td>
       <td>{{ cat.descripcion}}</td>
+      <td>{{ cat.estado}}</td>
+      <td>{{ cat.categoriaId.descripcion}}</td>
+      <td>{{ cat.duracion}}</td>
+      <td>{{ cat.costo}}</td>
       <td>
         <button class="btn btn-info mr-1"
          [routerLink]="['/servicio/modificar', cat.categoriaId ]">
@@ -44,5 +118,5 @@
 
 
 </div>
-
+  -->
 

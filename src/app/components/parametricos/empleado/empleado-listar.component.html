@@ -1,9 +1,9 @@
 <br>
 <div class="container-fluid">
   <div class="row">
-    <h5 class="display">Clientes</h5>
+    <h5 class="display">Empleados</h5>
     <div class="col text-right">
-      <button routerLink="/cliente/agregar" class="btn btn-info mr-1" >
+      <button routerLink="/empleado/agregar" class="btn btn-info mr-1" >
        <i class="fas fa-plus"></i> Agregar
       </button>  
     </div>
@@ -12,15 +12,14 @@
     <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Empleados</div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" *ngIf="clientes.length>0" width="100%" cellspacing="0">
+            <table class="table table-bordered" id="dataTable" *ngIf="empleados.length>0" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                       <th>#</th>
                       <th>Nombre</th>
                       <th>Apellido</th>
-                      <th>Correo</th>
-                      <th>Documento</th>
-                      <th>Telefono</th>
+                      <th>Dirección</th>
+                      <th>Teléfono</th>
                       <th>Opciones</th>
                     </tr>
                 </thead>
@@ -29,26 +28,24 @@
                       <th>#</th>
                       <th>Nombre</th>
                       <th>Apellido</th>
-                      <th>Correo</th>
-                      <th>Documento</th>
-                      <th>Telefono</th>
+                      <th>Dirección</th>
+                      <th>Teléfono</th>
                       <th>Opciones</th>
                     </tr>
                 </tfoot>
-                <tbody *ngFor="let e of clientes; let i = index  ">
+                <tbody *ngFor="let e of empleados; let i = index  ">
                     <tr>
                       <td>{{ i + 1}}</td>
                       <td>{{ e.nombre}}</td>
                       <td>{{ e.apellido}}</td>
-                      <td>{{ e.correo}}</td>
-                      <td>{{ e.ruc}}</td>
+                      <td>{{ e.direccion}}</td>
                       <td>{{ e.telefono}}</td>
                       <td>
                         <button class="btn btn-info mr-1"
-                         [routerLink]="['/cliente/modificar', e.clienteId ]">
+                         [routerLink]="['/empleado/modificar', e.cedula ]">
                           <i class="fas fa-pencil-alt"></i>
                         </button>
-                        <button class="btn btn-info mr-1" (click)="borrar(e.clienteId, i)">
+                        <button class="btn btn-info mr-1" (click)="borrar(e.cedula, i)">
                           <i class="fas fa-trash"></i>
                         </button>
                       </td>
@@ -59,7 +56,7 @@
                   </div>
                 </div>
 </div>
-<div *ngIf="clientes.length == 0" class="alertalert-warning text-center mt-3">
+<div *ngIf="empleados.length == 0" class="alertalert-warning text-center mt-3">
   <h4 class="alert-heading">No hay registros</h4>  
   <p>
     <i class="fa fa-exclamation fa-2x"></i>

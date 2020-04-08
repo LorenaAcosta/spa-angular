@@ -1,11 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import {NgxPaginationModule} from 'ngx-pagination';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CategoriaComponent } from './components/parametricos/categoria/categoria.component';
@@ -26,7 +29,9 @@ import { ServicioComponent } from './components/parametricos/servicio/servicio.c
 import { ServicioListarComponent } from './components/parametricos/servicio/servicio-listar.component';
 import { ServicioEditComponent } from './components/parametricos/servicio/servicio-edit.component';
 import { SortableHeader } from './directives/sortable.directive';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { EmpleadoComponent } from './components/parametricos/empleado/empleado.component';
+import { EmpleadoEditComponent } from './components/parametricos/empleado/empleado-edit.component';
+import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
 
 
 @NgModule({
@@ -53,7 +58,10 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     ServicioComponent,
     ServicioListarComponent,
     ServicioEditComponent,
-    SortableHeader
+    SortableHeader,
+    EmpleadoComponent,
+    EmpleadoEditComponent,
+    EmpleadoListarComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +69,9 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
+    NgSelectModule,
+    NgxPaginationModule
   ],
   providers: [
 

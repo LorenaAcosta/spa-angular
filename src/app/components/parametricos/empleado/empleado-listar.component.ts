@@ -1,21 +1,21 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
-import { ClienteService } from 'src/app/services/servicios/cliente.service';
+import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 
 @Component({
-  selector: 'app-cliente-listar',
-  templateUrl: './cliente-listar.component.html',
-  styleUrls: ['./cliente-listar.component.scss']
+  selector: 'app-empleado-listar',
+  templateUrl: './empleado-listar.component.html',
+  styleUrls: ['./empleado-listar.component.scss']
 })
-export class ClienteListarComponent implements OnInit {
+export class EmpleadoListarComponent implements OnInit {
 
-  clientes: any[] = [];
+  empleados: any[] = [];
   index = 0;
-  constructor(private clienteService: ClienteService) { }
+  constructor(private empleadoService: EmpleadoService) { }
 
   ngOnInit() {
-    this.clienteService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.clientes = resp );
+    this.empleadoService.listarRecurso()
+    .subscribe( (resp: any[]) =>  this.empleados = resp );
   }
 
   borrar(id: any, pos: any) {
@@ -29,8 +29,8 @@ export class ClienteListarComponent implements OnInit {
       confirmButtonText: 'Si, eliminar!'
       }).then((result) => {
         if (result.value) {
-          this.clientes.splice(pos, 1);
-          this.clienteService.eliminarRecurso(id).subscribe();
+          this.empleados.splice(pos, 1);
+          this.empleadoService.eliminarRecurso(id).subscribe();
           Swal.fire(
             'Eliminado!',
             'Los datos han sido eliminados.',

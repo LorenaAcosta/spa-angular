@@ -1,3 +1,6 @@
+//NG-SELECT
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
 // Import Custom Variables
 @import "variables.scss";
 
@@ -6,6 +9,7 @@
 
 // Import Custom SCSS
 @import "global.scss";
+
 
 // Layout
 @import "layout/authentication.scss";
@@ -20,3 +24,17 @@
 @import "navigation/sidenav/sidenav-dark.scss";
 @import "navigation/sidenav/sidenav-light.scss";
 @import "variables/sort.scss";
+
+
+.ng-select.custom {
+    border:0px;
+    min-height: 0px;
+    border-radius: 0;
+}
+.ng-select.custom .ng-select-container  {            
+    min-height: 0px;
+    border-radius: 0;
+}
+.form-check-input{
+    
+}

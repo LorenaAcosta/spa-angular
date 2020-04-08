@@ -12,6 +12,8 @@ import { ProductoListarComponent } from './components/parametricos/producto/prod
 import { ReservEditComponent } from './components/parametricos/reserva/reserv-edit.component';
 import { ServicioEditComponent } from './components/parametricos/servicio/servicio-edit.component';
 import { ServicioListarComponent } from './components/parametricos/servicio/servicio-listar.component';
+import { EmpleadoEditComponent } from './components/parametricos/empleado/empleado-edit.component';
+import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
 
 
 const routes: Routes = [
@@ -37,7 +39,16 @@ const routes: Routes = [
     path: 'cliente', data: { title: 'Cliente' },
     children: [
       { path: 'agregar', component: ClienteEditComponent , data: { title: 'Crear Cliente' }, },
-      { path: 'listar', component: ClienteListarComponent , data: { title: 'Listar Cliente' }, }
+      { path: 'listar', component: ClienteListarComponent , data: { title: 'Listar Cliente' }, },
+      { path: 'modificar/:id', component: ClienteEditComponent , data: { title: 'Editar Cliente' }, }
+     ]
+  },
+  {
+    path: 'empleado', data: { title: 'Empleado' },
+    children: [
+      { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
+      { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
+      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' }, }
      ]
   },
   {

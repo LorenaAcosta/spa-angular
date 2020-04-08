@@ -42,11 +42,6 @@ export class SidebarService {
                   url: '/cliente/listar',
                   icono: 'fas fa-angle-right',
                   titulo: 'Clientes'
-                },
-                {
-                  url: '/usuario/listar',
-                  icono: 'fas fa-angle-right',
-                  titulo: 'Usuarios'
                 }
               ]
           },

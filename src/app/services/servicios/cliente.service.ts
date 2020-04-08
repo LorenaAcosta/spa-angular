@@ -5,29 +5,31 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ProductoService {
-    recurosBaseURL: string = environment.URL_BASE + '/producto/';
-    constructor(private http: HttpClient) { }
+export class ClienteService {
 
-    listarRecurso() {
+  recurosBaseURL: string = environment.URL_BASE + '/cliente/';
+  constructor(private http: HttpClient) { }
+
+  listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
-    }
+  }
 
-    agregarRecurso(recurso) {
+  agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
-    }
-    listarPaginadoRecurso(filtros) {
-      return this.http.post(this.recurosBaseURL + 'productos-list', filtros);
-    }
-    modificarRecurso(recurso, id) {
+  }
+  modificarRecurso(recurso, id) {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
-    }
+  }
 
-    getRecurso(id) {
+  getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
-    }
+  }
 
-    eliminarRecurso(id) {
+  eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
-    }
+  }
+ /* listarRecurso(filtros) {
+    return this.http.get(this.recurosBaseURL, {params: filtros});
+  }  */
+
 }

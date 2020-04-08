@@ -3,41 +3,38 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
-import { ClienteService } from 'src/app/services/servicios/cliente.service';
-import { CategoriaService } from 'src/app/services/servicios/categoria.service';
+import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 
 @Component({
-  selector: 'app-cliente-edit',
-  templateUrl: './cliente-edit.component.html',
-  styleUrls: ['./cliente-edit.component.scss']
+  selector: 'app-empleado-edit',
+  templateUrl: './empleado-edit.component.html',
+  styleUrls: ['./empleado-edit.component.scss']
 })
-export class ClienteEditComponent implements OnInit {
+export class EmpleadoEditComponent implements OnInit {
 
   form = this.fb.group({
+    cedula: ['', Validators.required],
     nombre: ['', Validators.required],
-    nombreUsuario: ['', Validators.required],
-    contrasenha: ['', Validators.required],
     apellido: ['', Validators.required],
-    correo: ['', Validators.required],
-    ruc: ['', Validators.required],
+    direccion: ['', Validators.required],
     telefono: ['', Validators.required],
-    sexo: ['', Validators.required]
+    fechaNac: ['', Validators.required]
   });
+  // categorias$: Observable<any>;
+  categorias: any[] = [];
+  selectedPersonId = 'Elegir';
 
   constructor(private fb: FormBuilder,
-              private clienteService: ClienteService,
-              private categoriaService: CategoriaService,
+              private empleadoService: EmpleadoService,
               private route: ActivatedRoute) {
 
       this.form = this.fb.group({
+        cedula: ['', Validators.required],
         nombre: ['', Validators.required],
-        nombreUsuario: ['', Validators.required],
-        contrasenha: ['', Validators.required],
         apellido: ['', Validators.required],
-        correo: ['', Validators.required],
-        ruc: ['', Validators.required],
+        direccion: ['', Validators.required],
         telefono: ['', Validators.required],
-        sexo: ['', Validators.required]
+        fechaNac: ['', Validators.required]
       });
               }
 
@@ -46,25 +43,21 @@ export class ClienteEditComponent implements OnInit {
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({
+        cedula: ['', Validators.required],
         nombre: ['', Validators.required],
-        nombreUsuario: ['', Validators.required],
-        contrasenha: ['', Validators.required],
         apellido: ['', Validators.required],
-        correo: ['', Validators.required],
-        ruc: ['', Validators.required],
+        direccion: ['', Validators.required],
         telefono: ['', Validators.required],
-        sexo: ['', Validators.required]
+        fechaNac: ['', Validators.required]
       });
-      this.clienteService.getRecurso(id)
+      this.empleadoService.getRecurso(id)
        .subscribe ((data: any) => {
+        this.form.controls.cedula.setValue(data.cedula);
         this.form.controls.nombre.setValue(data.nombre);
-        this.form.controls.nombreUsuario.setValue(data.nombreUsuario);
-        this.form.controls.contrasenha.setValue(data.contrasenha);
         this.form.controls.apellido.setValue(data.apellido);
-        this.form.controls.correo.setValue(data.correo);
-        this.form.controls.ruc.setValue(data.ruc);
+        this.form.controls.direccion.setValue(data.direccion);
         this.form.controls.telefono.setValue(data.telefono);
-        this.form.controls.sexo.setValue(data.sexo);
+        this.form.controls.fechaNac.setValue(data.fechaNac);
        });
     }
   }
@@ -73,7 +66,7 @@ export class ClienteEditComponent implements OnInit {
      const id = this.route.snapshot.params.id;
      let peticion: Observable<any>;
      if (typeof id === 'undefined') {
-        peticion = this.clienteService.agregarRecurso(this.form.value);
+        peticion = this.empleadoService.agregarRecurso(this.form.value);
         peticion.subscribe((result: any) =>  {
           Swal.fire(
             'Guardado!',
@@ -82,7 +75,7 @@ export class ClienteEditComponent implements OnInit {
           );
         });
       } else {
-        peticion = this.clienteService.modificarRecurso(this.form.value, id);
+        peticion = this.empleadoService.modificarRecurso(this.form.value, id);
         peticion.subscribe((result: any) =>  {
           Swal.fire(
             'Guardado!',
