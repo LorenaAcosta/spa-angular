@@ -14,17 +14,27 @@ import { ServicioEditComponent } from './components/parametricos/servicio/servic
 import { ServicioListarComponent } from './components/parametricos/servicio/servicio-listar.component';
 import { EmpleadoEditComponent } from './components/parametricos/empleado/empleado-edit.component';
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
+import { ClienteLoginComponent } from './components/parametricos/cliente/cliente-login.component';
+import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
 
 
 const routes: Routes = [
-  {path: '', component: DashboardComponent},
+  {
+    path: '', data: { title: 'Dashboard' },
+    children: [
+      { path: '', component: DashboardComponent, data: { title: 'Dashboard-Componente' } },
+      { path: 'login', component: ClienteLoginComponent, data: { title: 'Login-Componente' } },
+      { path: 'registrar', component: ClienteEditComponent, data: { title: 'Registrar-Componente' }},
+    ]
+  },
   {
     path: 'categoria', data: { title: 'Categorias' },
     children: [
       // { path: '', component: UsuariosComponent, data: { title: 'Listado' } }
       { path: 'agregar', component: CategoriaEditComponent, data: { title: 'Crear Categoria' }, },
       { path: 'listar', component: CategoriaListarComponent, data: { title: 'Listar Categoria' }, },
-      { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, }
+      { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
+      { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
     ]
   },
   {
@@ -38,7 +48,7 @@ const routes: Routes = [
   {
     path: 'cliente', data: { title: 'Cliente' },
     children: [
-      { path: 'agregar', component: ClienteEditComponent , data: { title: 'Crear Cliente' }, },
+      { path: 'registrar', component: ClienteEditComponent , data: { title: 'Crear Cliente' }, },
       { path: 'listar', component: ClienteListarComponent , data: { title: 'Listar Cliente' }, },
       { path: 'modificar/:id', component: ClienteEditComponent , data: { title: 'Editar Cliente' }, }
      ]

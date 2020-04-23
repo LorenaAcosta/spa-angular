@@ -110,7 +110,7 @@ export class SidebarService {
       }
     ];
    }
-   obtenerSideBar(){
+   obtenerSideBar() {
      return this.menu;
    }
 }

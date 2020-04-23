@@ -14,10 +14,11 @@
         <th scope="col">#</th>
         <th scope="col">Codigo</th>
         <th scope="col">Descripción</th>
+        <th scope="col">Opciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of medioPago; let i = index">
+      <tr *ngFor="let item of medioPago | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
         <td>{{ i + 1 }}</td>
         <td>{{ item.codigo }}</td>
         <td>{{ item.descripcion}}</td>
@@ -26,8 +27,6 @@
              [routerLink]="['/medios-pago/modificar', item.medioPagoId ]">
               <i class="fas fa-pencil-alt"></i>
             </button>
-          </td>
-          <td>
             <button class="btn btn-info mr-1" (click)="borrar(item.medioPagoId, i)">
               <i class="fas fa-trash"></i>
             </button>
@@ -35,7 +34,7 @@
       </tr>
     </tbody>
   </table>
-
+  <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
   <div *ngIf="medioPago.length == 0" class="alertalert-warning text-center mt-3">
     <h4 class="alert-heading">No hay registros</h4>  
     <p>

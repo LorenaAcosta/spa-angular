@@ -1,9 +1,10 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { NgSelectModule } from '@ng-select/ng-select';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { AppComponent } from './app.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule, Injectable } from '@angular/core';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpInterceptor, HttpRequest, HttpHandler, HttpResponse} from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { FooterComponent } from './shared/footer/footer.component';
@@ -18,7 +19,6 @@ import { MediosPagoEditComponent } from './components/parametricos/medios-pago/m
 import { CategoriaListarComponent } from './components/parametricos/categoria/categoria-listar.component';
 import { MediosPagoListarComponent } from './components/parametricos/medios-pago/medios-pago-listar.component';
 import { ProductoComponent } from './components/parametricos/producto/producto.component';
-import { ClienteComponent } from './components/parametricos/cliente/cliente.component';
 import { ClienteEditComponent } from './components/parametricos/cliente/cliente-edit.component';
 import { ClienteListarComponent } from './components/parametricos/cliente/cliente-listar.component';
 import { ProductoEditComponent } from './components/parametricos/producto/producto-edit.component';
@@ -28,10 +28,12 @@ import { ReservEditComponent } from './components/parametricos/reserva/reserv-ed
 import { ServicioComponent } from './components/parametricos/servicio/servicio.component';
 import { ServicioListarComponent } from './components/parametricos/servicio/servicio-listar.component';
 import { ServicioEditComponent } from './components/parametricos/servicio/servicio-edit.component';
-import { SortableHeader } from './directives/sortable.directive';
 import { EmpleadoComponent } from './components/parametricos/empleado/empleado.component';
 import { EmpleadoEditComponent } from './components/parametricos/empleado/empleado-edit.component';
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
+import { ClienteLoginComponent } from './components/parametricos/cliente/cliente-login.component';
+import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
+
 
 
 @NgModule({
@@ -48,7 +50,6 @@ import { EmpleadoListarComponent } from './components/parametricos/empleado/empl
     CategoriaListarComponent,
     MediosPagoListarComponent,
     ProductoComponent,
-    ClienteComponent,
     ClienteEditComponent,
     ClienteListarComponent,
     ProductoEditComponent,
@@ -58,10 +59,11 @@ import { EmpleadoListarComponent } from './components/parametricos/empleado/empl
     ServicioComponent,
     ServicioListarComponent,
     ServicioEditComponent,
-    SortableHeader,
     EmpleadoComponent,
     EmpleadoEditComponent,
-    EmpleadoListarComponent
+    EmpleadoListarComponent,
+    ClienteLoginComponent,
+    CategoriaListar2Component
   ],
   imports: [
     BrowserModule,
@@ -74,7 +76,6 @@ import { EmpleadoListarComponent } from './components/parametricos/empleado/empl
     NgxPaginationModule
   ],
   providers: [
-
   ],
   bootstrap: [AppComponent]
 })

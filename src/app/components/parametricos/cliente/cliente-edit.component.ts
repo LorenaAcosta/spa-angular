@@ -15,31 +15,32 @@ export class ClienteEditComponent implements OnInit {
 
   form = this.fb.group({
     nombre: ['', Validators.required],
-    nombreUsuario: ['', Validators.required],
-    contrasenha: ['', Validators.required],
+    username: ['', Validators.required],
+    password: ['', Validators.required],
     apellido: ['', Validators.required],
     correo: ['', Validators.required],
     ruc: ['', Validators.required],
     telefono: ['', Validators.required],
-    sexo: ['', Validators.required]
-  });
+    sexo: ['', Validators.required],
+    estado: [1],
+    });
 
   constructor(private fb: FormBuilder,
               private clienteService: ClienteService,
-              private categoriaService: CategoriaService,
               private route: ActivatedRoute) {
 
       this.form = this.fb.group({
         nombre: ['', Validators.required],
-        nombreUsuario: ['', Validators.required],
-        contrasenha: ['', Validators.required],
+        username: ['', Validators.required],
+        password: ['', Validators.required],
         apellido: ['', Validators.required],
         correo: ['', Validators.required],
         ruc: ['', Validators.required],
         telefono: ['', Validators.required],
-        sexo: ['', Validators.required]
+        sexo: ['', Validators.required],
+        estado: [1],
       });
-              }
+  }
 
   ngOnInit() {
    // this.categorias$ = this.categoriaService.listarRecurso();
@@ -47,24 +48,26 @@ export class ClienteEditComponent implements OnInit {
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({
         nombre: ['', Validators.required],
-        nombreUsuario: ['', Validators.required],
-        contrasenha: ['', Validators.required],
+        username: ['', Validators.required],
+        password: ['', Validators.required],
         apellido: ['', Validators.required],
         correo: ['', Validators.required],
         ruc: ['', Validators.required],
         telefono: ['', Validators.required],
-        sexo: ['', Validators.required]
+        sexo: ['', Validators.required],
+        estado: [1],
       });
       this.clienteService.getRecurso(id)
        .subscribe ((data: any) => {
         this.form.controls.nombre.setValue(data.nombre);
-        this.form.controls.nombreUsuario.setValue(data.nombreUsuario);
-        this.form.controls.contrasenha.setValue(data.contrasenha);
+        this.form.controls.username.setValue(data.username);
+        this.form.controls.password.setValue(data.password);
         this.form.controls.apellido.setValue(data.apellido);
         this.form.controls.correo.setValue(data.correo);
         this.form.controls.ruc.setValue(data.ruc);
         this.form.controls.telefono.setValue(data.telefono);
         this.form.controls.sexo.setValue(data.sexo);
+        this.form.controls.estado.setValue(data.estado);
        });
     }
   }

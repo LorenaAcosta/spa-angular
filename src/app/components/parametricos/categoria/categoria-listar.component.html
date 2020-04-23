@@ -9,39 +9,39 @@
     </div>
   </div>
   
-  <div class="card mb-4">
-    <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Categorias</div>
-  <div class="card-body">
-  <div class="table-responsive">
-  <table class="table table-bordered">
+  <table *ngIf="categorias.length > 0" class="table table-hover animated fadedIn faster">
     <thead>
-      <tr >
-        <th class=" text-center" *ngFor="let item of dataGridColumns" sortable="item.modelo" (sort)="onSort($event)" >{{item.titulo}}</th>
-        <th class=" text-center">Acciones</th>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Codigo</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Nombre</th>
+        <th>Opciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let item of data$" >        
-        <td class=" text-center" *ngFor="let columna of dataGridColumns" >
-          <ngb-highlight [result]="item[columna.modelo]" ></ngb-highlight>
-        </td>
-        <td class=" text-center" >
-          <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId)"> <i class="fas fa-trash"></i></button>
-          <button class="btn btn-info mr-1" [routerLink]="['/categoria/modificar', item.categoriaId ]"> <i class="fas fa-pencil-alt"></i></button>
+      <tr *ngFor="let item of categorias | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+        <td>{{ i + 1}}</td>
+        <td>{{ item.codigo}}</td>
+        <td>{{ item.descripcion}}</td>
+        <td>{{ item.image_nombre}}</td>
+        <td>
+          <button class="btn btn-info mr-1"
+           [routerLink]="['/categoria/modificar', item.categoriaId ]">
+            <i class="fas fa-pencil-alt"></i>
+          </button>
+          <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId, i)">
+            <i class="fas fa-trash"></i>
+          </button>
         </td>
       </tr>
-      </tbody>
-      <nav aria-label="Page navigation example">
-        <ul class="pagination">
-          <li class="page-item"><button class="page-link" (click)="cargarPagina(this.page)">Previous</button></li>
-          <li class="page-item"><button class="page-link" (click)="onSort(columna.modelo, 'ASC') ")>1</button></li>
-          <li class="page-item"><button class="page-link" href="#">2</button></li>
-          <li class="page-item"><button class="page-link" href="#">3</button></li>
-          <li class="page-item"><button class="page-link" (click)="cargarPagina(this.page)">Next</button></li>
-        </ul>
-      </nav>
+    </tbody>
     </table>
+    <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
   </div>
-</div>
-</div>
+<div *ngIf="categorias.length == 0" class="alertalert-warning text-center mt-3">
+  <h4 class="alert-heading">No hay registros.</h4>  
+  <p>
+    <i class="fa fa-exclamation fa-2x"></i>
+  </p>
 </div>

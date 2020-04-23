@@ -14,6 +14,10 @@
         <th scope="col">#</th>
         <th scope="col">Codigo</th>
         <th scope="col">Descripción</th>
+        <th scope="col">Costo</th>
+        <th scope="col">Precio Venta</th>
+        <th scope="col">Stock Actual</th>
+        <th scope="col">Opciones</th>
       </tr>
     </thead>
  <tbody>
@@ -29,8 +33,6 @@
          [routerLink]="['/producto/modificar', prod.productoId ]">
           <i class="fas fa-pencil-alt"></i>
         </button>
-      </td>
-      <td>
         <button class="btn btn-info mr-1" (click)="borrar(prod.productoId, i)">
           <i class="fas fa-trash"></i>
         </button>
@@ -38,7 +40,7 @@
     </tr>
   </tbody>
 </table> 
-<pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+<pagination-controls (pageChange)="pageActual = $event" class="my-pagination"></pagination-controls>
 <div *ngIf="productos.length == 0" class="alertalert-warning text-center mt-3">
   <h4 class="alert-heading">No hay registros</h4>  
   <p>

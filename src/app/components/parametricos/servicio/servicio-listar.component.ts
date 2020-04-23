@@ -12,6 +12,8 @@ export class ServicioListarComponent implements OnInit {
   servicios: any[] = [];
   categorias: any[] = [];
   index = 0;
+  pageActual: 1;
+
   constructor(private servicioService: ServicioService) { }
 
   ngOnInit() {

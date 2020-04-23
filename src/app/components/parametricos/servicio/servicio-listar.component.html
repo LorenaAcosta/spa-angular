@@ -25,42 +25,31 @@
                       <th>Opciones</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                      <th>#</th>
-                      <th>Nombre</th>
-                      <th>Descripción</th>
-                      <th>Estado</th>
-                      <th>Categoria</th>
-                      <th>Duracion</th>
-                      <th>Costo</th>
-                      <th>Opciones</th>
-                    </tr>
-                </tfoot>
-                <tbody *ngFor="let s of servicios; let i = index  ">
+                <tbody *ngFor="let item of servicios | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                     <tr>
                       <td>{{ i + 1}}</td>
-                      <td>{{ s.nombre}}</td>
-                      <td>{{ s.descripcion}}</td>
-                      <td>{{ s.estado}}</td>
-                      <td>{{ s.categoriaId.descripcion}}</td>
-                      <td>{{ s.duracion}}</td>
-                      <td>{{ s.costo}}</td>
-                      <td>
+                      <td>{{ item.nombre}}</td>
+                      <td>{{ item.descripcion}}</td>
+                      <td>{{ item.estado}}</td>
+                      <td>{{ item.categoriaId.descripcion}}</td>
+                      <td>{{ item.duracion}}</td>
+                      <td>{{ item.costo}}</td>
+                      <td>                        
                         <button class="btn btn-info mr-1"
-                         [routerLink]="['/servicio/modificar', s.servicioId ]">
+                         [routerLink]="['/servicio/modificar', item.servicioId ]">
                           <i class="fas fa-pencil-alt"></i>
                         </button>
-                        <button class="btn btn-info mr-1" (click)="borrar(s.servicioId, i)">
+                        <button class="btn btn-info mr-1" (click)="borrar(item.servicioId, i)">
                           <i class="fas fa-trash"></i>
                         </button>
                       </td>
                     </tr>
-                    </tbody>
-                    </table>
-                    </div>
-                  </div>
-                </div>
+                  </tbody>
+                </table>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+    </div>
+   </div>
+  </div>
 </div>
 <div *ngIf="servicios.length == 0" class="alertalert-warning text-center mt-3">
   <h4 class="alert-heading">No hay registros</h4>  

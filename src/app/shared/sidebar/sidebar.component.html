@@ -6,7 +6,7 @@
                     Se definen los menus a ser mostrados en el sidebar.
                 -->
                 <div *ngFor="let itemMenu of menu">
-                    <div class="sb-sidenav-menu-heading">{{itemMenu.modulo}}</div>
+                   <!--  <div class="sb-sidenav-menu-heading">{{itemMenu.modulo}}</div>-->
 
                     <div *ngFor="let submodulo of itemMenu.moduloItems">
                         <div *ngIf="submodulo.subItems.length == 1">

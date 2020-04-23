@@ -11,6 +11,7 @@ export class ClienteListarComponent implements OnInit {
 
   clientes: any[] = [];
   index = 0;
+  pageActual: 1;
   constructor(private clienteService: ClienteService) { }
 
   ngOnInit() {

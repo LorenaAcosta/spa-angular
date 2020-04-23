@@ -14,17 +14,12 @@ export class CategoriaEditComponent implements OnInit {
 
   form = this.fb.group({
     codigo: ['', Validators.required],
-    descripcion: ['', Validators.required]
+    descripcion: ['', Validators.required],
+    imageNombre: ['', Validators.required]
   });
   constructor(private fb: FormBuilder,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute) {
-
-    this.form = this.fb.group({
-      codigo: ['', Validators.required],
-      descripcion: ['', Validators.required]
-    });
-
    }
 
    ngOnInit() {
@@ -33,12 +28,14 @@ export class CategoriaEditComponent implements OnInit {
     if (typeof id !== 'undefined') {
       this.form = this.fb.group({
         codigo: ['', Validators.required],
-        descripcion: ['', Validators.required]
+        descripcion: ['', Validators.required],
+        imageNombre: ['', Validators.required]
       });
       this.categoriaService.getRecurso(id)
        .subscribe ((data: any) => {
         this.form.controls.codigo.setValue(data.codigo);
         this.form.controls.descripcion.setValue(data.descripcion);
+        this.form.controls.imageNombre.setValue(data.image_nombre);
        });
     }
   }

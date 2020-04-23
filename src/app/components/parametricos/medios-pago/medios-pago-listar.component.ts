@@ -12,6 +12,7 @@ export class MediosPagoListarComponent implements OnInit {
 
   index: 1;
   medioPago: any[] = [];
+  pageActual: 1;
 
   constructor( private medioPagoService: MediosPagoService, private route: ActivatedRoute) { }
 

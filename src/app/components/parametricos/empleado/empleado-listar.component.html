@@ -8,14 +8,16 @@
       </button>  
     </div>
   </div>
+
   <div class="card mb-4">
     <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Empleados</div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" *ngIf="empleados.length>0" width="100%" cellspacing="0">
+            <table class="table table-bordered display" id="dataTable" *ngIf="empleados.length>0" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                       <th>#</th>
+                      <th>Cédula</th>
                       <th>Nombre</th>
                       <th>Apellido</th>
                       <th>Dirección</th>
@@ -23,39 +25,32 @@
                       <th>Opciones</th>
                     </tr>
                 </thead>
-                <tfoot>
-                    <tr>
-                      <th>#</th>
-                      <th>Nombre</th>
-                      <th>Apellido</th>
-                      <th>Dirección</th>
-                      <th>Teléfono</th>
-                      <th>Opciones</th>
-                    </tr>
-                </tfoot>
-                <tbody *ngFor="let e of empleados; let i = index  ">
+                <tbody *ngFor="let item of empleados | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                     <tr>
                       <td>{{ i + 1}}</td>
-                      <td>{{ e.nombre}}</td>
-                      <td>{{ e.apellido}}</td>
-                      <td>{{ e.direccion}}</td>
-                      <td>{{ e.telefono}}</td>
-                      <td>
+                      <td>{{ item.cedula }}</td>
+                      <td>{{ item.nombre}}</td>
+                      <td>{{ item.apellido}}</td>
+                      <td>{{ item.direccion}}</td>
+                      <td>{{ item.telefono}}</td>
+                      <td>                        
                         <button class="btn btn-info mr-1"
-                         [routerLink]="['/empleado/modificar', e.cedula ]">
-                          <i class="fas fa-pencil-alt"></i>
-                        </button>
-                        <button class="btn btn-info mr-1" (click)="borrar(e.cedula, i)">
+                         [routerLink]="['/empleado/modificar', item.cedula ]">
+                         <i class="fas fa-pencil-alt"></i></button>
+                        <button class="btn btn-info mr-1" (click)="borrar(item.cedula, i)">
                           <i class="fas fa-trash"></i>
                         </button>
                       </td>
                     </tr>
-                    </tbody>
-                    </table>
-                    </div>
-                  </div>
-                </div>
+                  </tbody>
+                </table>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+    </div>
+   </div>
+  </div>
 </div>
+  <!--    
+ -->
 <div *ngIf="empleados.length == 0" class="alertalert-warning text-center mt-3">
   <h4 class="alert-heading">No hay registros</h4>  
   <p>

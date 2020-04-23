@@ -544,11 +544,13 @@ pre code {
 
 .container {
   width: 100%;
+  padding-top: 100px;
   padding-right: 0.75rem;
   padding-left: 0.75rem;
   margin-right: auto;
   margin-left: auto;
 }
+
 @media (min-width: 576px) {
   .container {
     max-width: 540px;
@@ -4786,10 +4788,11 @@ a.badge-dark:focus, a.badge-dark.focus {
 }
 
 .jumbotron {
-  padding: 2rem 1rem;
+  padding: 1rem 1rem;
   margin-bottom: 2rem;
   background-color: #e9ecef;
   border-radius: 0.3rem;
+  opacity: 0.75;
 }
 @media (min-width: 576px) {
   .jumbotron {
@@ -9971,6 +9974,15 @@ html,
 body {
   height: 100%;
 }
+
+.bg-img
+{
+    background-image: url('/assets/img/478801-PGE4E4-917.jpg');
+    background-position: center;
+    background-repeat: no-repeat; 
+    background-size: cover;
+}
+
 
 .container,
 .container-fluid,
