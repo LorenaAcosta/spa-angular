@@ -1,1 +1,10 @@
-<p>servicio works!</p>
+<!-- -->
+<div class="card"  *ngFor="let item of servicios">
+    <h5 class="card-header">{{item.nombre}}</h5>
+    <div class="card-body">
+    <h5 class="card-title">{{item.duracion}} | {{item.costo}} Gs.</h5>
+    <p class="card-text">{{item.descripcion}}</p>
+    <a href="#" class="btn btn-primary">Agregar</a>
+    </div>
+</div>
+

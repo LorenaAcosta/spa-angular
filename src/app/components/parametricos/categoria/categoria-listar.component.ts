@@ -28,7 +28,7 @@ export class CategoriaListarComponent implements OnInit {
     .subscribe( (resp: any[]) =>  this.categorias = resp  );
   }
 
-  borrar(id: any, pos: any) {
+  borrar(id: any) {
     Swal.fire({
       title: 'Estas seguro?',
       text: 'No podrás revertir esta operación!',
@@ -39,7 +39,7 @@ export class CategoriaListarComponent implements OnInit {
       confirmButtonText: 'Si, eliminar!'
       }).then((result) => {
         if (result.value) {
-          this.categorias.splice(pos, 1);
+          // this.categorias.splice(pos + 1, 1);
           this.categoriaService.eliminarRecurso(id).subscribe();
           Swal.fire(
             'Eliminado!',

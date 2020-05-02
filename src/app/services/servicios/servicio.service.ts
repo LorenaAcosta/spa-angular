@@ -13,6 +13,10 @@ export class ServicioService {
     return this.http.get(this.recurosBaseURL + 'listar');
     }
 
+    listarRecursoPorCategoria(id) {
+      return this.http.post(this.recurosBaseURL + 'listarByCategoria', { categoriaId: id });
+    }
+
     agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
     }

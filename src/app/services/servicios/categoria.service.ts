@@ -13,6 +13,9 @@ export class CategoriaService {
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
+  obtenerPorTipo(tipo) {
+    return this.http.get(this.recurosBaseURL + 'getDataType/' + tipo);
+  }
 
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);

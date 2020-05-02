@@ -15,7 +15,8 @@ export class CategoriaEditComponent implements OnInit {
   form = this.fb.group({
     codigo: ['', Validators.required],
     descripcion: ['', Validators.required],
-    imageNombre: ['', Validators.required]
+    dataType: ['', Validators.required ],
+    imageName: ['']
   });
   constructor(private fb: FormBuilder,
               private categoriaService: CategoriaService,
@@ -29,13 +30,15 @@ export class CategoriaEditComponent implements OnInit {
       this.form = this.fb.group({
         codigo: ['', Validators.required],
         descripcion: ['', Validators.required],
-        imageNombre: ['', Validators.required]
+        dataType: ['', Validators.required ],
+        imageName: ['']
       });
       this.categoriaService.getRecurso(id)
        .subscribe ((data: any) => {
         this.form.controls.codigo.setValue(data.codigo);
         this.form.controls.descripcion.setValue(data.descripcion);
-        this.form.controls.imageNombre.setValue(data.image_nombre);
+        this.form.controls.dataType.setValue(data.dataType);
+        this.form.controls.imageName.setValue(data.imageName);
        });
     }
   }
@@ -48,8 +51,8 @@ export class CategoriaEditComponent implements OnInit {
     const id = this.route.snapshot.params.id;
     let peticion: Observable<any>;
     console.log(id);
-    console.log(typeof id);
     if (typeof id === 'undefined') {
+      console.warn(this.form.value);
       peticion = this.categoriaService.agregarRecurso(this.form.value);
       peticion.subscribe((result: any) =>  {
         Swal.fire(

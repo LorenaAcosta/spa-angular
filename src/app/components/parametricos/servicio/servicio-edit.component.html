@@ -25,16 +25,7 @@
         <input formControlName="descripcion" type="descripcion" class="form-control" id="descripcion" required>
       </div>
     </div>
-   
       <div class="form-row">
-        <div class="form-group col-md-2">
-          <label for="inputCity">Fecha Vigencia Inicio</label>
-          <input type="date"  formControlName="fechaVigenciaIni" class="form-control" id="fechaVigenciaIni" required>
-        </div>
-        <div class="form-group col-md-2">
-          <label for="inputState">Fecha Vigencia Fin</label>
-          <input type="date"  formControlName="fechaVigenciaFin" class="form-control" id="fechaVigenciaFin" required>
-        </div>
         <div class="form-group col-md-2">
           <label for="inputZip">Estado</label>
           <select id="estado"  formControlName="estado" class="form-control" required>
@@ -52,22 +43,12 @@
             {{ cat.descripcion }}
           </option>
         </select>
-        <!--   
-        <ng-select  [items]="categorias$ | async"
-           bindLabel="descripcion"
-           bindValue="categoriaId"
-           autofocus
-           [(ngModel)]="selectedPersonId"
-           class="custom form-control"
-           formControlName="categoriaId"
-           id="categoriaId" required>
-        </ng-select> -->
-        </div>
+      </div>
     </div> 
     <div class="form-row">
       <div class="form-group col-md-2">
         <label for="inputCity">Duracion</label>
-        <input  formControlName="duracion" type="text" class="form-control" id="duracion" required>
+        <input  formControlName="duracion" type="time" class="form-control" id="duracion" required>
       </div>
       <div class="form-group col-md-2">
         <label for="inputState">Costo</label>
@@ -76,6 +57,12 @@
       <div class="form-group col-md-2">
         <label for="inputZip">% Comisión</label>
         <input formControlName="porcComision"  type="number" class="form-control" id="porcComision" required>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Imagen</label>
+      <div class="col-sm-10">
+        <input formControlName="imageName" type="imageName" class="form-control" id="imageName" >
       </div>
     </div>
       <div class="form-group row">

@@ -16,6 +16,9 @@ import { EmpleadoEditComponent } from './components/parametricos/empleado/emplea
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
 import { ClienteLoginComponent } from './components/parametricos/cliente/cliente-login.component';
 import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
+import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
+import { ServicioComponent } from './components/parametricos/servicio/servicio.component';
+import { EmpleadoServicioComponent } from './components/parametricos/empleado/empleado-servicio.component';
 
 
 const routes: Routes = [
@@ -58,8 +61,9 @@ const routes: Routes = [
     children: [
       { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
       { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
-      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' }, }
-     ]
+      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' }, },
+      { path: 'asignar/:id', component: EmpleadoServicioComponent , data: { title: 'Empleado Servicio' }, }
+    ]
   },
   {
     path: 'producto', data: { title: 'Producto' },
@@ -74,6 +78,8 @@ const routes: Routes = [
     children: [
       { path: 'agregar', component: ServicioEditComponent , data: { title: 'Crear Servicio' }, },
       { path: 'listar', component:  ServicioListarComponent, data: { title: 'Listar Servicios' }, },
+      { path: 'servicio', component:  ServicioComponent, data: { title: 'Listar Servicios' }, },
+      { path: 'servicios/:id', component:  ServicioListar2Component, data: { title: 'Listar Servicios' }, },
       { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } }
      ]
   },

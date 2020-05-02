@@ -44,6 +44,30 @@
         </div>
       </div>
       <div class="form-group row">
+        <label for="inputState" class="col-sm-2 col-form-label">Categoria</label> 
+        <div class="form-group col-md-3">
+        <select id="categoriaId" formControlName="categoriaId" class="form-control">
+          <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
+            {{ cat.descripcion }}
+          </option>
+        </select>
+      </div>
+    </div> 
+    <div class="form-group col-md-2">
+      <label for="inputZip">Estado</label>
+      <select id="estado"  formControlName="estado" class="form-control" required>
+        <option selected>...</option>
+        <option value="activo">Activo</option>
+        <option value="inactivo">Inactivo</option>
+      </select>
+    </div>
+    <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Imagen</label>
+      <div class="col-sm-10">
+        <input formControlName="imageName" type="imageName" class="form-control" id="imageName" >
+      </div>
+    </div>
+      <div class="form-group row">
         <div class="col-sm-3">
           <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary" (click)="guardar()" >Guardar</button>
         </div>

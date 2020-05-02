@@ -33,6 +33,9 @@ import { EmpleadoEditComponent } from './components/parametricos/empleado/emplea
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
 import { ClienteLoginComponent } from './components/parametricos/cliente/cliente-login.component';
 import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
+import { ProductoListar2Component } from './components/parametricos/producto/producto-listar2.component';
+import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
+import { EmpleadoServicioComponent } from './components/parametricos/empelado/empleado-servicio.component';
 
 
 
@@ -63,7 +66,10 @@ import { CategoriaListar2Component } from './components/parametricos/categoria/c
     EmpleadoEditComponent,
     EmpleadoListarComponent,
     ClienteLoginComponent,
-    CategoriaListar2Component
+    CategoriaListar2Component,
+    ProductoListar2Component,
+    ServicioListar2Component,
+    EmpleadoServicioComponent
   ],
   imports: [
     BrowserModule,

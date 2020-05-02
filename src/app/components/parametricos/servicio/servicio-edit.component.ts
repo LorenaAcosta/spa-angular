@@ -15,14 +15,13 @@ export class ServicioEditComponent implements OnInit {
 
   form = this.fb.group({
     nombre: ['', Validators.required],
-    descripcion: ['', Validators.required],
-    fechaVigenciaIni: ['', Validators.required],
-    fechaVigenciaFin: ['', Validators.required],
     estado: ['', Validators.required],
+    descripcion: ['', Validators.required],
     categoriaId: ['', Validators.required],
     duracion: ['', Validators.required],
     costo: ['', Validators.required],
-    porcComision: ['', Validators.required]
+    porcComision: ['', Validators.required],
+    imageName: ['']
   });
   // categorias$: Observable<any>;
   categorias: any[] = [];
@@ -35,52 +34,49 @@ export class ServicioEditComponent implements OnInit {
 
       this.form = this.fb.group({
         nombre: ['', Validators.required],
-        descripcion: ['', Validators.required],
-        fechaVigenciaIni: ['', Validators.required],
-        fechaVigenciaFin: ['', Validators.required],
         estado: ['', Validators.required],
+        descripcion: ['', Validators.required],
         categoriaId: ['', Validators.required],
         duracion: ['', Validators.required],
         costo: ['', Validators.required],
-        porcComision: ['', Validators.required]
+        porcComision: ['', Validators.required],
+        imageName: ['']
       });
               }
 
   ngOnInit() {
    // this.categorias$ = this.categoriaService.listarRecurso();
-     this.categoriaService.listarRecurso().subscribe( (resp: any[]) =>  this.categorias = resp );
+     this.categoriaService.obtenerPorTipo('servicio').subscribe( (resp: any[]) =>  this.categorias = resp );
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({
         nombre: ['', Validators.required],
-        descripcion: ['', Validators.required],
-        fechaVigenciaIni: ['', Validators.required],
-        fechaVigenciaFin: ['', Validators.required],
         estado: ['', Validators.required],
+        descripcion: ['', Validators.required],
         categoriaId: ['', Validators.required],
         duracion: ['', Validators.required],
         costo: ['', Validators.required],
-        porcComision: ['', Validators.required]
+        porcComision: ['', Validators.required],
+        imageName: ['']
       });
       this.servicioService.getRecurso(id)
        .subscribe ((data: any) => {
         this.form.controls.nombre.setValue(data.nombre);
-        this.form.controls.descripcion.setValue(data.descripcion);
-        this.form.controls.fechaVigenciaIni.setValue(data.fechaVigenciaIni);
-        this.form.controls.fechaVigenciaFin.setValue(data.fechaVigenciaFin);
         this.form.controls.estado.setValue(data.estado);
+        this.form.controls.descripcion.setValue(data.descripcion);
         this.form.controls.categoriaId.setValue(data.categoriaId.categoriaId);
         this.form.controls.duracion.setValue(data.duracion);
         this.form.controls.costo.setValue(data.costo);
         this.form.controls.porcComision.setValue(data.porcComision);
+        this.form.controls.imageName.setValue(data.imageName);
        });
     }
   }
   guardar() {
-    //  console.warn(this.form.value);
-     const id = this.route.snapshot.params.id;
-     let peticion: Observable<any>;
-     if (typeof id === 'undefined') {
+    console.warn(this.form.value);
+    const id = this.route.snapshot.params.id;
+    let peticion: Observable<any>;
+    if (typeof id === 'undefined') {
         peticion = this.servicioService.agregarRecurso(this.form.value);
         peticion.subscribe((result: any) =>  {
           Swal.fire(
@@ -98,6 +94,6 @@ export class ServicioEditComponent implements OnInit {
             'success'
           );
         });
-      }
+      }  
     }
 }

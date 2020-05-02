@@ -16,7 +16,7 @@ export class CategoriaListar2Component implements OnInit {
   }
 
   getCategorias() {
-    this.categoriaService.listarRecurso()
+    this.categoriaService.obtenerPorTipo('servicio')
     .subscribe( (resp: any[]) =>  this.categorias = resp  );
   }
 
