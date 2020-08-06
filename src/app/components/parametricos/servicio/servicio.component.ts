@@ -14,8 +14,6 @@ export class ServicioComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    
-
   }
 
 }

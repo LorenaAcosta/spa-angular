@@ -13,10 +13,6 @@ export class CategoriaService {
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
-  obtenerPorTipo(tipo) {
-    return this.http.get(this.recurosBaseURL + 'getDataType/' + tipo);
-  }
-
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
   }
@@ -31,9 +27,12 @@ export class CategoriaService {
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
+  
+  obtenerPorTipo(tipo) {
+    return this.http.get(this.recurosBaseURL + 'getDataType/' + tipo);
+  }
 
   listarPaginadoRecurso(filtros) {
     return this.http.post(this.recurosBaseURL + 'categorias-list', filtros);
   }
-
 }

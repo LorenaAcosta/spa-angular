@@ -11,7 +11,8 @@ export class EmpleadoListarComponent implements OnInit {
 
   empleados: any[] = [];
   index = 0;
-  pageActual:1;
+  pageActual: 1;
+
   constructor(private empleadoService: EmpleadoService) { }
 
   ngOnInit() {

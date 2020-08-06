@@ -12,16 +12,14 @@ export class ServicioService {
     listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
     }
-
-    listarRecursoPorCategoria(id) {
-      return this.http.post(this.recurosBaseURL + 'listarByCategoria', { categoriaId: id });
-    }
-
     agregarRecurso(recurso) {
-    return this.http.post(this.recurosBaseURL + 'agregar', recurso);
+      return this.http.post(this.recurosBaseURL + 'agregar', recurso);
     }
     modificarRecurso(recurso, id) {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
+    }
+    listarRecursoPorCategoria(id) {
+      return this.http.post(this.recurosBaseURL + 'listarByCategoria', { categoriaId: id });
     }
 
     getRecurso(id) {
@@ -31,5 +29,4 @@ export class ServicioService {
     eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
     }
-
 }

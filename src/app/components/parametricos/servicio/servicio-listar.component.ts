@@ -33,12 +33,14 @@ export class ServicioListarComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.servicios.splice(pos, 1);
+        /*
           this.servicioService.eliminarRecurso(id).subscribe();
           Swal.fire(
             'Eliminado!',
             'Los datos han sido eliminados.',
             'success'
           );
+          */
         }
       });
   }

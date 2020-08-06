@@ -25,7 +25,7 @@ export class CategoriaEditComponent implements OnInit {
 
    ngOnInit() {
     const id = this.route.snapshot.params.id;
-   // console.log(id);
+    console.log(id);
     if (typeof id !== 'undefined') {
       this.form = this.fb.group({
         codigo: ['', Validators.required],
@@ -33,6 +33,7 @@ export class CategoriaEditComponent implements OnInit {
         dataType: ['', Validators.required ],
         imageName: ['']
       });
+
       this.categoriaService.getRecurso(id)
        .subscribe ((data: any) => {
         this.form.controls.codigo.setValue(data.codigo);

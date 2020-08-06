@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ClienteService } from 'src/app/services/servicios/cliente.service';
-import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 
 @Component({
   selector: 'app-cliente-edit',
@@ -22,7 +21,7 @@ export class ClienteEditComponent implements OnInit {
     ruc: ['', Validators.required],
     telefono: ['', Validators.required],
     sexo: ['', Validators.required],
-    estado: [1],
+    estado: [1]
     });
 
   constructor(private fb: FormBuilder,
@@ -38,14 +37,14 @@ export class ClienteEditComponent implements OnInit {
         ruc: ['', Validators.required],
         telefono: ['', Validators.required],
         sexo: ['', Validators.required],
-        estado: [1],
+        estado: [1]
       });
   }
 
   ngOnInit() {
-   // this.categorias$ = this.categoriaService.listarRecurso();
-     const id = this.route.snapshot.params.id;
-     if (typeof id !== 'undefined') {
+    const id = this.route.snapshot.params.id;
+    // console.log(id);
+    if (typeof id !== 'undefined') {
       this.form = this.fb.group({
         nombre: ['', Validators.required],
         username: ['', Validators.required],
@@ -55,10 +54,9 @@ export class ClienteEditComponent implements OnInit {
         ruc: ['', Validators.required],
         telefono: ['', Validators.required],
         sexo: ['', Validators.required],
-        estado: [1],
+        estado: ['', Validators.required]
       });
-      this.clienteService.getRecurso(id)
-       .subscribe ((data: any) => {
+      this.clienteService.getRecurso(id) .subscribe ((data: any) => {
         this.form.controls.nombre.setValue(data.nombre);
         this.form.controls.username.setValue(data.username);
         this.form.controls.password.setValue(data.password);
@@ -67,15 +65,15 @@ export class ClienteEditComponent implements OnInit {
         this.form.controls.ruc.setValue(data.ruc);
         this.form.controls.telefono.setValue(data.telefono);
         this.form.controls.sexo.setValue(data.sexo);
-        this.form.controls.estado.setValue(data.estado);
-       });
+        this.form.controls.estado.setValue(1);
+      });
     }
   }
   guardar() {
-    //  console.warn(this.form.value);
-     const id = this.route.snapshot.params.id;
-     let peticion: Observable<any>;
-     if (typeof id === 'undefined') {
+   // console.warn(this.form.value);
+    const id = this.route.snapshot.paramMap.get('id');
+    let peticion: Observable<any>;
+    if (typeof id == null) {
         peticion = this.clienteService.agregarRecurso(this.form.value);
         peticion.subscribe((result: any) =>  {
           Swal.fire(

@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChildren, QueryList, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-categoria-listar',
@@ -10,14 +9,12 @@ import { ActivatedRoute } from '@angular/router';
 })
 
 export class CategoriaListarComponent implements OnInit {
-  
   index: 1;
   categorias: any[] = [];
   pageActual: 1;
 
 
-
-  constructor(private categoriaService: CategoriaService, private route: ActivatedRoute) { }
+  constructor(private categoriaService: CategoriaService) { }
 
   ngOnInit() {
     this.getCategorias();
@@ -40,6 +37,7 @@ export class CategoriaListarComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           // this.categorias.splice(pos + 1, 1);
+
           this.categoriaService.eliminarRecurso(id).subscribe();
           Swal.fire(
             'Eliminado!',

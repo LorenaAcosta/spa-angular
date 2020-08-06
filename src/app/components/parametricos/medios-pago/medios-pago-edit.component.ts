@@ -34,11 +34,13 @@ export class MediosPagoEditComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
    // console.log(id);
     if (id !== null) {
+   /*
     this.medioPagoService.getRecurso(id)
        .subscribe ((data: any) => {
         this.form.controls.codigo.setValue(data.codigo);
         this.form.controls.descripcion.setValue(data.descripcion);
        });
+       */
 }
   }
 
@@ -54,7 +56,9 @@ export class MediosPagoEditComponent implements OnInit {
     }
 
     if (id !== null) {
+     /* 
      peticion = this.medioPagoService.modificarRecurso(this.form.value, id);
+     */
     } else {
     peticion = this.medioPagoService.agregarRecurso(this.form.value);
     }

@@ -41,48 +41,54 @@ export class ServicioListar2Component implements OnInit {
     /*Mostrar los servicios */
     const id = this.route.snapshot.params.id;
     if (typeof id !== 'undefined') {
-     this.servicioService.listarRecursoPorCategoria(id)
+    /* this.servicioService.listarRecursoPorCategoria(id)
      .subscribe( (resp: any[]) =>  this.servicios = resp );
-     }
+     } */
+
+
     // Parse the serialized data back into an aray of objects
     this.arrayList = JSON.parse(localStorage.getItem('items')) || [];
+    // this.sumar();
   }
 
-  recargar(id: any ) {
-    this.servicioService.listarRecursoPorCategoria(id)
-    .subscribe( (resp: any[]) =>  this.servicios = resp );
-  }
-
-  addItem(item: any) {
-    // Push the new data (whether it be an object or anything else) onto the array
-    this.arrayList.push(item);
-    // Alert the array value
-    // console.log(this.arrayList );  // Should be something like [Object array]
-
-    // Re-serialize the array back into a string and store it in localStorage
-    localStorage.setItem('items', JSON.stringify(this.arrayList ));
-    // console.log(this.arrayList );
-    Toast.fire({
-      icon: 'success',
-      title: 'Tratamiento Añadido'
-    });
-    this.sumar();
-  }
-
-  eraseItem(idToRemove: any) {
-    this.arrayList.splice(idToRemove, 1);
-    this.sumar();
-  }
-
-  sumar() {
-    this.sum = 0;
-    this.value =  this.arrayList;
-    for ( let j = 0; j < this.arrayList.length; j++) {
-         this.sum +=  this.value[j].costo;
-         console.log(this.value[j].costo);
-         }
-  }
 
 
 }
 
+
+recargar(id: any) {
+  /* this.servicioService.listarRecursoPorCategoria(id)
+   .subscribe( (resp: any[]) =>  this.servicios = resp ); */
+ }
+addItem(item: any) {
+  // Push the new data (whether it be an object or anything else) onto the array
+  this.arrayList.push(item);
+  // Alert the array value
+  // console.log(this.arrayList );  // Should be something like [Object array]
+
+  // Re-serialize the array back into a string and store it in localStorage
+  localStorage.setItem('items', JSON.stringify(this.arrayList));
+  // console.log(this.arrayList);
+  Toast.fire({
+    icon: 'success',
+    title: 'Tratamiento Añadido'
+  });
+ // this.sumar();
+}
+eraseItem(idToRemove: any) {
+  this.arrayList.splice(idToRemove, 1);
+  this.sumar();
+}
+
+
+sumar() {
+  this.sum = 0;
+  this.value =  this.arrayList;
+  for ( let j = 0; j < this.arrayList.length; j++) {
+       this.sum +=  this.value[j].costo;
+       console.log(this.value[j].costo);
+       }
+}
+
+
+}

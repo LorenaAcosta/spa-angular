@@ -45,8 +45,9 @@ export class ServicioEditComponent implements OnInit {
               }
 
   ngOnInit() {
-   // this.categorias$ = this.categoriaService.listarRecurso();
-     this.categoriaService.obtenerPorTipo('servicio').subscribe( (resp: any[]) =>  this.categorias = resp );
+    // this.categorias$ = this.categoriaService.listarRecurso();
+     this.categoriaService.obtenerPorTipo('servicio').
+     subscribe( (resp: any[]) =>  this.categorias = resp );
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({
@@ -94,6 +95,6 @@ export class ServicioEditComponent implements OnInit {
             'success'
           );
         });
-      }  
+      }
     }
 }

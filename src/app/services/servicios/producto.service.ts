@@ -12,7 +12,6 @@ export class ProductoService {
     listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
     }
-
     agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
     }
@@ -22,11 +21,9 @@ export class ProductoService {
     modificarRecurso(recurso, id) {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
     }
-
     getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
     }
-
     eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
     }

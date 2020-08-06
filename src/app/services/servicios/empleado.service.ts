@@ -28,5 +28,6 @@ export class EmpleadoService {
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
+  
 
 }

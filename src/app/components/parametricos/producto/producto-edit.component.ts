@@ -56,7 +56,7 @@ export class  ProductoEditComponent implements OnInit {
         stockActual: ['', Validators.required],
         categoriaId: ['', Validators.required],
         imageName: [''],
-        estado: ['', Validators.required]
+        estado: [1]
       });
       this.productoService.getRecurso(id)
        .subscribe ((data: any) => {

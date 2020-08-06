@@ -65,7 +65,7 @@ export class SidebarService {
         ]
       },
       {
-        modulo:'Finanzas',
+        modulo: 'Finanzas',
         moduloItems: [
           {
               id: 'submodulo4',
@@ -87,7 +87,7 @@ export class SidebarService {
         ]
       },
       {
-        modulo:'Otros',
+        modulo: 'Otros',
         moduloItems: [
           {
               id: 'submodulo5',

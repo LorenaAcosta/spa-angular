@@ -13,17 +13,15 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Codigo</th>
         <th scope="col">Tipo</th>
         <th scope="col">Descripción</th>
-        <th scope="col">Nombre</th>
+        <th scope="col">Imagen</th>
         <th>Opciones</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let item of categorias | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
-        <td>{{ i + 1}}</td>
-        <td>{{ item.codigo}}</td>
+        <td>{{ i + 1 }}</td>
         <td>{{ item.dataType}}</td>
         <td>{{ item.descripcion}}</td>
         <td>{{ item.imageName}}</td>

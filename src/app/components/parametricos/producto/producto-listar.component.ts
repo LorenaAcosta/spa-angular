@@ -1,8 +1,7 @@
-import { Component, OnInit, ViewChildren, QueryList, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../../services/servicios/producto.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
-import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 
 
 @Component({
@@ -12,18 +11,13 @@ import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 })
 
 export class ProductoListarComponent implements OnInit {
-
-  index: 1;
   productos: any[] = [];
+  index: 0;
   pageActual: 1;
 
 
   constructor(private productoService: ProductoService, private route: ActivatedRoute) { }
   ngOnInit() {
-    this.getProductos();
-  }
-
-  getProductos() {
     this.productoService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.productos = resp  );
   }

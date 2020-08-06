@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import 'rxjs/add/operator/finally';
-import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,5 +11,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+  logout() {
+
   }
 }

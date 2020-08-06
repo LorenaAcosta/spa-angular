@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col-sm-6 col-md-8">
-
         <div >
             <button *ngFor="let cat of categorias" type="button" class="btn btn-light"
             (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
@@ -17,7 +16,6 @@
                 <small class="text-muted">
                     <i class="far fa-clock"></i><strong> {{item.duracion}} |
                     <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong></small>
-
                 <button  class="btn btn-info mr-1 float-right" (click)="addItem(item)" > <i class="fas fa-plus-square"></i> </button>
             </div>
             </div>
@@ -52,7 +50,7 @@
               </tbody>
             </table>
             <div *ngIf="arrayList.length>0"> 
-                <button class="btn btn-info mr-1">Eligir Terapista</button> 
+                <button  [routerLink]="['/reserva/reserva-terapist']" class="btn btn-info mr-1">Eligir Terapista</button> 
             </div>
            
     </div>
