@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -36,6 +36,9 @@ import { EmpleadoEditComponent } from './components/parametricos/empleado/emplea
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
 import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
+import { LoginComponent } from './login/login.component';
+import { PagesComponent } from './pages.component';
+
 
 
 
@@ -69,7 +72,9 @@ import { ServicioListar2Component } from './components/parametricos/servicio/ser
     EmpleadoListarComponent,
     CategoriaListar2Component,
     ProductoListar2Component,
-    ServicioListar2Component
+    ServicioListar2Component,
+    LoginComponent,
+    PagesComponent
   ],
   imports: [
     BrowserModule,
@@ -78,7 +83,8 @@ import { ServicioListar2Component } from './components/parametricos/servicio/ser
     HttpClientModule,
     NgbModule,
     NgSelectModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
