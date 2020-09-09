@@ -50,7 +50,6 @@ export class EmpleadoEditComponent implements OnInit {
         telefono: ['', Validators.required],
         fechaNac: ['', Validators.required]
       });
-      /*
       this.empleadoService.getRecurso(id)
        .subscribe ((data: any) => {
         this.form.controls.cedula.setValue(data.cedula);
@@ -59,14 +58,19 @@ export class EmpleadoEditComponent implements OnInit {
         this.form.controls.direccion.setValue(data.direccion);
         this.form.controls.telefono.setValue(data.telefono);
         this.form.controls.fechaNac.setValue(data.fechaNac);
-       }); 
-       */
+       });
     }
   }
+
+  ver() {
+    console.warn(this.form.value);
+  }
+
   guardar() {
     //  console.warn(this.form.value);
      const id = this.route.snapshot.params.id;
      let peticion: Observable<any>;
+     console.log(id);
      if (typeof id === 'undefined') {
         peticion = this.empleadoService.agregarRecurso(this.form.value);
         peticion.subscribe((result: any) =>  {
@@ -77,7 +81,6 @@ export class EmpleadoEditComponent implements OnInit {
           );
         });
       } else {
-       /*
         peticion = this.empleadoService.modificarRecurso(this.form.value, id);
         peticion.subscribe((result: any) =>  {
           Swal.fire(
@@ -86,7 +89,6 @@ export class EmpleadoEditComponent implements OnInit {
             'success'
           );
         });
-        */
       }
     }
 }

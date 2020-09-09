@@ -35,9 +35,9 @@
                       <td>{{ item.telefono}}</td>
                       <td>                        
                         <button class="btn btn-info mr-1"
-                         [routerLink]="['/empleado/modificar', item.cedula ]">
+                         [routerLink]="['/empleado/modificar', item.empleadoId ]">
                          <i class="fas fa-pencil-alt"></i></button>
-                        <button class="btn btn-info mr-1" (click)="borrar(item.cedula, i)">
+                        <button class="btn btn-info mr-1" (click)="borrar(item.empleadoId, i)">
                           <i class="fas fa-trash"></i> </button>
                       </td>
                     </tr>

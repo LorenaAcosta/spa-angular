@@ -13,6 +13,8 @@ import Swal from 'sweetalert2';
 })
 export class ServicioEditComponent implements OnInit {
 
+  categorias: any[] = [];
+
   form = this.fb.group({
     nombre: ['', Validators.required],
     estado: ['', Validators.required],
@@ -23,31 +25,18 @@ export class ServicioEditComponent implements OnInit {
     porcComision: ['', Validators.required],
     imageName: ['']
   });
-  // categorias$: Observable<any>;
-  categorias: any[] = [];
-  selectedPersonId = 'Elegir';
 
   constructor(private fb: FormBuilder,
               private servicioService: ServicioService,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute) {
-
-      this.form = this.fb.group({
-        nombre: ['', Validators.required],
-        estado: ['', Validators.required],
-        descripcion: ['', Validators.required],
-        categoriaId: ['', Validators.required],
-        duracion: ['', Validators.required],
-        costo: ['', Validators.required],
-        porcComision: ['', Validators.required],
-        imageName: ['']
-      });
-              }
+  }
 
   ngOnInit() {
     // this.categorias$ = this.categoriaService.listarRecurso();
      this.categoriaService.obtenerPorTipo('servicio').
      subscribe( (resp: any[]) =>  this.categorias = resp );
+     
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({

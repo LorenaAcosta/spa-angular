@@ -40,6 +40,7 @@ import { ServicioListar2Component } from './components/parametricos/servicio/ser
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,

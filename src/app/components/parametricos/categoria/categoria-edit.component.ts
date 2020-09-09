@@ -51,7 +51,7 @@ export class CategoriaEditComponent implements OnInit {
   guardar() {
     const id = this.route.snapshot.params.id;
     let peticion: Observable<any>;
-    console.log(id);
+   // console.log(id);
     if (typeof id === 'undefined') {
       console.warn(this.form.value);
       peticion = this.categoriaService.agregarRecurso(this.form.value);

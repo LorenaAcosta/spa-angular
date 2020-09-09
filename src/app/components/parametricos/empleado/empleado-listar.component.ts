@@ -31,8 +31,8 @@ export class EmpleadoListarComponent implements OnInit {
       confirmButtonText: 'Si, eliminar!'
       }).then((result) => {
         if (result.value) {
-          this.empleados.splice(pos, 1);
           this.empleadoService.eliminarRecurso(id).subscribe();
+          this.empleados.splice(pos, 1);
           Swal.fire(
             'Eliminado!',
             'Los datos han sido eliminados.',

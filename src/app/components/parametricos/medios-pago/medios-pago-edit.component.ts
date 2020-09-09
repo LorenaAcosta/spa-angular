@@ -34,41 +34,42 @@ export class MediosPagoEditComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
    // console.log(id);
     if (id !== null) {
-   /*
     this.medioPagoService.getRecurso(id)
        .subscribe ((data: any) => {
         this.form.controls.codigo.setValue(data.codigo);
         this.form.controls.descripcion.setValue(data.descripcion);
        });
-       */
-}
+    }
   }
 
   imprimir() {
     alert(this.form.value.codigo);
   }
+  
   guardar() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.params.id;
     let peticion: Observable<any>;
-    // console.log(id);
-    if (this.form.invalid) {
-        console.log('Formulario no valido');
-    }
-
-    if (id !== null) {
-     /* 
-     peticion = this.medioPagoService.modificarRecurso(this.form.value, id);
-     */
+    console.log(id);
+    if (typeof id === 'undefined') {
+      console.warn(this.form.value);
+      peticion = this.medioPagoService.agregarRecurso(this.form.value);
+      peticion.subscribe((result: any) =>  {
+        Swal.fire(
+          'Guardado!',
+          'Se guardaron  los datos!',
+          'success'
+        );
+      });
     } else {
-    peticion = this.medioPagoService.agregarRecurso(this.form.value);
-    }
-    peticion.subscribe((result: any) =>  {
+      peticion = this.medioPagoService.modificarRecurso(this.form.value, id);
+      peticion.subscribe((result: any) =>  {
         Swal.fire(
           'Guardado!',
           'Se actualizaron los datos!',
           'success'
         );
       });
+    }
   }
 
 }
