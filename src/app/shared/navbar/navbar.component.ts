@@ -16,7 +16,7 @@ export class NavbarComponent implements OnInit {
     ) {
 
     let roles: any[];
-    roles = JSON.parse(localStorage.getItem('usuario'));
+    roles = JSON.parse(localStorage.getItem('usuario')) || ' ';
     let band = 0;
     // tslint:disable-next-line: prefer-for-of
     for ( let i = 0; i < roles.length; i++) {
