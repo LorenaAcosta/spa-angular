@@ -41,25 +41,27 @@ export class ServicioListar2Component implements OnInit {
     /*Mostrar los servicios */
     const id = this.route.snapshot.params.id;
     if (typeof id !== 'undefined') {
-    /* this.servicioService.listarRecursoPorCategoria(id)
+    this.servicioService.listarRecursoPorCategoria(id)
      .subscribe( (resp: any[]) =>  this.servicios = resp );
-     } */
+    } else {
+      this.servicioService.listarRecursoPorCategoria(1)
+      .subscribe( (resp: any[]) =>  this.servicios = resp );
+    }
 
 
     // Parse the serialized data back into an aray of objects
     this.arrayList = JSON.parse(localStorage.getItem('items')) || [];
     // this.sumar();
   }
-
-
-
-}
+  
 
 
 recargar(id: any) {
-  /* this.servicioService.listarRecursoPorCategoria(id)
-   .subscribe( (resp: any[]) =>  this.servicios = resp ); */
+   this.servicioService.listarRecursoPorCategoria(id)
+   .subscribe( (resp: any[]) =>  this.servicios = resp );
  }
+
+
 addItem(item: any) {
   // Push the new data (whether it be an object or anything else) onto the array
   this.arrayList.push(item);

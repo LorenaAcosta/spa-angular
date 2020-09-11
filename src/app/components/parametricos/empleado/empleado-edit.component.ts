@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-empleado-edit',
@@ -20,6 +22,10 @@ export class EmpleadoEditComponent implements OnInit {
     telefono: ['', Validators.required],
     fechaNac: ['', Validators.required]
   });
+
+  get cedula() { return this.form.get('cedula'); }
+  get telefono() { return this.form.get('telefono'); }
+
   // categorias$: Observable<any>;
   categorias: any[] = [];
   selectedPersonId = 'Elegir';
@@ -70,7 +76,7 @@ export class EmpleadoEditComponent implements OnInit {
     //  console.warn(this.form.value);
      const id = this.route.snapshot.params.id;
      let peticion: Observable<any>;
-     console.log(id);
+    // console.log(id);
      if (typeof id === 'undefined') {
         peticion = this.empleadoService.agregarRecurso(this.form.value);
         peticion.subscribe((result: any) =>  {
@@ -80,6 +86,7 @@ export class EmpleadoEditComponent implements OnInit {
             'success'
           );
         });
+
       } else {
         peticion = this.empleadoService.modificarRecurso(this.form.value, id);
         peticion.subscribe((result: any) =>  {

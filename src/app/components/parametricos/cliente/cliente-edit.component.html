@@ -10,10 +10,11 @@
   </div>
 </div>
 <hr>
+
 <div class="container-fluid">
   <form [formGroup]="form">
     <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">User Name</label>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre de Usuario</label>
       <div class="col-sm-4">
         <input type="text"  autocomplete="username" class="form-control" id="username"
          placeholder="username"  formControlName="username">
@@ -40,13 +41,25 @@
         placeholder="Apellido"  formControlName="apellido">
       </div>
     </div>
+
     <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+      <label for="inputEmail3" class="col-sm-2 col-form-label">Correo electrónico</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="correo" 
-        placeholder="Email"  formControlName="correo">
-      </div>
+        <input 
+          type="text" 
+          class="form-control" 
+          id="correo" 
+          placeholder="Email"  
+          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
+          formControlName="correo">
+
+        <div *ngIf="correo.invalid && (correo.dirty || correo.touched)"
+          class="alert alert-danger">
+          Correo inválido.
+        </div>
     </div>
+  </div>
+
     <div class="form-group row">
       <label for="inputEmail3" class="col-sm-2 col-form-label">RUC</label>
       <div class="col-sm-4">
@@ -57,12 +70,22 @@
     <div class="form-group row">
       <label for="inputEmail3" class="col-sm-2 col-form-label">Teléfono</label>
       <div class="col-sm-4">
-        <input type="text" class="form-control" id="telefono" placeholder="(0986) 111-555"  formControlName="telefono">
+        <input 
+          type="text" 
+          class="form-control" 
+          id="telefono" 
+          placeholder="(0986) 111-555"
+          pattern="^[0-9]*$"
+          formControlName="telefono">
+
+          <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
+            Introduzca sólo dígitos.  </div>
+
       </div>
     </div>
     <fieldset class="form-group">
       <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">Sexo</legend>
+        <legend class="col-form-label col-sm-2 pt-0">Género</legend>
         <div class="col-sm-4">
           <div class="form-check" >
             <input class="form-check-input" type="radio" name="sexo" id="gridRadios1" value="femenino"  formControlName="sexo" checked>

@@ -29,7 +29,7 @@ export class CategoriaService {
   }
   
   obtenerPorTipo(tipo) {
-    return this.http.get(this.recurosBaseURL + 'getDataType/' + tipo);
+    return this.http.get(this.recurosBaseURL + 'obtener-por-tipo/' + tipo);
   }
 
   listarPaginadoRecurso(filtros) {

@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ClienteService {
-  recurosBaseURL: string = environment.URL_BASE + '/cliente/';
+  recurosBaseURL: string = environment.URL_BASE + '/usuario/';
   constructor(private http: HttpClient) { }
 
   getResourse() {

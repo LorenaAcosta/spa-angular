@@ -20,10 +20,10 @@ export class ServicioEditComponent implements OnInit {
     estado: ['', Validators.required],
     descripcion: ['', Validators.required],
     categoriaId: ['', Validators.required],
-    duracion: ['', Validators.required],
     costo: ['', Validators.required],
-    porcComision: ['', Validators.required],
-    imageName: ['']
+   // porcComision: ['', Validators.required],
+    imageName: [''],
+    duracion: ['', Validators.required]
   });
 
   constructor(private fb: FormBuilder,
@@ -44,10 +44,10 @@ export class ServicioEditComponent implements OnInit {
         estado: ['', Validators.required],
         descripcion: ['', Validators.required],
         categoriaId: ['', Validators.required],
-        duracion: ['', Validators.required],
         costo: ['', Validators.required],
-        porcComision: ['', Validators.required],
-        imageName: ['']
+       // porcComision: ['', Validators.required],
+        imageName: [''],
+        duracion: ['', Validators.required]
       });
       this.servicioService.getRecurso(id)
        .subscribe ((data: any) => {
@@ -55,10 +55,10 @@ export class ServicioEditComponent implements OnInit {
         this.form.controls.estado.setValue(data.estado);
         this.form.controls.descripcion.setValue(data.descripcion);
         this.form.controls.categoriaId.setValue(data.categoriaId.categoriaId);
-        this.form.controls.duracion.setValue(data.duracion);
         this.form.controls.costo.setValue(data.costo);
-        this.form.controls.porcComision.setValue(data.porcComision);
+      //  this.form.controls.porcComision.setValue(data.porcComision);
         this.form.controls.imageName.setValue(data.imageName);
+        this.form.controls.duracion.setValue(data.duracion);
        });
     }
   }
