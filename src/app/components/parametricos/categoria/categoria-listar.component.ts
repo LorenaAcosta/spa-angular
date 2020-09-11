@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-categoria-listar',
@@ -14,7 +15,7 @@ export class CategoriaListarComponent implements OnInit {
   pageActual: 1;
 
 
-  constructor(private categoriaService: CategoriaService) { }
+  constructor(private categoriaService: CategoriaService, public router: Router) { }
 
   ngOnInit() {
     this.getCategorias();
@@ -22,7 +23,13 @@ export class CategoriaListarComponent implements OnInit {
 
   getCategorias() {
     this.categoriaService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.categorias = resp  );
+    .subscribe( (resp: any[]) => {
+        this.categorias = resp;
+      }, (err) => {
+      console.log(err);
+     // Swal.fire('Error', err.error.error === 'unauthorized' ? 'No tiene permisos para acceder a esta pagina' : ' ', 'error');
+      // this.router.navigate(['/']);
+    });
   }
 
   borrar(id: any) {

@@ -38,6 +38,8 @@ import { CategoriaListar2Component } from './components/parametricos/categoria/c
 import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
 import { LoginComponent } from './login/login.component';
 import { PagesComponent } from './pages.component';
+import { RegisterComponent } from './login/register.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 
 
 
@@ -74,7 +76,9 @@ import { PagesComponent } from './pages.component';
     ProductoListar2Component,
     ServicioListar2Component,
     LoginComponent,
-    PagesComponent
+    RegisterComponent,
+    PagesComponent,
+    NavbarComponent
   ],
   imports: [
     BrowserModule,

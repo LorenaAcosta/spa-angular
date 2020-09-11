@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 import { Router, Route } from '@angular/router';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormBuilder, Validators } from '@angular/forms';
 import { Usuario } from '../models/usuario.model';
 import { UsuarioService } from '../services/servicios/usuario.service';
 
@@ -13,46 +14,37 @@ import { UsuarioService } from '../services/servicios/usuario.service';
   styleUrls: ['./login.component.css'
   ]
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
 
-  // tslint:disable-next-line: no-inferrable-types
-  recuerdame: boolean = false;
+  public formSubmitted = false;
+  public loginForm = this.fb.group({
+    username: [localStorage.getItem('username') || '', Validators.required],
+    password: ['', [ Validators.required, Validators.minLength(3) ]],
+    remember: [false]
+  });
 
   constructor(
     public router: Router,
     // tslint:disable-next-line: variable-name
-    public _usuarioService: UsuarioService
+    public _usuarioService: UsuarioService,
+    private fb: FormBuilder
   ) { }
 
-  ngOnInit(): void {
-    // init_plugins();
+  login() {
+    this._usuarioService.login( this.loginForm.value)
+    .subscribe( resp => {
+      if ( this.loginForm.get('remember').value ) {
+        localStorage.setItem('username', this.loginForm.get('username').value);
+      } else {
+        localStorage.removeItem('username');
+      }
+    }, (err) => {
+      console.log(err);
+      Swal.fire('Error', err.error.error === 'invalid_grant' || 'unauthorized' ? 'Usuario o contraseña incorrectos' : ' ', 'error');
+    });
+
   }
 
-  ingresar( forma: NgForm ) {
-
-    if ( forma.invalid ) {
-      return;
-    }
-
-    const usuario = new Usuario( forma.value.username, forma.value.password );
-
-    this._usuarioService.login( usuario, forma.value.recuerdame )
-                  .subscribe( correcto =>
-                              this.router.navigate(['/dashboard'])
-                              );
-    if (this._usuarioService.estaLogueado()) {
-      this.userData();
-    }
-  }
-
-
-  userData() {
-
-    this._usuarioService.getUsuarioLogueado()
-                  .subscribe( (resp: any) => {
-
-                  });
-  }
-
+  // validaciones login
 
 }

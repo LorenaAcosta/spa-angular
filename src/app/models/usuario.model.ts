@@ -1,4 +1,4 @@
-import { Authorities } from './authorities';
+import { Roles } from './roles.model';
 
 export class Usuario {
 
@@ -6,10 +6,13 @@ export class Usuario {
         public username: string,
         public password: string,
         public email?: string,
-        public id?: string,
-        public authorities?: Authorities[],
+        public nombre?: string,
+        public apellido?: string,
         public enabled?: boolean,
-        public firstname?: string,
-        public lastname?: string
-    ){}
+        public ruc?: string,
+        public telefono?: string,
+        public sexo?: string,
+        public id?: string,
+        public roles?: Roles[],
+    ) {}
 }

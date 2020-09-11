@@ -1,0 +1,94 @@
+[0815/201626.113:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0815/202626.152:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0815/202626.177:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0815/202759.648:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0815/203126.116:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0815/224926.019:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[0815/224926.003:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[0815/224926.097:ERROR:exception_snapshot_win.cc(98)] thread ID 17260 not found in process
+[0815/224926.097:ERROR:exception_snapshot_win.cc(98)] thread ID 17268 not found in process
+[0816/114323.848:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0816/115323.852:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0816/115323.853:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0816/115719.545:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0816/162331.482:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0822/112736.424:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0826/040347.143:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0827/195830.085:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0828/191904.494:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0829/004647.222:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0829/100948.414:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/000048.917:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/183347.967:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/184347.968:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/184347.985:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/184848.025:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/190348.027:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/191848.029:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/193348.029:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/194848.031:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/200348.032:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/201848.032:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/203348.033:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/204848.035:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/210348.036:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/211848.038:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/213348.039:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/214848.041:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/220348.041:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/221848.079:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/223348.092:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/224848.094:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/230348.096:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/231848.097:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/233348.098:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0903/234848.099:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0904/000348.101:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0904/001848.102:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0904/003348.103:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0904/085056.180:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[0904/085056.180:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[0904/085056.180:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[0904/085056.273:ERROR:exception_snapshot_win.cc(99)] thread ID 15944 not found in process
+[0904/085056.180:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[0904/085056.273:ERROR:exception_snapshot_win.cc(99)] thread ID 19252 not found in process
+[0904/085056.273:ERROR:exception_snapshot_win.cc(99)] thread ID 16300 not found in process
+[0904/085056.273:ERROR:exception_snapshot_win.cc(99)] thread ID 14872 not found in process
+[0905/011415.389:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0905/231149.359:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0905/232149.400:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0905/232149.400:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0905/232649.395:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0905/234149.397:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0905/235649.425:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/001149.427:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/002649.429:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/004149.431:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/005649.432:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/011149.434:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/012649.435:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/014149.437:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/015649.438:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/021149.439:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/022649.440:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/024149.442:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/025649.444:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/031149.444:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/032649.445:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/034149.448:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/035649.449:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/041149.451:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/042649.451:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/044149.454:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/045649.456:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/051149.457:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/052649.459:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/054149.460:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/055649.461:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/061149.464:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/062649.465:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/064149.467:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/065649.468:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/071149.470:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/072649.471:ERROR:crash_report_database_win.cc(428)] unexpected header
+[0906/074149.471:ERROR:crash_report_database_win.cc(428)] unexpected header

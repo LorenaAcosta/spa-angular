@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -10,7 +10,17 @@ export class ProductoService {
     constructor(private http: HttpClient) { }
 
     listarRecurso() {
-    return this.http.get(this.recurosBaseURL + 'listar');
+      const accessToken = localStorage.getItem('token') || '';
+      let headers1: HttpHeaders;
+      headers1 = new HttpHeaders({
+        Authorization: 'Bearer ' + accessToken,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      });
+      const options = {
+        headers: headers1
+      };
+      return this.http.get(this.recurosBaseURL + 'listar', options);
+      // return this.http.get(this.recurosBaseURL + 'listar');
     }
     agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);

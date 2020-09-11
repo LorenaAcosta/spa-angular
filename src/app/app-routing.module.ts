@@ -19,6 +19,9 @@ import { ServicioListar2Component } from './components/parametricos/servicio/ser
 import { ServicioComponent } from './components/parametricos/servicio/servicio.component';
 import { LoginComponent } from './login/login.component';
 import { PagesComponent } from './pages.component';
+import { RegisterComponent } from './login/register.component';
+import { AutenticadoGuard } from './guards/autenticado.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 
 
@@ -30,8 +33,9 @@ const routes: Routes = [
         path: 'categoria', data: { title: 'Categorias' },
         children: [
           // { path: '', component: UsuariosComponent, data: { title: 'Listado' } }
-          { path: 'agregar', component: CategoriaEditComponent, data: { title: 'Crear Categoria' }, },
-          { path: 'listar', component: CategoriaListarComponent, data: { title: 'Listar Categoria' }, },
+          { path: 'agregar', component: CategoriaEditComponent, canActivate: [ AutenticadoGuard],
+                data: { title: 'Crear Categoria' }, },
+          { path: 'listar', component: CategoriaListarComponent, canActivate: [ AdminGuard], data: { title: 'Listar Categoria' }, },
           { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
           { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
         ]
@@ -63,7 +67,7 @@ const routes: Routes = [
       {
         path: 'servicio', data: { title: 'Servicio' },
         children: [
-          { path: 'agregar', component: ServicioEditComponent , data: { title: 'Crear Servicio' }, },
+          { path: 'agregar', component: ServicioEditComponent , canActivate: [ AutenticadoGuard ], data: { title: 'Crear Servicio' }, },
           { path: 'listar', component:  ServicioListarComponent, data: { title: 'Listar Servicios' }, },
           { path: 'servicio', component:  ServicioComponent, data: { title: 'Listar Servicios' }, },
           { path: 'servicios/:id', component:  ServicioListar2Component, data: { title: 'Listar Servicios' }, },
@@ -85,7 +89,7 @@ const routes: Routes = [
     ]
   },
 
-  { path: 'registrar', component: ClienteEditComponent, data: { title: 'Registrar-Componente' }},
+  { path: 'registro', component: RegisterComponent, data: { title: 'Register' }},
   { path: 'login', component: LoginComponent, data: { title: 'Login' }}
 
 ];

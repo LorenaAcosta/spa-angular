@@ -3,7 +3,8 @@ import { Usuario } from '../../models/usuario.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { URL_SERVICIOS } from '../../config/config';
-import { retry, map, filter, catchError } from 'rxjs/operators';
+import { retry, map, filter, catchError, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
 
 @Injectable({
@@ -26,26 +27,6 @@ export class UsuarioService {
     });
   }
 
-
-  renuevaToken() {
-    const url = URL_SERVICIOS + '/refresh';
-    return this.http.get( url, {headers: this.headers})
-                                .pipe(
-                                  map( (resp: any) => {
-
-                                    this.token = resp.access_token;
-                                    localStorage.setItem('token', this.token );
-                                    return true;
-
-                                  }),
-                                  catchError( (err: any) =>
-                                    this.router.navigate(['/login'])
-                                  )
-                                 );
-
-  }
-
-
   estaLogueado() {
     return ( this.token.length !== null ) ? true : false;
     // return ( this.token !== '' ) ? true : false;
@@ -53,7 +34,7 @@ export class UsuarioService {
 
 
   getUsuarioLogueado() {
-    const url = URL_SERVICIOS + '/user';
+    const url = URL_SERVICIOS + '/usuarios';
 
     return this.http.get( url, {headers: this.headers} )
               .pipe(
@@ -87,59 +68,68 @@ export class UsuarioService {
   }
 
   logout() {
-
-    this.router.navigate(['/login']);
-    // this.token = '';
     localStorage.removeItem('token');
+    localStorage.removeItem('refresh_token');
     localStorage.removeItem('usuario');
-
-  }
-/*original
-  login( usuario: Usuario, recuerdame: boolean = false ){
-    const url = URL_SERVICIOS + '/auth';
-
-    return this.http.post( url, usuario )
-               .pipe(
-                  map( (resp: any) => {
-
-                    localStorage.setItem( 'token', resp.token );
-                  })
-                );
-
-  }*/
-
-  login( usuario: Usuario, recuerdame: boolean = false ) {
-    const url = URL_SERVICIOS + '/oauth/token';
-    let headers1: HttpHeaders;
-    headers1 = new HttpHeaders({
-      // Authorization: localStorage.getItem('token')
-      Authorization: 'Basic YW5ndWxhcjoxMjM0NQ==', // 'Basic ' + btoa('YW5ndWxhcjoxMjM0NQ=='),//'YW5ndWxhcjoxMjM0NQ==',
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-    // usuario.grant_type = 'password';
-    const options = {
-      headers: headers1,
-      body: 'username=' + usuario.username + '&password=' + usuario.password + '&grant_type=password'
-    }
-    // options.body.grant_type = 'password';
-
-    return this.http.post( url, options.body, options )
-               .pipe(
-                  map( (resp: any) => {
-
-                    localStorage.setItem( 'token', resp.access_token );
-                  })
-                );
-
+    this.router.navigate(['/login']);
   }
 
 
 
-crearUsuario( usuario: Usuario ) {
+crearUsuario( formData: any ) {
+  const url = URL_SERVICIOS + '/usuarios/agregar';
+  return this.http.post( url, formData );
 
-  const url = URL_SERVICIOS + '/auth/token';
-  return this.http.post( url, usuario );
+}
 
+login( formData: any ) {
+  const url = URL_SERVICIOS + '/oauth/token';
+  const payload = '';
+  let headers1: HttpHeaders;
+  headers1 = new HttpHeaders({
+    Authorization: 'Basic YW5ndWxhcjoxMjM0NQ==',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  });
+  const options = {
+    headers: headers1,
+    body: 'username=' + formData.username + '&password=' + formData.password + '&grant_type=password'
+  };
+  return this.http.post( url, options.body, options )
+  .pipe(
+     map( (resp: any) => {
+       localStorage.setItem('usuario', JSON.stringify(resp.roles) );
+       localStorage.setItem( 'token', resp.access_token );
+       localStorage.setItem( 'refresh_token', resp.refresh_token);
+       if (localStorage.getItem( 'token').length !== null) {
+        this.router.navigate(['/']);
+      }
+     })
+   );
+
+}
+
+validaToken(): Observable<boolean> {
+  const url = URL_SERVICIOS + '/oauth/token';
+  // tslint:disable-next-line: variable-name
+  const refresh_token = localStorage.getItem('refresh_token') || '';
+  let headers1: HttpHeaders;
+  headers1 = new HttpHeaders({
+    Authorization: 'Basic YW5ndWxhcjoxMjM0NQ==',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  });
+  const options = {
+    headers: headers1,
+    body: 'refresh_token=' + refresh_token + '&grant_type=refresh_token'
+  };
+  return this.http.post( url, options.body, options )
+  .pipe(
+    tap( (resp: any) => {
+      localStorage.setItem( 'token', resp.access_token );
+      localStorage.setItem( 'refresh_token', resp.refresh_token);
+    }),
+     map ( resp => true ),
+     catchError( error => of(false) )
+   );
 }
 
 }
