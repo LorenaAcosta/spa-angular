@@ -20,7 +20,7 @@ export class NavbarComponent implements OnInit {
     let band = 0;
     // tslint:disable-next-line: prefer-for-of
     for ( let i = 0; i < roles.length; i++) {
-        console.log(roles[i].nombre)
+        console.log(roles[i]);
         if (roles[i].nombre === 'ROLE_ADMIN') {
           band = 1;
           break;

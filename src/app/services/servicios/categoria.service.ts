@@ -11,32 +11,47 @@ export class CategoriaService {
   constructor(private http: HttpClient) { }
 
   listarRecurso() {
-    const accessToken = localStorage.getItem('token') || '';
+    return this.http.get(this.recurosBaseURL + 'listar');
+  }
+  agregarRecurso(recurso) {
+    const accessToken = localStorage.getItem('token') || ' ';
     let headers1: HttpHeaders;
     headers1 = new HttpHeaders({
-      Authorization: 'Bearer ' + accessToken,
-      'Content-Type': 'application/x-www-form-urlencoded'
+      Authorization: 'Bearer ' + accessToken
     });
     const options = {
       headers: headers1
     };
-    return this.http.get(this.recurosBaseURL + 'listar', options);
-  }
-  agregarRecurso(recurso) {
-    return this.http.post(this.recurosBaseURL + 'agregar', recurso);
+    return this.http.post(this.recurosBaseURL + 'agregar', recurso, options);
   }
   modificarRecurso(recurso, id) {
-    return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
+    const accessToken = localStorage.getItem('token') || '';
+    let headers1: HttpHeaders;
+    headers1 = new HttpHeaders({
+      Authorization: 'Bearer ' + accessToken
+    });
+    const options = {
+      headers: headers1
+    };
+    return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso, options);
   }
 
   getRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
+    const accessToken = localStorage.getItem('token') || '';
+    let headers1: HttpHeaders;
+    headers1 = new HttpHeaders({
+      Authorization: 'Bearer ' + accessToken
+    });
+    const options = {
+      headers: headers1
+    };
+    return this.http.get(this.recurosBaseURL + 'encontrar/' + id, options);
   }
 
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
-  
+
   obtenerPorTipo(tipo) {
     return this.http.get(this.recurosBaseURL + 'getDataType/' + tipo);
   }

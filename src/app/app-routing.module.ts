@@ -35,7 +35,7 @@ const routes: Routes = [
           // { path: '', component: UsuariosComponent, data: { title: 'Listado' } }
           { path: 'agregar', component: CategoriaEditComponent, canActivate: [ AutenticadoGuard],
                 data: { title: 'Crear Categoria' }, },
-          { path: 'listar', component: CategoriaListarComponent, canActivate: [ AdminGuard], data: { title: 'Listar Categoria' }, },
+          { path: 'listar', component: CategoriaListarComponent,  data: { title: 'Listar Categoria' }, },
           { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
           { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
         ]
