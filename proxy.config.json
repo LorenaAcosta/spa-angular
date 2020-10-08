@@ -1,8 +1,8 @@
 {
     "/api/*": {
-        "target":"http://localhost:8084/",
+        "target": "https://spa-restful-api.herokuapp.com/api",
         "secure": true,
         "changeOrigin": true,
-        "logLevel":"debug"
+        "logLevel": "debug"
     }
 }
