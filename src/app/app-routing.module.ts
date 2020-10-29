@@ -67,7 +67,7 @@ const routes: Routes = [
       {
         path: 'servicio', data: { title: 'Servicio' },
         children: [
-          { path: 'agregar', component: ServicioEditComponent , canActivate: [ AutenticadoGuard ], data: { title: 'Crear Servicio' }, },
+          { path: 'agregar', component: ServicioEditComponent , data: { title: 'Crear Servicio' }, },
           { path: 'listar', component:  ServicioListarComponent, data: { title: 'Listar Servicios' }, },
           { path: 'servicio', component:  ServicioComponent, data: { title: 'Listar Servicios' }, },
           { path: 'servicios/:id', component:  ServicioListar2Component, data: { title: 'Listar Servicios' }, },

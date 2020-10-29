@@ -17,7 +17,10 @@ export class CategoriaListar2Component implements OnInit {
 
   getCategorias() {
     this.categoriaService.obtenerPorTipo('servicio')
-    .subscribe( (resp: any[]) =>  this.categorias = resp  );
+    .subscribe( (resp: any[]) =>  {
+      this.categorias = resp;
+      console.log(resp);
+    });
   }
 
 }
