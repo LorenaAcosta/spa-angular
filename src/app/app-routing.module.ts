@@ -17,6 +17,8 @@ import { EmpleadoListarComponent } from './components/parametricos/empleado/empl
 import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
 import { ServicioComponent } from './components/parametricos/servicio/servicio.component';
+import { ProveedorComponent } from './components/parametricos/proveedor/proveedor.component';
+import { ProveedorEditComponent } from './components/parametricos/proveedor/proveedor-edit.component';
 
 
 const routes: Routes = [
@@ -84,7 +86,15 @@ const routes: Routes = [
     children: [
       { path: 'agregar', component: ReservEditComponent , data: { title: 'Agregar Reserva' }, }
      ]
-  }
+  },
+  {
+    path: 'proveedor', data: { title: 'Proveedores' },
+    children: [
+      { path: 'agregar', component: ProveedorEditComponent , data: { title: 'Crear proveedor' }, },
+      { path: 'listar', component: ProveedorComponent , data: { title: 'Listar Proveedores' }, },
+  //    { path: 'modificar/:id', component: ClienteEditComponent , data: { title: 'Editar Cliente' }, }
+     ]
+  },
 ];
 
 @NgModule({
