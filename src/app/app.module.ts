@@ -39,6 +39,7 @@ import { ServicioListar2Component } from './components/parametricos/servicio/ser
 import { ProveedorComponent } from './components/parametricos/proveedor/proveedor.component';
 import { ProveedorEditComponent } from './components/parametricos/proveedor/proveedor-edit.component';
 import { DisponibilidadComponent } from './components/parametricos/empleado/disponibilidad.component';
+import { ComprasComponent } from './parametricos/compras/compras.component';
 
 
 
@@ -76,7 +77,8 @@ import { DisponibilidadComponent } from './components/parametricos/empleado/disp
     ServicioListar2Component,
     ProveedorComponent,
     ProveedorEditComponent,
-    DisponibilidadComponent
+    DisponibilidadComponent,
+    ComprasComponent
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,7 @@
       </button>
         </div>
     </div>
-    <table *ngIf="proveedores.length > 0" class="table table-hover animated fadedIn faster">
+    <table *ngIf="proveedores.length >  0" class="table table-hover animated fadedIn faster">
         <thead>
             <tr>
                 <th scope="col">#</th>
@@ -16,6 +16,7 @@
                 <th scope="col">Nombre</th>
                 <th scope="col">Telefono</th>
                 <th scope="col">Empresa</th>
+                <th scope="col">Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -25,14 +26,14 @@
                 <td>{{ prov.nombreProveedor}}</td>
                 <td>{{ prov.telefono}}</td>
                 <td>{{ prov.empresa}}</td>
-                <!--         <td>
-                    <button class="btn btn-info mr-1" [routerLink]="['/producto/modificar', prov.productoId ]">
-          <i class="fas fa-pencil-alt"></i>
-        </button>
-                    <button class="btn btn-info mr-1" (click)="borrar(prod.productoId, i)">
-          <i class="fas fa-trash"></i>
-        </button>
-                </td>-->
+                <td>
+                    <button class="btn btn-info mr-1" [routerLink]="['/proveedor/modificar', prov.proveedorId ]">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="btn btn-info mr-1" (click)="borrar(prov.proveedorId, i)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
             </tr>
         </tbody>
     </table>

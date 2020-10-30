@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class ProveedorEditComponent implements OnInit {
   form = this.fb.group({
-    nombre_proveedor: ['', Validators.required],
+    nombreProveedor: ['', Validators.required],
     telefono: ['', Validators.required],
     empresa: ['', Validators.required]
   });
@@ -24,6 +24,22 @@ export class ProveedorEditComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
+    // this.categoriaService.obtenerPorTipo('producto').subscribe( (resp: any[]) =>  this.categorias = resp );
+    const id = this.route.snapshot.params.id;
+   // console.log(id);
+    if (typeof id !== 'undefined') {
+      this.form = this.fb.group({
+        nombreProveedor: ['', Validators.required],
+        telefono: ['', Validators.required],
+        empresa: ['', Validators.required]
+      });
+      this.proveedorService.getRecurso(id)
+       .subscribe ((data: any) => {
+        this.form.controls.nombreProveedor.setValue(data.nombreProveedor);
+        this.form.controls.telefono.setValue(data.telefono);
+        this.form.controls.empresa.setValue(data.empresa);
+       });
+    }
   }
 
   guardar() {
@@ -33,6 +49,7 @@ export class ProveedorEditComponent implements OnInit {
     console.log(typeof id);
     if (typeof id === 'undefined') {
       peticion = this.proveedorService.agregarRecurso(this.form.value);
+      console.log(this.form.value);
       peticion.subscribe((result: any) =>  {
         Swal.fire(
           'Guardado!',

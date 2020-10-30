@@ -94,7 +94,7 @@ const routes: Routes = [
     children: [
       { path: 'agregar', component: ProveedorEditComponent , data: { title: 'Crear proveedor' }, },
       { path: 'listar', component: ProveedorComponent , data: { title: 'Listar Proveedores' }, },
-  //    { path: 'modificar/:id', component: ClienteEditComponent , data: { title: 'Editar Cliente' }, }
+      { path: 'modificar/:id', component: ProveedorEditComponent , data: { title: 'Editar Proveedor' }, }
      ]
   },
 ];
