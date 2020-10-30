@@ -60,6 +60,8 @@ export class DisponibilidadComponent implements OnInit {
 
   borrar(empleadoId: any) {
   }
+
+  
   guardar() {
 
     const id = this.route.snapshot.params.id;
