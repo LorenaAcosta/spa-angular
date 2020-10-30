@@ -19,7 +19,7 @@ export class ServicioService {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
     }
     listarRecursoPorCategoria(id) {
-      return this.http.post(this.recurosBaseURL + 'listarByCategoria', { categoriaId: id });
+      return this.http.get(this.recurosBaseURL + 'getServciosByCategoriaId/' +  id );
     }
 
     getRecurso(id) {
