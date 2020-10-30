@@ -17,7 +17,7 @@ import { EmpleadoListarComponent } from './components/parametricos/empleado/empl
 import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
 import { ServicioComponent } from './components/parametricos/servicio/servicio.component';
-
+import { DisponibilidadComponent } from './components/parametricos/empleado/disponibilidad.component';
 
 const routes: Routes = [
   {
@@ -58,7 +58,8 @@ const routes: Routes = [
     children: [
       { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
       { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
-      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' }, }
+      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' }, },
+      { path: 'disponibilidad/:id', component: DisponibilidadComponent , data: { title: 'Editar Empleado' }, }
   ]
   },
   {

@@ -53,7 +53,6 @@ export class ServicioListar2Component implements OnInit {
     this.arrayList = JSON.parse(localStorage.getItem('items')) || [];
     // this.sumar();
   }
-  
 
 
 recargar(id: any) {
@@ -77,11 +76,11 @@ addItem(item: any) {
   });
  // this.sumar();
 }
+
 eraseItem(idToRemove: any) {
   this.arrayList.splice(idToRemove, 1);
   this.sumar();
 }
-
 
 sumar() {
   this.sum = 0;

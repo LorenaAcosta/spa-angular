@@ -38,6 +38,9 @@
                          <i class="fas fa-pencil-alt"></i></button>
                         <button class="btn btn-info mr-1" (click)="borrar(item.empleadoId, i)">
                           <i class="fas fa-trash"></i> </button>
+                          <button class="btn btn-info mr-1"
+                         [routerLink]="['/empleado/disponibilidad', item.empleadoId ]">
+                         <i class="fas fa-pencil-alt"></i></button>
                       </td>
                     </tr>
                   </tbody>
