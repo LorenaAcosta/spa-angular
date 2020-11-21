@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -39,7 +39,16 @@ import { ServicioListar2Component } from './components/parametricos/servicio/ser
 import { ProveedorComponent } from './components/parametricos/proveedor/proveedor.component';
 import { ProveedorEditComponent } from './components/parametricos/proveedor/proveedor-edit.component';
 import { DisponibilidadComponent } from './components/parametricos/empleado/disponibilidad.component';
-import { ComprasComponent } from './parametricos/compras/compras.component';
+import { CompraComponent } from './components/parametricos/compra/compra.component';
+import { DetallesCompraComponent } from './components/parametricos/detalles-compra/detalles-compra.component';
+import { CompraEditComponent } from './components/parametricos/compra/compra-edit.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TableComponent } from './components/table/table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import { CompraModificarComponent } from './components/parametricos/compra/compra-modificar.component';
 
 
 
@@ -78,7 +87,11 @@ import { ComprasComponent } from './parametricos/compras/compras.component';
     ProveedorComponent,
     ProveedorEditComponent,
     DisponibilidadComponent,
-    ComprasComponent
+    CompraComponent,
+    DetallesCompraComponent,
+    CompraEditComponent,
+    TableComponent,
+    CompraModificarComponent
   ],
   imports: [
     BrowserModule,
@@ -87,9 +100,15 @@ import { ComprasComponent } from './parametricos/compras/compras.component';
     HttpClientModule,
     NgbModule,
     NgSelectModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    FormsModule
   ],
-  providers: [],
+  providers: [CompraModificarComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

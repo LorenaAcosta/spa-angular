@@ -5,8 +5,8 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ComprasService {
-  recurosBaseURL: string = environment.URL_BASE + '/compras/';
+export class DetallesCompraService {
+  recurosBaseURL: string = environment.URL_BASE + '/detalles-compra/';
   constructor(private http: HttpClient) { }
 
   listarRecurso() {
@@ -14,7 +14,7 @@ export class ComprasService {
   }
 
   getRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
+    return this.http.get(this.recurosBaseURL + 'encontrar-detalles/' + id);
   }
 
   agregarRecurso(recurso) {
@@ -28,5 +28,4 @@ export class ComprasService {
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
     }
-
 }

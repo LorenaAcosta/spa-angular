@@ -21,6 +21,10 @@ import { ProveedorComponent } from './components/parametricos/proveedor/proveedo
 import { ProveedorEditComponent } from './components/parametricos/proveedor/proveedor-edit.component';
 
 import { DisponibilidadComponent } from './components/parametricos/empleado/disponibilidad.component';
+import { CompraComponent } from './components/parametricos/compra/compra.component';
+import { DetallesCompraComponent } from './components/parametricos/detalles-compra/detalles-compra.component';
+import { CompraEditComponent } from './components/parametricos/compra/compra-edit.component';
+import { CompraModificarComponent } from './components/parametricos/compra/compra-modificar.component';
 
 const routes: Routes = [
   {
@@ -95,6 +99,14 @@ const routes: Routes = [
       { path: 'agregar', component: ProveedorEditComponent , data: { title: 'Crear proveedor' }, },
       { path: 'listar', component: ProveedorComponent , data: { title: 'Listar Proveedores' }, },
       { path: 'modificar/:id', component: ProveedorEditComponent , data: { title: 'Editar Proveedor' }, }
+     ]
+  },
+  {
+    path: 'compras', data: { title: 'Compras' },
+    children: [
+      { path: 'agregar', component: CompraEditComponent , data: { title: 'Crear compra' }, },
+      { path: 'listar', component: CompraComponent , data: { title: 'Listar compras' }, },
+       { path: 'modificar/:id', component: CompraEditComponent , data: { title: 'Editar compra' }, }
      ]
   },
 ];
