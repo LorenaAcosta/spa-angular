@@ -1,0 +1,10 @@
+<p>Terapista works!</p>
+
+<div>
+  
+    <button *ngFor="let  item of disponible; let i = index " type="button" 
+    class="btn btn-light"   [routerLink]="['/booking/calendar', item.disponibleId ]">
+        {{ item.empleadoId.nombre }} {{ item.empleadoId.apellido}}  {{ item.disponibleId}} 
+     </button>
+ 
+</div>

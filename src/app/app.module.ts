@@ -1,12 +1,13 @@
 
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule} from '@angular/forms';
 import { NgModule } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
@@ -15,9 +16,9 @@ import { FooterComponent } from './shared/footer/footer.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { CategoriaComponent } from './components/parametricos/categoria/categoria.component';
 import { CategoriaEditComponent } from './components/parametricos/categoria/categoria-edit.component';
+import { CategoriaListarComponent } from './components/parametricos/categoria/categoria-listar.component';
 import { MediosPagoComponent } from './components/parametricos/medios-pago/medios-pago.component';
 import { MediosPagoEditComponent } from './components/parametricos/medios-pago/medios-pago-edit.component';
-import { CategoriaListarComponent } from './components/parametricos/categoria/categoria-listar.component';
 import { MediosPagoListarComponent } from './components/parametricos/medios-pago/medios-pago-listar.component';
 import { ClienteEditComponent } from './components/parametricos/cliente/cliente-edit.component';
 import { ClienteListarComponent } from './components/parametricos/cliente/cliente-listar.component';
@@ -34,12 +35,12 @@ import { ServicioEditComponent } from './components/parametricos/servicio/servic
 import { EmpleadoComponent } from './components/parametricos/empleado/empleado.component';
 import { EmpleadoEditComponent } from './components/parametricos/empleado/empleado-edit.component';
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
-import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
-import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
-import { DisponibilidadComponent } from './components/parametricos/empleado/disponibilidad.component';
-
-
-
+import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
+import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
+import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
+import { HorarioAsignarComponent } from './components/parametricos/horario/horario-asignar.component';
+import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
+import { CalendarComponent } from './components/parametricos/booking/calendar.component';
 
 
 @NgModule({
@@ -72,7 +73,11 @@ import { DisponibilidadComponent } from './components/parametricos/empleado/disp
     CategoriaListar2Component,
     ProductoListar2Component,
     ServicioListar2Component,
-    DisponibilidadComponent
+    EmpleadoComponent,
+    PlanillaComponent,
+    HorarioAsignarComponent,
+    TerapistaComponent,
+    CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +85,7 @@ import { DisponibilidadComponent } from './components/parametricos/empleado/disp
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    FormsModule,
     NgSelectModule,
     NgxPaginationModule
   ],

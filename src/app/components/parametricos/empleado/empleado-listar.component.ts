@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-empleado-listar',
@@ -12,13 +14,22 @@ export class EmpleadoListarComponent implements OnInit {
   empleados: any[] = [];
   index = 0;
   pageActual: 1;
+  closeResult = '';
 
-  constructor(private empleadoService: EmpleadoService) { }
 
   ngOnInit() {
     this.empleadoService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.empleados = resp );
   }
+
+
+  constructor(private fb: FormBuilder,
+              private empleadoService: EmpleadoService,
+              private modalService: NgbModal) {
+
+     }
+
+
 
   borrar(id: any, pos: any) {
     Swal.fire({
@@ -43,3 +54,6 @@ export class EmpleadoListarComponent implements OnInit {
   }
 
 }
+
+
+

@@ -6,15 +6,16 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class DisponibleService {
-  recurosBaseURL: string = environment.URL_BASE + '/disponibilidad/';
+  recurosBaseURL: string = environment.URL_BASE + '/disponible/';
   constructor(private http: HttpClient) { }
 
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
-  listarByEmpleado(empleadoId) {
-    return this.http.get(this.recurosBaseURL + 'listar-por-empleado-id/' + empleadoId) ;
+  listarByEmpleado(servicioId) {
+    return this.http.get(this.recurosBaseURL + 'obtener-empleados-disponibles/' + servicioId) ;
   }
+
 
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
@@ -23,12 +24,11 @@ export class DisponibleService {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
   }
 
-  getRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
-  }
-
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
 
+  getRecurso(id) {
+    return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
+  }
 }

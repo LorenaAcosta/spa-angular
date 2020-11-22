@@ -36,7 +36,6 @@ export class ServicioEditComponent implements OnInit {
     // this.categorias$ = this.categoriaService.listarRecurso();
      this.categoriaService.obtenerPorTipo('servicio').
      subscribe( (resp: any[]) =>  this.categorias = resp );
-     
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({

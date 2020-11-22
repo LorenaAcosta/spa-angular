@@ -4,6 +4,7 @@ import { CategoriaService } from '../../../services/servicios/categoria.service'
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-categoria-edit',
@@ -16,11 +17,15 @@ export class CategoriaEditComponent implements OnInit {
     codigo: ['', Validators.required],
     descripcion: ['', Validators.required],
     dataType: ['', Validators.required ],
-    imageName: ['']
+    imageName: ['' ]
   });
+
+  SelectedFile: File = null;
+
   constructor(private fb: FormBuilder,
               private categoriaService: CategoriaService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private cd: ChangeDetectorRef) {
    }
 
    ngOnInit() {
@@ -31,7 +36,7 @@ export class CategoriaEditComponent implements OnInit {
         codigo: ['', Validators.required],
         descripcion: ['', Validators.required],
         dataType: ['', Validators.required ],
-        imageName: ['']
+        imageName: ['', Validators.required ]
       });
 
       this.categoriaService.getRecurso(id)
@@ -48,10 +53,16 @@ export class CategoriaEditComponent implements OnInit {
     console.warn(this.form.value);
   }
 
+
   guardar() {
     const id = this.route.snapshot.params.id;
     let peticion: Observable<any>;
-   // console.log(id);
+    console.log(id);
+    console.log(this.form.value);
+
+  //  this.createUploadImage();
+  //  console.log(this.form.value);
+
     if (typeof id === 'undefined') {
       console.warn(this.form.value);
       peticion = this.categoriaService.agregarRecurso(this.form.value);
@@ -73,5 +84,18 @@ export class CategoriaEditComponent implements OnInit {
       });
     }
   }
+
+
+/*
+  onFileSelected(event) {
+    console.log(event);
+    this.SelectedFile = event.target.files[0];
+  }
+
+  createUploadImage(){
+    this.form.controls.imageName.setValue(this.SelectedFile.name);
+  }
+*/
+
 
 }

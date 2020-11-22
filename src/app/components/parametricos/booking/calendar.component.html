@@ -1,0 +1,33 @@
+<p>Selecciona un horario disponible</p>
+
+<ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next" (click)="getSelectedDay()"></ngb-datepicker>
+
+
+
+
+<!--
+<hr/>
+<button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">Ver calendario</button>
+<button class="btn btn-sm btn-outline-primary mr-2" (click)="dp.navigateTo()">To current month</button>
+<hr/>
+
+<pre>Month: {{ date.month }}.{{ date.year }}.{{ date.day }}</pre>
+<pre>Model: {{ model | json }}</pre>
+-->
+
+
+<pre >  
+<select class="btn btn-sm btn-outline-primary mr-2" [(ngModel)]="selectedOption">
+    <option *ngFor="let x of turnosArray">
+       {{x}}
+    </option>
+ </select>
+ <button (click)="print()">Agendar </button>
+ 
+ <p>Selected option: {{ selectedOption }}</p>
+ <p>Button output: {{ printedOption }}</p>
+
+</pre>
+
+
+

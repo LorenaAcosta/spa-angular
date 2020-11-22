@@ -5,25 +5,18 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaService {
+export class ReservaService {
 
-  recurosBaseURL: string = environment.URL_BASE + '/categoria/';
+  recurosBaseURL: string = environment.URL_BASE + '/reserva-detalle/';
 
   constructor(private http: HttpClient) { }
 
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
+
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
-  }
-
-  createImage(recurso) {
-    return this.http.post(this.recurosBaseURL + 'imagen', recurso);
-  }
-
-  modificarRecurso(recurso, id) {
-    return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
   }
 
   getRecurso(id) {
@@ -33,12 +26,13 @@ export class CategoriaService {
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
-  
-  obtenerPorTipo(id) {
-    return this.http.get(this.recurosBaseURL + 'obtener-por-tipo/' + id);
+
+  getTurnos(id) {
+    return this.http.get(this.recurosBaseURL + 'get-turnos/' + id);
   }
 
-  listarPaginadoRecurso(filtros) {
-    return this.http.post(this.recurosBaseURL + 'categorias-list', filtros);
+  getTurnosss(empid, serid, fecha) {
+    return this.http.get(this.recurosBaseURL + 'obtener-turnos/' + empid + '/'  + '/' + fecha);
   }
+
 }

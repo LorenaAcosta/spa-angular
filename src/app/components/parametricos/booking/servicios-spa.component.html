@@ -8,7 +8,8 @@
         </div>
 
        <!--Lista los servicios dependiendo de la categoria-->
-       <div class="row row-cols-1 row-cols-md-3"> 
+       <!--Lista los servicios dependiendo de la categoria-->
+       <div class="row row-cols-1 row-cols-md-2"> 
             <div class="card" *ngFor="let item of servicios">
             <img src= "/assets/img/{{item.imageName}}.png"  style="width: 100px; height: 100px;">
             <div class="card-body">
@@ -19,7 +20,8 @@
                 <small class="text-muted">
                     <i class="far fa-clock"></i><strong> {{item.duracion}} |
                     <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong></small>
-                <button  class="btn btn-info mr-1 float-right" (click)="addItem(item)" > <i class="fas fa-plus-square"></i> </button>
+                <button  class="btn btn-info mr-1 float-right" [routerLink]="['/booking/terapista', item.servicioId ]" >
+                    <i class="fas fa-plus-square"></i> </button>
             </div>
             </div>
         </div>  
@@ -30,34 +32,13 @@
             <i class="fa fa-exclamation fa-2x"></i>
             </p>
         </div>
+    </div>
 
 
-    </div>
-    <div class="col-6 col-md-4 fixed">
-        <table class="table table-sm display" id="dataTable" *ngIf="arrayList.length>0" width="100%" cellspacing="0">
-           <h4>Tus reservas</h4>
-            <tbody *ngFor="let item of arrayList; let i = index">
-                <tr>
-                  <td *ngIf="i < 0">{{ i + 1 }}</td>
-                  <td>{{ item.nombre}}</td>
-                  <td  text-aligned="right"> gs. {{ item.costo}}</td>
-                  <td>                        
-                    <button (click)="eraseItem(i)" ><i class="far fa-trash-alt"></i></button>
-                  </td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                    <td >Total</td>
-                    <td> gs. {{this.sum}} </td>      
-                  </tr>
-              </tbody>
-            </table>
-            <div *ngIf="arrayList.length>0"> 
-                <button  [routerLink]="['/reserva/reserva-terapist']" class="btn btn-info mr-1">Eligir Horario</button> 
-            </div>
-           
-    </div>
+
+    
+
+
 </div>
        
             

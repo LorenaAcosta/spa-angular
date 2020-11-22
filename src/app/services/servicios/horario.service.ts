@@ -5,9 +5,9 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class CategoriaService {
+export class HorarioService {
 
-  recurosBaseURL: string = environment.URL_BASE + '/categoria/';
+  recurosBaseURL: string = environment.URL_BASE + '/horario/';
 
   constructor(private http: HttpClient) { }
 
@@ -16,10 +16,6 @@ export class CategoriaService {
   }
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
-  }
-
-  createImage(recurso) {
-    return this.http.post(this.recurosBaseURL + 'imagen', recurso);
   }
 
   modificarRecurso(recurso, id) {
@@ -34,11 +30,8 @@ export class CategoriaService {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
   
-  obtenerPorTipo(id) {
-    return this.http.get(this.recurosBaseURL + 'obtener-por-tipo/' + id);
+  obtenerHorario(id) {
+    return this.http.get(this.recurosBaseURL + 'obtener-horario-empleado/' + id);
   }
 
-  listarPaginadoRecurso(filtros) {
-    return this.http.post(this.recurosBaseURL + 'categorias-list', filtros);
-  }
 }

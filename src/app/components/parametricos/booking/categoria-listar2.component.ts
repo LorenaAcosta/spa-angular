@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 
 @Component({
@@ -9,7 +10,8 @@ import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 export class CategoriaListar2Component implements OnInit {
 
   categorias: any[] = [];
-  constructor(private categoriaService: CategoriaService) { }
+  constructor(private categoriaService: CategoriaService,
+              private router: Router) { }
 
   ngOnInit(): void {
     this.getCategorias();
@@ -18,6 +20,9 @@ export class CategoriaListar2Component implements OnInit {
   getCategorias() {
     this.categoriaService.obtenerPorTipo('servicio')
     .subscribe( (resp: any[]) =>  this.categorias = resp  );
+  }
+  btnClick() {
+    this.router.navigateByUrl('booking/servicios');
   }
 
 }

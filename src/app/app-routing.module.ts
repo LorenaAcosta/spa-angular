@@ -14,10 +14,13 @@ import { ServicioEditComponent } from './components/parametricos/servicio/servic
 import { ServicioListarComponent } from './components/parametricos/servicio/servicio-listar.component';
 import { EmpleadoEditComponent } from './components/parametricos/empleado/empleado-edit.component';
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
-import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
-import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
+import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
 import { ServicioComponent } from './components/parametricos/servicio/servicio.component';
-import { DisponibilidadComponent } from './components/parametricos/empleado/disponibilidad.component';
+import { HorarioAsignarComponent } from './components/parametricos/horario/horario-asignar.component';
+import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
+import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
+import { CalendarComponent } from './components/parametricos/booking/calendar.component';
+import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 
 const routes: Routes = [
   {
@@ -33,8 +36,7 @@ const routes: Routes = [
       // { path: '', component: UsuariosComponent, data: { title: 'Listado' } }
       { path: 'agregar', component: CategoriaEditComponent, data: { title: 'Crear Categoria' }, },
       { path: 'listar', component: CategoriaListarComponent, data: { title: 'Listar Categoria' }, },
-      { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
-      { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
+     { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' } },
     ]
   },
   {
@@ -50,7 +52,7 @@ const routes: Routes = [
     children: [
       { path: 'registrar', component: ClienteEditComponent , data: { title: 'Crear Cliente' }, },
       { path: 'listar', component: ClienteListarComponent , data: { title: 'Listar Cliente' }, },
-      { path: 'modificar/:id', component: ClienteEditComponent , data: { title: 'Editar Cliente' }, }
+      { path: 'modificar/:id', component: ClienteEditComponent , data: { title: 'Editar Cliente' } }
      ]
   },
   {
@@ -58,9 +60,8 @@ const routes: Routes = [
     children: [
       { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
       { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
-      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' }, },
-      { path: 'disponibilidad/:id', component: DisponibilidadComponent , data: { title: 'Editar Empleado' }, }
-  ]
+      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' } },
+    ]
   },
   {
     path: 'producto', data: { title: 'Producto' },
@@ -76,7 +77,6 @@ const routes: Routes = [
       { path: 'agregar', component: ServicioEditComponent , data: { title: 'Crear Servicio' }, },
       { path: 'listar', component:  ServicioListarComponent, data: { title: 'Listar Servicios' }, },
       { path: 'servicio', component:  ServicioComponent, data: { title: 'Listar Servicios' }, },
-      { path: 'servicios/:id', component:  ServicioListar2Component, data: { title: 'Listar Servicios' }, },
       { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } }
      ]
   },
@@ -84,6 +84,28 @@ const routes: Routes = [
     path: 'reserva', data: { title: 'Reserva' },
     children: [
       { path: 'agregar', component: ReservEditComponent , data: { title: 'Agregar Reserva' }, }
+     ]
+  },
+  {
+    path: 'booking', data: { title: 'Booking' },
+    children: [
+     /* { path: 'servicios/:id', component:  ServicioListar2Component, data: { title: 'Listar Servicios' }, },  */
+      { path: 'servicios', component: ServicioListar2Component , data: { title: 'Listar Servicio' } },
+      { path: 'calendar/:id', component:  CalendarComponent, data: { title: 'Calendar' }, },
+      { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
+      { path: 'terapista/:id', component:  TerapistaComponent, data: { title: 'terapista' }, }
+    ]
+  },
+  {
+    path: 'horario', data: { title: 'horario' },
+    children: [
+      { path: 'asignar/:id', component: HorarioAsignarComponent , data: { title: 'Asignar Horario' }, }
+     ]
+  },
+  {
+    path: 'planilla', data: { title: 'Planilla' },
+    children: [
+      { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' }, }
      ]
   }
 ];

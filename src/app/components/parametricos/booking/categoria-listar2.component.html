@@ -1,0 +1,15 @@
+
+<div class="card-columns">
+    <div class="col mb-4">
+        <!--  Lista las categorias -->
+            <div class="card" *ngFor="let item of categorias" >
+                <img src= "/assets/img/{{item.imageName}}.jpg" class="card-img-top" alt="...">
+                <button class="btn btn-light" (click)="btnClick();" >
+                <!--</button> [routerLink]="['../../booking/servicios', item.categoriaId]">-->
+                    <div class="card-body">
+                    <h5 class="card-title">{{ item.descripcion}}</h5> 
+                </div> 
+                </button>
+            </div>
+    </div>
+</div>
