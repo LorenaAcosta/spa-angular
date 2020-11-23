@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HorarioService } from 'src/app/services/servicios/horario.service';
 
 import { ReservaService } from 'src/app/services/servicios/reserva.service';
@@ -51,6 +51,7 @@ export class CalendarComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder,
+              private router: Router,
               private calendar: NgbCalendar,
               private route: ActivatedRoute,
               private horarioService: HorarioService,
@@ -85,8 +86,8 @@ export class CalendarComponent implements OnInit {
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
     this.form.controls.usuarioId.setValue(1);
 
-    console.log(this.form);
-    console.warn(this.form.value);
+   // console.log(this.form);
+    // console.warn(this.form.value);
     let peticion: Observable<any>;
     peticion = this.reservaService.agregarRecurso(this.form.value);
     peticion.subscribe((result: any) =>  {
@@ -96,14 +97,18 @@ export class CalendarComponent implements OnInit {
         'success'
         );
       });
+  //  this.router.navigateByUrl('booking/categorias');
   }
 
   getSelectedDay() {
+
+    this.turnosArray = [];
     /*Obtiene el horario del empleado */
     this.horarioService.obtenerHorario(this.empleadoId)
     .subscribe( (resp: any) =>  this.horario = resp  );
+    // 07, 11
 
-    /* Obtiene los turnos guardados*/
+    /* Obtiene los turnos guardados del empleado y de la fecha*/
     this.reservaService.getTurnos(this.empleadoId)
     .subscribe( (resp: any) =>  this.turnos = resp  );
 
@@ -113,24 +118,21 @@ export class CalendarComponent implements OnInit {
   }
 
   generateArray() {
-    const Hinicio = this.horario[0].horaInicio ;
-    const Hfin = this.horario[0].horaFin;
-
-    this.i = Hinicio.substr(-20, 2);
-    this.f = Hfin.substr(-20, 2);
-
-    const length = (this.f - this.i);
+    const Hinicio = this.horario[0].horaInicio ; // 07:00
+    const Hfin = this.horario[0].horaFin; // 11:00
+    this.i = Hinicio.substr(-20, 2);   //07
+    this.f = Hfin.substr(-20, 2);   //11
+    const length = (this.f - this.i);  //5
     const long = this.turnos.length;
     console.log('longitud: ' + long );
-
-    for (let x = 0; x < length; x++) { //5
+    for (let x = 0; x < length; x++) { // 5
       // tslint:disable-next-line:prefer-for-of
       for ( let y = 0; y < long; y++ ) {
-        const horita =  this.turnos[y].hora;
-        const xVar = horita.substr(-20, 2);
+        const horita =  this.turnos[y].hora;  // 07:00
+        const xVar = horita.substr(-20, 2); //07
         console.log('horita' + horita);
         console.log('xVar' + Number(xVar)); // 09
-        if ( Number(xVar) === Number(this.i) ) {
+        if ( Number(xVar) === Number(this.i) ) {   // 07 = 07 
           this.i++;
         } else {
           this.turnosArray.push( this.i.toString() + ':00'  );
@@ -138,11 +140,8 @@ export class CalendarComponent implements OnInit {
         }
       } // {'01:00, '02:00', 03:00, 04:00, 05:00'}
     }
-
-
     this.arrayObject = this.turnosArray as string[];
   }
-
 }
 
 

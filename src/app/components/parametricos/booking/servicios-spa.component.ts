@@ -29,9 +29,9 @@ export class ServicioListar2Component implements OnInit {
     this.categoriaService.obtenerPorTipo('servicio')
     .subscribe( (resp: any[]) =>  this.categorias = resp );
     /*Mostrar los servicios */
-  // const id = this.route.snapshot.params.id;
-    if (typeof this.id !== 'undefined') {
-    this.servicioService.listarRecursoPorCategoria(this.id)
+    const id = this.route.snapshot.params.id;
+    if (typeof id !== 'undefined') {
+    this.servicioService.listarRecursoPorCategoria(id)
      .subscribe( (resp: any[]) =>  this.servicios = resp );
     } else {
       this.servicioService.listarRecursoPorCategoria(1)

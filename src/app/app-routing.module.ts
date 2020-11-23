@@ -90,7 +90,7 @@ const routes: Routes = [
     path: 'booking', data: { title: 'Booking' },
     children: [
      /* { path: 'servicios/:id', component:  ServicioListar2Component, data: { title: 'Listar Servicios' }, },  */
-      { path: 'servicios', component: ServicioListar2Component , data: { title: 'Listar Servicio' } },
+      { path: 'servicios/:id', component: ServicioListar2Component , data: { title: 'Listar Servicio' } },
       { path: 'calendar/:id', component:  CalendarComponent, data: { title: 'Calendar' }, },
       { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
       { path: 'terapista/:id', component:  TerapistaComponent, data: { title: 'terapista' }, }

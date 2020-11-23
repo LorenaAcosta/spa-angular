@@ -1,6 +1,8 @@
 <p>Selecciona un horario disponible</p>
 
-<ngb-datepicker #dp [(ngModel)]="model" (navigate)="date = $event.next" (click)="getSelectedDay()"></ngb-datepicker>
+<ngb-datepicker #dp [(ngModel)]="model" s(click)="getSelectedDay()">
+   
+</ngb-datepicker>
 
 
 
@@ -15,14 +17,13 @@
 <pre>Model: {{ model | json }}</pre>
 -->
 
-
 <pre >  
 <select class="btn btn-sm btn-outline-primary mr-2" [(ngModel)]="selectedOption">
     <option *ngFor="let x of turnosArray">
        {{x}}
     </option>
  </select>
- <button (click)="print()">Agendar </button>
+ <button  class="btn btn-sm btn-outline-primary mr-2"  (click)="print()">Agendar </button>
  
  <p>Selected option: {{ selectedOption }}</p>
  <p>Button output: {{ printedOption }}</p>
@@ -31,3 +32,9 @@
 
 
 
+<div *ngIf="turnosArray.length == 0" class="alertalert-warning text-center mt-3">
+   <h4 class="alert-heading">No hay registros</h4>  
+   <p>
+   <i class="fa fa-exclamation fa-2x"></i>
+   </p>
+</div>
