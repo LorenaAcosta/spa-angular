@@ -48,7 +48,6 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { CompraModificarComponent } from './components/parametricos/compra/compra-modificar.component';
 
 
 
@@ -90,8 +89,7 @@ import { CompraModificarComponent } from './components/parametricos/compra/compr
     CompraComponent,
     DetallesCompraComponent,
     CompraEditComponent,
-    TableComponent,
-    CompraModificarComponent
+    TableComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +106,7 @@ import { CompraModificarComponent } from './components/parametricos/compra/compr
     MatSelectModule,
     FormsModule
   ],
-  providers: [CompraModificarComponent],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -26,6 +26,7 @@ export class CompraEditComponent implements OnInit {
   datosEliminar: Detalle[] = [];
   datosTemporal: Detalle[] = [];
   compra: any;
+  com: any;
   resTemp: any;
   totalCompra = 0;
   fechaActual: number = Date.now();
@@ -53,12 +54,16 @@ export class CompraEditComponent implements OnInit {
   });
 
   currentDate: number = Date.now();
-  articuloselect: Detalle = new Detalle(0, 0, 0, 0);
+  articuloselect: Detalle = new Detalle(0, 0, 0, 0, 0);
 
   @ViewChild(MatTable) tabla1: MatTable<Detalle>;
 
   borrarFila(cod: number) {
     if (confirm('Realmente quiere borrarlo?')) {
+      this.totalCompra = this.totalCompra - (this.datos[cod].cantidad * this.datos[cod].precioCompra);
+      this.datosEliminar.push(new Detalle(this.datos[cod].detalleId, this.datos[cod].cantidad, this.datos[cod].comprasId,
+         this.datos[cod].precioCompra, this.datos[cod].productoId));
+      console.log(this.datosEliminar);
       this.datos.splice(cod, 1);
       this.tabla1.renderRows();
     }
@@ -66,17 +71,17 @@ export class CompraEditComponent implements OnInit {
   }
 
   agregar() {
-    console.log(this.selectedProd);
+    console.log('producto seleccionado' + this.selectedProd);
     this.totalCompra = this.totalCompra + (this.articuloselect.cantidad * this.articuloselect.precioCompra);
-    this.datosGuardar.push(new Detalle(this.articuloselect.cantidad, this.articuloselect.comprasId, this.articuloselect.precioCompra,
-      this.selectedProd));
-    this.articuloselect.productoId = this.selectedProd.descripcion;
-    this.datos.push(new Detalle(this.articuloselect.cantidad, this.articuloselect.comprasId, this.articuloselect.precioCompra,
+    this.datosGuardar.push(new Detalle(0, this.articuloselect.cantidad, this.articuloselect.comprasId, this.articuloselect.precioCompra,
+      this.articuloselect.productoId));
+    // this.articuloselect.productoId = this.selectedProd.descripcion;
+    this.datos.push(new Detalle(0, this.articuloselect.cantidad, this.articuloselect.comprasId, this.articuloselect.precioCompra,
       this.articuloselect.productoId));
     console.log(this.datos);
     console.log(this.datosGuardar);
     this.tabla1.renderRows();
-    this.articuloselect = new Detalle(0, 0, 0, 0);
+    this.articuloselect = new Detalle(0, 0, 0, 0, 0);
   }
 
 
@@ -97,14 +102,14 @@ export class CompraEditComponent implements OnInit {
       });
       this.compraService.getRecurso(id)
        .subscribe ((data: any) => {
-        this.form.controls.fecha.setValue(data.fecha);
+         this.com = data;
+         this.form.controls.fecha.setValue(data.fecha);
         //this.form.controls.montoTotal.setValue(data.montoTotal);
-        this.totalCompra = data.montoTotal;
+         this.totalCompra = Number(data.montoTotal);
         this.form.controls.proveedorId.setValue(data.proveedorId.proveedorId);
         this.datos = data.detallesCollection;
-        this.datosGuardar = data.detallesCollection;
+        console.log(this.datos);
        });
-      console.log('detalle');
     }
   }
 
@@ -131,11 +136,12 @@ export class CompraEditComponent implements OnInit {
           });
         }
 
-
       });
     } else {
+
       peticion = this.compraService.modificarRecurso(this.form.value, id);
       peticion.subscribe((result: any) =>  {
+        console.log(result);
         compraId = id,
         Swal.fire(
           'Guardado!',
@@ -148,6 +154,10 @@ export class CompraEditComponent implements OnInit {
           this.detallesService.agregarRecurso(detalle).subscribe(( res: any) => {
             console.log(res);
           });
+        }
+
+        for (let detalle of this.datosEliminar){
+          this.borrarDetalle(detalle.detalleId);
         }
 
       });
@@ -168,7 +178,8 @@ export class CompraEditComponent implements OnInit {
 
 
 export class Detalle {
-  constructor(public cantidad: number, public comprasId: number, public precioCompra: number, public productoId: any
+  constructor(public detalleId: number, public cantidad: number, public comprasId: number,
+              public precioCompra: number, public productoId: any
       ) {
   }
 }

@@ -4,7 +4,6 @@ import { ComprasService } from 'src/app/services/servicios/compras.service';
 import { DetallesCompraService } from 'src/app/services/servicios/detalles-compra.service';
 import Swal from 'sweetalert2';
 import { CompraEditComponent } from './compra-edit.component';
-import { CompraModificarComponent } from './compra-modificar.component';
 
 @Component({
   selector: 'app-compra',
@@ -22,8 +21,7 @@ export class CompraComponent implements OnInit {
   constructor(
     private compraService: ComprasService,
     private detallesCompraService: DetallesCompraService,
-    private route: ActivatedRoute,
-    public compraModif: CompraModificarComponent
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit(): void {

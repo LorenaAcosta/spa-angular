@@ -24,7 +24,6 @@ import { DisponibilidadComponent } from './components/parametricos/empleado/disp
 import { CompraComponent } from './components/parametricos/compra/compra.component';
 import { DetallesCompraComponent } from './components/parametricos/detalles-compra/detalles-compra.component';
 import { CompraEditComponent } from './components/parametricos/compra/compra-edit.component';
-import { CompraModificarComponent } from './components/parametricos/compra/compra-modificar.component';
 
 const routes: Routes = [
   {

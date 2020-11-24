@@ -22,6 +22,7 @@ export class ComprasService {
   }
 
   modificarRecurso(recurso, id) {
+    console.log(recurso);
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
   }
 

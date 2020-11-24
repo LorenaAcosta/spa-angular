@@ -51,7 +51,7 @@
                                                 <th scope="col">Precio compra</th>
                                                 <th scope="col">Producto</th>
                                                 <th scope="col">Total</th>
-                                                <th scope="col">Opciones</th>
+                                                <!--<th scope="col">Opciones</th>-->
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -63,14 +63,14 @@
                                                 <td>{{ d.precioCompra}}</td>
                                                 <td>{{ d.productoId.descripcion}}</td>
                                                 <td>{{ d.precioCompra * d.cantidad}}</td>
-                                                <td>
+                                                <!--<td>
                                                     <button class="btn btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
                                                         <i class="fas fa-pencil-alt"></i>
                                                     </button>
                                                     <button class="btn btn-info mr-1" (click)="borrar(c.comprasId, i)">
                                                         <i class="fas fa-trash"></i>
                                                     </button>
-                                                </td>
+                                                </td>-->
                                             </tr>
                                         </tbody>
                                     </table>
