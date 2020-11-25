@@ -11,7 +11,7 @@ export class ReservaService {
 
   constructor(private http: HttpClient) { }
 
-  listarRecurso() {
+  listarRecursosHoy() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
 

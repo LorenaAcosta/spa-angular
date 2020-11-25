@@ -19,6 +19,7 @@ export class ServicioListar2Component implements OnInit {
   value: any;
   sum = 0;
   id = 1;
+  pageActual: 1;
 
   constructor(private categoriaService: CategoriaService,
               private servicioService: ServicioService,

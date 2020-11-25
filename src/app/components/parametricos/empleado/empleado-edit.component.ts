@@ -6,6 +6,7 @@ import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { HorarioService } from 'src/app/services/servicios/horario.service';
 
 @Component({
   selector: 'app-empleado-edit',
@@ -23,6 +24,9 @@ export class EmpleadoEditComponent implements OnInit {
     fechaNac: ['', Validators.required]
   });
 
+  // tslint:disable-next-line:ban-types
+  horario: {horaInicio: String, horaFin: String, empleadoId: number};
+
   get cedula() { return this.form.get('cedula'); }
   get telefono() { return this.form.get('telefono'); }
 
@@ -32,6 +36,7 @@ export class EmpleadoEditComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private empleadoService: EmpleadoService,
+              private horarioService: HorarioService,
               private route: ActivatedRoute) {
 
       this.form = this.fb.group({
@@ -42,7 +47,7 @@ export class EmpleadoEditComponent implements OnInit {
         telefono: ['', Validators.required],
         fechaNac: ['', Validators.required]
       });
-              }
+    }
 
   ngOnInit() {
    // this.categorias$ = this.categoriaService.listarRecurso();
@@ -73,20 +78,19 @@ export class EmpleadoEditComponent implements OnInit {
   }
 
   guardar() {
-    //  console.warn(this.form.value);
      const id = this.route.snapshot.params.id;
      let peticion: Observable<any>;
-    // console.log(id);
      if (typeof id === 'undefined') {
-        peticion = this.empleadoService.agregarRecurso(this.form.value);
-        peticion.subscribe((result: any) =>  {
+       console.log(id);
+       /*Insertar empleado */
+       peticion = this.empleadoService.agregarRecurso(this.form.value);
+       peticion.subscribe((result: any) =>  {
           Swal.fire(
             'Guardado!',
             'Se guardaron los datos!',
             'success'
           );
         });
-
       } else {
         peticion = this.empleadoService.modificarRecurso(this.form.value, id);
         peticion.subscribe((result: any) =>  {

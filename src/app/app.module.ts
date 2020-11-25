@@ -41,6 +41,7 @@ import { PlanillaComponent } from './components/parametricos/planilla/planilla.c
 import { HorarioAsignarComponent } from './components/parametricos/horario/horario-asignar.component';
 import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
 import { CalendarComponent } from './components/parametricos/booking/calendar.component';
+import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
 
 
 @NgModule({
@@ -77,7 +78,8 @@ import { CalendarComponent } from './components/parametricos/booking/calendar.co
     PlanillaComponent,
     HorarioAsignarComponent,
     TerapistaComponent,
-    CalendarComponent
+    CalendarComponent,
+    OfertaComponent
   ],
   imports: [
     BrowserModule,

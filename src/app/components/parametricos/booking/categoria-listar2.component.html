@@ -1,8 +1,15 @@
+<blockquote class="blockquote text-center">
+    <p class="mb-0">Comienza a agendar hoy con nosotros, Te ofrecemos variedad al mejor precio!</p>
+    <footer class="blockquote-footer">Recomendado Nro. 1  <cite title="Source Title">en San Lorenzo </cite></footer>
+  </blockquote>
+<br>
+<br>
+
 
 <div class="card-columns">
     <div class="col mb-4">
         <!--  Lista las categorias -->
-            <div class="card" *ngFor="let item of categorias">
+            <div class="card" *ngFor="let item of categorias; let i= index">
                 <img src= "/assets/img/{{item.imageName}}.jpg" class="card-img-top" alt="...">
                 <button class="btn btn-light" [routerLink]="['../../booking/servicios', item.categoriaId]">
                 <!--</button> [routerLink]="['../../booking/servicios', item.categoriaId]">   
