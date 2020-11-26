@@ -11,10 +11,19 @@ import Swal from 'sweetalert2';
   styleUrls: ['./proveedor-edit.component.scss']
 })
 export class ProveedorEditComponent implements OnInit {
+  public formSubmitted = false;
+
   form = this.fb.group({
     nombreProveedor: ['', Validators.required],
     telefono: ['', Validators.required],
-    empresa: ['', Validators.required]
+    empresa: ['', Validators.required],
+    direccion: ['', Validators.required],
+    ruc: ['', Validators.required],
+    correo: ['', 
+    Validators.compose([
+      Validators.required,
+      Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@' + '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')])
+    ]
   });
 
   constructor(
@@ -31,18 +40,32 @@ export class ProveedorEditComponent implements OnInit {
       this.form = this.fb.group({
         nombreProveedor: ['', Validators.required],
         telefono: ['', Validators.required],
-        empresa: ['', Validators.required]
+        empresa: ['', Validators.required],
+        direccion: ['', Validators.required],
+        ruc: ['', Validators.required],
+        correo: ['',
+        Validators.compose([
+          Validators.required,
+          Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@' + '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')])
+        ]
       });
       this.proveedorService.getRecurso(id)
        .subscribe ((data: any) => {
         this.form.controls.nombreProveedor.setValue(data.nombreProveedor);
         this.form.controls.telefono.setValue(data.telefono);
         this.form.controls.empresa.setValue(data.empresa);
+        this.form.controls.direccion.setValue(data.direccion);
+        this.form.controls.ruc.setValue(data.ruc);
+        this.form.controls.correo.setValue(data.correo);
        });
     }
   }
 
   guardar() {
+    this.formSubmitted = true;
+    if ( this.form.invalid ) {
+      return;
+    }
     const id = this.route.snapshot.params.id;
     let peticion: Observable<any>;
     console.log(id);
@@ -66,6 +89,14 @@ export class ProveedorEditComponent implements OnInit {
           'success'
         );
       });
+    }
+  }
+
+  campoNoValido( campo: string ): boolean {
+    if (this.form.get(campo).invalid && this.formSubmitted ) {
+      return true;
+    } else {
+      return false;
     }
   }
 

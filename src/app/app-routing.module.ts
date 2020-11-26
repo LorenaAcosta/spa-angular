@@ -24,6 +24,7 @@ import { DisponibilidadComponent } from './components/parametricos/empleado/disp
 import { CompraComponent } from './components/parametricos/compra/compra.component';
 import { DetallesCompraComponent } from './components/parametricos/detalles-compra/detalles-compra.component';
 import { CompraEditComponent } from './components/parametricos/compra/compra-edit.component';
+import { VentaComponent } from './components/parametricos/venta/venta.component';
 
 const routes: Routes = [
   {
@@ -106,6 +107,14 @@ const routes: Routes = [
       { path: 'agregar', component: CompraEditComponent , data: { title: 'Crear compra' }, },
       { path: 'listar', component: CompraComponent , data: { title: 'Listar compras' }, },
        { path: 'modificar/:id', component: CompraEditComponent , data: { title: 'Editar compra' }, }
+     ]
+  },
+  {
+    path: 'ventas', data: { title: 'Ventas' },
+    children: [
+      //{ path: 'agregar', component: CompraEditComponent , data: { title: 'Crear compra' }, },
+      { path: 'listar', component: VentaComponent , data: { title: 'Listar ventas' }, },
+       //{ path: 'modificar/:id', component: CompraEditComponent , data: { title: 'Editar compra' }, }
      ]
   },
 ];

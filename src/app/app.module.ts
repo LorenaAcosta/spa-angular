@@ -48,6 +48,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
+import { VentaComponent } from './components/parametricos/venta/venta.component';
 
 
 
@@ -89,7 +90,8 @@ import { MatSelectModule } from '@angular/material/select';
     CompraComponent,
     DetallesCompraComponent,
     CompraEditComponent,
-    TableComponent
+    TableComponent,
+    VentaComponent
   ],
   imports: [
     BrowserModule,
