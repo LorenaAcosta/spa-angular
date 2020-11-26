@@ -1,34 +1,30 @@
-<div class="row">
-    <div class="col-sm-12 col-md-12">
+<div class="container">
 
         <!--Lista las categorias-->
         <div>
-            <button *ngFor="let cat of categorias" type="button" class="btn btn-light btn-lg"  
+            <button *ngFor="let cat of categorias" type="button" class="btn btn-light btn-lg alert alert-primary"  role="alert"  
             (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
         </div>
 
         <!--Los servicios-->
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col mb-6">
+              <div class="card" *ngFor="let item of servicios | paginate: {itemsPerPage: 2 , currentPage: pageActual}; let i = index">
                 <div class="card-body">
-                    <div class="card" *ngFor="let item of servicios | paginate: {itemsPerPage: 3 , currentPage: pageActual}; let i = index">
-                        <img src= "/assets/img/{{item.imageName}}.png"  style="width: 100px; height: 100px;">
-                        <div class="card-body">
-                            <h5 class="card-title">{{item.nombre}}</h5>
-                            <p class="card-text">{{item.descripcion}} </p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">
-                                <i class="far fa-clock"></i><strong> {{item.duracion}} |
-                                <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong></small>
-                            <button  class="btn btn-info mr-1 float-right" [routerLink]="['/booking/terapista', item.servicioId ]" >
-                                <i class="fas fa-plus-square"></i> </button>
-                        </div>
-                    </div>
-                    <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+                  <img src= "/assets/img/{{item.imageName}}.png"  style="width: 100px; height: 100px;">
+                  <h5 class="card-title">{{item.nombre}}</h5>
+                  <p class="card-text">{{item.descripcion}}</p>
+                  <div class="card-footer">
+                    <small class="text-muted">
+                        <i class="far fa-clock"></i><strong> {{item.duracion}} |
+                        <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong></small>
+                    <button  class="btn btn-info" [routerLink]="['/booking/terapista', item.servicioId ]" ><i class="fas fa-plus-square"></i> </button>
+                  </div>
+                </div>
               </div>
+              <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
             </div>
-          </div>  
+
 
         <div *ngIf="servicios.length == 0" class="alertalert-warning text-center mt-3">
             <h4 class="alert-heading">No hay registros</h4>  
@@ -36,9 +32,7 @@
             <i class="fa fa-exclamation fa-2x"></i>
             </p>
         </div>
-    </div>
 </div>
-
 
             
 

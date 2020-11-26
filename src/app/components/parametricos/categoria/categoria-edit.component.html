@@ -27,28 +27,26 @@
     <div class="form-group row">
         <label class="col-sm-2 col-form-label" for="inputZip">Tipo Categoria</label>
         <div class="col-sm-10">
-          <select id="dataType"  formControlName="dataType" class="form-control" required>
+          <select id="dataType"  formControlName="dataType" class="form-control" >
             <option selected>...</option>
             <option value="producto">Productos</option>
             <option value="servicio">Servicio</option>
           </select>
         </div>
     </div>
-    <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label">Cargar Imagen</label>
-      <div class="col-sm-10">
-        <input formControlName="imageName" type="String"   
-          id="imageName" >
-      </div>
-    </div>
-<!-- 
-    <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label">Cargar Imagen</label>
-      <div class="col-sm-10">
-        <input formControlName="imageName" type="file"  (change)="onFileSelected($event)" 
-          id="imageName" >
-      </div>
-    </div>--> 
+
+
+    <h3>Image Uploading Module</h3>
+<div>
+    <input type="file" (change)="onFileChanged($event)">
+    <img [src]="imgURL" height="200" *ngIf="imgURL">
+</div>
+<input type="button" (click)="onUpload()" value="upload">
+Received Image:
+{{ receivedImageData['pic'] | json}}
+<img [src]="convertedImage" >
+
+
     
     <div class="form-group row">
       <div class="col-sm-10">

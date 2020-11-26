@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ChangeDetectorRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-categoria-edit',
@@ -16,17 +17,29 @@ export class CategoriaEditComponent implements OnInit {
   form = this.fb.group({
     codigo: ['', Validators.required],
     descripcion: ['', Validators.required],
-    dataType: ['', Validators.required ],
-    imageName: ['' ]
+    dataType: ['', Validators.required ]
   });
 
   SelectedFile: File = null;
 
+  title = 'ImageUploaderFrontEnd';
+
+  public selectedFile;
+  public event1;
+  imgURL: any;
+  receivedImageData: any;
+  base64Data: any;
+  convertedImage: any;
+
+
   constructor(private fb: FormBuilder,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute,
-              private cd: ChangeDetectorRef) {
+              private cd: ChangeDetectorRef,
+              private httpClient: HttpClient) {
    }
+
+
 
    ngOnInit() {
     const id = this.route.snapshot.params.id;
@@ -35,8 +48,7 @@ export class CategoriaEditComponent implements OnInit {
       this.form = this.fb.group({
         codigo: ['', Validators.required],
         descripcion: ['', Validators.required],
-        dataType: ['', Validators.required ],
-        imageName: ['', Validators.required ]
+        dataType: ['', Validators.required ]
       });
 
       this.categoriaService.getRecurso(id)
@@ -44,7 +56,6 @@ export class CategoriaEditComponent implements OnInit {
         this.form.controls.codigo.setValue(data.codigo);
         this.form.controls.descripcion.setValue(data.descripcion);
         this.form.controls.dataType.setValue(data.dataType);
-        this.form.controls.imageName.setValue(data.imageName);
        });
     }
   }
@@ -85,17 +96,30 @@ export class CategoriaEditComponent implements OnInit {
     }
   }
 
-
-/*
-  onFileSelected(event) {
+  public  onFileChanged(event) {
     console.log(event);
-    this.SelectedFile = event.target.files[0];
-  }
+    this.selectedFile = event.target.files[0];
 
-  createUploadImage(){
-    this.form.controls.imageName.setValue(this.SelectedFile.name);
-  }
-*/
+    // Below part is used to display the selected image
+    const reader = new FileReader();
+    reader.readAsDataURL(event.target.files[0]);
+    reader.onload = (event2) => {
+      this.imgURL = reader.result;
+   };
+ }
+ // This part is for uploading
+ onUpload() {
+  const uploadData = new FormData();
+  uploadData.append('myFile', this.selectedFile, this.selectedFile.name);
 
+  this.httpClient.post('http://localhost:8084/api/categoria/upload', uploadData)
+  .subscribe(
+               res => {console.log(res);
+                       this.receivedImageData = res;
+                       this.base64Data = this.receivedImageData.imageName;
+                       this.convertedImage = 'data:image/jpeg;base64,' + this.base64Data; },
+               err => console.log('Error Occured duringng saving: ' + err)
+            );
+ }
 
 }
