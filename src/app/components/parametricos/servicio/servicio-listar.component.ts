@@ -1,6 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+
 import { ServicioService } from 'src/app/services/servicios/servicio.service';
 import Swal from 'sweetalert2';
+
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+
+// import { jsPDF } from 'jspdf';
+declare var jsPDF: any;
 
 @Component({
   selector: 'app-servicio-listar',
@@ -13,6 +18,7 @@ export class ServicioListarComponent implements OnInit {
   categorias: any[] = [];
   index = 0;
   pageActual: 1;
+  @ViewChild('htmlData') htmlData: ElementRef;
 
   constructor(private servicioService: ServicioService) { }
 
@@ -41,6 +47,31 @@ export class ServicioListarComponent implements OnInit {
           );
         }
       });
+  }
+
+
+  public openPDF(): void {
+    const DATA = this.htmlData.nativeElement;
+    const doc = new jsPDF('p', 'pt', 'a4');
+    doc.fromHTML(DATA.innerHTML, 15, 15);
+    doc.output('dataurlnewwindow');
+  }
+
+  public downloadPDF(): void {
+    const DATA = this.htmlData.nativeElement;
+    const doc =  new jsPDF('p', 'pt', 'a4');
+    doc.setFont('arial', 'bold');
+    doc.setFontSize(14);
+    const handleElement = {
+      '#editor'(element, renderer) {
+        return true;
+      }
+    };
+    doc.fromHTML(DATA.innerHTML, 10, 10, {
+      width: 100,
+      elementHandlers: handleElement
+    });
+    doc.save('servicio-reporte.pdf');
   }
 
 }

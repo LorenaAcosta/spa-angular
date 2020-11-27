@@ -24,9 +24,6 @@ export class EmpleadoEditComponent implements OnInit {
     fechaNac: ['', Validators.required]
   });
 
-  // tslint:disable-next-line:ban-types
-  horario: {horaInicio: String, horaFin: String, empleadoId: number};
-
   get cedula() { return this.form.get('cedula'); }
   get telefono() { return this.form.get('telefono'); }
 

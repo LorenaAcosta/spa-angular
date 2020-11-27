@@ -24,6 +24,7 @@ import { CategoriaListar2Component } from './components/parametricos/booking/cat
 import { ReservaListComponent } from './components/parametricos/reserva/reserva-list.component';
 import { ProductoListar2Component } from './components/parametricos/producto/producto-listar2.component';
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
+import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
 
 const routes: Routes = [
   {
@@ -64,7 +65,9 @@ const routes: Routes = [
       { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
       { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
       { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' } },
-      { path: 'horario/:id', component: HorarioAsignarComponent , data: { title: 'Asignar Horario Empleado' } }
+      { path: 'horario/:id', component: HorarioAsignarComponent , data: { title: 'Asignar Horario Empleado' } },
+      { path: 'disponible', component: DisponibleComponent , data: { title: 'Asignar Disponibilidad' } },
+      { path: 'disponible-listar', component: DisponibleComponent , data: { title: 'Listar Disponibilidad' } }
     ]
   },
   {

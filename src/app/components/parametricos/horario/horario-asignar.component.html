@@ -1,7 +1,7 @@
 <br>
 <div class="container-fluid">
   <div class="row">
-    <h5 class="display">Empleados</h5>
+    <h5 class="display">Horario del Empleado</h5>
     <div class="col text-right">
       <button routerLink="/empleado/listar" class="btn btn-info mr-1" >
        <i class="fas fa-arrow-left"></i> Regresar
@@ -13,34 +13,36 @@
 <div class="container-fluid">
   <form [formGroup]="form">
     <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label">Empleado</label>
-      <div class="col-sm-10">
-        <input formControlName="empleadoId" type="empleadoId" class="form-control" id="empleadoId" disabled>
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre</label>
+      <div class="col-sm-3">
+        <input formControlName="nombre" type="nombre" class="form-control" id="nombre" disabled>
       </div>
     </div>
+
+    <div class="form-group row">
+      <label for="inputPassword3" class="col-sm-2 col-form-label">Apellido</label>
+      <div class="col-sm-3">
+        <input formControlName="apellido" type="apellido" class="form-control" id="apellido" disabled>
+      </div>
+    </div>
+</form>
+  <form [formGroup]="form2">
     <div class="form-group row">
       <label for="inputPassword3" class="col-sm-2 col-form-label">Hora de Entrada</label>
-      <div class="col-sm-10">
-        <input formControlName="horaInicio" type="Time"   
-          id="horaInicio" >
+        <div>
+        <input  formControlName="horaInicio" type="time" class="form-control" id="horaInicio"  min="06:00" max="11:00" required>
+        <span class="validity"></span>
+        <label>(Horas validas de entrada entre 06:00 a 11:00) </label>
       </div>
     </div>
     <div class="form-group row">
       <label for="inputPassword3" class="col-sm-2 col-form-label">Hora de Salida</label>
-      <div class="col-sm-10">
-        <input formControlName="horaFin" type="Time"   
-          id="horaFin" >
+      <div>
+        <input  formControlName="horaFin" type="time" class="form-control" id="duracion"  min="14:00" max="21:00" required>
+        <span class="validity"></span>
+        <label>(Horas validas de salida entre 14:00 a 21:00) </label>
       </div>
     </div>
-<!-- 
-    <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label">Cargar Imagen</label>
-      <div class="col-sm-10">
-        <input formControlName="imageName" type="file"  (change)="onFileSelected($event)" 
-          id="imageName" >
-      </div>
-    </div>--> 
-    
     <div class="form-group row">
       <div class="col-sm-10">
         <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary" (click)="guardar()" >Guardar Cambios</button>
@@ -48,3 +50,5 @@
     </div>
   </form>
 </div>
+
+

@@ -11,7 +11,7 @@
             <div class="col mb-6">
               <div class="card" *ngFor="let item of servicios | paginate: {itemsPerPage: 2 , currentPage: pageActual}; let i = index">
                 <div class="card-body">
-                  <img src= "/assets/img/{{item.imageName}}.png"  style="width: 100px; height: 100px;">
+                 <img src= "/assets/img/{{item.imageName}}.png"  style="width: 100px; height: 100px;">
                   <h5 class="card-title">{{item.nombre}}</h5>
                   <p class="card-text">{{item.descripcion}}</p>
                   <div class="card-footer">

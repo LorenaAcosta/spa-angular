@@ -49,7 +49,8 @@
     <div class="form-group row">
         <label for="inputCity" class="col-sm-2 col-form-label">Duracion</label>
         <div class="col-sm-4">
-        <input  formControlName="duracion" type="time" class="form-control" id="duracion" required>
+        <input  formControlName="duracion" type="time" class="form-control" id="duracion" min="01:00" max="03:00" required>
+        <span class="validity"></span>
       </div>
     </div>
     <div class="form-group row">

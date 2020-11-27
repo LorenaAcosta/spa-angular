@@ -36,9 +36,9 @@
     </div>
 
 
-    <h3>Image Uploading Module</h3>
+<h3>Image Uploading Module</h3>
 <div>
-    <input type="file" (change)="onFileChanged($event)">
+    <input type="file" (change)="onFileChanged($event)" >
     <img [src]="imgURL" height="200" *ngIf="imgURL">
 </div>
 <input type="button" (click)="onUpload()" value="upload">
