@@ -13,6 +13,10 @@ export class VentaService {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
 
+  getNextId() {
+    return this.http.get(this.recurosBaseURL + 'next-id');
+  }
+
   getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
   }

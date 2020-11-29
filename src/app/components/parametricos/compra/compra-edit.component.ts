@@ -9,6 +9,7 @@ import { ProveedorService } from 'src/app/services/servicios/proveedor.service';
 import Swal from 'sweetalert2';
 import { MatTable } from '@angular/material/table';
 import { DetallesCompraService } from 'src/app/services/servicios/detalles-compra.service';
+import { MediosPagoService } from 'src/app/services/servicios/medios-pago.service';
 
 @Component({
   selector: 'app-compra-edit',
@@ -17,7 +18,7 @@ import { DetallesCompraService } from 'src/app/services/servicios/detalles-compr
 })
 export class CompraEditComponent implements OnInit {
 
-  columnas: string[] = ['codigo', 'precio', 'producto', 'borrar'];
+  columnas: string[] = ['cantidad', 'precio', 'producto', 'borrar'];
   proveedores: any[] = [];
   productos: any[] = [];
   productoId: number;
@@ -69,7 +70,7 @@ export class CompraEditComponent implements OnInit {
     }
     console.log(this.datos);
   }
-
+ 
   agregar() {
     console.log('producto seleccionado' + this.selectedProd);
     this.totalCompra = this.totalCompra + (this.articuloselect.cantidad * this.articuloselect.precioCompra);
@@ -104,11 +105,11 @@ export class CompraEditComponent implements OnInit {
        .subscribe ((data: any) => {
          this.com = data;
          this.form.controls.fecha.setValue(data.fecha);
-        //this.form.controls.montoTotal.setValue(data.montoTotal);
+        // this.form.controls.montoTotal.setValue(data.montoTotal);
          this.totalCompra = Number(data.montoTotal);
-        this.form.controls.proveedorId.setValue(data.proveedorId.proveedorId);
-        this.datos = data.detallesCollection;
-        console.log(this.datos);
+         this.form.controls.proveedorId.setValue(data.proveedorId.proveedorId);
+         this.datos = data.detallesCollection;
+         console.log(this.datos);
        });
     }
   }

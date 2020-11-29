@@ -25,6 +25,7 @@ import { CompraComponent } from './components/parametricos/compra/compra.compone
 import { DetallesCompraComponent } from './components/parametricos/detalles-compra/detalles-compra.component';
 import { CompraEditComponent } from './components/parametricos/compra/compra-edit.component';
 import { VentaComponent } from './components/parametricos/venta/venta.component';
+import { VentaEditComponent } from './components/parametricos/venta/venta-edit.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,7 @@ const routes: Routes = [
       { path: 'listar', component: CategoriaListarComponent, data: { title: 'Listar Categoria' }, },
       { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
       { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
+      { path: 'upload/:id', component: CategoriaEditComponent , data: { title: 'Upload Categoria' }, },
     ]
   },
   {
@@ -112,9 +114,9 @@ const routes: Routes = [
   {
     path: 'ventas', data: { title: 'Ventas' },
     children: [
-      //{ path: 'agregar', component: CompraEditComponent , data: { title: 'Crear compra' }, },
+      { path: 'agregar', component: VentaEditComponent , data: { title: 'Crear venta' }, },
       { path: 'listar', component: VentaComponent , data: { title: 'Listar ventas' }, },
-       //{ path: 'modificar/:id', component: CompraEditComponent , data: { title: 'Editar compra' }, }
+      { path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, }
      ]
   },
 ];
