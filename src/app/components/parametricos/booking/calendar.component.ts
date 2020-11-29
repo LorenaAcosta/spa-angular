@@ -9,6 +9,7 @@ import { FormBuilder } from '@angular/forms';
 import { DisponibleService } from '../../../services/servicios/disponibilidad.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 
 @Component({
   selector: 'app-calendar',
@@ -20,6 +21,7 @@ export class CalendarComponent implements OnInit {
   disponibleId: number;
   empleadoId: number;
   servicioId: number;
+  dispo: any;
 
   fecha: number;
   horaInicio: any;
@@ -56,6 +58,7 @@ export class CalendarComponent implements OnInit {
               private route: ActivatedRoute,
               private horarioService: HorarioService,
               private reservaService: ReservaService,
+              private empleadoService: EmpleadoService ,
               private disponibleService: DisponibleService ) {
   }
 
@@ -67,12 +70,10 @@ export class CalendarComponent implements OnInit {
        this.disponible = resp.disponibleId;
        this.empleadoId = resp.empleadoId.empleadoId;
        this.servicioId =  resp.servicioId.servicioId;
-     /*  console.log(resp);
-         console.log(this.disponible);
-         console.log(this.empleadoId);
-         console.log(this.servicioId); */
+       this.dispo = resp;
      });
   }
+
 
   selectToday() {
     this.model = this.calendar.getToday();
@@ -85,63 +86,74 @@ export class CalendarComponent implements OnInit {
     this.form.controls.hora.setValue(this.selectedOption);
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
     this.form.controls.usuarioId.setValue(1);
-
-   // console.log(this.form);
+   // console.log(this.form.value);
     // console.warn(this.form.value);
     let peticion: Observable<any>;
     peticion = this.reservaService.agregarRecurso(this.form.value);
     peticion.subscribe((result: any) =>  {
       Swal.fire(
-        'Confirmado!',
+        'Reserva Confirmada!',
         'Se guardaron  los datos!',
         'success'
         );
       });
-  //  this.router.navigateByUrl('booking/categorias');
+    this.redireccionar();
+  }
+
+
+  redireccionar() {
+      this.router.navigateByUrl('booking/categorias');
   }
 
   getSelectedDay() {
 
     this.turnosArray = [];
-    /*Obtiene el horario del empleado */
+    /*Obtiene el horario del empleado */ // 07  - 12
     this.horarioService.obtenerHorario(this.empleadoId)
     .subscribe( (resp: any) =>  this.horario = resp  );
-    // 07, 11
 
-    /* Obtiene los turnos guardados del empleado y de la fecha*/
-    this.reservaService.getTurnos(this.empleadoId)
-    .subscribe( (resp: any) =>  this.turnos = resp  );
+    let Today = Date();
+    Today = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
+    console.log(Today);
+    /* Obtiene los turnos guardados del empleado en la fecha*/
+    this.reservaService.getTurnosPorFechayEmpleado(Number(this.empleadoId), Today )
+    .subscribe( (resp: any) => {
+      this.turnos = resp ;
+      console.log(this.turnos); });
 
-    /*genera el array de horas disponibles*/
-    this.generateArray();
-
-  }
-
-  generateArray() {
+    /*Extraemos las horas*/
     const Hinicio = this.horario[0].horaInicio ; // 07:00
     const Hfin = this.horario[0].horaFin; // 11:00
-    this.i = Hinicio.substr(-20, 2);   //07
-    this.f = Hfin.substr(-20, 2);   //11
-    const length = (this.f - this.i);  //5
-    const long = this.turnos.length;
-    console.log('longitud: ' + long );
-    for (let x = 0; x < length; x++) { // 5
-      // tslint:disable-next-line:prefer-for-of
-      for ( let y = 0; y < long; y++ ) {
-        const horita =  this.turnos[y].hora;  // 07:00
-        const xVar = horita.substr(-20, 2); //07
-        console.log('horita' + horita);
-        console.log('xVar' + Number(xVar)); // 09
-        if ( Number(xVar) === Number(this.i) ) {   // 07 = 07 
-          this.i++;
-        } else {
-          this.turnosArray.push( this.i.toString() + ':00'  );
-          this.i++;
-        }
-      } // {'01:00, '02:00', 03:00, 04:00, 05:00'}
+    this.i = Hinicio.substr(-20, 2);   // 07
+    this.f = Hfin.substr(-20, 2);   // 11
+    const length = (this.f - this.i);  // 5
+
+    if (this.turnos.length === 0) {
+      for (let x = 0; x < length; x++) { // 5
+            this.turnosArray.push( this.i.toString() + ':00'  );
+            this.i++;
+          }
+    } else {
+      for (let x = 0; x < length; x++) { // 5
+        const long = this.turnos.length;
+        // tslint:disable-next-line:prefer-for-of
+        for ( let y = 0; y < long; y++ ) {
+          const horita =  this.turnos[y].hora;  // 07:00
+          const xVar = horita.substr(-20, 2); // 07
+          if ( Number(xVar) === Number(this.i) ) {   // 07 = 07
+            this.i++;
+          } else {
+            this.turnosArray.push( this.i.toString() + ':00'  );
+            this.i++;
+          }
+        } // {'01:00, '02:00', 03:00, 04:00, 05:00'}
+      }
     }
     this.arrayObject = this.turnosArray as string[];
+
   }
+
+
 }
 
 

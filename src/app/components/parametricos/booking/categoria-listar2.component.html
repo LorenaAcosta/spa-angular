@@ -1,6 +1,6 @@
 <blockquote class="blockquote text-center">
-    <p class="mb-0">Comienza a agendar hoy con nosotros, Te ofrecemos variedad al mejor precio!</p>
-    <footer class="blockquote-footer">Recomendado Nro. 1  <cite title="Source Title">en San Lorenzo </cite></footer>
+    <h1>Explora nuestras categorias</h1>
+    <footer class="blockquote-footer"><cite title="Source Title">Agendá ya con nosotros con los mejores especialistas! </cite></footer>
   </blockquote>
 <br>
 <br>
@@ -10,14 +10,12 @@
     <div class="col mb-4">
         <!--  Lista las categorias -->
             <div class="card" *ngFor="let item of categorias; let i= index">
-                <img src= "/assets/img/{{item.imageName}}.jpg" class="card-img-top" alt="...">
+                <blockquote class="blockquote mb-0">
                 <button class="btn btn-light" [routerLink]="['../../booking/servicios', item.categoriaId]">
-                <!--</button> [routerLink]="['../../booking/servicios', item.categoriaId]">   
-                      (click)="btnClick();" -->
-                    <div class="card-body">
                     <h5 class="card-title"> {{ item.descripcion}} </h5> 
-                </div> 
                 </button>
-            </div>
-    </div>
+                </blockquote>
+            </div> 
+        </div>
 </div>
+

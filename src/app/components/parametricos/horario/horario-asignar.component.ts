@@ -16,10 +16,6 @@ import { Time } from '@angular/common';
 export class HorarioAsignarComponent implements OnInit {
 
 
-  form = this.fb.group({
-    nombre: ['', Validators.required],
-    apellido: ['', Validators.required]
-  });
 
   form2 = this.fb.group({
     horaFin: ['', Validators.required],
@@ -28,7 +24,7 @@ export class HorarioAsignarComponent implements OnInit {
   });
 
   categorias: any[] = [];
-  empleado: any[] = [];
+  empleados: any[] = [];
 
 
   constructor(private fb: FormBuilder,
@@ -36,10 +32,6 @@ export class HorarioAsignarComponent implements OnInit {
               private empleadoService: EmpleadoService,
               private route: ActivatedRoute) {
 
-      this.form = this.fb.group({
-        nombre: ['', Validators.required],
-        apellido: ['', Validators.required]
-      });
       this.form2 = this.fb.group({
         horaFin: ['', Validators.required],
         horaInicio: ['', Validators.required],
@@ -49,24 +41,32 @@ export class HorarioAsignarComponent implements OnInit {
 
   ngOnInit() {
      const id = this.route.snapshot.params.id;
-     let peticion: Observable<any>;
-     peticion = this.empleadoService.getRecurso(id);
-     peticion.subscribe((result: any) =>  {
-         this.empleado = result;
-         console.log(this.empleado);
-         this.form.controls.nombre.setValue(result.nombre);
-         this.form.controls.apellido.setValue(result.apellido);
+     this.empleadoService.listarRecurso().
+     subscribe( (resp: any[]) =>  this.empleados = resp );
+     if (typeof id !== 'undefined') {
+      this.form2 = this.fb.group({
+        horaFin: ['', Validators.required],
+        horaInicio: ['', Validators.required],
+        empleadoId: ['', Validators.required],
+      });
+      let peticion: Observable<any>;
+      peticion = this.horarioService.getRecurso(id);
+      peticion.subscribe((result: any) =>  {
+         this.form2.controls.empleadoId.setValue(result.empleadoId);
+         this.form2.controls.horaInicio.setValue(result.horaInicio);
+         this.form2.controls.horaFin.setValue(result.horaFin);
         });
         // hacer que busque si ya esta grabado su horario
-     this.form2 = this.fb.group({
+      this.form2 = this.fb.group({
           horaFin: [ '', Validators.required],
           horaInicio: ['' , Validators.required],
           empleadoId: [Number(id)]
         });
   }
+}
 
   ver() {
-    console.warn(this.form.value);
+    console.warn(this.form2.value);
   }
 
   guardar() {
@@ -75,14 +75,27 @@ export class HorarioAsignarComponent implements OnInit {
      let peticion2: Observable<any>;
      console.log(id);
      console.log(this.form2.value);
-     peticion2 = this.horarioService.agregarRecurso(this.form2.value);
-     peticion2.subscribe((result: any) =>  {
-        Swal.fire(
-          'Guardado!',
-          'Se guardaron los datos!',
-          'success'
-        );
-      });
+     if (typeof id === 'undefined') {
+      peticion2 = this.horarioService.agregarRecurso(this.form2.value);
+      peticion2.subscribe((result: any) =>  {
+          Swal.fire(
+            'Guardado!',
+            'Se guardaron los datos!',
+            'success'
+          );
+        });
+  } else {
+    peticion2 = this.horarioService.modificarRecurso(this.form2.value, id);
+    peticion2.subscribe((result: any) =>  {
+      Swal.fire(
+        'Modificado!',
+        'Se actualizaron los datos!',
+        'success'
+      );
+    });
   }
 
+  }
 }
+
+

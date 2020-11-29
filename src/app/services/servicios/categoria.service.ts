@@ -14,12 +14,9 @@ export class CategoriaService {
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
-  agregarRecurso(recurso) {
-    return this.http.post(this.recurosBaseURL + 'agregar', recurso);
-  }
 
-  createImage(recurso) {
-    return this.http.post(this.recurosBaseURL + 'imagen', recurso);
+  agregarRecurso(recurso) {
+    return this.http.post(this.recurosBaseURL + 'agregar', recurso );
   }
 
   modificarRecurso(recurso, id) {

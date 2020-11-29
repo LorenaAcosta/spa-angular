@@ -1,10 +1,27 @@
-<p>Terapista works!</p>
+<blockquote class="blockquote text-center">
+    <h1>Selecciona un especialista</h1>
+    <footer class="blockquote-footer">Estos son los especialistas disponibles por ahora</footer>
+  </blockquote>
 
-<div>
-  
-    <button *ngFor="let  item of disponible; let i = index " type="button" 
-    class="btn btn-light"   [routerLink]="['/booking/calendar', item.disponibleId ]">
-        {{ item.empleadoId.nombre }} {{ item.empleadoId.apellido}}  {{ item.disponibleId}} 
-     </button>
- 
+    
+<div class="card-columns">
+    <div class="col mb-4">
+        <!--  Lista las categorias -->
+            <div class="card" *ngFor="let item of disponible; let i= index">
+                <button class="btn btn-light" [routerLink]="['/booking/calendar', item.disponibleId ]">
+                 {{ item.empleadoId.nombre }} 
+                 {{ item.empleadoId.apellido}}  
+                 {{ item.disponibleId}}
+               
+                </button>
+            </div>
+    </div>
 </div>
+
+<div *ngIf="disponible.length == 0" class="alertalert-warning text-center mt-3">
+    <h4 class="alert-heading">No hay especialistas disponibles por el momento.</h4>  
+    <p>
+      <i class="fa fa-exclamation fa-2x"></i>
+    </p>
+  </div>
+  

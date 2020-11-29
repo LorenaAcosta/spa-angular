@@ -1,40 +1,20 @@
-<p>Selecciona un horario disponible</p>
+<blockquote class="blockquote text-center">
+   <h1>Consulta los Horarios disponibles</h1>
+   <footer class="blockquote-footer">Selecciona el horario que mejor te quede!</footer>
+ </blockquote>
 
-<ngb-datepicker #dp [(ngModel)]="model" (click)="getSelectedDay()">
+
+   <ngb-datepicker class="my-datepicker-1" #dp [(ngModel)]="model" (click)="getSelectedDay()">
+   </ngb-datepicker>
+
+
+   <blockquote class="blockquote text-center">
+      <select class="btn btn-bg btn-outline-primary mr-2" [(ngModel)]="selectedOption">
+          <option *ngFor="let x of turnosArray">
+             {{x}}
+          </option>
+       </select>
+       <button  class="btn btn-bg btn-outline-primary mr-2"  (click)="print()">Agendar </button>
+   </blockquote>
+
    
-</ngb-datepicker>
-
-
-
-
-<!--
-<hr/>
-<button class="btn btn-sm btn-outline-primary mr-2" (click)="selectToday()">Ver calendario</button>
-<button class="btn btn-sm btn-outline-primary mr-2" (click)="dp.navigateTo()">To current month</button>
-<hr/>
-
-<pre>Month: {{ date.month }}.{{ date.year }}.{{ date.day }}</pre>
-<pre>Model: {{ model | json }}</pre>
--->
-
-<pre >  
-<select class="btn btn-sm btn-outline-primary mr-2" [(ngModel)]="selectedOption">
-    <option *ngFor="let x of turnosArray">
-       {{x}}
-    </option>
- </select>
- <button  class="btn btn-sm btn-outline-primary mr-2"  (click)="print()">Agendar </button>
- 
- <p>Selected option: {{ selectedOption }}</p>
- <p>Button output: {{ printedOption }}</p>
-
-</pre>
-
-
-
-<div *ngIf="turnosArray.length == 0" class="alertalert-warning text-center mt-3">
-   <h4 class="alert-heading">No hay registros</h4>  
-   <p>
-   <i class="fa fa-exclamation fa-2x"></i>
-   </p>
-</div>

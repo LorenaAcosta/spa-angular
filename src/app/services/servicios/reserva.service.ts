@@ -11,6 +11,10 @@ export class ReservaService {
 
   constructor(private http: HttpClient) { }
 
+  listarRecursos() {
+    return this.http.get(this.recurosBaseURL + 'listar');
+  }
+  
   listarRecursosHoy() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
@@ -29,6 +33,10 @@ export class ReservaService {
 
   getTurnos(id) {
     return this.http.get(this.recurosBaseURL + 'get-turnos/' + id);
+  }
+
+  getTurnosPorFechayEmpleado(id, date) {
+    return this.http.get(this.recurosBaseURL + 'get-turnos/' + id + '/' + date);
   }
 
   getTurnosss(empid, serid, fecha) {

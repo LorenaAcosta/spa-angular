@@ -16,9 +16,9 @@ export class ReservaListComponent implements OnInit {
   constructor(private reservaService: ReservaService) { }
 
   ngOnInit(): void {
-    this.reservaService.listarRecursosHoy().subscribe( (resp: any[]) => {
+    this.reservaService.listarRecursos().subscribe( (resp: any[]) => {
       this.auxiliar = resp;
-     // console.log(this.auxiliar);
+      console.log(this.auxiliar);
      });
 
   }
@@ -30,7 +30,7 @@ export class ReservaListComponent implements OnInit {
     const date: Date = new Date();
     // tslint:disable-next-line:ban-types
     // const fechaActual: String =  date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
-    const fechaActual = '2020-01-03';
+    const fechaActual = '2020-11-27';
     console.log(fechaActual);
     for (this.i = 0; this.i < this.auxiliar.length; this.i++ ) {
       console.log('auxiliar[i] ' + this.auxiliar[this.i].fechaReserva);

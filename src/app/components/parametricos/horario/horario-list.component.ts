@@ -1,28 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { DisponibleService } from 'src/app/services/servicios/disponibilidad.service';
+import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
+import { HorarioService } from 'src/app/services/servicios/horario.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-listar',
-  templateUrl: './disponible-listar.component.html',
-  styleUrls: ['./disponible-listar.component.scss']
+  selector: 'app-horario-list',
+  templateUrl: './horario-list.component.html',
+  styleUrls: ['./horario-list.component.scss']
 })
-export class ListarComponent implements OnInit {
+export class HorarioListComponent implements OnInit {
 
-  disponible: any[] = [];
+
+  empleados: any[] = [];
   index = 0;
   pageActual: 1;
   closeResult = '';
 
+
   constructor(private fb: FormBuilder,
-              private disponibleService: DisponibleService,
+              private horarioService: HorarioService,
               private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.disponibleService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.disponible = resp );
+    this.horarioService.listarRecurso()
+    .subscribe( (resp: any[]) =>  this.empleados = resp );
   }
 
   borrar(id: any, pos: any) {
@@ -36,8 +39,8 @@ export class ListarComponent implements OnInit {
       confirmButtonText: 'Si, eliminar!'
       }).then((result) => {
         if (result.value) {
-          this.disponibleService.eliminarRecurso(id).subscribe();
-          this.disponible.splice(pos, 1);
+          this.horarioService.eliminarRecurso(id).subscribe();
+          this.empleados.splice(pos, 1);
           Swal.fire(
             'Eliminado!',
             'Los datos han sido eliminados.',

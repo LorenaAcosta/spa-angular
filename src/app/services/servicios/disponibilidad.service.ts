@@ -16,7 +16,6 @@ export class DisponibleService {
     return this.http.get(this.recurosBaseURL + 'obtener-empleados-disponibles/' + servicioId) ;
   }
 
-
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
   }

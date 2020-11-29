@@ -18,7 +18,6 @@ export class ServicioListar2Component implements OnInit {
   index: 0;
   value: any;
   sum = 0;
-  id = 1;
   pageActual: 1;
 
   constructor(private categoriaService: CategoriaService,
@@ -32,17 +31,17 @@ export class ServicioListar2Component implements OnInit {
     /*Mostrar los servicios */
     const id = this.route.snapshot.params.id;
     if (typeof id !== 'undefined') {
-    this.servicioService.listarRecursoPorCategoria(id)
+    this.servicioService.listarRecursosActivos(id, 'activo')
      .subscribe( (resp: any[]) =>  this.servicios = resp );
     } else {
-      this.servicioService.listarRecursoPorCategoria(1)
+      this.servicioService.listarRecursosActivos(1, 'activo')
       .subscribe( (resp: any[]) =>  this.servicios = resp );
     }
   }
 
 
 recargar(id: any) {
-   this.servicioService.listarRecursoPorCategoria(id)
+   this.servicioService.listarRecursosActivos(id, 'activo')
    .subscribe( (resp: any[]) =>  this.servicios = resp );
  }
 

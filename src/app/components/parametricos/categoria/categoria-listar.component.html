@@ -6,6 +6,8 @@
       <button routerLink="/categoria/agregar" class="btn btn-info mr-1" >
       <i class="fas fa-plus"></i> Agregar
       </button>  
+      <button class="btn btn-info mr-1" (click)="productos()">Productos</button>
+      <button class="btn btn-info mr-1" (click)="servicios()">Servicios</button> 
     </div>
   </div>
   
@@ -13,7 +15,7 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Tipo Servicio</th>
+        <th scope="col" >Tipo Servicio</th>
         <th scope="col">Nombre de Categoria</th>
         <th>Opciones</th>
       </tr>

@@ -13,7 +13,7 @@
 <div class="container-fluid">
   <form [formGroup]="form">
       <div class="form-group row">
-        <label for="inputEmail3" class="col-sm-2 col-form-label">Cedula</label>
+        <label for="inputEmail3" class="col-sm-2 col-form-label">Número deCédula </label>
         <div class="col-sm-3">
           <input formControlName="cedula" type="cedula" class="form-control" 
           pattern="^[0-9]*$" id="cedula" required>
@@ -23,21 +23,21 @@
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre</label>
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Nombres</label>
         <div class="col-sm-3">
-          <input formControlName="nombre" type="nombre" class="form-control" id="nombre" required>
+          <input formControlName="nombre" type="nombre" maxlength="30"     class="form-control" id="nombre" required>
         </div>
       </div>
       <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Apellido</label>
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Apellidos</label>
         <div class="col-sm-3">
-          <input formControlName="apellido" type="apellido" class="form-control" id="apellido" required>
+          <input formControlName="apellido" type="apellido"  maxlength="30"  class="form-control" id="apellido" required>
         </div>
       </div>
       <div class="form-group row">
         <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección</label>
         <div class="col-sm-3">
-          <input formControlName="direccion" type="direccion" class="form-control" id="direccion" required>
+          <input formControlName="direccion" type="direccion" maxlength="60" class="form-control" id="direccion" required>
         </div>
       </div>
       <div class="form-group row">

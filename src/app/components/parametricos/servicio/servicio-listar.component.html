@@ -1,5 +1,5 @@
-<br>
-<div class="container-fluid">
+
+
   <div class="row">
     <h5 class="display">Servicios</h5>
     <div class="col text-right">
@@ -8,9 +8,8 @@
     <button class="btn btn-info mr-1" (click)="downloadPDF()"><i class="far fa-file-pdf"></i></button>
     </div>
   </div>
-  <div class="col-md-8" id="htmlData" #htmlData>
 
-
+  <div class="col-md-12" id="htmlData" #htmlData>
     <div class="card mb-4">
       <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Servicios</div>
       <div class="card-body">
@@ -54,7 +53,8 @@
               </div>
             </div>
     </div>
-  </div>
+
+
 
     <div *ngIf="servicios.length == 0" class="alertalert-warning text-center mt-3">
       <h4 class="alert-heading">No hay registros</h4>  

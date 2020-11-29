@@ -44,6 +44,7 @@ import { CalendarComponent } from './components/parametricos/booking/calendar.co
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
 import { ListarComponent } from './components/parametricos/disponible/disponible-listar.component';
+import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
 
 
 @NgModule({
@@ -78,12 +79,13 @@ import { ListarComponent } from './components/parametricos/disponible/disponible
     ServicioListar2Component,
     EmpleadoComponent,
     PlanillaComponent,
-    HorarioAsignarComponent,
     TerapistaComponent,
     CalendarComponent,
     OfertaComponent,
     DisponibleComponent,
-    ListarComponent
+    ListarComponent,
+    HorarioAsignarComponent,
+    HorarioListComponent
   ],
   imports: [
     BrowserModule,

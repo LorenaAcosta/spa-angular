@@ -1,19 +1,17 @@
-<p>reserva-list works!</p>
 
-
+<!--
  <div class="btn-group d-flex justify-content-end mb-2" role="group">
     <button type="button" class="btn btn-sm btn-outline-primary" (click)="getReservasPrev();">Prev</button>
     <button type="button" class="btn btn-sm btn-outline-primary" (click)="getReservasToday()">Today</button>
     <button type="button" class="btn btn-sm btn-outline-primary" (click)="getReservasNext()">Next</button>
   </div>
-
-
+ -->
   <div class="container-fluid">
     <div class="card mb-4">
       <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Reservas</div>
       <div class="card-body">
           <div class="table-responsive">
-              <table class="table table-bordered display" id="dataTable" *ngIf="reservas.length>0" width="100%" cellspacing="0">
+              <table class="table table-bordered display"  *ngIf="auxiliar.length>0" width="100%" cellspacing="0">
                   <thead>
                       <tr>
                         <th>#</th>
@@ -23,16 +21,13 @@
                         <th>Opciones</th>
                       </tr>
                   </thead>
-                  <tbody *ngFor="let item of reservas; let i = index  ">
+                  <tbody *ngFor="let item of auxiliar; let i = index  ">
                       <tr>
                         <td>{{ i + 1}}</td>
                         <td>{{ item.disponibleId.empleadoId.nombre}}</td>
                         <td>{{ item.hora}}</td>
                         <td>{{ item.disponibleId.servicioId.nombre}}</td>
-                        <td>                        
-                          <button class="btn btn-info mr-1" (click)="changeState(item.reservaId)">
-                            <i class="fas fa-pencil-alt"></i>
-                          </button>
+                        <td>     
                         </td>
                       </tr>
                     </tbody>
@@ -46,7 +41,7 @@
 
 
 
-  <div *ngIf="reservas.length == 0" class="alertalert-warning text-center mt-3">
+  <div *ngIf="auxiliar.length == 0" class="alertalert-warning text-center mt-3">
     <h4 class="alert-heading">No hay registros</h4>  
     <p>
       <i class="fa fa-exclamation fa-2x"></i>
