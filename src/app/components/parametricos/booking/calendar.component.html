@@ -1,33 +1,45 @@
 <blockquote class="blockquote text-center">
-   <h1>Consulta los Horarios disponibles</h1>
-   <footer class="blockquote-footer">Selecciona el horario que mejor te quede!</footer>
- </blockquote>
+    <h1>Consulta los Horarios disponibles</h1>
+    <footer class="blockquote-footer">Selecciona el horario que mejor te quede!</footer>
+</blockquote><br><br>
+<h4 class="panel-title text-dark text-center">
+    <div class="panel-body">¡Elegí el dia y la hora adecuada para vos!</div><br>
+    <a data-toggle="collapse" data-parent="#accordion" (click)=getSelectedDay() href="#collapse1">
+        <h1>Haga Click para desplegar el calendario</h1>
+    </a>
 
- <div class="container">
-   <div class="row">
-     <div class="col-sm">
-      
-
-
-      <ngb-datepicker class="my-datepicker-1" #dp [(ngModel)]="model" (click) = getSelectedDay()>
-      </ngb-datepicker>
+</h4>
+<div class="container panel-collapse collapse in" id="collapse1">
+    <div class="row">
+        <div class="col-sm ">
 
 
 
-     </div>
-     <div class="col-sm">
-      <select class="btn btn-lg btn-outline-primary mr-2" [(ngModel)]="selectedOption">
+            <ngb-datepicker class="my-datepicker-1" #dp [(ngModel)]="model" (click)=getSelectedDay()>
+            </ngb-datepicker>
+
+
+
+        </div>
+        <div class="col-sm">
+            <select class="btn btn-lg btn-outline-primary mr-2" [(ngModel)]="selectedOption">
          <option *ngFor="let x of turnosArray">
             {{x}}
          </option>
       </select>
-     </div>
-     <div class="col-sm">
-      <button  class="btn btn-lg btn-outline-primary mr-2"  (click)="print()">Agendar </button>
-     </div>
-   </div>
- </div>
-  
+        </div>
+        <div class="col-sm">
+            <button class="btn btn-lg btn-outline-primary mr-2" (click)="print()">Agendar </button>
+        </div>
+    </div>
+</div>
 
+<div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+        <div class="panel-heading">
 
-   
+        </div>
+        <div class="panel-collapse collapse in">
+            <div class="panel-body">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</div>
+        </div>
+    </div>
