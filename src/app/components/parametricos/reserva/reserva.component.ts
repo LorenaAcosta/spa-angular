@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ReservaService } from 'src/app/services/servicios/reserva.service';
 
 @Component({
   selector: 'app-reserva',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ReservaComponent implements OnInit {
 
-  constructor() { }
+  constructor(private reservaService: ReservaService) { }
 
   ngOnInit() {
   }

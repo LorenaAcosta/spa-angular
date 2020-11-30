@@ -22,6 +22,14 @@ export class ServicioService {
       return this.http.get(this.recurosBaseURL + 'getServciosByCategoriaId/' +  id );
     }
 
+    listarRecursoPorEstado(estado) {
+      return this.http.get(this.recurosBaseURL + 'getServiciosByEstado/' +  estado );
+    }
+
+    listarRecursosActivos(categoriaId, estado) {
+      return this.http.get(this.recurosBaseURL + 'getServiciosActivos/' +  categoriaId + '/' + estado );
+    }
+
     getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
     }

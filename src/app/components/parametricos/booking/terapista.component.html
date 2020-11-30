@@ -1,0 +1,34 @@
+<blockquote class="blockquote text-center">
+    <h1>Selecciona un especialista</h1>
+    <footer class="blockquote-footer">Estos son los especialistas disponibles por ahora</footer>
+  </blockquote>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-sm">
+                  
+        <div class="card-columns">
+          <div class="col mb-4">
+              <!--  Lista las categorias -->
+                  <div class="card btn btn-light" *ngFor="let item of disponible; let i= index" [routerLink]="['/booking/calendar', item.disponibleId ]">
+                      {{ item.empleadoId.nombre }} 
+                      {{ item.empleadoId.apellido}}  
+                      {{ item.disponibleId}}
+          </div>
+        </div>
+
+        <div *ngIf="disponible.length == 0" class="alertalert-warning text-center mt-3">
+          <h4 class="alert-heading">No hay especialistas disponibles por el momento.</h4>  
+          <p>
+            <i class="fa fa-exclamation fa-2x"></i>
+          </p>
+        </div>
+      </div>
+      <div class="col-sm">
+      </div>
+      <div class="col-sm">
+      </div>
+    </div>
+  </div>
+ 
+  

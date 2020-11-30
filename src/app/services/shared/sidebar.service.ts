@@ -42,11 +42,6 @@ export class SidebarService {
                   url: '/cliente/listar',
                   icono: 'fas fa-angle-right',
                   titulo: 'Clientes'
-                },
-                {
-                  url: '/disponibilidad/listar',
-                  icono: 'fas fa-angle-right',
-                  titulo: 'Horario-Empleados'
                 }
               ]
           },
@@ -85,7 +80,7 @@ export class SidebarService {
                 {
                   url: '/planilla/listar',
                   icono: 'fas fa-angle-right',
-                  titulo: 'Liquidación'
+                  titulo: 'Planilla salarios'
                 }
               ]
           }

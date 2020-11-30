@@ -21,8 +21,6 @@ export class ServicioEditComponent implements OnInit {
     descripcion: ['', Validators.required],
     categoriaId: ['', Validators.required],
     costo: ['', Validators.required],
-   // porcComision: ['', Validators.required],
-    imageName: [''],
     duracion: ['', Validators.required]
   });
 
@@ -36,7 +34,6 @@ export class ServicioEditComponent implements OnInit {
     // this.categorias$ = this.categoriaService.listarRecurso();
      this.categoriaService.obtenerPorTipo('servicio').
      subscribe( (resp: any[]) =>  this.categorias = resp );
-     
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({
@@ -45,8 +42,6 @@ export class ServicioEditComponent implements OnInit {
         descripcion: ['', Validators.required],
         categoriaId: ['', Validators.required],
         costo: ['', Validators.required],
-       // porcComision: ['', Validators.required],
-        imageName: [''],
         duracion: ['', Validators.required]
       });
       this.servicioService.getRecurso(id)
@@ -56,8 +51,6 @@ export class ServicioEditComponent implements OnInit {
         this.form.controls.descripcion.setValue(data.descripcion);
         this.form.controls.categoriaId.setValue(data.categoriaId.categoriaId);
         this.form.controls.costo.setValue(data.costo);
-      //  this.form.controls.porcComision.setValue(data.porcComision);
-        this.form.controls.imageName.setValue(data.imageName);
         this.form.controls.duracion.setValue(data.duracion);
        });
     }

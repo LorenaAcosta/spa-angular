@@ -27,4 +27,7 @@ export class ProductoService {
     eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
     }
+    listarRecursoPorCategoria(id) {
+      return this.http.get(this.recurosBaseURL + 'getProductosByCategoriaId/' +  id );
+    }
 }

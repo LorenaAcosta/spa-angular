@@ -47,4 +47,13 @@ export class CategoriaListarComponent implements OnInit {
         }
       });
   }
+
+  productos() {
+      this.categoriaService.obtenerPorTipo('producto')
+      .subscribe( (resp: any[]) =>  this.categorias = resp  );
+  }
+  servicios() {
+    this.categoriaService.obtenerPorTipo('servicio')
+    .subscribe( (resp: any[]) =>  this.categorias = resp  );
+}
 }

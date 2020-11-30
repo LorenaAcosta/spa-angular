@@ -1,18 +1,20 @@
-<br>
-<div class="container-fluid">
+
+
   <div class="row">
     <h5 class="display">Servicios</h5>
     <div class="col text-right">
-      <button routerLink="/servicio/agregar" class="btn btn-info mr-1" >
-       <i class="fas fa-plus"></i> Agregar
-      </button>  
+    <button routerLink="/servicio/agregar" class="btn btn-info mr-1" ><i class="fas fa-plus"></i> Agregar</button>  
+    <button class="btn btn-info mr-1" (click)="openPDF()"><i class="fas fa-eye"></i></button>
+    <button class="btn btn-info mr-1" (click)="downloadPDF()"><i class="far fa-file-pdf"></i></button>
     </div>
   </div>
-  <div class="card mb-4">
-    <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Servicios</div>
-    <div class="card-body">
+
+  <div class="col-md-12" id="htmlData" #htmlData>
+    <div class="card mb-4">
+      <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Servicios</div>
+      <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-bordered display" id="dataTable" *ngIf="servicios.length>0" width="100%" cellspacing="0">
+            <table class="table table-bordered display" id="dataTable" *ngIf="servicios.length>0" width="100%" cellspacing="0" >
                 <thead>
                     <tr>
                       <th>#</th>
@@ -25,7 +27,7 @@
                       <th>Opciones</th>
                     </tr>
                 </thead>
-                <tbody *ngFor="let item of servicios | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                <tbody *ngFor="let item of servicios | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
                     <tr>
                       <td>{{ i + 1}}</td>
                       <td>{{ item.nombre}}</td>
@@ -46,14 +48,19 @@
                     </tr>
                   </tbody>
                 </table>
+              </div>
                 <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+              </div>
+            </div>
     </div>
-   </div>
-  </div>
-</div>
-<div *ngIf="servicios.length == 0" class="alertalert-warning text-center mt-3">
-  <h4 class="alert-heading">No hay registros</h4>  
-  <p>
-    <i class="fa fa-exclamation fa-2x"></i>
-  </p>
-</div>
+
+
+
+    <div *ngIf="servicios.length == 0" class="alertalert-warning text-center mt-3">
+      <h4 class="alert-heading">No hay registros</h4>  
+      <p>
+        <i class="fa fa-exclamation fa-2x"></i>
+      </p>
+    </div>
+
+

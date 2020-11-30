@@ -15,12 +15,10 @@ import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 export class  ProductoEditComponent implements OnInit {
 
   form = this.fb.group({
-    codigo: ['', Validators.required],
     descripcion: ['', Validators.required],
     costo: ['', Validators.required],
     precioVenta: ['', Validators.required],
     stockActual: ['', Validators.required],
-    imageName: [''],
     estado: ['', Validators.required]
   });
   productos: any[] = [];
@@ -32,13 +30,11 @@ export class  ProductoEditComponent implements OnInit {
               private categoriaService: CategoriaService,
               private route: ActivatedRoute) {
                 this.form = this.fb.group({
-                  codigo: ['', Validators.required],
                   descripcion: ['', Validators.required],
                   costo: ['', Validators.required],
                   precioVenta: ['', Validators.required],
                   stockActual: ['', Validators.required],
                   categoriaId: ['', Validators.required],
-                  imageName: [''],
                   estado: ['', Validators.required]
                 });
 
@@ -50,13 +46,11 @@ export class  ProductoEditComponent implements OnInit {
    // console.log(id);
     if (typeof id !== 'undefined') {
       this.form = this.fb.group({
-        codigo: ['', Validators.required],
         descripcion: ['', Validators.required],
         costo: ['', Validators.required],
         precioVenta: ['', Validators.required],
         stockActual: ['', Validators.required],
         categoriaId: ['', Validators.required],
-        imageName: [''],
         estado: [1]
       });
       this.productoService.getRecurso(id)
