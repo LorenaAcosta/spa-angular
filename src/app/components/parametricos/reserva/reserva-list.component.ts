@@ -1,74 +1,54 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { FormBuilder } from '@angular/forms';
+import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ReservaService } from 'src/app/services/servicios/reserva.service';
+import { EmpleadoService } from '../../../services/servicios/empleado.service';
 
 @Component({
   selector: 'app-reserva-list',
   templateUrl: './reserva-list.component.html',
   styleUrls: ['./reserva-list.component.scss']
 })
+
 export class ReservaListComponent implements OnInit {
 
-  reservas: any[] = [];
-  auxiliar: any[] = [];
+  constructor(private reservaService: ReservaService,
+              private empleadoService: EmpleadoService,
+              private fb: FormBuilder) { }
+  reservas: any;
+  model: NgbDateStruct;
+  fecha;
+  arrayObject: any[] = [];
+  empleados: any[] = [];
+  lado;
+  selectedOption: number;
 
-  i: number;
-
-  constructor(private reservaService: ReservaService) { }
-
-  ngOnInit(): void {
-    this.reservaService.listarRecursos().subscribe( (resp: any[]) => {
-      this.auxiliar = resp;
-      console.log(this.auxiliar);
-     });
-
+  ngOnInit() {
+    this.empleadoService.listarRecurso()
+    .subscribe( (resp: any) =>  this.empleados = resp  );
   }
 
-  changeState( reservaId ) {
+  // tslint:disable-next-line:member-ordering
+  form = this.fb.group({
+    model: ['']
+  });
+
+
+  cambiaLado(valor) {
+    this.lado = valor;
+    console.log(this.lado);
+
+    // tslint:disable-next-line:prefer-const
+    let dateString = (this.model.year + '-'  + this.model.month + '-' + this.model.day as string);
+    console.log(dateString);
+    this.reservaService.listarporfecha(dateString.toString())
+    .subscribe( (resp: any ) =>  {
+      this.reservas = resp;
+      console.log(this.reservas);
+    }  );
+    this.arrayObject = this.reservas as string[];
   }
 
-  getReservasToday() {
-    const date: Date = new Date();
-    // tslint:disable-next-line:ban-types
-    // const fechaActual: String =  date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
-    const fechaActual = '2020-11-27';
-    console.log(fechaActual);
-    for (this.i = 0; this.i < this.auxiliar.length; this.i++ ) {
-      console.log('auxiliar[i] ' + this.auxiliar[this.i].fechaReserva);
-      console.log('fecha actual ' + fechaActual);
-      if (this.auxiliar[this.i].fechaReserva === fechaActual ) {
-        this.reservas.push(this.auxiliar[this.i]);
-      }
-    }
-    console.log(this.reservas);
-  }
 
-  getReservasPrev() {
-    this.reservas = [];
-    let datex = new Date();
-    datex = new Date(datex.getTime() - (1000 * 60 * 60 * 24));
-    console.log(datex);
-    const fechaActual =  datex.getFullYear() + '-' + datex.getMonth() + '-' + datex.getDate();
-    for (this.i = 0; this.i < this.auxiliar.length; this.i++ ) {
-      console.log('auxiliar[i] ' + this.auxiliar[this.i].fechaReserva);
-      console.log('fecha actual ' + fechaActual);
-      if (this.auxiliar[this.i].fechaReserva === fechaActual ) {
-        this.reservas.push(this.auxiliar[this.i]);
-      }
-    }
-  }
-
-  getReservasNext() {
-    this.reservas = [];
-    let date: Date = new Date();
-    date = new Date(date.getTime() + (1000 * 60 * 60 * 24));
-    console.log(date);
-    const fechaActual =  date.getFullYear() + '-' + date.getMonth() + '-' + date.getDate();
-    for (this.i = 0; this.i < this.auxiliar.length; this.i++ ) {
-      console.log('auxiliar[i] ' + this.auxiliar[this.i].fechaReserva);
-      console.log('fecha actual ' + fechaActual);
-      if (this.auxiliar[this.i].fechaReserva === fechaActual ) {
-        this.reservas.push(this.auxiliar[this.i]);
-      }
-    }
-  }
 }
+

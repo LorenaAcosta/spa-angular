@@ -3,18 +3,31 @@
    <footer class="blockquote-footer">Selecciona el horario que mejor te quede!</footer>
  </blockquote>
 
+ <div class="container">
+   <div class="row">
+     <div class="col-sm">
+      
 
-   <ngb-datepicker class="my-datepicker-1" #dp [(ngModel)]="model" (click)="getSelectedDay()">
-   </ngb-datepicker>
+
+      <ngb-datepicker class="my-datepicker-1" #dp [(ngModel)]="model" (click) = getSelectedDay()>
+      </ngb-datepicker>
 
 
-   <blockquote class="blockquote text-center">
-      <select class="btn btn-bg btn-outline-primary mr-2" [(ngModel)]="selectedOption">
-          <option *ngFor="let x of turnosArray">
-             {{x}}
-          </option>
-       </select>
-       <button  class="btn btn-bg btn-outline-primary mr-2"  (click)="print()">Agendar </button>
-   </blockquote>
+
+     </div>
+     <div class="col-sm">
+      <select class="btn btn-lg btn-outline-primary mr-2" [(ngModel)]="selectedOption">
+         <option *ngFor="let x of turnosArray">
+            {{x}}
+         </option>
+      </select>
+     </div>
+     <div class="col-sm">
+      <button  class="btn btn-lg btn-outline-primary mr-2"  (click)="print()">Agendar </button>
+     </div>
+   </div>
+ </div>
+  
+
 
    

@@ -14,10 +14,6 @@ export class ReservaService {
   listarRecursos() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
-  
-  listarRecursosHoy() {
-    return this.http.get(this.recurosBaseURL + 'listar');
-  }
 
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
@@ -41,6 +37,10 @@ export class ReservaService {
 
   getTurnosss(empid, serid, fecha) {
     return this.http.get(this.recurosBaseURL + 'obtener-turnos/' + empid + '/'  + '/' + fecha);
+  }
+
+  listarporfecha(fechaReserva) {
+    return this.http.get(this.recurosBaseURL + 'listarporfecha/' + fechaReserva);
   }
 
 }

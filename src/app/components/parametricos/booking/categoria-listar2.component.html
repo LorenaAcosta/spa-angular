@@ -9,12 +9,9 @@
 <div class="card-columns">
     <div class="col mb-4">
         <!--  Lista las categorias -->
-            <div class="card" *ngFor="let item of categorias; let i= index">
-                <blockquote class="blockquote mb-0">
-                <button class="btn btn-light" [routerLink]="['../../booking/servicios', item.categoriaId]">
+            <div class="card btn btn-light" *ngFor="let item of categorias; let i= index" 
+            [routerLink]="['../../booking/servicios', item.categoriaId]">
                     <h5 class="card-title"> {{ item.descripcion}} </h5> 
-                </button>
-                </blockquote>
             </div> 
         </div>
 </div>

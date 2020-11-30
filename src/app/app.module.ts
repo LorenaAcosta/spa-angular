@@ -8,7 +8,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
-
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table' 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -45,7 +47,6 @@ import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
 import { ListarComponent } from './components/parametricos/disponible/disponible-listar.component';
 import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
-
 
 @NgModule({
   declarations: [
@@ -95,7 +96,10 @@ import { HorarioListComponent } from './components/parametricos/horario/horario-
     NgbModule,
     FormsModule,
     NgSelectModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatFormFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -21,7 +21,7 @@ export class CategoriaListar2Component implements OnInit {
     this.categoriaService.obtenerPorTipo('servicio')
     .subscribe( (resp: any[]) =>  this.categorias = resp  );
   }
-  
+
   btnClick() {
     this.router.navigateByUrl('booking/servicios');
   }

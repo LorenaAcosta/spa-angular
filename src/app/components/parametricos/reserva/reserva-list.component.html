@@ -1,49 +1,57 @@
+<h1>Informe de Reservas por Fecha</h1>
+
+<form class="form-inline">
+    <div class="form-group">
+      <div class="input-group">
+        <input class="form-control" placeholder="yyyy-mm-dd"
+               name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)" ngbDatepicker #d="ngbDatepicker">
+        <div class="input-group-append">
+          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+        </div>
+        
+
+      </div>
+    </div>
+  </form>
+  <hr/>
 
 <!--
- <div class="btn-group d-flex justify-content-end mb-2" role="group">
-    <button type="button" class="btn btn-sm btn-outline-primary" (click)="getReservasPrev();">Prev</button>
-    <button type="button" class="btn btn-sm btn-outline-primary" (click)="getReservasToday()">Today</button>
-    <button type="button" class="btn btn-sm btn-outline-primary" (click)="getReservasNext()">Next</button>
-  </div>
- -->
-  <div class="container-fluid">
+    
+<pre>Model: {{ model | json }}</pre>
+<ngb-alert class="mt-3 mb-0" type="info" [dismissible]="false">
+  You must provide the icon for the button. This allows you
+  to choose an icon that matches your application's style.
+  In this example, the icon is set via a CSS class.
+</ngb-alert>
+-->
+
+
+  <div class="col-md-12" id="htmlData" #htmlData>
     <div class="card mb-4">
       <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Reservas</div>
-      <div class="card-body">
-          <div class="table-responsive">
-              <table class="table table-bordered display"  *ngIf="auxiliar.length>0" width="100%" cellspacing="0">
-                  <thead>
-                      <tr>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered display" id="dataTable" *ngIf="reservas.length>0" width="100%" cellspacing="0" >
+                    <thead>
+                        <tr>
                         <th>#</th>
                         <th>Terapista</th>
                         <th>Hora</th>
                         <th>Servicio</th>
                         <th>Opciones</th>
-                      </tr>
-                  </thead>
-                  <tbody *ngFor="let item of auxiliar; let i = index  ">
-                      <tr>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of reservas; let i = index  ">
+                        <tr>
                         <td>{{ i + 1}}</td>
                         <td>{{ item.disponibleId.empleadoId.nombre}}</td>
                         <td>{{ item.hora}}</td>
                         <td>{{ item.disponibleId.servicioId.nombre}}</td>
-                        <td>     
-                        </td>
-                      </tr>
+                        </tr>
                     </tbody>
-                  </table>
-      </div>
-     </div>
+                    </table>
+            </div>
+            <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+        </div>
     </div>
-  </div>
-
-
-
-
-
-  <div *ngIf="auxiliar.length == 0" class="alertalert-warning text-center mt-3">
-    <h4 class="alert-heading">No hay registros</h4>  
-    <p>
-      <i class="fa fa-exclamation fa-2x"></i>
-    </p>
-  </div>
+    </div>
