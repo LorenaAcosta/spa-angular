@@ -13,41 +13,30 @@ import Swal from 'sweetalert2';
 })
 export class ServicioEditComponent implements OnInit {
 
+  categorias: any[] = [];
+
   form = this.fb.group({
     nombre: ['', Validators.required],
     estado: ['', Validators.required],
     descripcion: ['', Validators.required],
     categoriaId: ['', Validators.required],
-    duracion: ['', Validators.required],
     costo: ['', Validators.required],
-    porcComision: ['', Validators.required],
-    imageName: ['']
+   // porcComision: ['', Validators.required],
+    imageName: [''],
+    duracion: ['', Validators.required]
   });
-  // categorias$: Observable<any>;
-  categorias: any[] = [];
-  selectedPersonId = 'Elegir';
 
   constructor(private fb: FormBuilder,
               private servicioService: ServicioService,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute) {
-
-      this.form = this.fb.group({
-        nombre: ['', Validators.required],
-        estado: ['', Validators.required],
-        descripcion: ['', Validators.required],
-        categoriaId: ['', Validators.required],
-        duracion: ['', Validators.required],
-        costo: ['', Validators.required],
-        porcComision: ['', Validators.required],
-        imageName: ['']
-      });
-              }
+  }
 
   ngOnInit() {
     // this.categorias$ = this.categoriaService.listarRecurso();
      this.categoriaService.obtenerPorTipo('servicio').
      subscribe( (resp: any[]) =>  this.categorias = resp );
+     
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({
@@ -55,10 +44,10 @@ export class ServicioEditComponent implements OnInit {
         estado: ['', Validators.required],
         descripcion: ['', Validators.required],
         categoriaId: ['', Validators.required],
-        duracion: ['', Validators.required],
         costo: ['', Validators.required],
-        porcComision: ['', Validators.required],
-        imageName: ['']
+       // porcComision: ['', Validators.required],
+        imageName: [''],
+        duracion: ['', Validators.required]
       });
       this.servicioService.getRecurso(id)
        .subscribe ((data: any) => {
@@ -66,10 +55,10 @@ export class ServicioEditComponent implements OnInit {
         this.form.controls.estado.setValue(data.estado);
         this.form.controls.descripcion.setValue(data.descripcion);
         this.form.controls.categoriaId.setValue(data.categoriaId.categoriaId);
-        this.form.controls.duracion.setValue(data.duracion);
         this.form.controls.costo.setValue(data.costo);
-        this.form.controls.porcComision.setValue(data.porcComision);
+      //  this.form.controls.porcComision.setValue(data.porcComision);
         this.form.controls.imageName.setValue(data.imageName);
+        this.form.controls.duracion.setValue(data.duracion);
        });
     }
   }

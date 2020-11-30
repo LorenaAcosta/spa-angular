@@ -1,0 +1,46 @@
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <h5 class="display">Proveedores</h5>
+        <div class="col text-right">
+            <button routerLink="/proveedor/agregar" class="btn btn-info mr-1">
+       <i class="fas fa-plus"></i> Agregar
+      </button>
+        </div>
+    </div>
+    <table *ngIf="proveedores.length >  0" class="table table-hover animated fadedIn faster">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Telefono</th>
+                <th scope="col">Empresa</th>
+                <th scope="col">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let prov of proveedores | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                <td>{{ i + 1}}</td>
+                <td>{{ prov.proveedorId}}</td>
+                <td>{{ prov.nombreProveedor}}</td>
+                <td>{{ prov.telefono}}</td>
+                <td>{{ prov.empresa}}</td>
+                <td>
+                    <button class="btn btn-info mr-1" [routerLink]="['/proveedor/modificar', prov.proveedorId ]">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="btn btn-info mr-1" (click)="borrar(prov.proveedorId, i)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <pagination-controls (pageChange)="pageActual = $event" class="my-pagination"></pagination-controls>
+    <div *ngIf="proveedores.length == 0" class="alertalert-warning text-center mt-3">
+        <h4 class="alert-heading">No hay registros</h4>
+        <p>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </p>
+    </div>

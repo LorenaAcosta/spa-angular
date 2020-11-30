@@ -1,0 +1,106 @@
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <h5 class="display">Compras</h5>
+        <div class="col text-right">
+            <button routerLink="/compras/agregar" class="btn btn-sm btn-info mr-1">
+       <i class="fas fa-plus"></i> Agregar
+      </button><br>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table *ngIf="compras.length >  0" class="table table-hover animated fadedIn faster">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
+                    <th scope="col">Fecha</th>
+                    <th scope="col">Monto total</th>
+                    <th scope="col">Proveedor</th>
+                    <th scope="col">Detalles</th>
+                    <th scope="col">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let c of compras | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                    <td>{{ i + 1}}</td>
+                    <td>{{ c.comprasId}}</td>
+                    <td>{{ c.fecha}}</td>
+                    <td>{{ c.montoTotal}}</td>
+                    <td>{{ c.proveedorId.empresa}}</td>
+                    <td>
+
+                        <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getDetalles( c.comprasId)">Detalles</button>
+                        <!-- Modal -->
+                        <div id="myModal" class="modal fade " role="dialog">
+                            <div class="modal-dialog modal-lg">
+
+                                <!-- Modal content-->
+                                <div class="modal-content col-lg-12 col-md-6">
+                                    <div class="modal-header bg-info row">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Detalles</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table *ngIf="c.detallesCollection.length >  0" class="table table-hover animated fadedIn faster">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Id</th>
+                                                    <th scope="col">CompraId</th>
+                                                    <th scope="col">Cantidad</th>
+                                                    <th scope="col">Precio compra</th>
+                                                    <th scope="col">Producto</th>
+                                                    <th scope="col">Total</th>
+                                                    <!--<th scope="col">Opciones</th>-->
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index  ">
+                                                    <td>{{ j + 1}}</td>
+                                                    <td>{{ d.detalleId}}</td>
+                                                    <td>{{ d.comprasId }}</td>
+                                                    <td>{{ d.cantidad}}</td>
+                                                    <td>{{ d.precioCompra}}</td>
+                                                    <td>{{ d.productoId.descripcion}}</td>
+                                                    <td>{{ d.precioCompra * d.cantidad}}</td>
+                                                    <!--<td>
+                                                    <button class="btn btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
+                                                        <i class="fas fa-pencil-alt"></i>
+                                                    </button>
+                                                    <button class="btn btn-info mr-1" (click)="borrar(c.comprasId, i)">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>-->
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                        <button class="btn btn-sm btn-info mr-1" (click)="borrar(c.comprasId, i)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    </td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <pagination-controls (pageChange)="pageActual = $event" class="my-pagination"></pagination-controls>
+    <div *ngIf="compras.length == 0" class="alertalert-warning text-center mt-3">
+        <h4 class="alert-heading">No hay registros</h4>
+        <p>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </p>
+    </div>

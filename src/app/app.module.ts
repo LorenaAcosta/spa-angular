@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
@@ -36,6 +36,26 @@ import { EmpleadoEditComponent } from './components/parametricos/empleado/emplea
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
 import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
+import { ProveedorComponent } from './components/parametricos/proveedor/proveedor.component';
+import { ProveedorEditComponent } from './components/parametricos/proveedor/proveedor-edit.component';
+import { DisponibilidadComponent } from './components/parametricos/empleado/disponibilidad.component';
+import { CompraComponent } from './components/parametricos/compra/compra.component';
+import { DetallesCompraComponent } from './components/parametricos/detalles-compra/detalles-compra.component';
+import { CompraEditComponent } from './components/parametricos/compra/compra-edit.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TableComponent } from './components/table/table.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import {MatRadioModule} from '@angular/material/radio';
+import { VentaComponent } from './components/parametricos/venta/venta.component';
+import { VentaEditComponent } from './components/parametricos/venta/venta-edit.component';
+import { VentaReporteComponent } from './components/parametricos/venta/venta-reporte.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSort, MatSortModule} from '@angular/material/sort';
+
 
 
 
@@ -69,7 +89,17 @@ import { ServicioListar2Component } from './components/parametricos/servicio/ser
     EmpleadoListarComponent,
     CategoriaListar2Component,
     ProductoListar2Component,
-    ServicioListar2Component
+    ServicioListar2Component,
+    ProveedorComponent,
+    ProveedorEditComponent,
+    DisponibilidadComponent,
+    CompraComponent,
+    DetallesCompraComponent,
+    CompraEditComponent,
+    TableComponent,
+    VentaComponent,
+    VentaEditComponent,
+    VentaReporteComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,7 +108,17 @@ import { ServicioListar2Component } from './components/parametricos/servicio/ser
     HttpClientModule,
     NgbModule,
     NgSelectModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatInputModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatRadioModule,
+    MatPaginatorModule,
+    MatSortModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

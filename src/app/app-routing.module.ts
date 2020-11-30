@@ -17,7 +17,16 @@ import { EmpleadoListarComponent } from './components/parametricos/empleado/empl
 import { CategoriaListar2Component } from './components/parametricos/categoria/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/servicio/servicio-listar2.component';
 import { ServicioComponent } from './components/parametricos/servicio/servicio.component';
+import { ProveedorComponent } from './components/parametricos/proveedor/proveedor.component';
+import { ProveedorEditComponent } from './components/parametricos/proveedor/proveedor-edit.component';
 
+import { DisponibilidadComponent } from './components/parametricos/empleado/disponibilidad.component';
+import { CompraComponent } from './components/parametricos/compra/compra.component';
+import { DetallesCompraComponent } from './components/parametricos/detalles-compra/detalles-compra.component';
+import { CompraEditComponent } from './components/parametricos/compra/compra-edit.component';
+import { VentaComponent } from './components/parametricos/venta/venta.component';
+import { VentaEditComponent } from './components/parametricos/venta/venta-edit.component';
+import { VentaReporteComponent } from './components/parametricos/venta/venta-reporte.component';
 
 const routes: Routes = [
   {
@@ -35,6 +44,7 @@ const routes: Routes = [
       { path: 'listar', component: CategoriaListarComponent, data: { title: 'Listar Categoria' }, },
       { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
       { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
+      { path: 'upload/:id', component: CategoriaEditComponent , data: { title: 'Upload Categoria' }, },
     ]
   },
   {
@@ -58,7 +68,8 @@ const routes: Routes = [
     children: [
       { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
       { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
-      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' }, }
+      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' }, },
+      { path: 'disponibilidad/:id', component: DisponibilidadComponent , data: { title: 'Editar Empleado' }, }
   ]
   },
   {
@@ -84,7 +95,32 @@ const routes: Routes = [
     children: [
       { path: 'agregar', component: ReservEditComponent , data: { title: 'Agregar Reserva' }, }
      ]
-  }
+  },
+  {
+    path: 'proveedor', data: { title: 'Proveedores' },
+    children: [
+      { path: 'agregar', component: ProveedorEditComponent , data: { title: 'Crear proveedor' }, },
+      { path: 'listar', component: ProveedorComponent , data: { title: 'Listar Proveedores' }, },
+      { path: 'modificar/:id', component: ProveedorEditComponent , data: { title: 'Editar Proveedor' }, }
+     ]
+  },
+  {
+    path: 'compras', data: { title: 'Compras' },
+    children: [
+      { path: 'agregar', component: CompraEditComponent , data: { title: 'Crear compra' }, },
+      { path: 'listar', component: CompraComponent , data: { title: 'Listar compras' }, },
+       { path: 'modificar/:id', component: CompraEditComponent , data: { title: 'Editar compra' }, }
+     ]
+  },
+  {
+    path: 'ventas', data: { title: 'Ventas' },
+    children: [
+      { path: 'agregar', component: VentaEditComponent , data: { title: 'Crear venta' }, },
+      { path: 'listar', component: VentaComponent , data: { title: 'Listar ventas' }, },
+      { path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
+      { path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
+     ]
+  },
 ];
 
 @NgModule({

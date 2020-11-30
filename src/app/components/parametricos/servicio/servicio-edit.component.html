@@ -14,30 +14,30 @@
 <div class="container-fluid">
   <form [formGroup]="form">
     <div class="form-group row">
-      <div class="form-group col-sm-6">
         <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre</label>
+        <div class="col-sm-4">
           <input formControlName="nombre" type="nombre" class="form-control" id="nombre" required>
-      </div> 
+        </div> 
     </div>
     <div class="form-group row">
-      <div class="form-group col-sm-6">
       <label for="inputPassword3" class="col-sm-2 col-form-label">Descripción</label>
-        <input formControlName="descripcion" type="descripcion" class="form-control" id="descripcion" required>
+      <div class="col-sm-4">
+          <input formControlName="descripcion" type="descripcion" class="form-control" id="descripcion" required>
       </div>
     </div>
-      <div class="form-row">
-        <div class="form-group col-md-2">
-          <label for="inputZip">Estado</label>
+    <div class="form-group row">
+        <label for="inputZip" class="col-sm-2 col-form-label">Estado</label>
+        <div class="col-sm-4">
           <select id="estado"  formControlName="estado" class="form-control" required>
             <option selected>...</option>
             <option value="activo">Activo</option>
             <option value="inactivo">Inactivo</option>
           </select>
-        </div>
+         </div>
       </div>
       <div class="form-group row">
-        <div class="form-group col-md-6">
-        <label for="inputState">Categoria</label> 
+        <label for="inputState" class="col-sm-2 col-form-label">Categoria</label> 
+        <div class="col-sm-4">
         <select id="categoriaId" formControlName="categoriaId" class="form-control">
           <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
             {{ cat.descripcion }}
@@ -45,23 +45,21 @@
         </select>
       </div>
     </div> 
-    <div class="form-row">
-      <div class="form-group col-md-2">
-        <label for="inputCity">Duracion</label>
+    <div class="form-group row">
+        <label for="inputCity" class="col-sm-2 col-form-label">Duracion</label>
+        <div class="col-sm-4">
         <input  formControlName="duracion" type="time" class="form-control" id="duracion" required>
-      </div>
-      <div class="form-group col-md-2">
-        <label for="inputState">Costo</label>
-        <input  formControlName="costo" type="number" class="form-control" id="costo" required>
-      </div>
-      <div class="form-group col-md-2">
-        <label for="inputZip">% Comisión</label>
-        <input formControlName="porcComision"  type="number" class="form-control" id="porcComision" required>
       </div>
     </div>
     <div class="form-group row">
+        <label for="inputState" class="col-sm-2 col-form-label">Costo</label>
+        <div class="col-sm-4">
+        <input  formControlName="costo" type="number" class="form-control" id="costo" required>
+     </div>
+    </div>
+    <div class="form-group row">
       <label for="inputPassword3" class="col-sm-2 col-form-label">Imagen</label>
-      <div class="col-sm-10">
+      <div class="col-sm-4">
         <input formControlName="imageName" type="imageName" class="form-control" id="imageName" >
       </div>
     </div>
@@ -70,5 +68,11 @@
           <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary" (click)="guardar()" >Guardar</button>
         </div>
       </div>
+            <!--
+      <div class="form-group col-md-2">
+        <label for="inputZip">% Comisión</label>
+        <input formControlName="porcComision"  type="number" class="form-control" id="porcComision" required>
+      </div>
+    </div> -->
   </form>
 </div>

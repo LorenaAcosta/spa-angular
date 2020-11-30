@@ -8,12 +8,11 @@
       </button>  
     </div>
   </div>
-
   <div class="card mb-4">
     <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Empleados</div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table display" id="dataTable" *ngIf="empleados.length>0" width="100%" cellspacing="0">
+          <table class="table table-bordered display"  id="dataTable" *ngIf="empleados.length>0" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                       <th>#</th>
@@ -35,10 +34,13 @@
                       <td>{{ item.telefono}}</td>
                       <td>                        
                         <button class="btn btn-info mr-1"
-                         [routerLink]="['/empleado/modificar', item.cedula ]">
+                         [routerLink]="['/empleado/modificar', item.empleadoId ]">
                          <i class="fas fa-pencil-alt"></i></button>
-                        <button class="btn btn-info mr-1" (click)="borrar(item.cedula, i)">
+                        <button class="btn btn-info mr-1" (click)="borrar(item.empleadoId, i)">
                           <i class="fas fa-trash"></i> </button>
+                          <button class="btn btn-info mr-1"
+                         [routerLink]="['/empleado/disponibilidad', item.empleadoId ]">
+                         <i class="fas fa-pencil-alt"></i></button>
                       </td>
                     </tr>
                   </tbody>

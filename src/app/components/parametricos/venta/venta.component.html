@@ -1,0 +1,154 @@
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <h5 class="display">Compras</h5>
+        <div class="col text-right">
+            <button routerLink="/ventas/agregar" class="btn btn-sm btn-info mr-1">
+       <i class="fas fa-plus"></i> Agregar
+      </button><br>
+        </div>
+    </div>
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de VENTAS</div>
+        <div class="card-body">
+            <div class="table-responsive" id="tb">
+                <table id="my" *ngIf="ventas.length >  0" class="table table-hover animated fadedIn faster table  display">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Id</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Monto total</th>
+                            <th scope="col">Numero de factura</th>
+                            <th scope="col">Medio de pago</th>
+                            <th scope="col">Cliente</th>
+                            <th scope="col">Detalles</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let v of ventas | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                            <td>{{ i + 1}}</td>
+                            <td>{{ v.ventasId}}</td>
+                            <td>{{ v.fecha}}</td>
+                            <td>{{ v.montoTotal}}</td>
+                            <td (ngModel)=comprobanteAux>{{'001-001-'+ ceroIzquierda(v.numeroComprobante, 7) }}</td>
+                            <td>{{ v.medioPagoId.descripcion}}</td>
+                            <td>{{ v.usuarioId.nombre + ' ' + v.usuarioId.apellido}}</td>
+                            <td>
+
+                                <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getDetalles( v.ventasId)" (click)="getNumeroComprobante(v.ventasId)">Detalles</button>
+                                <!-- Modal -->
+                                <div id="myModal" class="modal fade col-lg-8 col-md-8 justify-content-md-center justify-content-lg-center" role="dialog">
+                                    <div class="modal-dialog modal-lg">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content col table-bordered" style="float: left;">
+                                            <div class="modal-header bg-info">
+                                                <div class="logoholder text-center mr-3" style="float: left;">
+                                                    <img class="w-20 img-thumbnail" style="width: 100px;
+                                                        height: 100px
+                                                    " src="https://i.ibb.co/xJxy56v/spa-icon.png">
+
+                                                </div>
+
+                                                <div class="ml-10 mt-2 mr-3 col" style="float: left;">
+                                                    <p contenteditable="">
+                                                        <strong>Katty Spa S.A.</strong><br> 10 de agosto y Gral. Caballero<br> San Lorenzo - Paraguay.<br>RUC : 80010539-1
+                                                        <br>FACTURA : {{'001-001-'+ ceroIzquierda(comprobanteAux.numeroComprobante, 7) }}<br>
+                                                    </p>
+                                                </div>
+
+                                                <div class="info mt-2 mr-3" style="float: left;">
+                                                    <p contenteditable="">
+                                                        Web: <a>www.kattyspa.com.py</a><br> Correo: <a>info@kattyspa.com.py</a><br> Tel: 021-498-003<br> Instagram: @kattyspa
+                                                    </p>
+                                                </div>
+                                                <!--    
+                                    <p contenteditable="" class="mt-2 mr-3">
+                                        Razon social: <br> Katty Spa S.A. <br> RUC: <br> 80010539-1
+                                    </p>-->
+
+                                                <!--<button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                                                <h4 class="modal-title">Detalles</h4>-->
+                                            </div>
+                                            <div class="modal-body container-fluid ">
+                                                <table class="table table-hover animated fadedIn faster " id="tab">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">#</th>
+                                                            <th scope="col">Producto</th>
+                                                            <th scope="col">Cantidad</th>
+                                                            <th scope="col">Monto</th>
+                                                            <th scope="col">Total</th>
+                                                            <!--<th scope="col">Opciones</th>-->
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index  ">
+                                                            <td>{{ j + 1}}</td>
+                                                            <td *ngIf="d.productoId !== null; else servicio">{{ d.productoId.descripcion}}</td>
+                                                            <ng-template #servicio>
+                                                                <td>{{d.servicioId.descripcion}}</td>
+                                                            </ng-template>
+                                                            <td>{{ d.cantidad}}</td>
+                                                            <td>{{ d.precio}}</td>
+                                                            <td>{{ d.monto}}</td>
+                                                        </tr>
+                                                        <!--<tr>
+
+                                                            <th scope="col">Iva 5%</th>
+                                                            <td>{{ comprobanteAux.montoTotal/ 21}}</td>
+                                                            <th scope="col">Iva 10%</th>
+                                                            <td>{{ comprobanteAux.montoTotal/ 11}}</td>
+                                                        </tr>-->
+                                                        <tfoot class="footer ">
+                                                            <br>
+
+
+                                                            <tr>
+                                                                <th scope="col">Total general</th>
+                                                                <td>{{ comprobanteAux.montoTotal}}</td>
+                                                            </tr>
+
+
+                                                        </tfoot>
+
+                                                </table>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                <button type="button" class="btn btn-info text-dark" onclick="return xepOnline.Formatter.Format('myModal',
+                                                {pageWidth:'250mm', pageHeight:'250mm'});"><strong>Imprimir</strong></button>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </td>
+                            <div class="container-fluid">
+                                <td>
+                                    <button class="btn btn-sm btn-info mr-1 " [routerLink]="['/ventas/modificar', v.ventasId ]">
+                        <i class="fas fa-pencil-alt "></i>
+                    </button>
+                                    <button class="btn btn-sm btn-info mr-1" (click)="borrar(v.ventasId, i)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                                </td>
+                            </div>
+                        </tr>
+                        </tbody>
+                </table>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+            </div>
+        </div>
+
+    </div>
+
+    <div *ngIf="ventas.length == 0" class="alertalert-warning text-center mt-3">
+        <h4 class="alert-heading">No hay registros</h4>
+        <p>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </p>
+    </div>

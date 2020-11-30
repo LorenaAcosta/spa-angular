@@ -1,0 +1,247 @@
+<br>
+<div class="container-fluid">
+    <div class="row">
+        <h5 class="display">Nueva venta</h5>
+        <div class="col text-right">
+            <button routerLink="/ventas/listar" class="btn btn-info mr-1">
+       <i class="fas fa-arrow-left"></i> Regresar
+      </button>
+        </div>
+    </div>
+</div>
+<hr>
+
+<div class="container-fluid">
+    <form [formGroup]="form">
+        <!--
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col" colspan="1">First</th>
+                    <th scope="col" colspan="1">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td scope="col" colspan="1">
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-2 col-form-label">Fecha</label>
+                            <div class="col-sm-8">
+                                <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true>
+                            </div>
+                        </div>
+                    </td>
+                    <td scope="col" colspan="1">
+                        <div class="form-group row">
+                            <label for="inputPassword3" class="col-sm-4 col-form-label">Numero comprobante</label>
+                            <div class="col-sm-6">
+                                <input formControlName="numeroComprobante" type="numeroComprobante" class="form-control" id="numeroComprobante" disabled>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+
+                </tr>
+                <tr>
+                    <td colspan="2">Larry the Bird</td>
+                    <td>@twitter</td>
+                </tr>
+            </tbody>
+        </table>
+-->
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Fecha </label>
+            <div class="col-sm-3">
+                <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Monto Total</label>
+            <div class="col-sm-3">
+                <input [(ngModel)]="totalVenta" formControlName="montoTotal" type="montoTotal" value="{{totalVenta}}" class="form-control" id="montoTotal" disabled>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Numero comprobante</label>
+            <div class="col-sm-3">
+                <input formControlName="numeroComprobante" type="numeroComprobante" value="{{'001-001-'+ceroIzquierda(this.nextComprobante, 7)}}" class="form-control" id="numeroComprobante" disabled>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputState" class="col-sm-2 col-form-label">Medio de pago</label>
+            <div class="form-group col-md-3">
+                <select id="medioPagoId" formControlName="medioPagoId" class="form-control">
+              <option *ngFor="let m of medios" [ngValue]="m.medioPagoId">
+                {{ m.descripcion }}
+              </option>
+            </select>
+            </div>
+            <div class="d-inline ">
+                <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar medio de pago" [routerLink]="['/medios-pago/agregar' ]">
+                <i class="fas fa-1x fa-plus-circle"></i>
+            </button>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label for="inputState" class="col-sm-2 col-form-label">Cliente</label>
+            <div class="form-group col-md-3">
+                <select id="usuarioId" formControlName="usuarioId" class="form-control">
+              <option *ngFor="let u of usuarios" [ngValue]="u.usuarioId">
+                {{ u.nombre + ' ' + u.apellido }}
+              </option>
+            </select>
+            </div>
+            <div class="d-inline ">
+                <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar cliente" [routerLink]="['/cliente/registrar' ]">
+                <i class="fas fa-1x fa-plus-circle"></i>
+            </button>
+            </div>
+
+        </div>
+
+
+
+
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary" (click)="guardar()">Guardar</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!--Agregar tabla para detalles-->
+<br><br>
+<strong><p class="text-center">Productos</p></strong>
+<table mat-table [dataSource]="datos" class="mat-elevation-z8" #tabla1>
+
+
+    <tr mat-header-cell *matHeaderCellDef> Productos </tr>
+
+
+    <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+        <td mat-cell *matCellDef="let detalle"> {{detalle.cantidad}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="producto_servicio">
+        <th mat-header-cell *matHeaderCellDef> Producto o Servico </th>
+        <ng-container *matCellDef="let detalle">
+            <td mat-cell *ngIf="detalle.productoId !== null; else servicio">
+                {{detalle.productoId.descripcion}}
+            </td>
+            <ng-template #servicio>
+                <td>{{detalle.servicioId.descripcion}}</td>
+            </ng-template>
+        </ng-container>
+        <ng-template #noprod>-</ng-template>
+    </ng-container>
+
+
+    <ng-container matColumnDef="precioVenta">
+        <th mat-header-cell *matHeaderCellDef> Precio </th>
+        <td mat-cell *matCellDef="let detalle"> {{detalle.precio}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="monto" invisible>
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let detalle">
+            {{ detalle.monto}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="borrar">
+        <th mat-header-cell *matHeaderCellDef> Borrar? </th>
+        <td mat-cell *matCellDef="let j = index;">
+            <button mat-raised-button color="warn" focusable="false" (click)="borrarFila(j)">
+                  Borrar?
+                </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+</table>
+<!--<table mat-table [dataSource]="datosTemporal" class="mat-elevation-z8" #tab>
+
+
+    <tr mat-header-cell *matHeaderCellDef> Productos </tr>
+
+
+    <ng-container matColumnDef="cantidad">
+        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
+        <td mat-cell *matCellDef="let detalle"> {{detalle.cantidad}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="producto_servicio">
+        <th mat-header-cell *matHeaderCellDef> Producto o Servico </th>
+        <ng-container *matCellDef="let detalle">
+            <td mat-cell *ngIf="(detalle.productoId.descripcion !== ''); else noprod">
+                {{detalle.productoId.descripcion}}
+            </td>
+        </ng-container>
+        <ng-template #noprod>-</ng-template>
+    </ng-container>
+
+
+    <ng-container matColumnDef="precioVenta">
+        <th mat-header-cell *matHeaderCellDef> Precio </th>
+        <td mat-cell *matCellDef="let detalle"> {{detalle.productoId.precioVenta}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="monto" invisible>
+        <th mat-header-cell *matHeaderCellDef> Total </th>
+        <td mat-cell *matCellDef="let detalle">
+            {{ detalle.productoId.precioVenta * detalle.cantidad}}
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="borrar">
+        <th mat-header-cell *matHeaderCellDef> Borrar? </th>
+        <td mat-cell *matCellDef="let j = index;">
+            <button mat-raised-button color="warn" focusable="false" (click)="borrarFila(j)">
+                  Borrar?
+                </button>
+        </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
+</table>-->
+
+<!--form que recibe parametros para detalle-->
+<div class="contenedor">
+
+    <mat-form-field>
+        <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
+    </mat-form-field>
+    <br>
+    <section class="example-section">
+        <label>Seleccione el tipo de detalle que desea agregar:</label>
+        <mat-radio-group>
+            <mat-radio-button class="example-margin" value="after" (click)=cargaProducto() [checked]="true">Producto</mat-radio-button>
+            <mat-radio-button class="example-margin" value="before" (click)=cargaServicio()>Servicio</mat-radio-button>
+        </mat-radio-group>
+    </section>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Seleccione el producto</mat-label>
+        <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
+          <option value="--" selected></option>
+          <option *ngFor="let prod of productos " [ngValue]="prod" >
+            {{prod.descripcion}}
+          </option>
+        </select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
+
+</div>
+<!--Fin tabla para detalles-->

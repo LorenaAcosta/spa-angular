@@ -19,25 +19,23 @@
                       <th>Nombre</th>
                       <th>Apellido</th>
                       <th>Correo</th>
-                      <th>Documento</th>
                       <th>Telefono</th>
                       <th>Opciones</th>
                     </tr>
                 </thead>
-                <tbody *ngFor="let item of clientes | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                <tbody *ngFor="let item of clientes | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let i = index  ">
                     <tr>
                       <td>{{ i + 1}}</td>
                       <td>{{ item.nombre}}</td>
                       <td>{{ item.apellido}}</td>
                       <td>{{ item.correo}}</td>
-                      <td>{{ item.ruc}}</td>
                       <td>{{ item.telefono}}</td>
                       <td>                        
                         <button class="btn btn-info mr-1"
-                         [routerLink]="['/cliente/modificar', item.clienteId ]">
+                         [routerLink]="['/cliente/modificar', item.usuarioId ]">
                           <i class="fas fa-pencil-alt"></i>
                         </button>
-                        <button class="btn btn-info mr-1" (click)="borrar(item.clienteId, i)">
+                        <button class="btn btn-info mr-1" (click)="borrar(item.usuarioId, i)">
                           <i class="fas fa-trash"></i>
                         </button>
                       </td>

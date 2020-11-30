@@ -1,0 +1,21 @@
+[1028/214837.864:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
+[1028/225011.430:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
+[1126/001248.072:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
+[1126/125959.355:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
+[1127/012616.122:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
+[1127/193132.774:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
+[1128/005536.254:ERROR:file_io.cc(135)] WriteFile: Se está cerrando la canalización. (0xE8)
+[1128/010207.569:ERROR:filesystem_win.cc(129)] GetFileAttributes C:\Users\PC\AppData\Local\Google\Chrome\User Data\Crashpad\attachments\4c9451ad-af12-40d4-ad1b-9931f2d59c9f: El sistema no puede encontrar la ruta especificada. (0x3)
+[1128/090424.122:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
+[1128/161913.590:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)
+[1129/093237.687:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[1129/093237.763:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[1129/093237.691:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[1129/093238.068:ERROR:exception_snapshot_win.cc(99)] thread ID 8048 not found in process
+[1129/093238.068:ERROR:exception_snapshot_win.cc(99)] thread ID 13028 not found in process
+[1129/093238.068:ERROR:exception_snapshot_win.cc(99)] thread ID 17672 not found in process
+[1129/093238.213:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[1129/093238.214:ERROR:exception_snapshot_win.cc(99)] thread ID 16892 not found in process
+[1129/093238.215:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[1129/093238.215:ERROR:exception_snapshot_win.cc(99)] thread ID 14696 not found in process
+[1129/170206.629:ERROR:directory_reader_win.cc(43)] FindFirstFile: El sistema no puede encontrar la ruta especificada. (0x3)

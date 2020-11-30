@@ -13,9 +13,8 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Tipo</th>
-        <th scope="col">Descripción</th>
-        <th scope="col">Imagen</th>
+        <th scope="col">Tipo Servicio</th>
+        <th scope="col">Nombre de Categoria</th>
         <th>Opciones</th>
       </tr>
     </thead>
@@ -24,7 +23,6 @@
         <td>{{ i + 1 }}</td>
         <td>{{ item.dataType}}</td>
         <td>{{ item.descripcion}}</td>
-        <td>{{ item.imageName}}</td>
         <td>
           <button class="btn btn-info mr-1"
            [routerLink]="['/categoria/modificar', item.categoriaId ]">

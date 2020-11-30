@@ -42,6 +42,11 @@ export class SidebarService {
                   url: '/cliente/listar',
                   icono: 'fas fa-angle-right',
                   titulo: 'Clientes'
+                },
+                {
+                  url: '/disponibilidad/listar',
+                  icono: 'fas fa-angle-right',
+                  titulo: 'Horario-Empleados'
                 }
               ]
           },
