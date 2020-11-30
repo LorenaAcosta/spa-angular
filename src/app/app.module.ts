@@ -54,6 +54,7 @@ import { VentaComponent } from './components/parametricos/venta/venta.component'
 import { VentaEditComponent } from './components/parametricos/venta/venta-edit.component';
 import { VentaReporteComponent } from './components/parametricos/venta/venta-reporte.component';
 import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSort, MatSortModule} from '@angular/material/sort';
 
 
 
@@ -98,7 +99,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     TableComponent,
     VentaComponent,
     VentaEditComponent,
-    VentaReporteComponent
+    VentaReporteComponent,
   ],
   imports: [
     BrowserModule,
@@ -116,6 +117,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     MatCheckboxModule,
     MatRadioModule,
     MatPaginatorModule,
+    MatSortModule,
     FormsModule
   ],
   providers: [],
