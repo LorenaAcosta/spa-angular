@@ -52,6 +52,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
 import {MatRadioModule} from '@angular/material/radio';
 import { VentaComponent } from './components/parametricos/venta/venta.component';
 import { VentaEditComponent } from './components/parametricos/venta/venta-edit.component';
+import { VentaReporteComponent } from './components/parametricos/venta/venta-reporte.component';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 
 
@@ -95,7 +97,8 @@ import { VentaEditComponent } from './components/parametricos/venta/venta-edit.c
     CompraEditComponent,
     TableComponent,
     VentaComponent,
-    VentaEditComponent
+    VentaEditComponent,
+    VentaReporteComponent
   ],
   imports: [
     BrowserModule,
@@ -112,6 +115,7 @@ import { VentaEditComponent } from './components/parametricos/venta/venta-edit.c
     MatSelectModule,
     MatCheckboxModule,
     MatRadioModule,
+    MatPaginatorModule,
     FormsModule
   ],
   providers: [],

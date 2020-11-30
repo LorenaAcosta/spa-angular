@@ -179,6 +179,18 @@ export class VentaEditComponent implements OnInit {
           this.articuloselect.precio, this.articuloselect.monto, null,
           this.articuloselect.servicioId));
       } else {
+        // controlar existencia del producto
+        const stock = this.articuloselect.productoId.stockActual - this.articuloselect.cantidad;
+        console.log(stock < this.articuloselect.productoId.stockActual);
+        if (stock < 0) {
+            Swal.fire(
+              'Existencia insuficiente',
+              'La cantidad supera el stock actual : ' + this.articuloselect.productoId.stockActual,
+              'warning'
+            );
+            exit();
+        }
+
         this.articuloselect.precio = this.articuloselect.productoId.precioVenta;
         this.articuloselect.monto = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad;
         this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId,

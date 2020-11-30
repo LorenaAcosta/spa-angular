@@ -13,6 +13,10 @@ export class DetalleVentaService {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
 
+  getRankingProductos() {
+    return this.http.get(this.recurosBaseURL + 'ranking');
+  }
+
   getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar-detalles/' + id);
   }

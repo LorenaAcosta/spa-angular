@@ -26,6 +26,7 @@ import { DetallesCompraComponent } from './components/parametricos/detalles-comp
 import { CompraEditComponent } from './components/parametricos/compra/compra-edit.component';
 import { VentaComponent } from './components/parametricos/venta/venta.component';
 import { VentaEditComponent } from './components/parametricos/venta/venta-edit.component';
+import { VentaReporteComponent } from './components/parametricos/venta/venta-reporte.component';
 
 const routes: Routes = [
   {
@@ -116,7 +117,8 @@ const routes: Routes = [
     children: [
       { path: 'agregar', component: VentaEditComponent , data: { title: 'Crear venta' }, },
       { path: 'listar', component: VentaComponent , data: { title: 'Listar ventas' }, },
-      { path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, }
+      { path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
+      { path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
      ]
   },
 ];
