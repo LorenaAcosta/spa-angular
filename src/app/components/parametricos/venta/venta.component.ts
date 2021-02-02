@@ -29,8 +29,8 @@ export class VentaComponent implements OnInit {
     this.ventasService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.ventas = resp  );
 
-    this.ventasService.getRecurso(1).
-    subscribe( (resp: any) =>  this.comprobanteAux = resp  );
+    /*this.ventasService.getRecurso(id)
+    .subscribe( (resp: any) =>  this.comprobanteAux = resp  );*/
   }
 
   exportarPdf() {
@@ -48,9 +48,9 @@ export class VentaComponent implements OnInit {
   }
 
   getNumeroComprobante(id){
-    this.ventasService.getRecurso(id).
-    subscribe( (resp: any) =>  this.comprobanteAux = resp  );
-    console.log(this.comprobanteAux.numeroComprobante);
+    this.ventasService.getRecurso(id)
+    .subscribe( (resp: any) =>  this.comprobanteAux = resp );
+    console.log(this.comprobanteAux.montoTotal + ' nro comprobante');
   }
 
   getCategorias(id) {

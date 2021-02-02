@@ -19,7 +19,6 @@ import { ServicioComponent } from './components/parametricos/servicio/servicio.c
 import { ProveedorComponent } from './components/parametricos/proveedor/proveedor.component';
 import { ProveedorEditComponent } from './components/parametricos/proveedor/proveedor-edit.component';
 
-import { DisponibilidadComponent } from './components/parametricos/empleado/disponibilidad.component';
 import { CompraComponent } from './components/parametricos/compra/compra.component';
 import { DetallesCompraComponent } from './components/parametricos/detalles-compra/detalles-compra.component';
 import { CompraEditComponent } from './components/parametricos/compra/compra-edit.component';
@@ -30,12 +29,13 @@ import { HorarioAsignarComponent } from './components/parametricos/horario/horar
 import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
 import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
 import { CalendarComponent } from './components/parametricos/booking/calendar.component';
-import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
+//import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 import { ReservaListComponent } from './components/parametricos/reserva/reserva-list.component';
 import { ProductoListar2Component } from './components/parametricos/producto/producto-listar2.component';
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
 import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
+import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 
 const routes: Routes = [
   {

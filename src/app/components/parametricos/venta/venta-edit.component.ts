@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { exit } from 'process';
 import { Observable } from 'rxjs';
 import { ClienteService } from 'src/app/services/servicios/cliente.service';
@@ -28,6 +29,7 @@ export class VentaEditComponent implements OnInit {
               public servicioId: any, public usuarioId: any
       )
   */
+ model: NgbDateStruct;
   proveedores: any[] = [];
   medios: any[] = [];
   usuarios: any[] = [];
@@ -128,6 +130,9 @@ export class VentaEditComponent implements OnInit {
     }
 
     agregar() {
+
+
+
       /* controlar que se seleccione el producto para agregar fila a la tabla */
       if (this.selectedProd === 0 ||  this.selectedProd === '--' || this.selectedProd === undefined) {
         console.log('hay que validar');
@@ -201,7 +206,7 @@ export class VentaEditComponent implements OnInit {
       // this.articuloselect.subtotal = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad
       this.totalVenta = this.totalVenta + this.articuloselect.monto;
       console.log('this.totalVenta');
-      console.log(this.articuloselect.monto);
+      console.log(this.totalVenta);
      /* this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
         this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
         this.articuloselect.servicioId));*/
@@ -277,6 +282,8 @@ export class VentaEditComponent implements OnInit {
       const id = this.route.snapshot.params.id;
       let peticion: Observable<any>;
       let ventasId: number;
+      console.log(this.form.get('fecha').value);
+
       if (typeof id === 'undefined') {
         peticion = this.ventaService.agregarRecurso(this.form.value);
         console.warn(this.form.value);

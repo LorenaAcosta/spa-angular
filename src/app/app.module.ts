@@ -62,6 +62,8 @@ import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
 import { ListarComponent } from './components/parametricos/disponible/disponible-listar.component';
 import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
+import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
+import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
 
 @NgModule({
   declarations: [
@@ -75,6 +77,7 @@ import { HorarioListComponent } from './components/parametricos/horario/horario-
     MediosPagoComponent,
     MediosPagoEditComponent,
     CategoriaListarComponent,
+    CategoriaListar2Component,
     MediosPagoListarComponent,
     ProductoComponent,
     ClienteEditComponent,
@@ -86,16 +89,14 @@ import { HorarioListComponent } from './components/parametricos/horario/horario-
     ReservaListComponent,
     ServicioComponent,
     ServicioListarComponent,
+    ServicioListar2Component,
     ServicioEditComponent,
     EmpleadoComponent,
     EmpleadoEditComponent,
     EmpleadoListarComponent,
-   
     ProductoListar2Component,
-   
     ProveedorComponent,
     ProveedorEditComponent,
-   
     CompraComponent,
     DetallesCompraComponent,
     CompraEditComponent,

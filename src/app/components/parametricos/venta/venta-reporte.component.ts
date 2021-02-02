@@ -62,6 +62,7 @@ export class VentaReporteComponent implements OnInit {
         for (let d of resp){
           this.datos.push(new Ranking(d.max, d.producto, d.total));
           this.dataSource = new MatTableDataSource(this.datos);
+          console.log(this.datos);
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
         }

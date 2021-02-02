@@ -172,9 +172,7 @@ export class CalendarComponent implements OnInit {
 
 
   getSelectedDay() {
-    
     this.turnosArray.splice(0, this.turnosArray.length);
-    this.turnosArray = [];
     this.horarioEmp.splice(0, this.horarioEmp.length);
     /*Obtiene el horario del empleado */ // 07  - 12
     this.horarioService.obtenerHorario(this.empleadoId)
@@ -220,6 +218,32 @@ export class CalendarComponent implements OnInit {
               console.log('horario2:', this.turnos[k].hora.toString());
               if (horario.toString() === this.turnos[k].hora.toString()) {
                 console.log('eliminado');
+                this.horarioEmp.splice(i, 1);
+              }
+          }
+        }
+
+      }
+
+    console.log(this.horarioEmp);
+    this.turnosArray.splice(0, this.turnosArray.length);
+    this.turnosArray = this.horarioEmp as string[];
+  }
+ 
+}
+// 7,8,9,10,11
+
+ /*   } else {
+        console.log('else');
+        
+        for (let i = 0; i < this.horarioEmp.length; i++) {
+            let horario = this.horarioEmp[i];
+            console.log('horario:', horario.toString());
+            // tslint:disable-next-line:prefer-for-of
+            for (let k = 0; k < this.turnos.length; k++) {
+              console.log('horario2:', this.turnos[k].hora.toString());
+              if (horario.toString() === this.turnos[k].hora.toString()) {
+                console.log('eliminado');
                 //this.horarioEmp.splice(i, 1);
                 this.horarioEmp[i] = null;
               }
@@ -229,8 +253,7 @@ export class CalendarComponent implements OnInit {
       }
 
     console.log(this.horarioEmp);
-      /* this.turnosArray.splice(0, this.turnosArray.length);
-       this.turnosArray = this.horarioEmp as string[];*/
+
     for (let d of this.horarioEmp){
          if (d !== null){
            this.turnosArray.push(d);
@@ -238,10 +261,6 @@ export class CalendarComponent implements OnInit {
        }
     console.log(this.turnosArray);
     }
-
-    /*console.log(this.horarioEmp);
-    this.turnosArray.splice(0, this.turnosArray.length);
-    this.turnosArray = this.horarioEmp as string[];*/
     
   }
-
+*/
