@@ -1,8 +1,8 @@
 {
     "/api/*": {
-        "target":"http://localhost:8084/",
+        "target": "http://spa-2021-springboot.herokuapp.com/api/",
         "secure": true,
         "changeOrigin": true,
-        "logLevel":"debug"
+        "logLevel": "debug"
     }
 }
