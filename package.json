@@ -2,7 +2,6 @@
     "name": "spa-2021-angular",
     "version": "0.0.0",
     "scripts": {
-        "heroku-postbuild": "ng build --prod",
         "ng": "ng",
         "start": "node server.js --proxy-config proxy.config.json",
         "build": "ng build",
