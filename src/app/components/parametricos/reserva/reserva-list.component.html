@@ -2,18 +2,17 @@
 
 <form class="form-inline">
     <div class="form-group">
-      <div class="input-group">
-        <input class="form-control" placeholder="yyyy-mm-dd"
-               name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)" ngbDatepicker #d="ngbDatepicker">
-        <div class="input-group-append">
-          <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
-        </div>
-        
+        <div class="input-group">
+            <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)" ngbDatepicker #d="ngbDatepicker">
+            <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+            </div>
 
-      </div>
+
+        </div>
     </div>
-  </form>
-  <hr/>
+</form>
+<hr/>
 
 <!--
     
@@ -26,32 +25,32 @@
 -->
 
 
-  <div class="col-md-12" id="htmlData" #htmlData>
+<div class="col-md-12" id="htmlData" #htmlData>
     <div class="card mb-4">
-      <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Reservas</div>
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Reservas</div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered display" id="dataTable" *ngIf="reservas.length>0" width="100%" cellspacing="0" >
+                <table class="table table-bordered display" id="dataTable" *ngIf="reservas.length>0" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                        <th>#</th>
-                        <th>Terapista</th>
-                        <th>Hora</th>
-                        <th>Servicio</th>
-                        <th>Opciones</th>
+                            <th>#</th>
+                            <th>Terapista</th>
+                            <th>Hora</th>
+                            <th>Servicio</th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody *ngFor="let item of reservas; let i = index  ">
                         <tr>
-                        <td>{{ i + 1}}</td>
-                        <td>{{ item.disponibleId.empleadoId.nombre}}</td>
-                        <td>{{ item.hora}}</td>
-                        <td>{{ item.disponibleId.servicioId.nombre}}</td>
+                            <td>{{ i + 1}}</td>
+                            <td>{{ item.disponibleId.empleadoId.nombre}}</td>
+                            <td>{{ item.hora}}</td>
+                            <td>{{ item.disponibleId.servicioId.nombre}}</td>
                         </tr>
                     </tbody>
-                    </table>
+                </table>
             </div>
-            <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+            <!--<pagination-controls (pageChange)="pageActual = $event"></pagination-controls>-->
         </div>
     </div>
-    </div>
+</div>
