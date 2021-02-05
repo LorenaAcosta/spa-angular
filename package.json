@@ -14,11 +14,9 @@
     "private": true,
     "dependencies": {
         "@angular/animations": "^9.1.12",
-        "@angular/cli": "^11.1.2",
         "@angular/cdk": "^10.2.7",
         "@angular/common": "~9.1.0",
-        "@angular/compiler": "~11.1.2",
-        "@angular/compiler-cli": "~11.1.2",
+        "@angular/compiler": "^9.1.13",
         "@angular/core": "~9.1.0",
         "@angular/forms": "~9.1.0",
         "@angular/localize": "^9.1.0",
@@ -51,9 +49,9 @@
         "zone.js": "~0.10.3"
     },
     "devDependencies": {
-        "@angular/cli": "^11.1.2",
         "@angular-devkit/build-angular": "^0.901.9",
-        "@angular/compiler-cli": "~11.1.2",
+        "@angular/cli": "^9.1.0",
+        "@angular/compiler-cli": "^11.1.2",
         "@angular/language-service": "~9.1.0",
         "@types/datatables.net": "^1.10.19",
         "@types/jasmine": "~3.3.8",
