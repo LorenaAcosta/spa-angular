@@ -1,6 +1,6 @@
 {
     "/api/*": {
-        "target": "https://spa-2021-springboot.herokuapp.com/",
+        "target": "https://spa-2021-springboot.herokuapp.com/api",
         "secure": false,
         "logLevel": "debug"
     }

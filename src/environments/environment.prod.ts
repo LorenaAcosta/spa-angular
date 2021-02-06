@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  URL_BASE: 'https://spa-2021-springboot.herokuapp.com'
+  URL_BASE: 'https://spa-2021-springboot.herokuapp.com/api'
 };
 
 /*
