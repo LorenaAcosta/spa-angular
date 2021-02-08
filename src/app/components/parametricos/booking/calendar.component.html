@@ -1,33 +1,29 @@
 <blockquote class="blockquote text-center">
-   <h1>Consulta los Horarios disponibles</h1>
-   <footer class="blockquote-footer">Selecciona el horario que mejor te quede!</footer>
- </blockquote>
+    <h1>Consulta los Horarios disponibles</h1>
+    <footer class="blockquote-footer">Selecciona el horario que mejor te quede!</footer>
+</blockquote>
 
- <div class="container">
-   <div class="row">
-     <div class="col-sm">
-      
-
-
-      <ngb-datepicker class="my-datepicker-1" #dp [(ngModel)]="model" (click) = getSelectedDay()>
-      </ngb-datepicker>
+<div class="container">
+    <div class="row">
+        <div class="col-sm">
 
 
 
-     </div>
-     <div class="col-sm">
-      <select class="btn btn-lg btn-outline-primary mr-2" [(ngModel)]="selectedOption">
-         <option *ngFor="let x of turnosArray">
-            {{x}}
-         </option>
-      </select>
-     </div>
-     <div class="col-sm">
-      <button  class="btn btn-lg btn-outline-primary mr-2"  (click)="print()">Agendar </button>
-     </div>
-   </div>
- </div>
-  
+            <ngb-datepicker class="my-datepicker-1" #dp [(ngModel)]="model" (click)=getSelectedDay()>
+            </ngb-datepicker>
 
 
-   
+
+        </div>
+        <div class="col-sm">
+            <select class="btn btn-lg btn-outline-primary mr-2" [(ngModel)]="selectedOption">
+          <option *ngFor="let x of turnosArray">
+             {{x}}
+          </option>
+       </select>
+        </div>
+        <div class="col-sm">
+            <button class="btn btn-lg btn-outline-primary mr-2" (click)="print()">Agendar </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,13 @@
+table {
+    width: 90%;
+    margin: 1rem auto;
+}
+
+.contenedor {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem auto;
+    max-width: 600px;
+    box-shadow: -1px 3px 66px 0px rgba(0, 0, 0, 0.75);
+    padding: 1rem;
+}

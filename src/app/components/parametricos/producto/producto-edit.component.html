@@ -1,66 +1,92 @@
 <br>
 <div class="container-fluid">
-  <div class="row">
-    <h5 class="display">Nuevo Producto</h5>
-    <div class="col text-right">
-      <button routerLink="/producto/listar" class="btn btn-info mr-1" >
+    <div class="row">
+        <h5 class="display">Nuevo Producto</h5>
+        <div class="col text-right">
+            <button routerLink="/producto/listar" class="btn btn-info mr-1">
        <i class="fas fa-arrow-left"></i> Regresar
-      </button>  
+      </button>
+        </div>
     </div>
-  </div>
 </div>
 <hr>
 
 <div class="container-fluid">
-  <form [formGroup]="form">
-      <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Nombre del Producto</label>
-        <div class="col-sm-3">
-          <input formControlName="descripcion" type="descripcion" class="form-control" id="descripcion" required>
+    <form [formGroup]="form">
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Codigo</label>
+            <div class="col-sm-3">
+                <input formControlName="codigo" type="codigo" class="form-control" id="codigo" required>
+            </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Costo del Producto</label>
-        <div class="col-sm-3">
-          <input formControlName="costo" type="number" class="form-control" id="costo"  pattern="^[0-9]*$" required>
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Descripción</label>
+            <div class="col-sm-3">
+                <input formControlName="descripcion" type="descripcion" class="form-control" id="descripcion" required>
+            </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Precio de Venta</label>
-        <div class="col-sm-3">
-          <input formControlName="precioVenta" type="number" class="form-control" id="precioVenta"  pattern="^[0-9]*$" required>
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Costo</label>
+            <div class="col-sm-3">
+                <input formControlName="costo" type="costo" class="form-control" id="costo" required>
+            </div>
         </div>
-      </div>
-      <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Stock Actual</label>
-        <div class="col-sm-3">
-          <input formControlName="stockActual" type="number" class="form-control" id="stockActual" pattern="^[0-9]*$" required>
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Precio de Venta</label>
+            <div class="col-sm-3">
+                <input formControlName="precioVenta" type="precioVenta" class="form-control" id="precioVenta" required>
+            </div>
         </div>
+        <div class="row">
+            <div class="col text-danger">
+                <p *ngIf="form.get('costo').value > form.get('precioVenta').value"> * El Precio de venta debe ser mayor al precio de compra</p>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Stock Actual</label>
+            <div class="col-sm-3">
+                <input formControlName="stockActual" type="stockActual" class="form-control" id="stockActual" required>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputState" class="col-sm-2 col-form-label">Categoria</label>
+            <div class="form-group col-md-3">
+                <select id="categoriaId" formControlName="categoriaId" class="form-control">
+                <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
+                  {{ cat.descripcion }}
+                </option>
+              </select >
+            </div>
+        </div>
+        <div class="form-group row">
+          <label for="inputState" class="col-sm-2 col-form-label">Estado</label>
+          <div class="form-group col-md-3">
+            <select id="estado" formControlName="estado" class="form-control" required>
+                <option value="activo" selected>Activo</option>
+                <option value="inactivo">Inactivo</option>
+            </select >
+          </div>
       </div>
-      <div class="form-group row">
-        <label for="inputState" class="col-sm-2 col-form-label">Categoria</label> 
-        <div class="form-group col-md-3">
-        <select id="categoriaId" formControlName="categoriaId" class="form-control">
-          <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
-            {{ cat.descripcion }}
-          </option>
-        </select>
-      </div>
-    </div> 
-    <div class="form-group row">
-      <label for="inputZip">Estado del Producto</label>
-      <div class="form-group col-md-3">
-      <select id="estado"  formControlName="estado" class="form-control" required>
-        <option selected>...</option>
-        <option value="activo">Activo</option>
-        <option value="inactivo">Inactivo</option>
+       <!-- <div class="form-group col-md-6">
+            <label for="inputZip" class="col-sm-2 col-form-label">Estado</label>
+            <div class="form-group col-md-3">
+            <select  id="estado" formControlName="estado" class="form-control" required>
+      <option selected>...</option>
+        <option class="col-sm-3"  value="activo" selected>Activo</option>
+        <option  class="col-sm-3" value="inactivo">Inactivo</option>
       </select>
-      </div>
-    </div>
-      <div class="form-group row">
-        <div class="form-group col-md-3">
-          <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary" (click)="guardar()" >Guardar</button>
+            </div>
+        </div>-->
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2  col-form-label">Imagen</label>
+            <div class="col-sm-3">
+                <input formControlName="imageName" type="imageName" class="form-control" id="imageName">
+            </div>
         </div>
-      </div>
+        <div class="form-group row">
+            <div class="col-sm-3">
+                <button type="submit" [disabled]="!this.form.valid || form.get('costo').value > form.get('precioVenta').value" class="btn btn-primary" (click)="guardar()">Guardar</button>
+            </div>
+        </div>
     </form>
 </div>

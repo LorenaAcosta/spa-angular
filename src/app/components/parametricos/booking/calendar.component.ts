@@ -231,3 +231,36 @@ export class CalendarComponent implements OnInit {
   }
  
 }
+// 7,8,9,10,11
+
+ /*   } else {
+        console.log('else');
+        
+        for (let i = 0; i < this.horarioEmp.length; i++) {
+            let horario = this.horarioEmp[i];
+            console.log('horario:', horario.toString());
+            // tslint:disable-next-line:prefer-for-of
+            for (let k = 0; k < this.turnos.length; k++) {
+              console.log('horario2:', this.turnos[k].hora.toString());
+              if (horario.toString() === this.turnos[k].hora.toString()) {
+                console.log('eliminado');
+                //this.horarioEmp.splice(i, 1);
+                this.horarioEmp[i] = null;
+              }
+          }
+        }
+
+      }
+
+    console.log(this.horarioEmp);
+
+    for (let d of this.horarioEmp){
+         if (d !== null){
+           this.turnosArray.push(d);
+         }
+       }
+    console.log(this.turnosArray);
+    }
+    
+  }
+*/

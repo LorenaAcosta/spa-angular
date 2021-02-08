@@ -15,25 +15,30 @@ import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 export class  ProductoEditComponent implements OnInit {
 
   form = this.fb.group({
+    codigo: ['', Validators.required],
     descripcion: ['', Validators.required],
     costo: ['', Validators.required],
     precioVenta: ['', Validators.required],
     stockActual: ['', Validators.required],
+    imageName: [''],
     estado: ['', Validators.required]
   });
   productos: any[] = [];
   categorias: any[] = [];
+  public formSubmitted = false;
 
   constructor(private fb: FormBuilder,
               private productoService: ProductoService,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute) {
                 this.form = this.fb.group({
+                  codigo: ['', Validators.required],
                   descripcion: ['', Validators.required],
                   costo: ['', Validators.required],
                   precioVenta: ['', Validators.required],
                   stockActual: ['', Validators.required],
                   categoriaId: ['', Validators.required],
+                  imageName: [''],
                   estado: ['', Validators.required]
                 });
 
@@ -45,11 +50,13 @@ export class  ProductoEditComponent implements OnInit {
    // console.log(id);
     if (typeof id !== 'undefined') {
       this.form = this.fb.group({
+        codigo: ['', Validators.required],
         descripcion: ['', Validators.required],
         costo: ['', Validators.required],
         precioVenta: ['', Validators.required],
         stockActual: ['', Validators.required],
         categoriaId: ['', Validators.required],
+        imageName: [''],
         estado: [1]
       });
       this.productoService.getRecurso(id)
@@ -67,6 +74,7 @@ export class  ProductoEditComponent implements OnInit {
   }
 
   guardar() {
+    
     const id = this.route.snapshot.params.id;
     let peticion: Observable<any>;
     console.log(id);
@@ -89,6 +97,15 @@ export class  ProductoEditComponent implements OnInit {
           'success'
         );
       });
+    }
+  }
+
+  campoNoValido(): boolean {
+    if ((this.form.get('costo').value > this.form.get('precioVenta').value) && this.formSubmitted ) {
+      this.formSubmitted = true;
+      return true;
+    } else {
+      return false;
     }
   }
 
