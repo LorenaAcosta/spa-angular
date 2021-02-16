@@ -30,7 +30,7 @@
            [routerLink]="['/categoria/modificar', item.categoriaId ]">
             <i class="fas fa-pencil-alt"></i>
           </button>
-          <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId)">
+          <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId, i)">
             <i class="fas fa-trash"></i>
           </button>
         </td>
