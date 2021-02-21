@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ProductoService } from 'src/app/services/servicios/producto.service';
@@ -27,7 +27,8 @@ export class  ProductoEditComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private productoService: ProductoService,
               private categoriaService: CategoriaService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
                 this.form = this.fb.group({
                   descripcion: ['', Validators.required],
                   costo: ['', Validators.required],
@@ -36,8 +37,7 @@ export class  ProductoEditComponent implements OnInit {
                   categoriaId: ['', Validators.required],
                   estado: ['', Validators.required]
                 });
-
-               }
+    }
 
   ngOnInit() {
     this.categoriaService.obtenerPorTipo('producto').subscribe( (resp: any[]) =>  this.categorias = resp );
@@ -79,6 +79,7 @@ export class  ProductoEditComponent implements OnInit {
           'Se actualizaron los datos!',
           'success'
         );
+        this.router.navigate(['/producto/listar']);
       });
     } else {
       peticion = this.productoService.modificarRecurso(this.form.value, id);
@@ -88,6 +89,7 @@ export class  ProductoEditComponent implements OnInit {
           'Se actualizaron los datos!',
           'success'
         );
+        this.router.navigate(['/producto/listar']);
       });
     }
   }

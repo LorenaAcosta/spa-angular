@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ServicioService } from '../../../services/servicios/servicio.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaService } from '../../../services/servicios/categoria.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -27,7 +27,8 @@ export class ServicioEditComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private servicioService: ServicioService,
               private categoriaService: CategoriaService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
   }
 
   ngOnInit() {
@@ -67,6 +68,7 @@ export class ServicioEditComponent implements OnInit {
             'Se guardaron los datos!',
             'success'
           );
+          this.router.navigate(['/servicio/listar']);
         });
       } else {
         peticion = this.servicioService.modificarRecurso(this.form.value, id);
@@ -76,6 +78,7 @@ export class ServicioEditComponent implements OnInit {
             'Se actualizaron los datos!',
             'success'
           );
+          this.router.navigate(['/servicio/listar']);
         });
       }
     }

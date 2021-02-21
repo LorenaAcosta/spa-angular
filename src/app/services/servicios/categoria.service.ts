@@ -4,6 +4,7 @@ import { environment } from '../../../environments/environment';
 import { map, catchError} from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { Observable, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,9 +12,10 @@ import { Observable, throwError } from 'rxjs';
 export class CategoriaService {
 
   recurosBaseURL: string = environment.URL_BASE + '/categoria/';
-  router: any;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
+
 
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
@@ -22,7 +24,7 @@ export class CategoriaService {
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso ).pipe(
       catchError( e=> {
-        console.error(e.error.mensaje);
+        this.router.navigate(['/categoria/listar']);
         Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
       })
@@ -32,7 +34,7 @@ export class CategoriaService {
   modificarRecurso(recurso, id) {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso).pipe(
       catchError( e=> {
-        console.error(e.error.mensaje);
+        this.router.navigate(['/categoria/clientes']);
         Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
       })
@@ -42,7 +44,7 @@ export class CategoriaService {
   getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id).pipe(
       catchError( e=> {
-        this.router.navigate(['/clientes']);
+        this.router.navigate(['/categoria/listar']);
         Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
       })
@@ -53,7 +55,7 @@ export class CategoriaService {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id)
     .pipe(
       catchError( e=> {
-        console.error(e.error.mensaje);
+        this.router.navigate(['/categoria/listar']);
         Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
       })
@@ -63,7 +65,7 @@ export class CategoriaService {
   obtenerPorTipo(id) {
     return this.http.get(this.recurosBaseURL + 'obtener-por-tipo/' + id).pipe(
       catchError( e=> {
-        this.router.navigate(['/clientes']);
+        this.router.navigate(['/categoria/listar']);
         console.error(e.error.mensaje);
         Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(e);

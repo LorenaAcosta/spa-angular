@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CategoriaService } from '../../../services/servicios/categoria.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ChangeDetectorRef } from '@angular/core';
@@ -22,11 +22,10 @@ export class CategoriaEditComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute,
+              private router: Router,
               private cd: ChangeDetectorRef,
               private httpClient: HttpClient) {
    }
-
-
 
    ngOnInit() {
     const id = this.route.snapshot.params.id;
@@ -63,6 +62,7 @@ export class CategoriaEditComponent implements OnInit {
           'Se guardaron  los datos!',
           'success'
         );
+        this.router.navigate(['/categoria/listar']);
       });
     } else {
       peticion = this.categoriaService.modificarRecurso(this.form.value, id);
@@ -72,6 +72,7 @@ export class CategoriaEditComponent implements OnInit {
           'Se actualizaron los datos!',
           'success'
         );
+        this.router.navigate(['/categoria/listar']);
       });
     }
   }

@@ -68,7 +68,6 @@ const routes: Routes = [
       { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' } },
       { path: 'asignar-horario-edit/:id', component: HorarioAsignarComponent , data: { title: 'Asignar Horario Empleado' } },
       { path: 'asignar-horario', component: HorarioAsignarComponent , data: { title: 'Asignar Horario Empleado' } },
-      { path: 'horario', component: HorarioListComponent , data: { title: 'Listar Horario Empleado' } },
       { path: 'disponible', component: DisponibleComponent , data: { title: 'Asignar Disponibilidad' } },
       { path: 'disponible-listar', component: DisponibleComponent , data: { title: 'Listar Disponibilidad' } }
     ]

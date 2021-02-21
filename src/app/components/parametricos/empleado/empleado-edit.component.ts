@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
@@ -34,7 +34,8 @@ export class EmpleadoEditComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private empleadoService: EmpleadoService,
               private horarioService: HorarioService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute,
+              private router: Router) {
 
       this.form = this.fb.group({
         cedula: ['', Validators.required],
@@ -87,6 +88,7 @@ export class EmpleadoEditComponent implements OnInit {
             'Se guardaron los datos!',
             'success'
           );
+          this.router.navigate(['/empleado/listar']);
         });
       } else {
         peticion = this.empleadoService.modificarRecurso(this.form.value, id);
@@ -96,6 +98,7 @@ export class EmpleadoEditComponent implements OnInit {
             'Se actualizaron los datos!',
             'success'
           );
+          this.router.navigate(['/empleado/listar']);
         });
       }
     }
