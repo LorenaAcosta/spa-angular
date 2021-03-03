@@ -16,7 +16,6 @@ import { EmpleadoEditComponent } from './components/parametricos/empleado/emplea
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
 import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
 import { ServicioComponent } from './components/parametricos/servicio/servicio.component';
-import { HorarioAsignarComponent } from './components/parametricos/horario/horario-asignar.component';
 import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
 import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
 import { CalendarComponent } from './components/parametricos/booking/calendar.component';
@@ -25,7 +24,7 @@ import { ReservaListComponent } from './components/parametricos/reserva/reserva-
 import { ProductoListar2Component } from './components/parametricos/producto/producto-listar2.component';
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
-import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
+import { HorarioComponent } from './components/parametricos/horario/horario.component';
 
 const routes: Routes = [
   {
@@ -66,8 +65,7 @@ const routes: Routes = [
       { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
       { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
       { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' } },
-      { path: 'asignar-horario-edit/:id', component: HorarioAsignarComponent , data: { title: 'Asignar Horario Empleado' } },
-      { path: 'asignar-horario', component: HorarioAsignarComponent , data: { title: 'Asignar Horario Empleado' } },
+      { path: 'asignar-horario/:id', component: HorarioComponent , data: { title: 'Asignar Horario Empleado' } },
       { path: 'disponible', component: DisponibleComponent , data: { title: 'Asignar Disponibilidad' } },
       { path: 'disponible-listar', component: DisponibleComponent , data: { title: 'Listar Disponibilidad' } }
     ]
@@ -97,21 +95,13 @@ const routes: Routes = [
   },
   {
     path: 'booking', data: { title: 'Booking' },
-    children: [
-     /* { path: 'servicios/:id', component:  ServicioListar2Component, data: { title: 'Listar Servicios' }, },  */
-      { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
+    children: [ { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
       { path: 'ofertas', component: OfertaComponent, data: { title: 'Ofertas-Componente' }},
       { path: 'productos', component: ProductoListar2Component , data: { title: 'Listar Productos' } },
       { path: 'terapista/:id', component:  TerapistaComponent, data: { title: 'terapista' }, },
       { path: 'servicios/:id', component: ServicioListar2Component , data: { title: 'Listar Servicio' } },
       { path: 'calendar/:id', component:  CalendarComponent, data: { title: 'Calendar' }, }
     ]
-  },
-  {
-    path: 'horario', data: { title: 'horario' },
-    children: [
-      { path: 'asignar/:id', component: HorarioAsignarComponent , data: { title: 'Asignar Horario' }, }
-     ]
   },
   {
     path: 'planilla', data: { title: 'Planilla' },

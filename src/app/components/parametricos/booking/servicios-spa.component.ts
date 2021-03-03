@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ServicioService } from 'src/app/services/servicios/servicio.service';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 import { ActivatedRoute } from '@angular/router';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class ServicioListar2Component implements OnInit {
 
   constructor(private categoriaService: CategoriaService,
               private servicioService: ServicioService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, 
+              private util: UtilesService) {
                }
 
   ngOnInit(): void {
@@ -50,6 +52,8 @@ getDetalle(servicioId) {
    .subscribe( (resp: any[]) =>  this.detalle = resp );
   console.log(this.detalle);
 }
+
+
 
 
 }

@@ -40,13 +40,13 @@ import { EmpleadoListarComponent } from './components/parametricos/empleado/empl
 import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
 import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
-import { HorarioAsignarComponent } from './components/parametricos/horario/horario-asignar.component';
 import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
 import { CalendarComponent } from './components/parametricos/booking/calendar.component';
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
 import { ListarComponent } from './components/parametricos/disponible/disponible-listar.component';
-import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
+import { HorarioComponent } from './components/parametricos/horario/horario.component';
+
 
 @NgModule({
   declarations: [
@@ -85,8 +85,7 @@ import { HorarioListComponent } from './components/parametricos/horario/horario-
     OfertaComponent,
     DisponibleComponent,
     ListarComponent,
-    HorarioAsignarComponent,
-    HorarioListComponent
+    HorarioComponent
   ],
   imports: [
     BrowserModule,

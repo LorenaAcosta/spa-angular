@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductoService } from '../../../services/servicios/producto.service';
 import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 
 @Component({
@@ -16,7 +17,9 @@ export class ProductoListarComponent implements OnInit {
   pageActual: 1;
 
 
-  constructor(private productoService: ProductoService, private route: ActivatedRoute) { }
+  constructor(private productoService: ProductoService, 
+              private route: ActivatedRoute,
+              private util: UtilesService) { }
   ngOnInit() {
     this.productoService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.productos = resp  );

@@ -19,7 +19,7 @@ import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 export class CalendarComponent implements OnInit {
 
   disponibleId: number;
-  empleadoId: number;
+  empleadoId: any;
   servicioId: number;
   dispo: any;
 
@@ -106,7 +106,6 @@ export class CalendarComponent implements OnInit {
     this.form.controls.hora.setValue(this.selectedOption.toString().substr(-20, 5));
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
     this.form.controls.usuarioId.setValue(1);
-    console.log(this.form.value);
 
     let peticion: Observable<any>;
     peticion = this.reservaService.agregarRecurso(this.form.value);
@@ -172,13 +171,18 @@ export class CalendarComponent implements OnInit {
 
 
   getSelectedDay() {
-    this.turnosArray.splice(0, this.turnosArray.length);
-    this.horarioEmp.splice(0, this.horarioEmp.length);
+    //Setaer  a vacio un array..
+    this.turnosArray=[];
+    this.horarioEmp=[];
+    
+    
     /*Obtiene el horario del empleado */ // 07  - 12
+    console.log(typeof this.empleadoId);
     this.horarioService.obtenerHorario(this.empleadoId)
-    .subscribe( (resp: any) =>  this.horario = resp  );
-
-    let Today = Date();
+    .subscribe( (resp: any) =>  {
+      
+      this.horario = resp;
+      let Today = Date();
     Today = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
     // console.log(Today);
     /* Obtiene los turnos guardados del empleado en la fecha*/
@@ -198,7 +202,6 @@ export class CalendarComponent implements OnInit {
 
     this.crearArray();
     console.log(this.horarioEmp);
-
 
     if (this.turnos.length === 0) {
       console.log('if');
@@ -228,6 +231,10 @@ export class CalendarComponent implements OnInit {
     console.log(this.horarioEmp);
     this.turnosArray.splice(0, this.turnosArray.length);
     this.turnosArray = this.horarioEmp as string[];
+    
+    });
+
+  
   }
  
 }

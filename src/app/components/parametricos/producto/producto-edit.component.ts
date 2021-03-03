@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ProductoService } from 'src/app/services/servicios/producto.service';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 @Component({
   selector: 'app-producto-edit',
@@ -28,7 +29,8 @@ export class  ProductoEditComponent implements OnInit {
               private productoService: ProductoService,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router, 
+              private util: UtilesService) {
                 this.form = this.fb.group({
                   descripcion: ['', Validators.required],
                   costo: ['', Validators.required],
@@ -91,6 +93,19 @@ export class  ProductoEditComponent implements OnInit {
         );
         this.router.navigate(['/producto/listar']);
       });
+    }
+  }
+
+  
+  public onChange(event: any): void {
+    if (this.form.controls.precioVenta.value < this.form.controls.costo.value) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1000
+      })
     }
   }
 

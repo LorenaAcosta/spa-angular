@@ -52,8 +52,7 @@ export class CategoriaService {
   }
 
   eliminarRecurso(id) {
-    return this.http.delete(this.recurosBaseURL + 'eliminar/' + id)
-    .pipe(
+    return this.http.delete(this.recurosBaseURL + 'eliminar/' + id).pipe(
       catchError( e=> {
         this.router.navigate(['/categoria/listar']);
         Swal.fire(e.error.mensaje, e.error.error, 'error');

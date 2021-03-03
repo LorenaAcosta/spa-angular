@@ -59,16 +59,17 @@ export class DisponibleComponent implements OnInit {
 
   guardar() {
     const id = this.route.snapshot.params.id;
-    let peticion: Observable<any>;
 
     if (typeof id === 'undefined') {
-      peticion = this.disponibleService.agregarRecurso(this.form.value);
-      peticion.subscribe((result: any) =>  {
+     this.disponibleService.agregarRecurso(this.form.value)
+      .subscribe((result: any) =>  {
         Swal.fire(
           'Guardado!',
           'Se guardaron  los datos!',
           'success'
         );
+      },(err)=>{
+        
       });
     }
   }
