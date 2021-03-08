@@ -1,0 +1,48 @@
+<div id="titulo">
+    <h1>Subir múltiples archivos Angular y Java</h1>
+</div>
+<div id="wrap">
+
+    <mat-card id="box1">
+        <div mode="buffer" *ngFor="let progress of progressInfo">
+            <span>{{progress.fileName}}</span>
+            <span>{{progress.value}}%</span>
+            <div id="progressbar">
+                <mat-progress-bar mode="buffer" value={{progress.value}}>
+                </mat-progress-bar>
+            </div>
+        </div>
+    </mat-card>
+
+    <div id="box2">
+        <button id="selectButton" mat-raised-button (click)="fileInput.click()">Select File to Upload</button>
+
+        <input #fileInput type="file" hidden multiple (change)="selectFiles($event)" />
+        <span *ngIf="fileName">{{fileName}}</span>
+
+        <button id="uploadButton" mat-raised-button *ngIf="selectedFiles" [disabled]="!selectedFiles" (click)="uploadFiles()">
+            Subir Archivos
+        </button>
+    </div>
+
+    <div id="box3">
+        <span>{{message}}</span>
+    </div>
+
+
+    <div id="box4">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Lista de Archivos</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <ul>
+                    <li *ngFor="let file of fileInfos | async">
+                        <a href="{{file.url}}">{{file.name}}</a>
+                        <mat-icon (click)="deleteFile(file.name)">delete</mat-icon>
+                    </li>
+                </ul>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

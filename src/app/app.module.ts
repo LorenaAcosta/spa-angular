@@ -10,6 +10,10 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table' 
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {MatGridListModule} from '@angular/material/grid-list';
+import {MatProgressBarModule} from '@angular/material/progress-bar';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
@@ -64,6 +68,7 @@ import { ListarComponent } from './components/parametricos/disponible/disponible
 import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
 import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
+import { ArchivosSubidosComponent } from './components/archivos-subidos/archivos-subidos.component';
 
 @NgModule({
   declarations: [
@@ -112,7 +117,8 @@ import { ServicioListar2Component } from './components/parametricos/booking/serv
     DisponibleComponent,
     ListarComponent,
     HorarioAsignarComponent,
-    HorarioListComponent
+    HorarioListComponent,
+    ArchivosSubidosComponent
   ],
   imports: [
     BrowserModule,
@@ -135,7 +141,11 @@ import { ServicioListar2Component } from './components/parametricos/booking/serv
     FormsModule,
     MatPaginatorModule,
     MatTableModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatProgressBarModule,
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

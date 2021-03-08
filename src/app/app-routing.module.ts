@@ -30,6 +30,7 @@ import { PlanillaComponent } from './components/parametricos/planilla/planilla.c
 import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
 import { CalendarComponent } from './components/parametricos/booking/calendar.component';
 //import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
+import { ArchivosSubidosComponent } from './components/archivos-subidos/archivos-subidos.component';
 import { ReservaListComponent } from './components/parametricos/reserva/reserva-list.component';
 import { ProductoListar2Component } from './components/parametricos/producto/producto-listar2.component';
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
@@ -158,6 +159,16 @@ const routes: Routes = [
       { path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
      ]
   },
+  {
+  path: 'images', data: { title: 'Imagenes' },
+  children: [
+    { path: 'agregar', component: ArchivosSubidosComponent , data: { title: 'Subir imagen' }, },
+    { path: 'buscar', component: ArchivosSubidosComponent , data: { title: 'Listar ventas' }, },
+    { path: 'modificar/:id', component: ArchivosSubidosComponent , data: { title: 'Editar venta' }, },
+    { path: 'get/:filename', component: ArchivosSubidosComponent , data: { title: 'Get Archivo' }, },
+    { path: 'reporte', component: ArchivosSubidosComponent , data: { title: 'Reporte de ventas' }, }
+   ]
+},
 ];
 
 @NgModule({

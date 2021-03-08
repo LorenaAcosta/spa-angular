@@ -10,6 +10,7 @@ import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 export class CategoriaListar2Component implements OnInit {
 
   categorias: any[] = [];
+  urlImagen: string = 'http://localhost:8084/api/files/';
   constructor(private categoriaService: CategoriaService,
               private router: Router) { }
 
