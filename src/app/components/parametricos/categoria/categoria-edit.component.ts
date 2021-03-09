@@ -17,7 +17,7 @@ export class CategoriaEditComponent implements OnInit {
 
   selectedFiles: FileList;
   imagenValida: boolean;
-  //Es el array que contiene los items para mostrar el progreso de subida de cada archivo
+  //Es el array que contiene los  items para mostrar el progreso de subida de cada archivo
   progressInfo = []
   message = '';
   fileName = "";
@@ -92,7 +92,7 @@ export class CategoriaEditComponent implements OnInit {
 
 
 
-
+/*subida de imagenes*/
   selectFiles(event) {
     this.progressInfo = [];
     event.target.files.length == 1 ? this.fileName = event.target.files[0].name : this.fileName = event.target.files.length + " archivos";
