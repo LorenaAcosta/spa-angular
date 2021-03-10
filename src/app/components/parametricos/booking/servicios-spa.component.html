@@ -9,31 +9,32 @@
     (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
 </div>
 
-<div class="card-columns">
-  <div class="col mb-4">
+  <div class="row">
       <!--  Lista las servicios -->
-          <div class="card" *ngFor="let item of servicios; let i= index">
-           <button  class="btn btn-light" [routerLink]="['/booking/terapista', item.servicioId ]">
+      <div  class="p-3" *ngFor="let item of servicios; let i= index"> 
+        <div class="">
+            <div class="card">
+            <button  class="btn btn-light" [routerLink]="['/booking/terapista', item.servicioId ]">
                   <div class="card-body">
                     <h5 class="card-title">{{item.nombre}}</h5>
-                  <h5 class="card-title"> {{ item.descripcion}} </h5> 
                   <p class="card-text">{{item.descripcion}}</p>
                   <blockquote class="blockquote text-center">
-                    <i class="far fa-clock"></i><strong> {{item.duracion}} |
-                      <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong>
+                    <i class="far fa-clock"></i><strong> {{ util.cortarString(item.duracion, 0, 5) }} h. |
+                      <i class="fas fa-money-bill-alt"></i>  {{util.numberWithCommas(item.costo) }}  Gs. </strong>
                   </blockquote>
               </div> 
               </button>
           </div>
+       </div>
+      </div>
+         
   </div>
-</div>
 
-<div *ngIf="servicios.length == 0" class="alertalert-warning text-center mt-3">
-  <h4 class="alert-heading">No hay registros</h4>  
-  <p>
-  <i class="fa fa-exclamation fa-2x"></i>
-  </p>
-</div>
+
+
+  <div *ngIf="servicios.length == 0" class="alert alert-secondary text-center mt-3">
+    <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>  
+  </div>
      
       
 

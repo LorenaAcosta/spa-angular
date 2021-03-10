@@ -1,34 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
-import { FormBuilder, Validators } from '@angular/forms';
+import {NgbModal,NgbActiveModal,  } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, Validators,FormControl } from '@angular/forms';
+
+
+
+
 
 @Component({
   selector: 'app-empleado-listar',
   templateUrl: './empleado-listar.component.html',
   styleUrls: ['./empleado-listar.component.scss']
 })
+
+
 export class EmpleadoListarComponent implements OnInit {
 
   empleados: any[] = [];
   index = 0;
   pageActual: 1;
   closeResult = '';
-
-
+  
   ngOnInit() {
     this.empleadoService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.empleados = resp );
   }
 
-
   constructor(private fb: FormBuilder,
               private empleadoService: EmpleadoService,
-              private modalService: NgbModal) {
+              private modalService: NgbModal ) {
 
-     }
-
+ }
 
 
   borrar(id: any, pos: any) {

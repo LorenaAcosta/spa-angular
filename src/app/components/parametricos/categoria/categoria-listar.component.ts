@@ -41,7 +41,6 @@ export class CategoriaListarComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.categorias.splice(pos, 1);
-
           this.categoriaService.eliminarRecurso(id).subscribe();
           Swal.fire(
             'Eliminado!',

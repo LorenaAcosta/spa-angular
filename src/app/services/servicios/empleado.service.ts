@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 
 
 
@@ -10,9 +14,18 @@ import { environment } from '../../../environments/environment';
 export class EmpleadoService {
 
   recurosBaseURL: string = environment.URL_BASE + '/empleado/';
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private router: Router) { }
+
+              
   agregarRecurso(recurso) {
-    return this.http.post(this.recurosBaseURL + 'agregar', recurso);
+    return this.http.post(this.recurosBaseURL + 'agregar', recurso).pipe(
+      catchError( e=> {
+        this.router.navigate(['/empleado/listar']);
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
   }
 
   listarRecurso() {
@@ -20,15 +33,42 @@ export class EmpleadoService {
   }
 
   modificarRecurso(recurso, id) {
-    return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
+    return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso).pipe(
+      catchError( e=> {
+        this.router.navigate(['/empleado/clientes']);
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
   }
 
   getRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
+    return this.http.get(this.recurosBaseURL + 'encontrar/' + id).pipe(
+      catchError( e=> {
+        this.router.navigate(['/empleado/listar']);
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
+  }
+
+  getRecursoByCedula(id) {
+    return this.http.get(this.recurosBaseURL + 'encontrar-por-cedula/' + id).pipe(
+      catchError( e=> {
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
   }
 
   eliminarRecurso(id) {
-    return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
+    return this.http.delete(this.recurosBaseURL + 'eliminar/' + id).pipe(
+      catchError( e=> {
+        this.router.navigate(['/empleado/listar']);
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
   }
   
 

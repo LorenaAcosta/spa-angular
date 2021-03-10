@@ -59,7 +59,6 @@ import {MatSort, MatSortModule} from '@angular/material/sort';
 
 
 import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
-import { HorarioAsignarComponent } from './components/parametricos/horario/horario-asignar.component';
 import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
 import { CalendarComponent } from './components/parametricos/booking/calendar.component';
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
@@ -69,6 +68,8 @@ import { HorarioListComponent } from './components/parametricos/horario/horario-
 import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
 import { ArchivosSubidosComponent } from './components/archivos-subidos/archivos-subidos.component';
+import { HorarioComponent } from './components/parametricos/horario/horario.component';
+
 
 @NgModule({
   declarations: [
@@ -119,6 +120,7 @@ import { ArchivosSubidosComponent } from './components/archivos-subidos/archivos
     HorarioAsignarComponent,
     HorarioListComponent,
     ArchivosSubidosComponent
+    HorarioComponent
   ],
   imports: [
     BrowserModule,

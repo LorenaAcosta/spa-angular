@@ -6,6 +6,11 @@
   <div class="container">
     <div class="row">
       <div class="col-sm">
+        <div *ngIf="disponible.length == 0" class="text-center">
+          <div class="alert alert-warning" role="alert">
+            <h4 >No hay especialistas disponibles por el momento <i class="fa fa-exclamation"></i></h4>  
+          </div>
+        </div>
                   
         <div class="card-columns">
           <div class="col mb-4">
@@ -16,18 +21,8 @@
                       {{ item.disponibleId}}
           </div>
         </div>
-
-        <div *ngIf="disponible.length == 0" class="alertalert-warning text-center mt-3">
-          <h4 class="alert-heading">No hay especialistas disponibles por el momento.</h4>  
-          <p>
-            <i class="fa fa-exclamation fa-2x"></i>
-          </p>
-        </div>
       </div>
-      <div class="col-sm">
-      </div>
-      <div class="col-sm">
-      </div>
+    
     </div>
   </div>
  

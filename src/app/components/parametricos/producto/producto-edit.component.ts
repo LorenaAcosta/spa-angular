@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ProductoService } from 'src/app/services/servicios/producto.service';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 import { ArchivosSubidosService } from 'src/app/services/archivos-subidos.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 @Component({
   selector: 'app-producto-edit',
@@ -43,6 +44,8 @@ export class  ProductoEditComponent implements OnInit {
               private categoriaService: CategoriaService,
               private route: ActivatedRoute,
               private archivosSubidosService: ArchivosSubidosService) {
+              private router: Router, 
+              private util: UtilesService) {
                 this.form = this.fb.group({
                   codigo: ['', Validators.required],
                   descripcion: ['', Validators.required],
@@ -53,8 +56,7 @@ export class  ProductoEditComponent implements OnInit {
                   imageName: [''],
                   estado: ['', Validators.required]
                 });
-
-               }
+    }
 
   ngOnInit() {
     this.categoriaService.obtenerPorTipo('producto').subscribe( (resp: any[]) =>  this.categorias = resp );
@@ -99,6 +101,7 @@ export class  ProductoEditComponent implements OnInit {
           'Se actualizaron los datos!',
           'success'
         );
+        this.router.navigate(['/producto/listar']);
       });
     } else {
       peticion = this.productoService.modificarRecurso(this.form.value, id);
@@ -108,6 +111,7 @@ export class  ProductoEditComponent implements OnInit {
           'Se actualizaron los datos!',
           'success'
         );
+        this.router.navigate(['/producto/listar']);
       });
     }
   }
@@ -182,5 +186,19 @@ export class  ProductoEditComponent implements OnInit {
       });
   }
 
+
+}
+  
+  public onChange(event: any): void {
+    if (this.form.controls.precioVenta.value < this.form.controls.costo.value) {
+      Swal.fire({
+        position: 'top-end',
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1000
+      })
+    }
+  }
 
 }
