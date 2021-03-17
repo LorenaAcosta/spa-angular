@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ServicioService } from '../../../services/servicios/servicio.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaService } from '../../../services/servicios/categoria.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-servicio-edit',
@@ -14,6 +15,12 @@ import Swal from 'sweetalert2';
 export class ServicioEditComponent implements OnInit {
 
   categorias: any[] = [];
+
+  myControl = new FormControl();
+  options: string[] = [];//['One', 'Two', 'Three'];
+
+
+  filteredOptions: Observable<string[]>;
 
   form = this.fb.group({
     nombre: ['', Validators.required],
@@ -33,8 +40,15 @@ export class ServicioEditComponent implements OnInit {
 
   ngOnInit() {
     // this.categorias$ = this.categoriaService.listarRecurso();
+    this.filteredOptions = this.myControl.valueChanges
+    .pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+
      this.categoriaService.obtenerPorTipo('servicio').
-     subscribe( (resp: any[]) =>  this.categorias = resp );
+     subscribe( (resp: any[]) =>  { this.categorias = resp, this.options = resp });
+
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({
@@ -55,6 +69,7 @@ export class ServicioEditComponent implements OnInit {
         this.form.controls.duracion.setValue(data.duracion);
        });
     }
+
   }
   guardar() {
     console.warn(this.form.value);
@@ -82,4 +97,18 @@ export class ServicioEditComponent implements OnInit {
         });
       }
     }
+
+    private _filter(value: string): string[] {
+
+      const filterValue = value.toLowerCase();
+  
+      return this.options.filter(option => option.toLowerCase().includes(filterValue));
+    }
+}
+
+export class Categoria {
+  constructor(public categoriaId: number, public descripcion: any, public dataType: any,
+              public imageName: any
+      ) {
+  }
 }

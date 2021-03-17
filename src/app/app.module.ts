@@ -56,6 +56,7 @@ import { VentaComponent } from './components/parametricos/venta/venta.component'
 import { VentaEditComponent } from './components/parametricos/venta/venta-edit.component';
 import { VentaReporteComponent } from './components/parametricos/venta/venta-reporte.component';
 import {MatSort, MatSortModule} from '@angular/material/sort';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
@@ -64,7 +65,7 @@ import { CalendarComponent } from './components/parametricos/booking/calendar.co
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
 import { ListarComponent } from './components/parametricos/disponible/disponible-listar.component';
-import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
+//import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
 import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
 import { ArchivosSubidosComponent } from './components/archivos-subidos/archivos-subidos.component';
@@ -117,9 +118,7 @@ import { HorarioComponent } from './components/parametricos/horario/horario.comp
     OfertaComponent,
     DisponibleComponent,
     ListarComponent,
-    HorarioAsignarComponent,
-    HorarioListComponent,
-    ArchivosSubidosComponent
+    ArchivosSubidosComponent,
     HorarioComponent
   ],
   imports: [
@@ -148,6 +147,7 @@ import { HorarioComponent } from './components/parametricos/horario/horario.comp
     MatButtonModule,
     MatCardModule,
     MatIconModule,
+    MatAutocompleteModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { exit } from 'process';
 import { Observable } from 'rxjs';
@@ -55,6 +55,8 @@ export class VentaEditComponent implements OnInit {
   selectedValue: number;
   selectedProd: any;
   constructor(
+    private fbc: FormBuilder,
+    private fmp: FormBuilder,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private compraService: ComprasService,
@@ -64,7 +66,26 @@ export class VentaEditComponent implements OnInit {
     private servicioService: ServicioService,
     private detallesService: DetalleVentaService,
     private medioService: MediosPagoService,
-    private usuarioService: ClienteService) { }
+    private usuarioService: ClienteService,
+    private medioPagoService: MediosPagoService,
+    private clienteService: ClienteService,
+    private router: Router) { 
+      this.form = this.fmp.group({
+        codigo: ['', Validators.required],
+        descripcion: ['', Validators.required]
+      });
+      this.formCliente = this.fbc.group({
+        nombre: ['', Validators.required],
+        username: ['', Validators.required],
+        password: ['', Validators.required],
+        apellido: ['', Validators.required],
+        correo: ['', Validators.required],
+        ruc: ['', Validators.required],
+        telefono: ['', Validators.required],
+        sexo: ['', Validators.required],
+        estado: [1]
+      });
+    }
 
     form = this.fb.group({
       fecha: [this.fechaActual],
@@ -74,6 +95,28 @@ export class VentaEditComponent implements OnInit {
       usuarioId: [ Validators.required],
       estado: ['Activo']
     });
+
+    formMedio = this.fmp.group({
+      codigo: ['', Validators.required],
+      descripcion: ['', Validators.required]
+    });
+
+    formCliente = this.fbc.group({
+      nombre: ['', Validators.required],
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+      apellido: ['', Validators.required],
+      correo: ['', Validators.required],
+      ruc: ['', Validators.required],
+      telefono: ['', Validators.required],
+      sexo: ['', Validators.required],
+      estado: [1]
+      });
+  
+    get correo() { return this.formCliente.get('correo'); }
+    get telefono() { return this.formCliente.get('telefono'); }
+    
+    medioPago: any[] = [];
 
     currentDate: number = Date.now();
     articuloselect: DetalleVenta = new DetalleVenta(0, 1, 0, 0, 0, 0, 0);
@@ -338,6 +381,41 @@ export class VentaEditComponent implements OnInit {
         console.log(res);
       });
     }
+
+
+    guardarMedio() {
+      const id = this.route.snapshot.params.id;
+      let peticion: Observable<any>;
+      console.log(id);
+      
+        console.warn(this.formMedio.value);
+        peticion = this.medioPagoService.agregarRecurso(this.formMedio.value);
+        peticion.subscribe((result: any) =>  {
+          Swal.fire(
+            'Guardado!',
+            'Se guardaron  los datos!',
+            'success'
+          );
+        });
+        console.log(this.router.url);
+        this.ngOnInit();
+    }
+
+    guardarCliente() {
+      // console.warn(this.form.value);
+        const id = this.route.snapshot.params.id;
+        let peticion: Observable<any>;
+        
+           peticion = this.clienteService.agregarRecurso(this.formCliente.value);
+           peticion.subscribe((result: any) =>  {
+             Swal.fire(
+               'Guardado!',
+               'Se guardaron los datos!',
+               'success'
+             );
+           });
+           this.ngOnInit();
+       }
 
 }
 

@@ -29,12 +29,12 @@
                 <td><button (click)="getFilesPorNombre(item.imageName)">{{item.imageName}}</button></td>
                 <td>
                     <button class="btn btn-info mr-1" [routerLink]="['/categoria/modificar', item.categoriaId ]">
-            <i class="fas fa-pencil-alt"></i>
-          </button>
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <!--<button class="btn btn-info mr-1" (click)="borrar(item.categoriaId, i)">-->
                     <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId, i)">
-          <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId, i)">
-            <i class="fas fa-trash"></i>
-          </button>
+                        <i class="fas fa-trash"></i>
+                    </button>
                 </td>
             </tr>
         </tbody>
@@ -46,10 +46,10 @@
     <p>
         <i class="fa fa-exclamation fa-2x"></i>
     </p>
-  </div>
+</div>
 
 
 
 <div *ngIf="categorias.length == 0" class="alert alert-secondary text-center mt-3">
-  <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>  
+    <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
 </div>

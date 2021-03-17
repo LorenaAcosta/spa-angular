@@ -25,7 +25,7 @@ import { CompraEditComponent } from './components/parametricos/compra/compra-edi
 import { VentaComponent } from './components/parametricos/venta/venta.component';
 import { VentaEditComponent } from './components/parametricos/venta/venta-edit.component';
 import { VentaReporteComponent } from './components/parametricos/venta/venta-reporte.component';
-import { HorarioAsignarComponent } from './components/parametricos/horario/horario-asignar.component';
+//import { HorarioAsignarComponent } from './components/parametricos/horario/horario-asignar.component';
 
 import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
 import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
@@ -36,7 +36,7 @@ import { ReservaListComponent } from './components/parametricos/reserva/reserva-
 import { ProductoListar2Component } from './components/parametricos/producto/producto-listar2.component';
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
-import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
+//import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
 import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 
 import { HorarioComponent } from './components/parametricos/horario/horario.component';

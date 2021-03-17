@@ -38,14 +38,17 @@
         </div>
         <div class="form-group row">
             <label for="inputState" class="col-sm-2 col-form-label">Categoria</label>
+
             <div class="col-sm-4">
                 <select id="categoriaId" formControlName="categoriaId" class="form-control">
-          <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
-            {{ cat.descripcion }}
-          </option>
-        </select>
+                    
+                    <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
+                        {{ cat.descripcion }}
+                    </option>
+                </select>
             </div>
         </div>
+
         <div class="form-group row">
             <label for="inputCity" class="col-sm-2 col-form-label">Duracion</label>
             <div class="col-sm-4">

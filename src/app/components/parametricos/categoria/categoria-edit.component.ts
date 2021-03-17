@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { CategoriaService } from '../../../services/servicios/categoria.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ArchivosSubidosComponent } from '../../archivos-subidos/archivos-subidos.component';
 import { ArchivosSubidosService } from '../../../services/archivos-subidos.service';
-import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-categoria-edit',
@@ -26,7 +26,7 @@ export class CategoriaEditComponent implements OnInit {
 
 
   form = this.fb.group({
-    codigo: ['', Validators.required],
+    //codigo: ['', Validators.required],
     descripcion: ['', Validators.required],
     dataType: ['', Validators.required ],
     imageName: ['']
@@ -34,11 +34,11 @@ export class CategoriaEditComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute,
-              private archivosSubidosService: ArchivosSubidosService) {
+              private archivosSubidosService: ArchivosSubidosService,
               private router: Router,
               private cd: ChangeDetectorRef,
-              private httpClient: HttpClient) {
-   }
+              private httpClient: HttpClient) {}
+   
 
    ngOnInit() {
     //this.fileInfos = this.archivosSubidosService.getFilePorNombre('zoom.png');
@@ -47,7 +47,6 @@ export class CategoriaEditComponent implements OnInit {
     console.log(id);
     if (typeof id !== 'undefined') {
       this.form = this.fb.group({
-        codigo: ['', Validators.required],
         descripcion: ['', Validators.required],
         dataType: ['', Validators.required ],
         imageName: ['']
@@ -55,7 +54,6 @@ export class CategoriaEditComponent implements OnInit {
 
       this.categoriaService.getRecurso(id)
        .subscribe ((data: any) => {
-        this.form.controls.codigo.setValue(data.codigo);
         this.form.controls.descripcion.setValue(data.descripcion);
         this.form.controls.dataType.setValue(data.dataType);
         this.form.controls.imageName.setValue(data.imageName);

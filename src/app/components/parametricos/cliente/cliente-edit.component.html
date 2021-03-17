@@ -1,110 +1,91 @@
 <br>
 <div class="container-fluid">
-  <div class="row">
-    <h5 class="display">Nuevo Usuario</h5>
-      <div class="col text-right">
-      <button routerLink="/cliente/listar" class="btn btn-info mr-1" >
+    <div class="row">
+        <h5 class="display">Nuevo Usuario</h5>
+        <div class="col text-right">
+            <button routerLink="/cliente/listar" class="btn btn-info mr-1">
        <i class="fas fa-arrow-left"></i> Regresar
-      </button>  
-    </div>    
-  </div>
+      </button>
+        </div>
+    </div>
 </div>
 <hr>
 
 <div class="container-fluid">
-  <form [formGroup]="form">
-    <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre de Usuario</label>
-      <div class="col-sm-4">
-        <input type="text"  autocomplete="username" class="form-control" id="username"
-         placeholder="username"  formControlName="username">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Contraseña</label>
-      <div class="col-sm-4">
-        <input type="password"  autocomplete="current-password" class="form-control" id="password"
-         formControlName="password">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="nombre" 
-        placeholder="Nombre"  formControlName="nombre">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Apellido</label>
-      <div class="col-sm-4">
-        <input type="apellido" class="form-control" id="apellido" 
-        placeholder="Apellido"  formControlName="apellido">
-      </div>
-    </div>
-
-    <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Correo electrónico</label>
-      <div class="col-sm-4">
-        <input 
-          type="text" 
-          class="form-control" 
-          id="correo" 
-          placeholder="Email"  
-          pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
-          formControlName="correo">
-
-        <div *ngIf="correo.invalid && (correo.dirty || correo.touched)"
-          class="alert alert-danger">
-          Correo inválido.
+    <form [formGroup]="form">
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre de Usuario</label>
+            <div class="col-sm-4">
+                <input type="text" autocomplete="username" class="form-control" id="username" placeholder="username" formControlName="username">
+            </div>
         </div>
-    </div>
-  </div>
-
-    <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">RUC</label>
-      <div class="col-sm-4">
-        <input type="text" class="form-control" id="ruc"
-         placeholder="000-0000-0000-00"  formControlName="ruc">
-      </div>
-    </div>
-    <div class="form-group row">
-      <label for="inputEmail3" class="col-sm-2 col-form-label">Teléfono</label>
-      <div class="col-sm-4">
-        <input 
-          type="text" 
-          class="form-control" 
-          id="telefono" 
-          placeholder="(0986) 111-555"
-          pattern="^[0-9]*$"
-          formControlName="telefono">
-
-          <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
-            Introduzca sólo dígitos.  </div>
-
-      </div>
-    </div>
-    <fieldset class="form-group">
-      <div class="row">
-        <legend class="col-form-label col-sm-2 pt-0">Género</legend>
-        <div class="col-sm-4">
-          <div class="form-check" >
-            <input class="form-check-input" type="radio" name="sexo" id="gridRadios1" value="femenino"  formControlName="sexo" checked>
-            <label class="form-check-label" for="gridRadios1">
-              FEMENINO
-            </label>
-            <input class="form-check-input" type="radio" name="sexo" id="gridRadios2" value="masculino"  formControlName="sexo">
-            <label class="form-check-label" for="gridRadios2">
-              MASCULINO
-            </label>
-          </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Contraseña</label>
+            <div class="col-sm-4">
+                <input type="password" autocomplete="current-password" class="form-control" id="password" formControlName="password">
+            </div>
         </div>
-      </div>
-    </fieldset>
-    <div class="form-group row">
-      <div class="col-sm-4">
-        <button type="submit" [disabled]="!this.form.valid" class="btn btn-success" (click)="guardar()">Guardar</button>
-      </div>
-    </div>
-  </form>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Apellido</label>
+            <div class="col-sm-4">
+                <input type="apellido" class="form-control" id="apellido" placeholder="Apellido" formControlName="apellido">
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Correo electrónico</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="correo" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="correo">
+
+                <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="alert alert-danger">
+                    Correo inválido.
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">RUC</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="ruc" placeholder="000-0000-0000-00" formControlName="ruc">
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="inputEmail3" class="col-sm-2 col-form-label">Teléfono</label>
+            <div class="col-sm-4">
+                <input type="text" class="form-control" id="telefono" placeholder="(0986) 111-555" pattern="^[0-9]*$" formControlName="telefono">
+
+                <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
+                    Introduzca sólo dígitos. </div>
+
+            </div>
+        </div>
+        <fieldset class="form-group">
+            <div class="row">
+                <legend class="col-form-label col-sm-2 pt-0">Género</legend>
+                <div class="col-sm-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="sexo" id="gridRadios1" value="femenino" formControlName="sexo" checked>
+                        <label class="form-check-label" for="gridRadios1">
+                          FEMENINO
+                        </label>
+                        <input class="form-check-input" type="radio" name="sexo" id="gridRadios2" value="masculino" formControlName="sexo">
+                        <label class="form-check-label" for="gridRadios2">
+                          MASCULINO
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <button type="submit" [disabled]="!this.form.valid" class="btn btn-info" (click)="guardar()">Guardar</button>
+            </div>
+        </div>
+    </form>
 </div>
-

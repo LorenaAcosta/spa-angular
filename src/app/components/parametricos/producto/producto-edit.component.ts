@@ -5,9 +5,9 @@ import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ProductoService } from 'src/app/services/servicios/producto.service';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
-import { ArchivosSubidosService } from 'src/app/services/archivos-subidos.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
+import { ArchivosSubidosService } from 'src/app/services/archivos-subidos.service';
 
 @Component({
   selector: 'app-producto-edit',
@@ -25,6 +25,8 @@ export class  ProductoEditComponent implements OnInit {
   fileName = "";
   fileInfos: Observable<any>;
   imagen="";
+  costo : any;
+  precioVenta: any;
 
   form = this.fb.group({
     codigo: ['', Validators.required],
@@ -43,9 +45,9 @@ export class  ProductoEditComponent implements OnInit {
               private productoService: ProductoService,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute,
-              private archivosSubidosService: ArchivosSubidosService) {
-              private router: Router, 
-              private util: UtilesService) {
+              private archivosSubidosService: ArchivosSubidosService,
+              private router: Router,
+              private util: UtilesService ) {
                 this.form = this.fb.group({
                   codigo: ['', Validators.required],
                   descripcion: ['', Validators.required],
@@ -186,11 +188,8 @@ export class  ProductoEditComponent implements OnInit {
       });
   }
 
-
-}
-  
   public onChange(event: any): void {
-    if (this.form.controls.precioVenta.value < this.form.controls.costo.value) {
+    /*if (this.form.controls.precioVenta.value < this.form.controls.costo.value) {
       Swal.fire({
         position: 'top-end',
         icon: 'success',
@@ -198,7 +197,9 @@ export class  ProductoEditComponent implements OnInit {
         showConfirmButton: false,
         timer: 1000
       })
-    }
+    }*/
   }
 
+
 }
+  
