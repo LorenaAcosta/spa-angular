@@ -10,6 +10,7 @@ import { DisponibleService } from '../../../services/servicios/disponibilidad.se
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 @Component({
   selector: 'app-calendar',
@@ -22,6 +23,8 @@ export class CalendarComponent implements OnInit {
   empleadoId: any;
   servicioId: number;
   dispo: any;
+
+  horaInicial: any;
 
   fecha: number;
   horaInicio: any;
@@ -36,11 +39,6 @@ export class CalendarComponent implements OnInit {
   turnosArray: any[] = [];
   arrayObject: any[] = [];
   turnos: any[] = [];
-  reservas: any[] = [];
-
-
-  i: number;
-  f: number;
 
   selectedOption: string;
   printedOption: string;
@@ -62,27 +60,21 @@ export class CalendarComponent implements OnInit {
               private horarioService: HorarioService,
               private reservaService: ReservaService,
               private empleadoService: EmpleadoService ,
-              private disponibleService: DisponibleService ) {
+              private disponibleService: DisponibleService,
+              private util: UtilesService ) {
   }
-
-
-
-
-
-
-
-
-
 
   ngOnInit(): void {
     /* Obtiene el objeto disponible {disponibleId, } */
     this.disponibleId = this.route.snapshot.params.id;
+    
     this.disponibleService.getRecurso(this.disponibleId)
      .subscribe( (resp: any) =>  {
        this.disponible = resp.disponibleId;
        this.empleadoId = resp.empleadoId.empleadoId;
        this.servicioId =  resp.servicioId.servicioId;
        this.dispo = resp;
+       localStorage.setItem('empleado', this.empleadoId);
      });
   }
 
@@ -92,20 +84,15 @@ export class CalendarComponent implements OnInit {
   }
 
 
-
-
-
-
-
-
-
   print() {
     this.printedOption = this.selectedOption;
-    this.form.controls.empleado.setValue( Number(this.empleadoId));
-    this.form.controls.fechaReserva.setValue(this.model.year +  '-' + this.model.month + '-' +  this.model.day );
+    this.form.controls.empleado.setValue( localStorage.getItem('empleado'));
+    this.form.controls.fechaReserva.setValue( localStorage.getItem('fecha') );
     this.form.controls.hora.setValue(this.selectedOption.toString().substr(-20, 5));
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
     this.form.controls.usuarioId.setValue(1);
+
+    console.log(this.form);
 
     let peticion: Observable<any>;
     peticion = this.reservaService.agregarRecurso(this.form.value);
@@ -124,150 +111,21 @@ export class CalendarComponent implements OnInit {
       this.router.navigateByUrl('booking/categorias');
   }
 
-
-
-  ceroIzquierda(numero, ancho) {
-    const numberOutput = Math.abs(numero); /* Valor absoluto del número */
-    const length = numero.toString().length; /* Largo del número */
-    const zero = '0'; /* String de cero */
-    if (ancho <= length) {
-        if (numero < 0) {
-             return ('-' + numberOutput.toString());
-        } else {
-             return numberOutput.toString();
-        }
-    } else {
-      if (numero < 0) {
-          return ( '-' + (zero.repeat(ancho - length)) + numberOutput.toString());
-      } else {
-          return ((zero.repeat(ancho - length)) + numberOutput.toString());
-      }
-  }
-}
-
-
-
-
-
-  crearArray() {
-    this.horarioEmp.splice(0, this.horarioEmp.length);
-    let d = Number(this.i);
-    // console.log(d);
-    for ( let i = d   ; i < this.f    ; i++ ) {
-      // console.log(d);
-      // si es un dgito de una cifra -> gregar cero a la izquierda
-      this.horarioEmp.push( this.ceroIzquierda(d, 2) + ':00:00'); // 07:00:00
-      d++;
-    }
-  }
-
-
-
-
-
-
-
-
-
-
-  getSelectedDay() {
-    //Setaer  a vacio un array..
-    this.turnosArray=[];
-    this.horarioEmp=[];
+  getHorariosDisponibles() {
+    let Today1 = Date();
+    Today1 = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
+    console.log(Today1);
+    localStorage.setItem('fecha', Today1);
     
-    
-    /*Obtiene el horario del empleado */ // 07  - 12
-    console.log(typeof this.empleadoId);
-    this.horarioService.obtenerHorario(this.empleadoId)
+    this.disponibleService.getHorasDisponibles(localStorage.getItem('categoria'), localStorage.getItem('servicio'), localStorage.getItem('empleado'), localStorage.getItem('fecha'))
     .subscribe( (resp: any) =>  {
-      
-      this.horario = resp;
-      let Today = Date();
-    Today = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
-    // console.log(Today);
-    /* Obtiene los turnos guardados del empleado en la fecha*/
-    this.reservaService.getTurnosPorFechayEmpleado(Number(this.empleadoId), Today )
-    .subscribe( (resp: any) => {
-      this.turnos = resp ;
-      console.log(this.turnos);
-     });
-
-    /*Extraemos las horas*/
-    const Hinicio = this.horario[0].horaInicio ; // 07:00
-    const Hfin = this.horario[0].horaFin; // 11:00
-    this.i = Hinicio.substr(-20, 2);   // 07
-    this.f = Hfin.substr(-20, 2);   // 11
-    const length = (this.f - this.i);  // 5
-
-
-    this.crearArray();
-    console.log(this.horarioEmp);
-
-    if (this.turnos.length === 0) {
-      console.log('if');
-      for (let x = 0; x < length; x++) { // 5
-            this.turnosArray.push( this.i.toString() + ':00'  );
-            this.i++;
-          }  // 7,8,9,10,11
-
-    } else {
-        console.log('else');
-        
-        for (let i = 0; i < this.horarioEmp.length; i++) {
-            let horario = this.horarioEmp[i];
-            console.log('horario:', horario.toString());
-            // tslint:disable-next-line:prefer-for-of
-            for (let k = 0; k < this.turnos.length; k++) {
-              console.log('horario2:', this.turnos[k].hora.toString());
-              if (horario.toString() === this.turnos[k].hora.toString()) {
-                console.log('eliminado');
-                this.horarioEmp.splice(i, 1);
-              }
-          }
-        }
-
+      localStorage.setItem("horasDisponibles", JSON.stringify(resp));
+      this.turnosArray = JSON.parse(localStorage.getItem("horasDisponibles"));
+      console.log(this.turnosArray);
+      console.log(this.turnosArray[0]);
+      if (this.turnosArray[0] == null){
+        Swal.fire('Lo siento!', 'No hay turnos disponibles para la fecha seleccionada', 'error');
       }
-
-    console.log(this.horarioEmp);
-    this.turnosArray.splice(0, this.turnosArray.length);
-    this.turnosArray = this.horarioEmp as string[];
-    
     });
-
-  
   }
- 
 }
-// 7,8,9,10,11
-
- /*   } else {
-        console.log('else');
-        
-        for (let i = 0; i < this.horarioEmp.length; i++) {
-            let horario = this.horarioEmp[i];
-            console.log('horario:', horario.toString());
-            // tslint:disable-next-line:prefer-for-of
-            for (let k = 0; k < this.turnos.length; k++) {
-              console.log('horario2:', this.turnos[k].hora.toString());
-              if (horario.toString() === this.turnos[k].hora.toString()) {
-                console.log('eliminado');
-                //this.horarioEmp.splice(i, 1);
-                this.horarioEmp[i] = null;
-              }
-          }
-        }
-
-      }
-
-    console.log(this.horarioEmp);
-
-    for (let d of this.horarioEmp){
-         if (d !== null){
-           this.turnosArray.push(d);
-         }
-       }
-    console.log(this.turnosArray);
-    }
-    
-  }
-*/

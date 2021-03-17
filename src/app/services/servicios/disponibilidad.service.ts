@@ -30,4 +30,8 @@ export class DisponibleService {
   getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
   }
+
+  getHorasDisponibles(categoriaId, servicioId, empleadoId, fecha) {
+    return this.http.get(this.recurosBaseURL + 'getHorariosDisponibles/' + categoriaId +"/" + servicioId + "/" + empleadoId + "/" + fecha);
+  }
 }

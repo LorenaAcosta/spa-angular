@@ -11,12 +11,12 @@
         <!--  Lista las categorias -->
         <div class="card btn btn-light" *ngFor="let item of categorias; let i= index" [routerLink]="['../../booking/servicios', item.categoriaId]">
             <h5 class="card-title"> {{ item.descripcion}} </h5>
-            <a> <img src="{{urlImagen}}{{item.imageName}}" width="130px" height="130px"> </a>
+            <a class="card-body"> <img src="{{urlImagen}}{{item.imageName}}" width="130px" height="130px"> </a>
         </div>
     </div>
 </div>
 
 
 <div *ngIf="categorias.length == 0" class="alert alert-secondary text-center mt-3">
-  <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>  
+    <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
 </div>

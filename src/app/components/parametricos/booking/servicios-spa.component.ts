@@ -32,18 +32,20 @@ export class ServicioListar2Component implements OnInit {
     .subscribe( (resp: any[]) =>  this.categorias = resp );
     /*Mostrar los servicios */
     const id = this.route.snapshot.params.id;
+    localStorage.setItem('categoria', id);
     if (typeof id !== 'undefined') {
-    this.servicioService.listarRecursosActivos(id, 'activo')
+    this.servicioService.listarRecursosActivos(id, 'ACTIVO')
      .subscribe( (resp: any[]) =>  this.servicios = resp );
     } else {
-      this.servicioService.listarRecursosActivos(1, 'activo')
+      this.servicioService.listarRecursosActivos(1, 'ACTIVO')
       .subscribe( (resp: any[]) =>  this.servicios = resp );
     }
   }
 
 
 recargar(id: any) {
-   this.servicioService.listarRecursosActivos(id, 'activo')
+  localStorage.setItem('categoria', id);
+   this.servicioService.listarRecursosActivos(id, 'ACTIVO')
    .subscribe( (resp: any[]) =>  this.servicios = resp );
  }
 
