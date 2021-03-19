@@ -18,6 +18,7 @@ export class VentaComponent implements OnInit {
   index: 0;
   pageActual: 1;
   comprobanteAux: any;
+  nroComprobante: number;
 
   constructor(
     private ventasService: VentaService,
@@ -26,9 +27,11 @@ export class VentaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.ventasService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.ventas = resp  );
 
+    this.ventasService.listarRecurso()
+    .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+
+    this.getNumeroComprobante(1);
     /*this.ventasService.getRecurso(id)
     .subscribe( (resp: any) =>  this.comprobanteAux = resp  );*/
   }
@@ -50,7 +53,7 @@ export class VentaComponent implements OnInit {
   getNumeroComprobante(id){
     this.ventasService.getRecurso(id)
     .subscribe( (resp: any) =>  this.comprobanteAux = resp );
-    console.log(this.comprobanteAux.montoTotal + ' nro comprobante');
+    console.log(this.comprobanteAux.numeroComprobante + ' nro comprobante');
   }
 
   getCategorias(id) {

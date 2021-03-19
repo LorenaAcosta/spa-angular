@@ -55,8 +55,8 @@ export class HorarioComponent implements OnInit {
        this.horarioService.obtenerHorario(id)
        .subscribe ((data: any) => {
         this.form2.controls.empleadoId.setValue(data.empleadoId.nombre.concat(" ").concat(data.empleadoId.apellido) );
-        this.form2.controls.horaFin.setValue( data.horaFin );
-        this.form2.controls.horaInicio.setValue(data.horaInicio ); 
+        this.form2.controls.horaFin.setValue( this.util.cortarString(data.horaFin, 0, 5) );
+        this.form2.controls.horaInicio.setValue(this.util.cortarString(data.horaInicio, 0, 5) ); 
     });
   }
 }

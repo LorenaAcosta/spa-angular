@@ -70,7 +70,7 @@ export class VentaEditComponent implements OnInit {
     private medioPagoService: MediosPagoService,
     private clienteService: ClienteService,
     private router: Router) { 
-      this.form = this.fmp.group({
+      this.formMedio = this.fmp.group({
         codigo: ['', Validators.required],
         descripcion: ['', Validators.required]
       });
@@ -161,7 +161,11 @@ export class VentaEditComponent implements OnInit {
 
     borrarFila(cod: number) {
       if (confirm('Realmente quiere borrarlo?')) {
-        this.totalVenta = this.totalVenta - (this.datos[cod].cantidad * this.datos[cod].monto);
+        console.log('total venta');
+        console.log(this.totalVenta);
+        console.log('monto a restar');
+        console.log((this.datos[cod].cantidad * this.datos[cod].precio));
+        this.totalVenta = this.totalVenta - (this.datos[cod].cantidad * this.datos[cod].precio);
         this.datosEliminar.push(new DetalleVenta(this.datos[cod].detalleId, this.datos[cod].cantidad, this.datos[cod].ventasId,
           this.datos[cod].precio, this.datos[cod].monto, this.datos[cod].productoId,
            this.datos[cod].servicioId));
@@ -267,9 +271,9 @@ export class VentaEditComponent implements OnInit {
       } else {
         this.tabla1.renderRows();
       }
-      // this.articuloselect = new DetalleVenta(0, 1, 0, 0, 0, 0, 0, 0 , 0);
-      
+      // this.articuloselect = new DetalleVenta(0, 1, 0, 0, 0, 0, 0, 0 , 0); 
     }
+
 
     ngOnInit(): void {
       this.esServicio = false;

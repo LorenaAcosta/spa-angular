@@ -13,48 +13,10 @@
 
 <div class="container-fluid">
     <form [formGroup]="form">
-        <!--
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th scope="col" colspan="1">First</th>
-                    <th scope="col" colspan="1">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td scope="col" colspan="1">
-                        <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-2 col-form-label">Fecha</label>
-                            <div class="col-sm-8">
-                                <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true>
-                            </div>
-                        </div>
-                    </td>
-                    <td scope="col" colspan="1">
-                        <div class="form-group row">
-                            <label for="inputPassword3" class="col-sm-4 col-form-label">Numero comprobante</label>
-                            <div class="col-sm-6">
-                                <input formControlName="numeroComprobante" type="numeroComprobante" class="form-control" id="numeroComprobante" disabled>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-
-                </tr>
-                <tr>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                </tr>
-            </tbody>
-        </table>
--->
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Fecha </label>
             <div class="col-sm-3">
-                <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fecha" disabled:true>
+                <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fecha" disabled>
             </div>
         </div>
 
@@ -242,7 +204,7 @@
 
         <div class="form-group row">
             <div class="col-sm-3">
-                <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary btn-sm" (click)="guardar()">Guardar</button>
+                <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary btn-sm" (click)="guardar()" [routerLink]="['/ventas/listar']">Guardar</button>
             </div>
         </div>
     </form>

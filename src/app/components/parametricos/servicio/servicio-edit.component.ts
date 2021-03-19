@@ -6,6 +6,7 @@ import { CategoriaService } from '../../../services/servicios/categoria.service'
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { map, startWith } from 'rxjs/operators';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 @Component({
   selector: 'app-servicio-edit',
@@ -28,14 +29,15 @@ export class ServicioEditComponent implements OnInit {
     descripcion: ['', Validators.required],
     categoriaId: ['', Validators.required],
     costo: ['', Validators.required],
-    duracion: ['', Validators.required]
+    duracion: [ , Validators.required]
   });
 
   constructor(private fb: FormBuilder,
               private servicioService: ServicioService,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              private util: UtilesService) {
   }
 
   ngOnInit() {
@@ -66,7 +68,7 @@ export class ServicioEditComponent implements OnInit {
         this.form.controls.descripcion.setValue(data.descripcion);
         this.form.controls.categoriaId.setValue(data.categoriaId.categoriaId);
         this.form.controls.costo.setValue(data.costo);
-        this.form.controls.duracion.setValue(data.duracion);
+        this.form.controls.duracion.setValue( this.util.cortarString(data.duracion, 0, 5));
        });
     }
 
