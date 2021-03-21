@@ -19,7 +19,7 @@ export class ProductoListarComponent implements OnInit {
 
   constructor(private productoService: ProductoService, 
               private route: ActivatedRoute,
-              private util: UtilesService) { }
+              public util: UtilesService) { }
   ngOnInit() {
     this.productoService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.productos = resp  );

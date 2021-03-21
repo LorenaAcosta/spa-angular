@@ -25,7 +25,7 @@ export class VentaComponent implements OnInit {
     private ventasService: VentaService,
     private detallesVentaService: DetalleVentaService,
     private route: ActivatedRoute,
-    private util: UtilesService
+    public util: UtilesService
   ) { }
 
   ngOnInit(): void {

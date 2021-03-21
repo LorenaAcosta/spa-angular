@@ -22,7 +22,7 @@ export class ServicioListarComponent implements OnInit {
   @ViewChild('htmlData') htmlData: ElementRef;
 
   constructor(private servicioService: ServicioService, 
-              private util: UtilesService) { }
+              public util: UtilesService) { }
 
   ngOnInit() {
     this.servicioService.listarRecurso()

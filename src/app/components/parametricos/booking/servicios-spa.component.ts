@@ -24,7 +24,7 @@ export class ServicioListar2Component implements OnInit {
   constructor(private categoriaService: CategoriaService,
               private servicioService: ServicioService,
               private route: ActivatedRoute, 
-              private util: UtilesService) {
+              public util: UtilesService) {
                }
 
   ngOnInit(): void {

@@ -61,7 +61,7 @@ export class CalendarComponent implements OnInit {
               private reservaService: ReservaService,
               private empleadoService: EmpleadoService ,
               private disponibleService: DisponibleService,
-              private util: UtilesService ) {
+              public util: UtilesService ) {
   }
 
   ngOnInit(): void {
