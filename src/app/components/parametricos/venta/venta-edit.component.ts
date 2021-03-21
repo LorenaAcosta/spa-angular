@@ -384,6 +384,7 @@ export class VentaEditComponent implements OnInit {
   
         });
       }
+      this.router.navigateByUrl('/ventas/listar');
     }
 
     borrarDetalle(cod: number) {
