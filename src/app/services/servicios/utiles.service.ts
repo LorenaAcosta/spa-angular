@@ -10,6 +10,10 @@ import { Injectable } from '@angular/core';
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
     }
 
+    numberWithDash(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '-');
+    }
+
     cortarString(cadena, inicio, longitud){
       return cadena.substr(inicio , longitud);
     }

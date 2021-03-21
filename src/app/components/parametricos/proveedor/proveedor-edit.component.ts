@@ -26,6 +26,8 @@ export class ProveedorEditComponent implements OnInit {
     ]
   });
 
+  get correo() { return this.form.get('correo'); }
+  get telefono() { return this.form.get('telefono'); }
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,

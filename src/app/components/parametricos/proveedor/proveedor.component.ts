@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProveedorService } from 'src/app/services/servicios/proveedor.service';
 import Swal from 'sweetalert2';
+import { UtilesService } from '../../../services/servicios/utiles.service';
 
 @Component({
   selector: 'app-proveedor',
@@ -13,7 +14,10 @@ export class ProveedorComponent implements OnInit {
   index: 0;
   pageActual: 1;
 
-  constructor(private proveedorService: ProveedorService, private route: ActivatedRoute) { }
+  constructor(private proveedorService: ProveedorService, 
+    private route: ActivatedRoute,
+    private util: UtilesService
+    ) { }
 
   ngOnInit() {
     this.proveedorService.listarRecurso()
