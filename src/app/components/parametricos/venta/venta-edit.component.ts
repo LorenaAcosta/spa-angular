@@ -13,6 +13,7 @@ import { MediosPagoService } from 'src/app/services/servicios/medios-pago.servic
 import { ProductoService } from 'src/app/services/servicios/producto.service';
 import { ProveedorService } from 'src/app/services/servicios/proveedor.service';
 import { ServicioService } from 'src/app/services/servicios/servicio.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { VentaService } from 'src/app/services/servicios/venta.service';
 import Swal from 'sweetalert2';
 
@@ -69,7 +70,8 @@ export class VentaEditComponent implements OnInit {
     private usuarioService: ClienteService,
     private medioPagoService: MediosPagoService,
     private clienteService: ClienteService,
-    private router: Router) { 
+    private router: Router,
+    private util: UtilesService) { 
       this.formMedio = this.fmp.group({
         codigo: ['', Validators.required],
         descripcion: ['', Validators.required]
@@ -171,15 +173,13 @@ export class VentaEditComponent implements OnInit {
            this.datos[cod].servicioId));
         console.log(this.datosEliminar);
         this.datos.splice(cod, 1);
+        this.datosGuardar.splice(cod, 1);
         this.tabla1.renderRows();
       }
       console.log(this.datos);
     }
 
     agregar() {
-
-
-
       /* controlar que se seleccione el producto para agregar fila a la tabla */
       if (this.selectedProd === 0 ||  this.selectedProd === '--' || this.selectedProd === undefined) {
         console.log('hay que validar');
@@ -346,6 +346,13 @@ export class VentaEditComponent implements OnInit {
           for (let detalle of this.datosGuardar){
             console.warn(detalle);
             detalle.ventasId = ventasId;
+            if (detalle.servicioId != null){
+              console.log('es servicio');
+              console.log(detalle.servicioId);
+              if (detalle.servicioId.duracion !== undefined){
+                detalle.servicioId.duracion = this.util.cortarString( detalle.servicioId.duracion, 0, 5);
+              }
+            }
             this.detallesService.agregarRecurso(detalle).subscribe(( res: any) => {
               console.log(res);
             });

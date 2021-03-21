@@ -23,7 +23,7 @@
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label ">Monto Total</label>
             <div class="col-sm-3">
-                <input [(ngModel)]="totalVenta" formControlName="montoTotal" type="montoTotal" value="{{totalVenta}}" class="form-control form-control-sm" id="montoTotal" disabled>
+                <input [(ngModel)]="totalVenta" formControlName="montoTotal" type="montoTotal" value="{{ util.numberWithCommas(totalVenta)}}" class="form-control form-control-sm" id="montoTotal" disabled>
             </div>
         </div>
 
@@ -204,7 +204,7 @@
 
         <div class="form-group row">
             <div class="col-sm-3">
-                <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary btn-sm" (click)="guardar()" [routerLink]="['/ventas/listar']">Guardar</button>
+                <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary btn-sm" routerLink="/ventas/listar" (click)="guardar()">Guardar</button>
             </div>
         </div>
     </form>
@@ -240,13 +240,13 @@
 
     <ng-container matColumnDef="precioVenta">
         <th mat-header-cell *matHeaderCellDef> Precio </th>
-        <td mat-cell *matCellDef="let detalle"> {{detalle.precio}} </td>
+        <td mat-cell *matCellDef="let detalle"> {{util.numberWithCommas(detalle.precio)}} </td>
     </ng-container>
 
     <ng-container matColumnDef="monto" invisible>
         <th mat-header-cell *matHeaderCellDef> Total </th>
         <td mat-cell *matCellDef="let detalle">
-            {{ detalle.monto}}
+            {{ util.numberWithCommas(detalle.monto)}}
         </td>
     </ng-container>
 

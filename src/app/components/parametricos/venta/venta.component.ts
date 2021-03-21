@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
 import { DetalleVentaService } from 'src/app/services/servicios/detalles-venta.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { VentaService } from 'src/app/services/servicios/venta.service';
 import Swal from 'sweetalert2';
 
@@ -23,7 +24,8 @@ export class VentaComponent implements OnInit {
   constructor(
     private ventasService: VentaService,
     private detallesVentaService: DetalleVentaService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private util: UtilesService
   ) { }
 
   ngOnInit(): void {
