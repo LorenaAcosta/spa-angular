@@ -13,41 +13,52 @@
 
 <div class="container-fluid">
     <form [formGroup]="form">
+
         <div class="form-group row">
             <label for="inputEmail3" class="col-sm-2 col-form-label">Codigo</label>
             <div class="col-sm-3">
                 <input formControlName="codigo" type="codigo" class="form-control" id="codigo" required>
             </div>
         </div>
+
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Descripción</label>
             <div class="col-sm-3">
                 <input formControlName="descripcion" type="descripcion" class="form-control" id="descripcion" required>
             </div>
         </div>
+
+
+
         <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Costo</label>
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Costo del Producto</label>
             <div class="col-sm-3">
-                <input formControlName="costo" type="costo" class="form-control" id="costo" required>
+                <input formControlName="costo" type="number" class="form-control" id="costo" pattern="^[0-9]*$" [(ngModel)]="costo" placeholder="0" required>
             </div>
         </div>
+
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Precio de Venta</label>
             <div class="col-sm-3">
-                <input formControlName="precioVenta" type="precioVenta" class="form-control" id="precioVenta" required>
+                <input formControlName="precioVenta" type="number" class="form-control" id="precioVenta" pattern="^[0-9]*$" [(ngModel)]="precioVenta" placeholder="0" required>
+
+
             </div>
         </div>
+
         <div class="row">
             <div class="col text-danger">
-                <p *ngIf="form.get('costo').value > form.get('precioVenta').value"> * El Precio de venta debe ser mayor al precio de compra</p>
+                <p *ngIf="costo > precioVenta"> * El Precio de venta debe ser mayor al costo del producto</p>
             </div>
         </div>
+
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Stock Actual</label>
             <div class="col-sm-3">
-                <input formControlName="stockActual" type="stockActual" class="form-control" id="stockActual" required>
+                <input formControlName="stockActual" type="number" class="form-control" id="stockActual" pattern="^[0-9]*$" required>
             </div>
         </div>
+
         <div class="form-group row">
             <label for="inputState" class="col-sm-2 col-form-label">Categoria</label>
             <div class="form-group col-md-3">
@@ -62,8 +73,8 @@
           <label for="inputState" class="col-sm-2 col-form-label">Estado</label>
           <div class="form-group col-md-3">
             <select id="estado" formControlName="estado" class="form-control" required>
-                <option value="activo" selected>Activo</option>
-                <option value="inactivo">Inactivo</option>
+                <option value="ACTIVO" selected>Activo</option>
+                <option value="INACTIVO">Inactivo</option>
             </select >
           </div>
       </div>
@@ -73,20 +84,98 @@
             <select  id="estado" formControlName="estado" class="form-control" required>
       <option selected>...</option>
         <option class="col-sm-3"  value="activo" selected>Activo</option>
-        <option  class="col-sm-3" value="inactivo">Inactivo</option>
+        <option   class="col-sm-3" value="inactivo">Inactivo</option>
       </select>
             </div>
         </div>-->
-        <div class="form-group row">
+        <div class="form-group row" style="display: none">
             <label for="inputPassword3" class="col-sm-2  col-form-label">Imagen</label>
             <div class="col-sm-3">
                 <input formControlName="imageName" type="imageName" class="form-control" id="imageName">
             </div>
         </div>
+
+        <div class="form-group row">
+            <div id="titulo" style="display: none">
+                <h1>Subir múltiples archivos Angular y Java</h1>
+            </div>
+            <div id="wrap">
+                <div style="display: none">
+                    <mat-card id="box1">
+                        <div mode="buffer" *ngFor="let progress of progressInfo" style="display: none">
+                            <span>{{progress.fileName}}</span>
+                            <span>{{progress.value}}%</span>
+                            <div id="progressbar" style="display: none">
+                                <mat-progress-bar mode="buffer" value={{progress.value}}>
+                                </mat-progress-bar>
+                            </div>
+                        </div>
+                    </mat-card>
+                </div>
+                <div>
+                    <!--  Lista las categorias -->
+
+                </div>
+                <div id="box2">
+                    <div class="card-img">
+                        <!--<h5 class="card-title"> item.descripcion </h5>-->
+
+                        <button id="selectButton" class="card-footer btn-info text-dark float-left" mat-raised-button (click)="fileInput.click()">Selecciona una imagen</button>
+                    </div>
+
+                    <!--para subir varios archivos
+                        <input #fileInput type="file" hidden multiple (change)="selectFiles($event)" />-->
+                    <input #fileInput type="file" hidden (change)="selectFiles($event)" />
+                    <span *ngIf="fileName"><!--{{fileName}}-->
+
+                    </span>
+                    <br><br>
+                    <button id="uploadButton" class="btn-info text-dark float-left" mat-raised-button *ngIf="selectedFiles" [disabled]="!selectedFiles" (click)="uploadFiles()">
+                        Subir Archivo
+                    </button><br>
+                    <br>
+                    <div [hidden]="!imagenValida">
+                        <p class="text-danger">El archivo seleccionado no es válido</p>
+                    </div>
+
+
+                    <div id="box4" class="container-fluid">
+
+
+                        <mat-card class="card-container">
+                            <div class="" *ngFor="let file of fileInfos | async">
+                                <div class="row row-6 text-right" *ngIf="file.name == imagen">
+
+                                    <img class="img-rounded" id="img" src="http://localhost:8084/api/files/{{imagen}}" width="130px" height="130px">
+
+                                </div>
+                            </div>
+                            <mat-card-content>
+
+
+                            </mat-card-content>
+                        </mat-card>
+                    </div>
+
+
+                </div>
+
+                <div id="box3">
+                    <span>{{message}}</span>
+                </div>
+
+
+
+            </div>
+        </div>
+
+
+
         <div class="form-group row">
             <div class="col-sm-3">
                 <button type="submit" [disabled]="!this.form.valid || form.get('costo').value > form.get('precioVenta').value" class="btn btn-primary" (click)="guardar()">Guardar</button>
             </div>
         </div>
+
     </form>
 </div>

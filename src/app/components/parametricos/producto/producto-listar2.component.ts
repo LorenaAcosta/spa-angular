@@ -18,6 +18,7 @@ export class ProductoListar2Component implements OnInit {
   value: any;
   sum = 0;
   id = 1;
+  urlImagen: string = 'http://localhost:8084/api/files/';
 
   constructor(private categoriaService: CategoriaService,
               private productoService: ProductoService,

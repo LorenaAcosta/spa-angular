@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
 import { DetalleVentaService } from 'src/app/services/servicios/detalles-venta.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { VentaService } from 'src/app/services/servicios/venta.service';
 import Swal from 'sweetalert2';
 
@@ -18,17 +19,21 @@ export class VentaComponent implements OnInit {
   index: 0;
   pageActual: 1;
   comprobanteAux: any;
+  nroComprobante: number;
 
   constructor(
     private ventasService: VentaService,
     private detallesVentaService: DetalleVentaService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private util: UtilesService
   ) { }
 
   ngOnInit(): void {
-    this.ventasService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.ventas = resp  );
 
+    this.ventasService.listarRecurso()
+    .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+
+    this.getNumeroComprobante(1);
     /*this.ventasService.getRecurso(id)
     .subscribe( (resp: any) =>  this.comprobanteAux = resp  );*/
   }
@@ -50,7 +55,7 @@ export class VentaComponent implements OnInit {
   getNumeroComprobante(id){
     this.ventasService.getRecurso(id)
     .subscribe( (resp: any) =>  this.comprobanteAux = resp );
-    console.log(this.comprobanteAux.montoTotal + ' nro comprobante');
+    console.log(this.comprobanteAux.numeroComprobante + ' nro comprobante');
   }
 
   getCategorias(id) {

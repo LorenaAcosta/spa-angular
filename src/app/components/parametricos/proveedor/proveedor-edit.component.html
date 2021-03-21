@@ -1,7 +1,7 @@
 <br>
 <div class="container-fluid">
     <div class="row">
-        <h5 class="display">Nuevo Proveedor</h5>
+        <h2 class="display">Nuevo Proveedor</h2>
         <div class="col text-right">
             <button routerLink="/proveedor/listar" class="btn btn-info mr-1">
        <i class="fas fa-arrow-left"></i> Regresar
@@ -20,24 +20,24 @@
                 <input formControlName="empresa" type="empresa" class="form-control" id="empresa" required>
             </div>
         </div>
-
-        <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Vendedor</label>
-            <div class="col-sm-3">
-                <input formControlName="nombreProveedor" type="nombre" class="form-control" id="nombre" required>
-            </div>
-        </div>
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Telefono</label>
             <div class="col-sm-3">
-                <input formControlName="telefono" type="telefono" class="form-control" id="telefono" required>
+                <input formControlName="telefono" type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{3}" class="form-control" id="telefono" placeholder="09##-###-###" required><br>
+                <div class="row">
+                    <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="col-sm-9 text-danger">
+                        <br>
+                        <p class=""> * El número de telefono ingresado no es válido, el formato debe ser : 09##-###-###</p>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección</label>
-            <div class="col-sm-9">
-                <input formControlName="direccion" type="direccion" class="form-control" id="direccion" required>
+            <div class="col-sm-3">
+                <!--<input formControlName="direccion" type="direccion" class="form-control" id="direccion" required>-->
+                <textarea formControlName="direccion" type="text" class="form-control" rows="1" style="max-height:80px;"> </textarea>
             </div>
         </div>
 
@@ -51,20 +51,27 @@
         <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Correo</label>
             <div class="col-sm-3">
-                <input formControlName="correo" type="correo" class="form-control" id="correo" required>
+                <input type="text" class="form-control" id="correo" placeholder="Correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="correo" required>
+                <div class="row">
+                    <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="col text-danger">
+                        <br>
+                        <p class="text-justify"> * El correo ingresado no es valido</p>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="row">
-            <div class="col text-danger">
-                <p class="text-justify"> * El correo es obligatorio y debe ser un correo valido</p>
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label">Vendedor</label>
+            <div class="col-sm-3">
+                <input formControlName="nombreProveedor" type="nombre" class="form-control" id="nombre" required>
             </div>
         </div>
 
 
         <div class="form-group row">
             <div class="col-sm-3">
-                <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary" (click)="guardar()">Guardar</button>
+                <button type="submit" [disabled]="!this.form.valid" routerLink="/proveedor/listar" class="btn btn-primary" (click)="guardar()">Guardar</button>
             </div>
         </div>
     </form>

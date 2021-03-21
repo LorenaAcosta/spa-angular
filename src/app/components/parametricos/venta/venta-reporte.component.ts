@@ -3,6 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { DetalleVentaService } from 'src/app/services/servicios/detalles-venta.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 
 export interface UserData {
@@ -47,6 +48,7 @@ export class VentaReporteComponent implements OnInit {
 
   constructor(
     private ventaDetalleService: DetalleVentaService,
+    private util: UtilesService
   ) {
     // Create 100 users
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));

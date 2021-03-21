@@ -19,7 +19,6 @@
                     <tr>
                       <th>#</th>
                       <th>Nombre</th>
-                      <th>Descripción</th>
                       <th>Estado</th>
                       <th>Categoria</th>
                       <th>Duracion</th>
@@ -31,11 +30,10 @@
                     <tr>
                       <td>{{ i + 1}}</td>
                       <td>{{ item.nombre}}</td>
-                      <td>{{ item.descripcion}}</td>
                       <td>{{ item.estado}}</td>
                       <td>{{ item.categoriaId.descripcion}}</td>
-                      <td>{{ item.duracion}}</td>
-                      <td>{{ item.costo}}</td>
+                      <td>{{ util.cortarString(item.duracion, 0, 5) }} h.</td>
+                      <td>{{ util.numberWithCommas( item.costo )}}  gs.</td>
                       <td>                        
                         <button class="btn btn-info mr-1"
                          [routerLink]="['/servicio/modificar', item.servicioId ]">
@@ -56,11 +54,8 @@
 
 
 
-    <div *ngIf="servicios.length == 0" class="alertalert-warning text-center mt-3">
-      <h4 class="alert-heading">No hay registros</h4>  
-      <p>
-        <i class="fa fa-exclamation fa-2x"></i>
-      </p>
+ 
+    <div *ngIf="servicios.length == 0" class="alert alert-secondary text-center mt-3">
+      <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>  
     </div>
-
 

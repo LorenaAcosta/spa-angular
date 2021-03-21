@@ -1,10 +1,10 @@
-<br>
+
 <div class="container-fluid">
   <div class="row">
     <h5 class="display">Horario del Empleado</h5>
     <div class="col text-right">
-      <button routerLink="/empleado/horario" class="btn btn-info mr-1" >
-       <i class="fas fa-arrow-left"></i> Regresar
+      <button routerLink="/empleado/listar" class="btn btn-info mr-1" >
+       <i class="fas fa-arrow-left"></i> Cancelar
       </button>  
     </div>
   </div>
@@ -13,17 +13,12 @@
 
   <form [formGroup]="form2">
     <div class="form-group row">
-      <label for="inputState" class="col-sm-2 col-form-label">Empleado</label> 
-      <div class="col-sm-4">
-      <select id="empleadoId" formControlName="empleadoId" class="form-control">
-        <option *ngFor="let e of empleados" [ngValue]="e.empleadoId">
-          {{ e.nombre }} {{ e.apellido }}
-        </option>
-      </select>
-    </div>
-   </div>
+        <label for="inputPassword3" class="col-sm-2 col-form-label">Especialista:</label>
+        <div class="col-sm-3">
+          <input formControlName="empleadoId" type="nombre" maxlength="30" class="form-control" id="empleadoId" disabled>
+        </div>
+      </div>
    
-  <form [formGroup]="form2">
     <div class="form-group row">
       <label for="inputPassword3" class="col-sm-2 col-form-label">Hora de Entrada</label>
         <div>
@@ -35,7 +30,7 @@
     <div class="form-group row">
       <label for="inputPassword3" class="col-sm-2 col-form-label">Hora de Salida</label>
       <div>
-        <input  formControlName="horaFin" type="time" class="form-control" id="duracion"  min="14:00" max="21:00" required>
+        <input  formControlName="horaFin" type="time" class="form-control" id="horaFin"  min="14:00" max="21:00" required>
         <span class="validity"></span>
         <label>(Horas validas de salida entre 14:00 a 21:00) </label>
       </div>
@@ -46,4 +41,3 @@
       </div>
     </div>
   </form>
-

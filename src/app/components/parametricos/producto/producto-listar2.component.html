@@ -1,37 +1,32 @@
 <blockquote class="blockquote text-center">
     <h1>Explora nuestra linea de productos</h1>
-  </blockquote>
+</blockquote>
 
-        <!--Lista las categorias de productos-->
-        <div>
-            <button *ngFor="let cat of categorias" type="button" class="btn btn-light btn-mg alert alert-primary"  role="alert"  
-            (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
+<!--Lista las categorias de productos-->
+<div>
+    <button *ngFor="let cat of categorias" type="button" class="btn btn-light btn-mg alert alert-primary" role="alert" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
+</div>
+
+<!--Lista los servicios dependiendo de la categoria-->
+<!--Lista los servicios dependiendo de la categoria-->
+<div class="row row-cols-1 row-cols-md-2s">
+    <div class="card" *ngFor="let item of productos">
+        <img src="{{urlImagen}}{{item.imageName}}" style="width: 100px; height: 100px;">
+        <div class="card-body">
+            <h5 class="card-title">{{item.nombre}}</h5>
+            <p class="card-text">{{item.descripcion}} </p>
         </div>
-
-       <!--Lista los servicios dependiendo de la categoria-->
-       <!--Lista los servicios dependiendo de la categoria-->
-       <div class="row row-cols-1 row-cols-md-2s"> 
-            <div class="card" *ngFor="let item of productos">
-            <img src= "/assets/img/{{item.imageName}}.png"  style="width: 100px; height: 100px;">
-            <div class="card-body">
-                <h5 class="card-title">{{item.nombre}}</h5>
-                <p class="card-text">{{item.descripcion}} </p>
-            </div>
-            <div class="card-footer">
-                <small class="text-muted">
+        <div class="card-footer">
+            <small class="text-muted">
                     <strong> 
                     <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong></small>
-                <button  class="btn btn-info mr-1 float-right" [routerLink]="['/booking/terapista', item.servicioId ]" >
+            <button class="btn btn-info mr-1 float-right" [routerLink]="['/booking/terapista', item.servicioId ]">
                     <i class="fas fa-plus-square"></i> </button>
-            </div>
-            </div>
-        </div>  
-
-        <div *ngIf="productos.length == 0" class="alertalert-warning text-center mt-3">
-            <h4 class="alert-heading">No hay registros</h4>  
-            <p>
-            <i class="fa fa-exclamation fa-2x"></i>
-            </p>
         </div>
+    </div>
+</div>
 
-            
+
+<div *ngIf="productos.length == 0" class="alert alert-secondary text-center mt-3">
+    <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
+</div>

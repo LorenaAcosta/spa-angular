@@ -31,7 +31,7 @@
                             <td>{{ i + 1}}</td>
                             <td>{{ v.ventasId}}</td>
                             <td>{{ v.fecha}}</td>
-                            <td>{{ v.montoTotal}}</td>
+                            <td>{{ util.numberWithCommas(v.montoTotal)}}</td>
                             <td (ngModel)=comprobanteAux>{{'001-001-'+ ceroIzquierda(v.numeroComprobante, 7) }}</td>
                             <td>{{ v.medioPagoId.descripcion}}</td>
                             <td>{{ v.usuarioId.nombre + ' ' + v.usuarioId.apellido}}</td>
@@ -93,8 +93,8 @@
                                                                 <td>{{d.servicioId.descripcion}}</td>
                                                             </ng-template>
                                                             <td>{{ d.cantidad}}</td>
-                                                            <td>{{ d.precio}}</td>
-                                                            <td>{{ d.monto}}</td>
+                                                            <td>{{ util.numberWithCommas(d.precio)}}</td>
+                                                            <td>{{ util.numberWithCommas(d.monto)}}</td>
                                                         </tr>
                                                         <!--<tr>
 
@@ -109,7 +109,7 @@
 
                                                             <tr>
                                                                 <th scope="col">Total general</th>
-                                                                <td>{{ v.montoTotal}}</td>
+                                                                <td>{{ util.numberWithCommas(comprobanteAux.montoTotal)}}</td>
                                                             </tr>
 
 
@@ -129,12 +129,13 @@
                             </td>
                             <div class="container-fluid">
                                 <td>
-                                    <button class="btn btn-sm btn-info mr-1 " [routerLink]="['/ventas/modificar', v.ventasId ]">
-                        <i class="fas fa-pencil-alt "></i>
-                    </button>
-                                    <button class="btn btn-sm btn-info mr-1" (click)="borrar(v.ventasId, i)">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                                    <!--<button class="btn btn-sm btn-info mr-1 " [routerLink]="['/ventas/modificar', v.ventasId ]">
+                                        <i class="fas fa-pencil-alt "></i>
+                                    </button>-->
+
+                                    <button class="btn btn-sm btn-danger mr-1 " data-toggle="tooltip" data-type="warning" data-placement="top" title="Anular" (click)="borrar(v.ventasId, i)">
+                                        Anular  <i class="fas fa-trash" ></i>
+                                    </button>
                                 </td>
                             </div>
                         </tr>

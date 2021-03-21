@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
+import { ArchivosSubidosService } from 'src/app/services/archivos-subidos.service';
 
 @Component({
   selector: 'app-categoria-listar',
@@ -13,8 +14,11 @@ export class CategoriaListarComponent implements OnInit {
   categorias: any[] = [];
   pageActual: 1;
 
+  imageName : any;
 
-  constructor(private categoriaService: CategoriaService) { }
+
+  constructor(private categoriaService: CategoriaService,
+    private archivosSubidosService: ArchivosSubidosService) { }
 
   ngOnInit() {
     this.getCategorias();
@@ -25,7 +29,7 @@ export class CategoriaListarComponent implements OnInit {
     .subscribe( (resp: any[]) =>  this.categorias = resp  );
   }
 
-  borrar(id: any) {
+  borrar(id: any, pos: any) {
     Swal.fire({
       title: 'Estas seguro?',
       text: 'No podrás revertir esta operación!',
@@ -36,8 +40,7 @@ export class CategoriaListarComponent implements OnInit {
       confirmButtonText: 'Si, eliminar!'
       }).then((result) => {
         if (result.value) {
-          // this.categorias.splice(pos + 1, 1);
-
+          this.categorias.splice(pos, 1);
           this.categoriaService.eliminarRecurso(id).subscribe();
           Swal.fire(
             'Eliminado!',
@@ -56,4 +59,12 @@ export class CategoriaListarComponent implements OnInit {
     this.categoriaService.obtenerPorTipo('servicio')
     .subscribe( (resp: any[]) =>  this.categorias = resp  );
 }
+  getFilesPorNombre(filename: string){
+  this.archivosSubidosService.getFilePorNombre(filename)
+    .subscribe ((data : any ) => {
+      this.imageName = data.imageName;
+      console.log(this.imageName);
+      console.log(data.imageName);
+    });
+  }
 }

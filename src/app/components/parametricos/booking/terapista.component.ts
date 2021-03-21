@@ -21,6 +21,7 @@ export class TerapistaComponent implements OnInit {
   ngOnInit(): void {
        /*Mostrar los empleados disponibles de ese servicio */
        this.servicioId = this.route.snapshot.params.id;
+       localStorage.setItem('servicio', this.route.snapshot.params.id);
       // console.log(this.servicioId);
        this.disponibleService.listarByEmpleado(this.servicioId)
        .subscribe( (resp: any[]) =>  this.disponible = resp );

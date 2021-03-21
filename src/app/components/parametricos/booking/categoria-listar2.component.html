@@ -1,7 +1,7 @@
 <blockquote class="blockquote text-center">
     <h1>Explora nuestras categorias</h1>
     <footer class="blockquote-footer"><cite title="Source Title">Agendá ya con nosotros con los mejores especialistas! </cite></footer>
-  </blockquote>
+</blockquote>
 <br>
 <br>
 
@@ -9,10 +9,14 @@
 <div class="card-columns">
     <div class="col mb-4">
         <!--  Lista las categorias -->
-            <div class="card btn btn-light" *ngFor="let item of categorias; let i= index" 
-            [routerLink]="['../../booking/servicios', item.categoriaId]">
-                    <h5 class="card-title"> {{ item.descripcion}} </h5> 
-            </div> 
+        <div class="card btn btn-light" *ngFor="let item of categorias; let i= index" [routerLink]="['../../booking/servicios', item.categoriaId]">
+            <h5 class="card-title"> {{ item.descripcion}} </h5>
+            <a class="card-body"> <img src="{{urlImagen}}{{item.imageName}}" width="130px" height="130px"> </a>
         </div>
+    </div>
 </div>
 
+
+<div *ngIf="categorias.length == 0" class="alert alert-secondary text-center mt-3">
+    <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
+</div>

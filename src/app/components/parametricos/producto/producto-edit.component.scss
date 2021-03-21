@@ -1,0 +1,99 @@
+#wrap {
+    display: block;
+}
+
+#box1,
+#box2,
+#box3,
+#box4 {
+    display: block;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#box1 {
+    text-align: center;
+    border: 1px solid gray;
+    height: 250px;
+    overflow: auto;
+}
+
+#progressbar {
+    text-align: center;
+    height: 20px;
+    padding: 10px;
+}
+
+#box1 span {
+    margin-left: 10px;
+}
+
+#box2 span {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+#selectButton {
+    background-color: #138496;
+}
+
+#uploadButton {
+    background-color: #138496;
+}
+
+#box3 {
+    color: red;
+}
+
+#box4 {
+    display: flex;
+    justify-content: space-between;
+}
+
+#box4 ul {
+    list-style: none;
+}
+
+#box4 ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+}
+
+#box4 ul li a {
+    text-decoration: none;
+    color: black;
+    margin-right: 20px;
+}
+
+#titulo {
+    display: block;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50px;
+    line-height: 50px;
+    padding: 20px;
+    text-align: center;
+}
+
+.card-container {
+    /*  not needed styles to reflect it */
+    width: 530px;
+    /* needed styles below */
+    display: right;
+    justify-content: flex-end;
+}
+
+.guardar {
+    /*  not needed styles to reflect it */
+    padding: 10px;
+    width: 500px;
+    /* needed styles below */
+    display: flex;
+    justify-content: flex-end;
+}

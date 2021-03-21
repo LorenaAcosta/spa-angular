@@ -3,6 +3,7 @@ import { ServicioService } from 'src/app/services/servicios/servicio.service';
 import Swal from 'sweetalert2';
 
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 // import { jsPDF } from 'jspdf';
 declare var jsPDF: any;
@@ -20,7 +21,8 @@ export class ServicioListarComponent implements OnInit {
   pageActual: 1;
   @ViewChild('htmlData') htmlData: ElementRef;
 
-  constructor(private servicioService: ServicioService) { }
+  constructor(private servicioService: ServicioService, 
+              private util: UtilesService) { }
 
   ngOnInit() {
     this.servicioService.listarRecurso()

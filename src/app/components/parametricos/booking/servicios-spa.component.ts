@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ServicioService } from 'src/app/services/servicios/servicio.service';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 import { ActivatedRoute } from '@angular/router';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 
 @Component({
@@ -22,7 +23,8 @@ export class ServicioListar2Component implements OnInit {
 
   constructor(private categoriaService: CategoriaService,
               private servicioService: ServicioService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, 
+              private util: UtilesService) {
                }
 
   ngOnInit(): void {
@@ -30,18 +32,20 @@ export class ServicioListar2Component implements OnInit {
     .subscribe( (resp: any[]) =>  this.categorias = resp );
     /*Mostrar los servicios */
     const id = this.route.snapshot.params.id;
+    localStorage.setItem('categoria', id);
     if (typeof id !== 'undefined') {
-    this.servicioService.listarRecursosActivos(id, 'activo')
+    this.servicioService.listarRecursosActivos(id, 'ACTIVO')
      .subscribe( (resp: any[]) =>  this.servicios = resp );
     } else {
-      this.servicioService.listarRecursosActivos(1, 'activo')
+      this.servicioService.listarRecursosActivos(1, 'ACTIVO')
       .subscribe( (resp: any[]) =>  this.servicios = resp );
     }
   }
 
 
 recargar(id: any) {
-   this.servicioService.listarRecursosActivos(id, 'activo')
+  localStorage.setItem('categoria', id);
+   this.servicioService.listarRecursosActivos(id, 'ACTIVO')
    .subscribe( (resp: any[]) =>  this.servicios = resp );
  }
 
@@ -50,6 +54,8 @@ getDetalle(servicioId) {
    .subscribe( (resp: any[]) =>  this.detalle = resp );
   console.log(this.detalle);
 }
+
+
 
 
 }

@@ -12,7 +12,7 @@ export class OfertaComponent implements OnInit {
   servicios: any[] = [];
 
   ngOnInit(): void {
-    this.servicioService.listarRecursoPorEstado('promo')
+    this.servicioService.listarRecursoPorEstado('PROMOCION')
      .subscribe( (resp: any[]) =>  this.servicios = resp );
   }
 
