@@ -10,7 +10,7 @@ import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 export class CategoriaListar2Component implements OnInit {
 
   categorias: any[] = [];
-  urlImagen: string = 'http://localhost:8084/api/files/';
+  urlImagen: string = 'https://spa-2021-springboot.herokuapp.com/api/files/';
   categoriaSelecionada: any = '';
   constructor(private categoriaService: CategoriaService,
               private router: Router) { }

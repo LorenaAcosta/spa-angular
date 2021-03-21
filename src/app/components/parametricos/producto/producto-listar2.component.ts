@@ -18,7 +18,7 @@ export class ProductoListar2Component implements OnInit {
   value: any;
   sum = 0;
   id = 1;
-  urlImagen: string = 'http://localhost:8084/api/files/';
+  urlImagen: string = 'https://spa-2021-springboot.herokuapp.com/api/files/';
 
   constructor(private categoriaService: CategoriaService,
               private productoService: ProductoService,
