@@ -195,9 +195,11 @@ export class VentaEditComponent implements OnInit {
 
       /* controlar que no se dupliquen productos antes de agregar fila a la tabla */
       for (let detalle of this.datos) {
-        if (detalle.productoId !== null) {
+        console.log('articulo seleccionado');
+        console.log(detalle);
+        if (!this.esServicio) {
             if (detalle.productoId.productoId === this.selectedProd.productoId) {
-                    console.log('hay que validar');
+                    console.log('hay que validar producto');
                     console.log(this.articuloselect.productoId);
                     Swal.fire(
                       'Duplicado',
@@ -208,7 +210,7 @@ export class VentaEditComponent implements OnInit {
             }
         } else {
           if (detalle.servicioId.servicioId === this.selectedProd.servicioId) {
-            console.log('hay que validar');
+            console.log('hay que validar servicio');
             console.log(this.articuloselect.productoId);
             Swal.fire(
               'Duplicado',
