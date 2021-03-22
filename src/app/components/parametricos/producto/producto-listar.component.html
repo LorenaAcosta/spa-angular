@@ -30,10 +30,10 @@
       <td>{{ util.numberWithCommas( prod.stockActual )}}      </td>
       <td>
         <button class="btn btn-info mr-1"
-         [routerLink]="['/producto/modificar', prod.productoId ]">
+         [routerLink]="['/producto/modificar', prod.productoId ]" placement="top" ngbTooltip="Editar">
           <i class="fas fa-pencil-alt"></i>
         </button>
-        <button class="btn btn-info mr-1" (click)="borrar(prod.productoId, i)">
+        <button class="btn btn-info mr-1" (click)="borrar(prod.productoId, i)" placement="top" ngbTooltip="Eliminar">
           <i class="fas fa-trash"></i>
         </button>
       </td>

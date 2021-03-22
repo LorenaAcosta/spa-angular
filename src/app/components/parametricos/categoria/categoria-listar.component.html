@@ -27,10 +27,10 @@
         <td>{{ item.descripcion}}</td>
         <td>
           <button class="btn btn-info mr-1"
-           [routerLink]="['/categoria/modificar', item.categoriaId ]">
+           [routerLink]="['/categoria/modificar', item.categoriaId ]" placement="top" ngbTooltip="Editar">
             <i class="fas fa-pencil-alt"></i>
           </button>
-          <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId, i)">
+          <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId, i)" placement="top" ngbTooltip="Eliminar">
             <i class="fas fa-trash"></i>
           </button>
         </td>

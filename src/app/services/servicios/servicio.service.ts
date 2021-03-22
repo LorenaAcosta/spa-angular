@@ -9,6 +9,7 @@ import { throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ServicioService {
     recurosBaseURL: string = environment.URL_BASE + '/servicio/';
     constructor(private http: HttpClient,
@@ -78,6 +79,16 @@ export class ServicioService {
       return this.http.delete(this.recurosBaseURL + 'eliminar/' + id).pipe(
         catchError( e=> {
           this.router.navigate(['/servicio/listar']);
+          Swal.fire(e.error.mensaje, e.error.error, 'error');
+          return throwError(e);
+        })
+      );
+    }
+
+    listarServiciosDisponibles(empleadoId){
+      return this.http.get(this.recurosBaseURL + 'get-servicios-disponibles/' +  empleadoId ).pipe(
+        catchError( e=> {
+          this.router.navigate(['/empleado/listar']);
           Swal.fire(e.error.mensaje, e.error.error, 'error');
           return throwError(e);
         })

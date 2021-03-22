@@ -34,13 +34,14 @@
                       <td>{{ item.telefono}}</td>
                       <td>                        
                         <button class="btn btn-info mr-1"
-                         [routerLink]="['/empleado/modificar', item.empleadoId ]">
+                         [routerLink]="['/empleado/modificar', item.empleadoId ]" placement="top" ngbTooltip="Editar">
                          <i class="fas fa-pencil-alt"></i></button>
-                        <button class="btn btn-info mr-1" (click)="borrar(item.empleadoId, i)">
+                        <button  type="button" class="btn btn-info mr-1" (click)="borrar(item.empleadoId, i)"  placement="top" ngbTooltip="Eliminar">
                           <i class="fas fa-trash"></i> </button>
-                        <button class="btn btn-info mr-1" [routerLink]="['/empleado/asignar-horario/', item.empleadoId ]">
-                          Horario
-                        </button> 
+                        <button class="btn btn-info mr-1" [routerLink]="['/empleado/asignar-horario/', item.empleadoId ]"  placement="top" ngbTooltip="Asignar Horarios">
+                          <i class="fas fa-clock"></i> </button> 
+                        <button class="btn btn-info mr-1" [routerLink]="['/empleado/asignar-disponibilidad/', item.empleadoId ]" placement="top" ngbTooltip="Ver Especialidades">
+                          <i class="fas fa-clipboard-list" ></i>  </button> 
                       </td>
                     </tr>
                   </tbody>

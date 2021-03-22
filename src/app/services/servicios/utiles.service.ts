@@ -14,4 +14,10 @@ import { Injectable } from '@angular/core';
       return cadena.substr(inicio , longitud);
     }
 
+    getFechaCalendar(model){
+      return (model.year + '-' + model.month + '-' + model.day as string);
+    }
+
+    
+
   }

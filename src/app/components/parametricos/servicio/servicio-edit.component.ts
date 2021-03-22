@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { CategoriaService } from '../../../services/servicios/categoria.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 @Component({
   selector: 'app-servicio-edit',
@@ -25,6 +26,7 @@ export class ServicioEditComponent implements OnInit {
   });
 
   constructor(private fb: FormBuilder,
+              private util:           UtilesService,
               private servicioService: ServicioService,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute,
@@ -52,7 +54,7 @@ export class ServicioEditComponent implements OnInit {
         this.form.controls.descripcion.setValue(data.descripcion);
         this.form.controls.categoriaId.setValue(data.categoriaId.categoriaId);
         this.form.controls.costo.setValue(data.costo);
-        this.form.controls.duracion.setValue(data.duracion);
+        this.form.controls.duracion.setValue( this.util.cortarString(data.duracion, 0,5));
        });
     }
   }

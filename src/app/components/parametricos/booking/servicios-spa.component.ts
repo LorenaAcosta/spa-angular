@@ -20,6 +20,7 @@ export class ServicioListar2Component implements OnInit {
   value: any;
   sum = 0;
   pageActual: 1;
+  categoriaId: any;
 
   constructor(private categoriaService: CategoriaService,
               private servicioService: ServicioService,
@@ -31,9 +32,10 @@ export class ServicioListar2Component implements OnInit {
     this.categoriaService.obtenerPorTipo('servicio')
     .subscribe( (resp: any[]) =>  this.categorias = resp );
     /*Mostrar los servicios */
-    const id = this.route.snapshot.params.id;
-    if (typeof id !== 'undefined') {
-    this.servicioService.listarRecursosActivos(id, 'activo')
+    this.categoriaId= this.route.snapshot.paramMap.get('id');
+    console.log(this.categoriaId);
+    if (typeof this.categoriaId !== 'undefined') {
+    this.servicioService.listarRecursosActivos(this.categoriaId, 'activo')
      .subscribe( (resp: any[]) =>  this.servicios = resp );
     } else {
       this.servicioService.listarRecursosActivos(1, 'activo')
