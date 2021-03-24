@@ -65,9 +65,9 @@ export class EmpleadoEditComponent implements OnInit {
         apellido: ['', Validators.required],
         direccion: ['', Validators.required],
         telefono: ['', Validators.required],
-        fechaNac: ['', Validators.required],
-        horaEntrada: ['', Validators.required],
-        horaSalida: ['', Validators.required]
+        fechaNac: ['', Validators.required]
+       // horaEntrada: ['', Validators.required],
+       // horaSalida: ['', Validators.required]
        });
       this.empleadoService.getRecurso(id)
        .subscribe ((data: any) => {
@@ -77,8 +77,8 @@ export class EmpleadoEditComponent implements OnInit {
         this.form.controls.direccion.setValue(data.direccion);
         this.form.controls.telefono.setValue(data.telefono);
         this.form.controls.fechaNac.setValue(data.fechaNac);
-        this.form.controls.horaEntrada.setValue(data.horaEntrada);
-        this.form.controls.horaSalida.setValue(data.horaSalida);
+        //this.form.controls.horaEntrada.setValue(data.horaEntrada);
+        //this.form.controls.horaSalida.setValue(data.horaSalida);
        });
     }
   }

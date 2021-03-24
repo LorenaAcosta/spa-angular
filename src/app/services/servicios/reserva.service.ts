@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { map } from 'jquery';
+import { FormsModule } from '@angular/forms';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservaService {
-
+ 
+ 
   recurosBaseURL: string = environment.URL_BASE + '/reserva-detalle/';
 
   constructor(private http: HttpClient) { }
@@ -42,5 +45,10 @@ export class ReservaService {
   listarporfecha(fechaReserva) {
     return this.http.get(this.recurosBaseURL + 'listarporfecha/' + fechaReserva);
   }
+
+  getBusqueda(id) {
+    return this.http.get(this.recurosBaseURL + 'busqueda-reservas/' + id);
+  }
+
 
 }

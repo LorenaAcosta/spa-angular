@@ -43,7 +43,7 @@ export class DisponibleComponent implements OnInit {
     this.disponibleService.listarByEmpleadoV2(this.empleadoId).
       subscribe((resp: any[]) => this.disponibles = resp);
 
-    this.servicioService.listarRecurso().
+    this.servicioService.listarServiciosDisponibles(this.empleadoId).
       subscribe((resp: any[]) => this.servicios = resp);
 
   }

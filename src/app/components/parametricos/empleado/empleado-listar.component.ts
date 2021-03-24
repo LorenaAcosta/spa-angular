@@ -56,6 +56,15 @@ export class EmpleadoListarComponent implements OnInit {
       });
   }
 
+  buscar(termino: String){
+    console.log(termino);
+    this.empleadoService.getBusqueda(termino)
+    .subscribe( (resp: any ) =>  {
+      console.log(resp);
+      this.empleados = resp;
+    });
+  }
+
 }
 
 

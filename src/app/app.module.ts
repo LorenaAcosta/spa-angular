@@ -48,6 +48,7 @@ import { ListarComponent } from './components/parametricos/disponible/disponible
 import { HorarioComponent } from './components/parametricos/horario/horario.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -85,7 +86,7 @@ import { HorarioComponent } from './components/parametricos/horario/horario.comp
     OfertaComponent,
     DisponibleComponent,
     ListarComponent,
-    HorarioComponent
+    HorarioComponent,
   ],
   imports: [
     BrowserModule,

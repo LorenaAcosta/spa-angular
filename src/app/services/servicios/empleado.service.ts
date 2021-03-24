@@ -82,5 +82,10 @@ export class EmpleadoService {
     );
   }
   
+  getBusqueda(id) {
+    return this.http.get(this.recurosBaseURL + 'busqueda-empleados/' + id);
+  }
+
+  
 
 }

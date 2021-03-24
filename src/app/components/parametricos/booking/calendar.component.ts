@@ -36,7 +36,8 @@ export class CalendarComponent implements OnInit {
     fechaReserva: [''],
     hora: ['' ],
     disponibleId: [''],
-    usuarioId: ['']
+    usuarioId: [''],
+    estado: ['']
   });
 
 
@@ -64,10 +65,11 @@ export class CalendarComponent implements OnInit {
   print() {
     this.printedOption = this.selectedOption;
     this.form.controls.empleado.setValue( this.empleadoId);
-    this.form.controls.fechaReserva.setValue( this.todayDate );
+    this.form.controls.fechaReserva.setValue( this.selectedDate );
     this.form.controls.hora.setValue(this.selectedOption.toString().substr(-20, 5));
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
     this.form.controls.usuarioId.setValue(1);
+    this.form.controls.estado.setValue('pendiente');
 
     //console.log(this.form);
 
