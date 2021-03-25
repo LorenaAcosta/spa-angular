@@ -20,6 +20,7 @@ import { UtilesService } from 'src/app/services/servicios/utiles.service';
 export class CalendarComponent implements OnInit {
 
   disponibleId: number;
+  disponible: any;
   empleadoId: any;
   servicioId: number;
   dispo: any;
@@ -28,28 +29,26 @@ export class CalendarComponent implements OnInit {
 
   fecha: number;
   horaInicio: any;
+  todayDate: any;
+  selectedDate: any;
 
   model: NgbDateStruct;
   date: {year: number, month: number, day: number};
-  turno: {hora: string};
-  disponible: any[] = [];
-  horarioEmp: any[] = [];
-
-  horario: any[] = [];
   turnosArray: any[] = [];
+
   arrayObject: any[] = [];
   turnos: any[] = [];
 
   selectedOption: string;
   printedOption: string;
-  selectedTime: string;
 
   form = this.fb.group({
     empleado: [''],
     fechaReserva: [''],
     hora: ['' ],
     disponibleId: [''],
-    usuarioId: ['']
+    usuarioId: [''],
+    estado: ['']
   });
 
 
@@ -86,11 +85,15 @@ export class CalendarComponent implements OnInit {
 
   print() {
     this.printedOption = this.selectedOption;
-    this.form.controls.empleado.setValue( localStorage.getItem('empleado'));
-    this.form.controls.fechaReserva.setValue( localStorage.getItem('fecha') );
+
+    this.form.controls.empleado.setValue( this.empleadoId);
+    this.form.controls.fechaReserva.setValue( this.selectedDate );
     this.form.controls.hora.setValue(this.selectedOption.toString().substr(-20, 5));
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
     this.form.controls.usuarioId.setValue(1);
+    this.form.controls.estado.setValue('pendiente');
+
+    //console.log(this.form);
 
     console.log(this.form);
 
@@ -112,20 +115,45 @@ export class CalendarComponent implements OnInit {
   }
 
   getHorariosDisponibles() {
-    let Today1 = Date();
-    Today1 = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
-    console.log(Today1);
-    localStorage.setItem('fecha', Today1);
+     /* Obtiene el objeto disponible {disponibleId, } */
+    this.disponibleId = this.route.snapshot.params.id;
     
-    this.disponibleService.getHorasDisponibles(localStorage.getItem('categoria'), localStorage.getItem('servicio'), localStorage.getItem('empleado'), localStorage.getItem('fecha'))
-    .subscribe( (resp: any) =>  {
-      localStorage.setItem("horasDisponibles", JSON.stringify(resp));
-      this.turnosArray = JSON.parse(localStorage.getItem("horasDisponibles"));
-      console.log(this.turnosArray);
-      console.log(this.turnosArray[0]);
-      if (this.turnosArray[0] == null){
-        Swal.fire('Lo siento!', 'No hay turnos disponibles para la fecha seleccionada', 'error');
-      }
+    this.disponibleService.getRecurso(this.disponibleId).subscribe( (resp: any) =>  {
+       console.log(resp);
+       this.empleadoId=  resp.empleadoId.empleadoId;
+  
+
+    this.selectedDate = Date();
+    this.selectedDate = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
+    console.log(this.selectedDate);
+    
+   /* this.selectedDate = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
+    console.log(this.selectedDate);
+    console.log(this.todayDate);  */
+   
+
+      this.disponibleService.getHorasDisponibles(
+        resp.servicioId.categoriaId.categoriaId,
+        resp.servicioId.servicioId,
+        resp.empleadoId.empleadoId, 
+        this.selectedDate)
+      .subscribe( (resp: any) =>  {
+
+        if (resp == null){
+           Swal.fire('Lo siento!', 'No puedes seleccionar esta fecha', 'error');
+        }else{
+          localStorage.setItem("horasDisponibles", JSON.stringify(resp));
+          this.turnosArray = JSON.parse(localStorage.getItem("horasDisponibles"));
+          console.log(this.turnosArray);
+          console.log(this.turnosArray[0]);
+          if (this.turnosArray[0] == null){
+            Swal.fire('Lo siento!', 'No hay turnos disponibles para la fecha seleccionada', 'error');
+          }
+        }
+          
+      });
+
     });
   }
+
 }

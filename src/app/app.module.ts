@@ -72,6 +72,7 @@ import { ArchivosSubidosComponent } from './components/archivos-subidos/archivos
 import { HorarioComponent } from './components/parametricos/horario/horario.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,7 +120,7 @@ import { HorarioComponent } from './components/parametricos/horario/horario.comp
     DisponibleComponent,
     ListarComponent,
     ArchivosSubidosComponent,
-    HorarioComponent
+    HorarioComponent,
   ],
   imports: [
     BrowserModule,

@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { HorarioService } from 'src/app/services/servicios/horario.service';
+import { getLocaleDateTimeFormat } from '@angular/common';
 
 
 @Component({
@@ -17,12 +18,21 @@ import { HorarioService } from 'src/app/services/servicios/horario.service';
 export class EmpleadoEditComponent implements OnInit {
 
   form = this.fb.group({
-    cedula: ['', Validators.required],
     nombre: ['', Validators.required],
     apellido: ['', Validators.required],
+    cedula: ['', Validators.required],
     direccion: ['', Validators.required],
-    telefono: ['', Validators.required],
-    fechaNac: ['', Validators.required]
+    ciudad: ['', Validators.required],
+    nacionalidad: ['', Validators.required],
+    estadoCivil: ['', Validators.required],
+    telefono: [''],
+    celular: [''],
+    fechaNac: ['', Validators.required],
+    correo: [''],
+    funcion: ['', Validators.required],
+    sueldo: ['', Validators.required],
+    estado: [1],
+    fechaIngreso: ['aa'],  
   });
 
   horario = this.fb.group({
@@ -33,10 +43,10 @@ export class EmpleadoEditComponent implements OnInit {
 
   get cedula() { return this.form.get('cedula'); }
   get telefono() { return this.form.get('telefono'); }
+  get celular() { return this.form.get('celular'); }
+  get sueldo() { return this.form.get('sueldo'); }
+  get correo() { return this.form.get('correo'); }
 
-  // categorias$: Observable<any>;
-  categorias: any[] = [];
-  selectedPersonId = 'Elegir';
   empleadoId;
 
   constructor(private fb: FormBuilder,
@@ -46,39 +56,66 @@ export class EmpleadoEditComponent implements OnInit {
               private router: Router) {
 
       this.form = this.fb.group({
-        cedula: ['', Validators.required],
         nombre: ['', Validators.required],
         apellido: ['', Validators.required],
+        cedula: ['', Validators.required],
         direccion: ['', Validators.required],
-        telefono: ['', Validators.required],
-        fechaNac: ['', Validators.required]
+        ciudad: ['', Validators.required],
+        nacionalidad: ['', Validators.required],
+        estadoCivil: ['', Validators.required],
+        telefono: [''],
+        celular: [''],
+        fechaNac: ['', Validators.required],
+        correo: [''],
+        funcion: ['', Validators.required],
+        sueldo: ['', Validators.required],
+        estado: [1],
+        fechaIngreso: ['aa'], 
       });
     }
 
   ngOnInit() {
-   // this.categorias$ = this.categoriaService.listarRecurso();
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({
-        cedula: ['', Validators.required],
         nombre: ['', Validators.required],
         apellido: ['', Validators.required],
+        cedula: ['', Validators.required],
         direccion: ['', Validators.required],
-        telefono: ['', Validators.required],
+        ciudad: ['', Validators.required],
+        nacionalidad: ['', Validators.required],
+        estadoCivil: ['', Validators.required],
+        telefono: [''],
+        celular: [''],
         fechaNac: ['', Validators.required],
-        horaEntrada: ['', Validators.required],
-        horaSalida: ['', Validators.required]
+        correo: [''],
+        funcion: ['', Validators.required],
+        sueldo: ['', Validators.required],
+        estado: [1],
+        fechaIngreso: ['aa'], 
+       // horaEntrada: ['', Validators.required],
+       // horaSalida: ['', Validators.required]
        });
       this.empleadoService.getRecurso(id)
        .subscribe ((data: any) => {
-        this.form.controls.cedula.setValue(data.cedula);
+       this.form.controls.cedula.setValue(data.cedula);
         this.form.controls.nombre.setValue(data.nombre);
         this.form.controls.apellido.setValue(data.apellido);
         this.form.controls.direccion.setValue(data.direccion);
         this.form.controls.telefono.setValue(data.telefono);
         this.form.controls.fechaNac.setValue(data.fechaNac);
-        this.form.controls.horaEntrada.setValue(data.horaEntrada);
-        this.form.controls.horaSalida.setValue(data.horaSalida);
+        this.form.controls.correo.setValue(data.correo);
+        this.form.controls.estadoCivil.setValue(data.estadoCivil);
+        this.form.controls.estado.setValue(1);
+        this.form.controls.fechaIngreso.setValue('aa');
+        this.form.controls.celular.setValue(data.celular);
+        this.form.controls.funcion.setValue(data.funcion);
+        this.form.controls.sueldo.setValue(data.sueldo);
+        this.form.controls.ciudad.setValue(data.ciudad);
+        this.form.controls.correo.setValue(data.correo);
+        this.form.controls.nacionalidad.setValue(data.nacionalidad);  
+        //this.form.controls.horaEntrada.setValue(data.horaEntrada);
+        //this.form.controls.horaSalida.setValue(data.horaSalida);
        });
     }
   }
@@ -93,9 +130,11 @@ export class EmpleadoEditComponent implements OnInit {
      if (typeof id == 'undefined') {
 
       /*Insertar empleado  */
+      console.log(this.form.value);
       peticion = this.empleadoService.agregarRecurso(this.form.value);
       peticion.subscribe((result: any) =>  {
-         console.log(result);
+        
+        console.log(result);
          this.horario.controls.horaFin.setValue("00:00");
          this.horario.controls.horaInicio.setValue("00:00");
          this.horario.controls.empleadoId.setValue(result.empleadoId);

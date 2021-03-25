@@ -67,4 +67,15 @@ export class CategoriaListarComponent implements OnInit {
       console.log(data.imageName);
     });
   }
+
+  }
+  buscar(termino: String){
+    console.log(termino);
+    this.categoriaService.getBusqueda(termino)
+    .subscribe( (resp: any ) =>  {
+      console.log(resp);
+      this.categorias = resp;
+    });
+  }
+
 }

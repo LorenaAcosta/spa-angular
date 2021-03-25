@@ -14,8 +14,9 @@
                   
         <div class="card-columns">
           <div class="col mb-4">
-              <!--  Lista las categorias -->
-                  <div class="card btn btn-light" *ngFor="let item of disponible; let i= index" [routerLink]="['/booking/calendar', item.disponibleId ]">
+              <!--  Lista las terapistas -->
+              <!-- ngif que controlevel horario asignado del empleado-->
+                  <div class="card btn btn-light" *ngFor="let item of disponible; let i= index" [routerLink]="['/booking/categorias/servicios/terapista/calendar', item.disponibleId ]">
                       {{ item.empleadoId.nombre }} 
                       {{ item.empleadoId.apellido}}  
                       {{ item.disponibleId}}

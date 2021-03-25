@@ -20,6 +20,9 @@ export class CategoriaService {
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
+  listarRecursoDescripcion() {
+    return this.http.get(this.recurosBaseURL + 'descripcion');
+  }
 
   listarRecursoDescripcion() {
     return this.http.get(this.recurosBaseURL + 'descripcion');
@@ -79,6 +82,12 @@ export class CategoriaService {
   listarPaginadoRecurso(filtros) {
     return this.http.post(this.recurosBaseURL + 'categorias-list', filtros);
   }
+
+   
+  getBusqueda(id) {
+    return this.http.get(this.recurosBaseURL + 'busqueda-categorias/' + id);
+  }
+
 }
 
 

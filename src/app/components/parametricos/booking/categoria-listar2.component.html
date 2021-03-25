@@ -9,10 +9,11 @@
 <div class="card-columns">
     <div class="col mb-4">
         <!--  Lista las categorias -->
-        <div class="card btn btn-light" *ngFor="let item of categorias; let i= index" [routerLink]="['../../booking/servicios', item.categoriaId]">
-            <h5 class="card-title"> {{ item.descripcion}} </h5>
-            <a class="card-body"> <img src="{{urlImagen}}{{item.imageName}}" width="130px" height="130px"> </a>
-        </div>
+            <div class="card btn btn-light" *ngFor="let item of categorias; let i= index" 
+            (click)="btnClick(item.categoriaId)" >
+                    <h5 class="card-title"> {{ item.descripcion}} </h5> 
+                    <a class="card-body"> <img src="{{urlImagen}}{{item.imageName}}" width="130px" height="130px"> </a>
+            </div> 
     </div>
 </div>
 

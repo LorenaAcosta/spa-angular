@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
+import { NgModule }      from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ReservaService } from 'src/app/services/servicios/reserva.service';
 import { EmpleadoService } from '../../../services/servicios/empleado.service';
@@ -22,6 +24,7 @@ export class ReservaListComponent implements OnInit {
   empleados: any[] = [];
   lado;
   selectedOption: number;
+  filtroEmpleado:'';
 
   ngOnInit() {
     this.empleadoService.listarRecurso()
@@ -32,6 +35,8 @@ export class ReservaListComponent implements OnInit {
   form = this.fb.group({
     model: ['']
   });
+
+
 
 
   cambiaLado(valor) {
@@ -46,9 +51,18 @@ export class ReservaListComponent implements OnInit {
       this.reservas = resp;
       console.log(this.reservas);
     }  );
-    this.arrayObject = this.reservas as string[];
+   // this.arrayObject = this.reservas as string[];
   }
 
+
+buscar(termino: String){
+  console.log(termino);
+  this.reservaService.getBusqueda(termino)
+  .subscribe( (resp: any ) =>  {
+    console.log(resp);
+    this.reservas = resp;
+  });
+}
 
 }
 

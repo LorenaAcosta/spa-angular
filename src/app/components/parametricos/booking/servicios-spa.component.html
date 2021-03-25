@@ -13,7 +13,8 @@
     <div class="p-3" *ngFor="let item of servicios; let i= index">
         <div class="">
             <div class="card">
-                <button class="btn btn-light" [routerLink]="['/booking/terapista', item.servicioId ]">
+
+            <button  class="btn btn-light" [routerLink]="['/booking/categorias/servicios/terapista', item.servicioId ]">
                   <div class="card-body">
                     <h5 class="card-title">{{item.nombre}}</h5>
                   <p class="card-text">{{item.descripcion}}</p>

@@ -13,6 +13,7 @@ import { throwError } from 'rxjs';
 })
 export class EmpleadoService {
 
+
   recurosBaseURL: string = environment.URL_BASE + '/empleado/';
   constructor(private http: HttpClient,
               private router: Router) { }
@@ -70,6 +71,21 @@ export class EmpleadoService {
       })
     );
   }
+
+
+  obtenerTurnos(id, fecha) {
+    return this.http.get(this.recurosBaseURL + 'obtener-turnos/' + id + fecha ).pipe(
+      catchError( e=> {
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
+  }
+  
+  getBusqueda(id) {
+    return this.http.get(this.recurosBaseURL + 'busqueda-empleados/' + id);
+  }
+
   
 
 }

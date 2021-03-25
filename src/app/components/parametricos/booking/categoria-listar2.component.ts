@@ -24,8 +24,10 @@ export class CategoriaListar2Component implements OnInit {
     .subscribe( (resp: any[]) =>  this.categorias = resp  );
   }
 
-  btnClick() {
-    this.router.navigateByUrl('booking/servicios');
+  btnClick(categoriaId:any) {
+  //  console.log(categoriaId);
+    this.router.navigate(['booking/categorias/servicios', categoriaId]);
   }
+  //[routerLink]="['../../booking/categorias/servicios', item.categoriaId]"
 
 }

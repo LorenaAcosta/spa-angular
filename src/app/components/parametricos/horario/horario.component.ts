@@ -20,7 +20,7 @@ export class HorarioComponent implements OnInit {
     horarioId: [''],
     horaFin: ['', Validators.required],
     horaInicio: ['', Validators.required],
-    empleadoId: ['']
+    empleadoId: ['', Validators.required]
   });
   categorias: any[] = [];
   empleados: any[] = [];
@@ -36,7 +36,7 @@ export class HorarioComponent implements OnInit {
       horarioId: [''],
       horaFin: ['', Validators.required],
       horaInicio: ['', Validators.required],
-      empleadoId: [''],
+      empleadoId: ['', Validators.required],
       });
 }
 
@@ -55,15 +55,13 @@ export class HorarioComponent implements OnInit {
        this.horarioService.obtenerHorario(id)
        .subscribe ((data: any) => {
         this.form2.controls.empleadoId.setValue(data.empleadoId.nombre.concat(" ").concat(data.empleadoId.apellido) );
-        this.form2.controls.horaFin.setValue( this.util.cortarString(data.horaFin, 0, 5) );
-        this.form2.controls.horaInicio.setValue(this.util.cortarString(data.horaInicio, 0, 5) ); 
+
+        this.form2.controls.horaFin.setValue( this.util.cortarString(data.horaFin, 0,5)  );
+        this.form2.controls.horaInicio.setValue( this.util.cortarString(data.horaInicio, 0,5)  ); 
     });
   }
 }
 
-  ver() {
-   // console.warn(this.form2.value);
-  }
 
   guardar() {
     const id = this.route.snapshot.params.id;
@@ -73,6 +71,7 @@ export class HorarioComponent implements OnInit {
       //console.log(r);
       this.form2.controls.empleadoId.setValue(r.empleadoId.empleadoId);
       this.form2.controls.horarioId.setValue(r.horarioId);
+      
       console.log(this.form2.value);
       peticion = this.horarioService.modificarRecurso(this.form2.value, this.form2.controls.
         horarioId.value);
