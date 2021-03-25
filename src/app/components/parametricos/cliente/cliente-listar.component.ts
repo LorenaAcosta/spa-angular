@@ -41,13 +41,21 @@ export class ClienteListarComponent implements OnInit {
       });
   }
 
-  
-buscar(termino: String){
-  console.log(termino);
-  this.clienteService.getBusqueda(termino).subscribe( (resp: any ) =>  {
-    console.log(resp);
-    this.clientes = resp;
-  });
-}
+  buscar(termino: String){
+    console.log(termino);
+    if (termino == ''){
+      this.clienteService.listarRecurso()
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.clientes = resp;
+      });
+    }else{
+      this.clienteService.getBusqueda(termino)
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.clientes = resp;
+      });
+    }
+  }
 
 }

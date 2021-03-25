@@ -58,11 +58,19 @@ export class EmpleadoListarComponent implements OnInit {
 
   buscar(termino: String){
     console.log(termino);
-    this.empleadoService.getBusqueda(termino)
-    .subscribe( (resp: any ) =>  {
-      console.log(resp);
-      this.empleados = resp;
-    });
+    if (termino == ''){
+      this.empleadoService.listarRecurso()
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.empleados = resp;
+      });
+    }else{
+      this.empleadoService.getBusqueda(termino)
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.empleados = resp;
+      });
+    }
   }
 
 }

@@ -9,18 +9,21 @@
     </div>
     <input #termino type="text" class="form-control" placeholder="Buscar cliente..." aria-label="Username"
       aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
-
+      <p>&nbsp;</p>
     <button routerLink="/cliente/registrar" class="btn btn-info mr-1">
       <i class="fas fa-plus"></i> Agregar
     </button>
   </div>
 
 
+
+
+
   <div class="card mb-4">
-    <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Clientes</div>
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Usuarios</div>
     <div class="card-body">
       <div class="table-responsive">
-        <table class="table table-bordered display" id="dataTable" *ngIf="clientes.length>0" width="100%"
+        <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="clientes.length>0" width="100%"
           cellspacing="0">
           <thead>
             <tr>
@@ -42,10 +45,10 @@
               <td>{{ item.correo}}</td>
               <td>{{ item.telefono}}</td>
               <td>
-                <button class="btn btn-info mr-1" [routerLink]="['/cliente/modificar', item.usuarioId ]">
+                <button class="btn btn-sm btn-info mr-1" [routerLink]="['/cliente/modificar', item.usuarioId ]">
                   <i class="fas fa-pencil-alt"></i>
                 </button>
-                <button class="btn btn-info mr-1" (click)="borrar(item.usuarioId, i)">
+                <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.usuarioId, i)">
                   <i class="fas fa-trash"></i>
                 </button>
               </td>

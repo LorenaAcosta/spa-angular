@@ -130,6 +130,7 @@ export class EmpleadoEditComponent implements OnInit {
      if (typeof id == 'undefined') {
 
       /*Insertar empleado  */
+      console.log(this.form.value);
       peticion = this.empleadoService.agregarRecurso(this.form.value);
       peticion.subscribe((result: any) =>  {
         

@@ -20,7 +20,7 @@ export class HorarioComponent implements OnInit {
     horarioId: [''],
     horaFin: ['', Validators.required],
     horaInicio: ['', Validators.required],
-    empleadoId: ['']
+    empleadoId: ['', Validators.required]
   });
   categorias: any[] = [];
   empleados: any[] = [];
@@ -36,7 +36,7 @@ export class HorarioComponent implements OnInit {
       horarioId: [''],
       horaFin: ['', Validators.required],
       horaInicio: ['', Validators.required],
-      empleadoId: [''],
+      empleadoId: ['', Validators.required],
       });
 }
 
@@ -61,9 +61,6 @@ export class HorarioComponent implements OnInit {
   }
 }
 
-  ver() {
-   // console.warn(this.form2.value);
-  }
 
   guardar() {
     const id = this.route.snapshot.params.id;

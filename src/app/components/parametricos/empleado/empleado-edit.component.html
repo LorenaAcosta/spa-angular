@@ -128,14 +128,12 @@
 
         <div class="form-group col-sm-6">
           <label class="label">Salario Base:</label>
-          <input formControlName="sueldo" type="number" class="form-control form-control-sm" id="sueldo"
+          <input formControlName="sueldo" type="salario" class="form-control form-control-sm" id="sueldo"
             placeholder="sueldo" required>
           <div *ngIf="sueldo.invalid && (sueldo.dirty || sueldo.touched)" class="alert alert-sm alert-danger">
             Introduzca sólo dígitos.
           </div>
         </div>
-
-
       </div>
     </div>
 

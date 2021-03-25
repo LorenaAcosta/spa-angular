@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ClienteService } from 'src/app/services/servicios/cliente.service';
@@ -25,32 +25,36 @@ export class ClienteEditComponent implements OnInit {
     nacionalidad: ['', Validators.required],
     direccion: ['', Validators.required],
     fechaNac: ['', Validators.required],
-    tarjeta: ['', Validators.required]
+    tarjeta: ['', Validators.required],
+    estado: ['']
   });
 
   get correo() { return this.form.get('correo'); }
   get telefono() { return this.form.get('telefono'); }
   get cedula() { return this.form.get('cedula'); }
+  get tarjeta() { return this.form.get('tarjeta'); }
 
   constructor(private fb: FormBuilder,
     private clienteService: ClienteService,
-    private route: ActivatedRoute) {
+    private route: ActivatedRoute,
+    private router: Router,) {
 
     this.form = this.fb.group({
-      nombre: ['', Validators.required],
-      username: ['', Validators.required],
-      password: ['', Validators.required],
-      apellido: ['', Validators.required],
-      correo: ['', Validators.required],
-      cedula: ['', Validators.required],
-      ruc: ['', Validators.required],
-      telefono: ['', Validators.required],
-      sexo: ['', Validators.required],
-      ciudad: ['', Validators.required],
-      nacionalidad: ['', Validators.required],
-      direccion: ['', Validators.required],
-      fechaNac: ['', Validators.required],
-      tarjeta: ['', Validators.required]
+    nombre: ['', Validators.required],
+    username: ['', Validators.required],
+    password: ['', Validators.required],
+    apellido: ['', Validators.required],
+    correo: ['', Validators.required],
+    cedula: ['', Validators.required],
+    direccion: ['', Validators.required],
+    ciudad: ['', Validators.required],
+    nacionalidad: ['', Validators.required],
+    ruc: ['', Validators.required],
+    telefono: ['', Validators.required],
+    tarjeta: ['', Validators.required],
+    sexo: ['', Validators.required],
+    fechaNac: ['', Validators.required],
+    estado: ['']
     });
   }
 
@@ -64,15 +68,16 @@ export class ClienteEditComponent implements OnInit {
         password: ['', Validators.required],
         apellido: ['', Validators.required],
         correo: ['', Validators.required],
-        ruc: ['', Validators.required],
         cedula: ['', Validators.required],
-        telefono: ['', Validators.required],
-        sexo: ['', Validators.required],
+        direccion: ['', Validators.required],
         ciudad: ['', Validators.required],
         nacionalidad: ['', Validators.required],
-        direccion: ['', Validators.required],
+        ruc: ['', Validators.required],
+        telefono: ['', Validators.required],
+        tarjeta: ['', Validators.required],
+        sexo: ['', Validators.required],
         fechaNac: ['', Validators.required],
-        tarjeta: ['', Validators.required]
+        estado: ['']
       });
       this.clienteService.getRecurso(id).subscribe((data: any) => {
         this.form.controls.nombre.setValue(data.nombre);
@@ -81,14 +86,15 @@ export class ClienteEditComponent implements OnInit {
         this.form.controls.apellido.setValue(data.apellido);
         this.form.controls.correo.setValue(data.correo);
         this.form.controls.cedula.setValue(data.cedula);
-        this.form.controls.telefono.setValue(data.telefono);
-        this.form.controls.sexo.setValue(data.sexo);
-        this.form.controls.ruc.setValue(data.ruc);
+        this.form.controls.direccion.setValue(data.direccion);
         this.form.controls.ciudad.setValue(data.ciudad);
         this.form.controls.nacionalidad.setValue(data.nacionalidad);
-        this.form.controls.direccion.setValue(data.direccion);
-        this.form.controls.fechaNac.setValue(data.fechaNac);
+        this.form.controls.telefono.setValue(data.telefono);
+        this.form.controls.ruc.setValue(data.ruc);
+        this.form.controls.sexo.setValue(data.sexo);
         this.form.controls.tarjeta.setValue(data.tarjeta);
+        this.form.controls.fechaNac.setValue(data.fechaNac);
+        this.form.controls.estado.setValue(1);
       });
     }
   }
@@ -104,6 +110,7 @@ export class ClienteEditComponent implements OnInit {
           'Se guardaron los datos!',
           'success'
         );
+        this.router.navigate(['/cliente/listar']);
       });
     } else {
       peticion = this.clienteService.modificarRecurso(this.form.value, id);
@@ -113,6 +120,7 @@ export class ClienteEditComponent implements OnInit {
           'Se actualizaron los datos!',
           'success'
         );
+        this.router.navigate(['/cliente/listar']);
       });
     }
   }

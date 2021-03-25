@@ -83,7 +83,10 @@
       <div class="bd-content">
         <div class="form-row form-group col-sm-6">
           <label for="inputCity">Telefono</label>
-          <input type="text" formControlName="telefono" class="form-control form-control-sm" id="telefono">
+          <input formControlName="telefono" placeholder="telefono" type="telefono" class="form-control form-control-sm"
+          pattern="^[0-9]*$" id="telefono" required>
+            <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">Introduzca sólo
+            dígitos.</div>
         </div>
         <div class="form-row form-group col-sm-6">
           <label for="inputState">Sexo</label>
@@ -103,7 +106,9 @@
 
         <div class="form-row form-group col-sm-6">
           <label>Tarjeta de TC/TD</label>
-          <input type="number" formControlName="tarjeta" class="form-control form-control-sm" id="tarjeta" formControlName="tarjeta">
+          <input type="tarjeta" formControlName="tarjeta" class="form-control form-control-sm" id="tarjeta" formControlName="tarjeta"   pattern="^[0-9]*$" id="tarjeta" required>
+          <div *ngIf="tarjeta.invalid && (tarjeta.dirty || tarjeta.touched)" class="alert alert-danger">Introduzca sólo
+          dígitos.</div>
         </div>
 
         <div class="form-row form-group col-sm-6">
