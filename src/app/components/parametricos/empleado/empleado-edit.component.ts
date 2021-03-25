@@ -45,6 +45,7 @@ export class EmpleadoEditComponent implements OnInit {
   get telefono() { return this.form.get('telefono'); }
   get celular() { return this.form.get('celular'); }
   get sueldo() { return this.form.get('sueldo'); }
+  get correo() { return this.form.get('correo'); }
 
   empleadoId;
 
