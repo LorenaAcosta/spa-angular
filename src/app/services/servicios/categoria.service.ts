@@ -24,10 +24,6 @@ export class CategoriaService {
     return this.http.get(this.recurosBaseURL + 'descripcion');
   }
 
-  listarRecursoDescripcion() {
-    return this.http.get(this.recurosBaseURL + 'descripcion');
-  }
-
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso ).pipe(
       catchError( e=> {
