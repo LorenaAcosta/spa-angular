@@ -46,4 +46,21 @@ export class ProveedorComponent implements OnInit {
       });
     }
 
+    
+  buscar(termino: String){
+    if (termino == ''){
+      this.proveedorService.listarRecurso()
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.proveedores = resp;
+      });
+    }else{
+      this.proveedorService.getBusqueda(termino)
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.proveedores = resp;
+      });
+    }
+  }
+
 }

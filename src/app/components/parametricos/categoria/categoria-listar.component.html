@@ -8,7 +8,7 @@
     <div class="input-group-prepend">
       <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
     </div>
-    <input #termino type="text" class="form-control" placeholder="Buscar empleado..." aria-label="Username"
+    <input #termino type="text" class="form-control" placeholder="Buscar categoria..." aria-label="Username"
       aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
 
     <button routerLink="/categoria/agregar" class="btn btn-info mr-1">
@@ -22,7 +22,7 @@
       <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Categorias</div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-bordered display" id="dataTable" *ngIf="servicios.length>0" width="100%"
+          <table class="table table-bordered display" id="dataTable" *ngIf="categorias.length>0" width="100%"
             cellspacing="0">
             <thead>
               <tr>
@@ -33,10 +33,8 @@
                 <th>Opciones</th>
               </tr>
             </thead>
-            <tbody
-              *ngFor="let item of categorias | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
-              <tr
-                *ngFor="let item of categorias | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+            <tbody *ngFor="let item of categorias | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
+              <tr>
                 <td>{{ i + 1 }}</td>
                 <td>{{ item.dataType}}</td>
                 <td>{{ item.descripcion}}</td>
@@ -66,3 +64,4 @@
       <i class="fa fa-exclamation fa-2x"></i>
     </p>
   </div>
+

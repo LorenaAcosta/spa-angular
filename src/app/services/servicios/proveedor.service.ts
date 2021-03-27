@@ -27,4 +27,8 @@ export class ProveedorService {
     eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
     }
+
+    getBusqueda(id) {
+      return this.http.get(this.recurosBaseURL + 'busqueda-proveedores/' + id);
+    }
 }

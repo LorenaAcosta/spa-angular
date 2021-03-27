@@ -11,6 +11,7 @@ import { throwError } from 'rxjs';
 })
 
 export class ServicioService {
+   
     recurosBaseURL: string = environment.URL_BASE + '/servicio/';
     constructor(private http: HttpClient,
                 private router: Router) { }
@@ -85,13 +86,17 @@ export class ServicioService {
       );
     }
 
-    listarServiciosDisponibles(empleadoId){
-      return this.http.get(this.recurosBaseURL + 'get-servicios-disponibles/' +  empleadoId ).pipe(
+    listarServiciosDisponibles(id){
+      return this.http.get(this.recurosBaseURL + 'get-servicios-disponibles/' +  id ).pipe(
         catchError( e=> {
           this.router.navigate(['/empleado/listar']);
           Swal.fire(e.error.mensaje, e.error.error, 'error');
           return throwError(e);
         })
       );
+    }
+
+    getBusqueda(id) {
+      return this.http.get(this.recurosBaseURL + 'busqueda-servicios/' + id);
     }
 }

@@ -21,7 +21,7 @@ export class DisponibleService {
   }
 
   listarByEmpleadoV2(empleadoId) {
-    return this.http.get(this.recurosBaseURL + 'listar-porempleado/' + empleadoId) ;
+     return this.http.get(this.recurosBaseURL + 'listar-porempleado/' + empleadoId) ;
   }
 
   agregarDisponibilidad(recurso) {

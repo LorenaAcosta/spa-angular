@@ -38,13 +38,22 @@ export class DisponibleComponent implements OnInit {
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
-    this.empleadoId = this.route.snapshot.params.id;
+    console.log(id);
+    this.empleadoId = parseInt(this.route.snapshot.params.id);
 
     this.disponibleService.listarByEmpleadoV2(this.empleadoId).
-      subscribe((resp: any[]) => this.disponibles = resp);
+      subscribe((resp: any[]) =>{
+        this.disponibles = resp;
+        console.log('disponible');
+        console.log(resp);
+      } 
+      );
 
     this.servicioService.listarServiciosDisponibles(this.empleadoId).
-      subscribe((resp: any[]) => this.servicios = resp);
+      subscribe((resp: any[]) => {
+        console.log('servicios');
+        console.log(this.servicios);
+        this.servicios = resp; });
 
   }
 
