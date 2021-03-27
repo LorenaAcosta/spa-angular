@@ -55,6 +55,14 @@ export class DisponibleComponent implements OnInit {
         console.log(this.servicios);
         this.servicios = resp; });
 
+    if (this.servicios.length == 0){
+      this.servicioService.listarRecurso()
+        .subscribe((resp: any[]) => {
+          console.log('servicios si está vacio');
+          this.servicios = resp;
+          console.log(this.servicios); });
+    }
+
   }
 
 

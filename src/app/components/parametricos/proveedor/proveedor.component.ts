@@ -21,7 +21,8 @@ export class ProveedorComponent implements OnInit {
 
   ngOnInit() {
     this.proveedorService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.proveedores = resp  );
+    .subscribe( (resp: any[]) =>  {this.proveedores = resp ;
+      console.log(resp);} );
   }
 
   borrar( id: any, pos: any) {
