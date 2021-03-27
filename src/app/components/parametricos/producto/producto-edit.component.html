@@ -70,6 +70,16 @@
             </div>
         </div>
         <div class="form-group row">
+            <label for="inputState" class="col-sm-2 col-form-label">Impuesto</label>
+            <div class="form-group col-md-3">
+                <select id="impuestoId" formControlName="impuestoId" class="form-control">
+                <option *ngFor="let imp of impuestos" [ngValue]="imp.impuestoId">
+                  {{ imp.descripcion }}
+                </option>
+              </select >
+            </div>
+        </div>
+        <div class="form-group row">
           <label for="inputState" class="col-sm-2 col-form-label">Estado</label>
           <div class="form-group col-md-3">
             <select id="estado" formControlName="estado" class="form-control" required>

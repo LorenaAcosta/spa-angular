@@ -8,6 +8,7 @@ import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 import { HttpEventType, HttpResponse } from '@angular/common/http';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { ArchivosSubidosService } from 'src/app/services/archivos-subidos.service';
+import { ImpuestoService } from 'src/app/services/servicios/impuesto.service';
 
 @Component({
   selector: 'app-producto-edit',
@@ -34,16 +35,19 @@ export class  ProductoEditComponent implements OnInit {
     costo: ['', Validators.required],
     precioVenta: ['', Validators.required],
     stockActual: ['', Validators.required],
+    impuesto: ['', Validators.required],
     imageName: [''],
     estado: ['', Validators.required]
   });
   productos: any[] = [];
   categorias: any[] = [];
+  impuestos: any[] = [];
   public formSubmitted = false;
 
   constructor(private fb: FormBuilder,
               private productoService: ProductoService,
               private categoriaService: CategoriaService,
+              private impuestoService: ImpuestoService,
               private route: ActivatedRoute,
               private archivosSubidosService: ArchivosSubidosService,
               private router: Router,
@@ -55,6 +59,7 @@ export class  ProductoEditComponent implements OnInit {
                   precioVenta: ['', Validators.required],
                   stockActual: ['', Validators.required],
                   categoriaId: ['', Validators.required],
+                  impuestoId: ['', Validators.required],
                   imageName: [''],
                   estado: ['', Validators.required]
                 });
@@ -62,6 +67,7 @@ export class  ProductoEditComponent implements OnInit {
 
   ngOnInit() {
     this.categoriaService.obtenerPorTipo('producto').subscribe( (resp: any[]) =>  this.categorias = resp );
+    this.impuestoService.listarRecurso().subscribe( (resp: any[]) =>  this.impuestos = resp );
     const id = this.route.snapshot.params.id;
    // console.log(id);
     if (typeof id !== 'undefined') {
@@ -72,6 +78,7 @@ export class  ProductoEditComponent implements OnInit {
         precioVenta: ['', Validators.required],
         stockActual: ['', Validators.required],
         categoriaId: ['', Validators.required],
+        impuestoId: ['', Validators.required],
         imageName: [''],
         estado: [1]
       });
@@ -83,6 +90,7 @@ export class  ProductoEditComponent implements OnInit {
         this.form.controls.precioVenta.setValue(data.precioVenta);
         this.form.controls.stockActual.setValue(data.stockActual);
         this.form.controls.categoriaId.setValue(data.categoriaId.categoriaId);
+        this.form.controls.impuestoId.setValue(data.impuestoId.impuestoId);
         this.form.controls.imageName.setValue(data.imageName);
         this.form.controls.estado.setValue(data.estado);
        });
