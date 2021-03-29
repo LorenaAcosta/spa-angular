@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
   providedIn: 'root'
 })
 export class ReservaService {
- 
+
  
   recurosBaseURL: string = environment.URL_BASE + '/reserva-detalle/';
 
@@ -49,6 +49,9 @@ export class ReservaService {
   getBusqueda(id) {
     return this.http.get(this.recurosBaseURL + 'busqueda-reservas/' + id);
   }
+
+
+ 
 
 
 }

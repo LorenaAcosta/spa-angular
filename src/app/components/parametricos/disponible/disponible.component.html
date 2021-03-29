@@ -23,8 +23,8 @@
                         <tr>
                             <td>{{ i + 1}}</td>
                             <td>{{ item.empleadoId.nombre}}</td>
-                            <td>{{ item.servicioId.descripcion}}</td>
-                            <td>{{ item.comision}}</td>
+                            <td>{{ item.servicioId.nombre}}</td>
+                            <td>{{ item.comision  }}</td>
                             <td>
                                 <button class="btn btn-info mr-1" [routerLink]="['/disponible/modificar', item.disponibleId ]" placement="top" ngbTooltip="Editar">
                         <i class="fas fa-pencil-alt"></i>
@@ -40,6 +40,7 @@
         </div>
     </div>
 </div>
+
 
 
 <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Añadir item</button>

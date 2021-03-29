@@ -11,6 +11,7 @@ import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
+import { BoxesService } from 'src/app/services/servicios/boxes.service';
 
 @Component({
   selector: 'app-calendar',
@@ -26,7 +27,7 @@ export class CalendarComponent implements OnInit {
   dispo: any;
 
   horaInicial: any;
-
+  box: any;
   fecha: number;
   horaInicio: any;
   todayDate: any;
@@ -48,7 +49,8 @@ export class CalendarComponent implements OnInit {
     hora: ['' ],
     disponibleId: [''],
     usuarioId: [''],
-    estado: ['']
+    estado: [''],
+    disponibleBoxesId:['']
   });
 
 
@@ -57,6 +59,7 @@ export class CalendarComponent implements OnInit {
               private calendar: NgbCalendar,
               private route: ActivatedRoute,
               private horarioService: HorarioService,
+              private boxesService: BoxesService,
               private reservaService: ReservaService,
               private empleadoService: EmpleadoService ,
               private disponibleService: DisponibleService,
@@ -85,34 +88,46 @@ export class CalendarComponent implements OnInit {
 
   print() {
     this.printedOption = this.selectedOption;
-
     this.form.controls.empleado.setValue( this.empleadoId);
     this.form.controls.fechaReserva.setValue( this.selectedDate );
     this.form.controls.hora.setValue(this.selectedOption.toString().substr(-20, 5));
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
     this.form.controls.usuarioId.setValue(1);
     this.form.controls.estado.setValue('pendiente');
-
-    //console.log(this.form);
-
-    console.log(this.form);
-
+    //setear el box -> disponibilidadBoxId
     let peticion: Observable<any>;
-    peticion = this.reservaService.agregarRecurso(this.form.value);
+    peticion = this.boxesService.obtenerUnBoxLibre(this.selectedDate, this.selectedOption.toString().substr(-20, 5), 
+    this.servicioId); //veo todos los boxes que ya se usaron en esa fecha y hora con el servicio
     peticion.subscribe((result: any) =>  {
-      Swal.fire(
-        'Reserva Confirmada!',
-        'Se guardaron  los datos!',
-        'success'
-        );
+      this.box = result;
+      console.log(result);
+      if (result!=null){
+        //SE GRABA LA RESERVA
+        this.form.controls.disponibleBoxesId.setValue(this.box);
+        console.log(this.form);
+        peticion = this.reservaService.agregarRecurso(this.form.value);
+        peticion.subscribe((result: any) =>  {
+          Swal.fire(
+            'Reserva Confirmada!',
+            'Se guardaron  los datos!',
+            'success'
+            );
+          });
+          this.router.navigateByUrl('booking/categorias');
+      
+        } else{
+        Swal.fire(
+          'Lo siento!',
+          'No hay lugar disponible para este horario!',
+          'error'
+          );
+        }
       });
-    this.redireccionar();
+    
   }
 
 
-  redireccionar() {
-      this.router.navigateByUrl('booking/categorias');
-  }
+
 
   getHorariosDisponibles() {
      /* Obtiene el objeto disponible {disponibleId, } */

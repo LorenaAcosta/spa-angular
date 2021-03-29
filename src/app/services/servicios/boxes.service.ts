@@ -60,10 +60,22 @@ export class BoxesService {
   listarBoxesDisponibles(id){
     return this.http.get(this.recurosBaseURL + 'get-boxes-disponibles/' +  id ).pipe(
       catchError( e=> {
-        this.router.navigate(['/boxes/listar']);
+        this.router.navigate(['/servicio/listar']);
         Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
       })
     );
   }
+
+
+    obtenerUnBoxLibre(fecha: any, hora: string, servicioId: number){
+    return this.http.get(this.recurosBaseURL + 'obtener-box-libre/' + fecha + '/' + hora + '/' + servicioId  );
+  }
 }
+
+/*
+select disponible_boxes_id from disponible_boxes d
+where d.disponible_boxes_id not in (select r.disponible_boxes_id from reserva_detalle r
+									where fecha_reserva='2021-03-02' and hora='13:00'
+								   )
+								   and d.servicio_id=1*/
