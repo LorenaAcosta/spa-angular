@@ -4,12 +4,13 @@
 <!-- array: disponibles-->
 <div class="col-md-12" id="htmlData" #htmlData>
     <div class="card mb-4">
-        <div class="card-header"> <button  (click)="openBox(content1)">NUEVO BOX</button>
-           
-            </div>
+        <div class="col text-right">
+        <button  (click)="openBox(content1)">NUEVO BOX</button>
+        <button  (click)="openBoxes(content2)">VER BOXES</button>
+        </div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered display" id="dataTable" *ngIf="disponibles.length>0" width="100%" cellspacing="0">
+                <table class="table table-bordered display" id="dataTable" *ngIf="disponibles.length>0" width="50%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -17,7 +18,7 @@
                             <th>Opciones</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let item of disponibles | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
+                    <tbody *ngFor="let item of disponibles;let i = index">
                         <tr>
                             <td>{{ i + 1}}</td>
                             <td>{{ item.boxesId.nombre}}</td>
@@ -103,4 +104,57 @@
         <button type="button" class="btn btn-outline-dark" (click)="guardarBox()">Guardar</button>
     </div>
 </ng-template>
+
+
+
+
+<!--Modal para  listar boxes-->
+
+<ng-template #content2 let-modal>
+    <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="col-md-12" id="htmlData" #htmlData>
+            <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Boxes</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-bordered display" id="dataTable" *ngIf="boxes.length>0" width="100%"
+                    cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Estado</th>
+                        <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let item of boxes | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                    <tr>
+                        <td>{{ i + 1}}</td>
+                        <td>{{ item.nombre}}</td>
+                        <td>{{ item.estado}}</td>
+                        <td>
+                        <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.boxesId, i)" placement="top"
+                            ngbTooltip="Eliminar">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+            </div>
+            </div>
+        </div>
+
+
+    </div>
+</ng-template>
+
+
 

@@ -52,20 +52,16 @@ export class DisponibleComponent implements OnInit {
       } 
       );
 
-    this.servicioService.listarServiciosDisponibles(this.empleadoId).
+      this.servicioService.listarServiciosDisponibles(this.empleadoId).
       subscribe((resp: any[]) => {
-        console.log('servicios');
-        console.log(this.servicios);
-        this.servicios = resp; });
-
-    if (this.servicios.length == 0){
-      this.servicioService.listarRecurso()
-        .subscribe((resp: any[]) => {
-          console.log('servicios si está vacio');
-          this.servicios = resp;
-          console.log(this.servicios); });
-    }
-
+        this.servicios =  resp;
+     /*  if (this.servicios.length == 0){
+          this.servicioService.listarRecurso()
+            .subscribe((resp: any[]) => {
+              this.servicios = resp;
+             }); 
+        }*/
+      });
   }
 
 
@@ -84,6 +80,7 @@ export class DisponibleComponent implements OnInit {
       );
 
     });
+    this.modalService.dismissAll();
     this.ngOnInit();
   }
 

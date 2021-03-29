@@ -101,7 +101,7 @@ export class CalendarComponent implements OnInit {
     peticion.subscribe((result: any) =>  {
       this.box = result;
       console.log(result);
-      if (result!=null){
+      if (result!=0){
         //SE GRABA LA RESERVA
         this.form.controls.disponibleBoxesId.setValue(this.box);
         console.log(this.form);
