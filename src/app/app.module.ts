@@ -120,7 +120,7 @@ import { HorarioComponent } from './components/parametricos/horario/horario.comp
     DisponibleComponent,
     ListarComponent,
     ArchivosSubidosComponent,
-    HorarioComponent,
+    HorarioComponent
   ],
   imports: [
     BrowserModule,

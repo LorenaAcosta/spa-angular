@@ -5,9 +5,10 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ImpuestoService {
+export class ComprobanteService {
 
-  recurosBaseURL: string = environment.URL_BASE + '/impuesto/';
+  
+  recurosBaseURL: string = environment.URL_BASE + '/comprobante/';
   constructor(private http: HttpClient) { }
 
   listarRecurso() {
@@ -17,7 +18,7 @@ export class ImpuestoService {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
   }
     listarPaginadoRecurso(filtros) {
-      return this.http.post(this.recurosBaseURL + 'impuesto-list', filtros);
+      return this.http.post(this.recurosBaseURL + 'comprobante-list', filtros);
     }
     modificarRecurso(recurso, id) {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
@@ -30,6 +31,16 @@ export class ImpuestoService {
     }
 
     getBusqueda(id) {
-      return this.http.get(this.recurosBaseURL + 'busqueda-proveedores/' + id);
+      return this.http.get(this.recurosBaseURL + 'busqueda-comprobantes/' + id);
+    }
+
+    getNumeroActual(){
+      return this.http.get(this.recurosBaseURL + 'numero-actual/');
+    }
+
+    
+    getComprobanteActivo(){
+      return this.http.get(this.recurosBaseURL + 'comprobante-activo/');
     }
 }
+

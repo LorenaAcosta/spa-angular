@@ -7,6 +7,7 @@ import { exit } from 'process';
 import { Observable } from 'rxjs';
 import { ClienteService } from 'src/app/services/servicios/cliente.service';
 import { ComprasService } from 'src/app/services/servicios/compras.service';
+import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
 import { DetallesCompraService } from 'src/app/services/servicios/detalles-compra.service';
 import { DetalleVentaService } from 'src/app/services/servicios/detalles-venta.service';
 import { MediosPagoService } from 'src/app/services/servicios/medios-pago.service';
@@ -48,7 +49,15 @@ export class VentaEditComponent implements OnInit {
   com: any;
   resTemp: any;
   totalVenta = 0;
+  ivaDiez = 0;
+  ivaCinco = 0;
+  ivaTotal = 0;
+  subTotalCinco = 0;
+  subTotalDiez = 0;
+  subTotalExenta = 0;
+  subTotalTotal = 0;
   nextComprobante = 0;
+  comprobanteActual:any = null;
   fechaActual: number = Date.now();
   index: 0;
   pageActual: 1;
@@ -62,6 +71,7 @@ export class VentaEditComponent implements OnInit {
     private route: ActivatedRoute,
     private compraService: ComprasService,
     private ventaService: VentaService,
+    private comprobanteService: ComprobanteService,
     private proveedorService: ProveedorService,
     private productoService: ProductoService,
     private servicioService: ServicioService,
@@ -87,12 +97,36 @@ export class VentaEditComponent implements OnInit {
         sexo: ['', Validators.required],
         estado: [1]
       });
+      this.form = this.fb.group({
+        fecha: [this.fechaActual],
+        montoTotal: [this.totalVenta, Validators.required],
+        numeroComprobante: [ this.nextComprobante, Validators.required],
+        comprobanteId: [''],
+        ivaCinco: [this.ivaCinco],
+        ivaDiez: [this.ivaDiez],
+        ivaTotal: [this.ivaTotal],
+        subTotalCinco: [this.subTotalCinco],
+        subTotalDiez: [this.subTotalDiez],
+        subTotalExenta: [this.subTotalExenta],
+        subTotalTotal: [this.subTotalTotal],
+        medioPagoId: ['', Validators.required],
+        usuarioId: [ Validators.required],
+        estado: ['Activo']
+      });
     }
 
     form = this.fb.group({
       fecha: [this.fechaActual],
       montoTotal: [this.totalVenta, Validators.required],
       numeroComprobante: [ this.nextComprobante, Validators.required],
+      comprobanteId: [''],
+      ivaCinco: [this.ivaCinco],
+      ivaDiez: [this.ivaDiez],
+      ivaTotal: [this.ivaTotal],
+      subTotalCinco: [this.subTotalCinco],
+      subTotalDiez: [this.subTotalDiez],
+      subTotalExenta: [this.subTotalExenta],
+      subTotalTotal: [this.subTotalTotal],
       medioPagoId: ['', Validators.required],
       usuarioId: [ Validators.required],
       estado: ['Activo']
@@ -168,6 +202,70 @@ export class VentaEditComponent implements OnInit {
         console.log('monto a restar');
         console.log((this.datos[cod].cantidad * this.datos[cod].precio));
         this.totalVenta = this.totalVenta - (this.datos[cod].cantidad * this.datos[cod].precio);
+        
+        
+        if (this.datos[cod].servicioId == 0) {
+          this.selectedProd = this.datos[cod].productoId;
+          if (this.selectedProd.impuestoId.impuestoId == 1){
+            console.log('impuesto 10');
+            this.ivaDiez = this.ivaDiez - Math.round( this.datos[cod].monto/(((Math.round(this.datos[cod].monto * this.selectedProd.impuestoId.valor)/100) + this.datos[cod].monto)/Math.round((this.datos[cod].monto *this.selectedProd.impuestoId.valor)/100 )));
+            this.form.controls.ivaDiez.setValue(this.ivaDiez);
+            console.log(this.ivaDiez);
+            this.subTotalDiez = this.subTotalDiez - this.datos[cod].monto;
+            this.form.controls.subTotalDiez.setValue(this.subTotalDiez);
+          } else if (this.selectedProd.impuestoId.impuestoId == 2){
+            console.log('iva 5');
+            this.ivaCinco = this.ivaCinco - Math.round( this.datos[cod].monto/(((Math.round(this.datos[cod].monto * this.selectedProd.impuestoId.valor)/100) + this.datos[cod].monto)/Math.round((this.datos[cod].monto *this.selectedProd.impuestoId.valor)/100 )));
+            this.form.controls.ivaCinco.setValue(this.ivaCinco);
+            console.log(this.ivaCinco);
+            this.subTotalCinco = this.subTotalCinco - this.datos[cod].monto;
+            this.form.controls.subTotalCinco.setValue(this.subTotalCinco);
+          } else {
+            console.log('exenta');
+            this.subTotalExenta = this.subTotalExenta - this.datos[cod].monto;
+            this.form.controls.subTotalExenta.setValue(this.subTotalExenta);
+          }
+          this.ivaTotal = this.ivaCinco + this.ivaDiez;
+          this.form.controls.ivaTotal.setValue(this.ivaTotal);
+          this.subTotalTotal = this.subTotalCinco + this.subTotalDiez + this.subTotalExenta;
+          this.form.controls.subTotalTotal.setValue(this.subTotalTotal);    
+          
+        } else {
+          this.selectedProd = this.datos[cod].servicioId;
+          if (this.selectedProd.impuestoId.impuestoId == 1){
+            console.log('impuesto 10');
+            this.ivaDiez = this.ivaDiez - Math.round( this.datos[cod].monto/(((Math.round(this.datos[cod].monto * this.selectedProd.impuestoId.valor)/100) + this.datos[cod].monto)/Math.round((this.datos[cod].monto *this.selectedProd.impuestoId.valor)/100 )));
+            this.form.controls.ivaDiez.setValue(this.ivaDiez);
+            console.log(this.ivaDiez);
+            this.subTotalDiez = this.subTotalDiez - this.articuloselect.monto;
+            this.form.controls.subTotalDiez.setValue(this.subTotalDiez);
+          } else if (this.selectedProd.impuestoId.impuestoId == 2){
+            console.log('iva 5');
+            this.ivaCinco = this.ivaCinco - Math.round( this.datos[cod].monto/(((Math.round(this.datos[cod].monto * this.selectedProd.impuestoId.valor)/100) + this.datos[cod].monto)/Math.round((this.datos[cod].monto *this.selectedProd.impuestoId.valor)/100 )));
+            this.form.controls.ivaCinco.setValue(this.ivaCinco);
+            console.log(this.ivaCinco);
+            this.subTotalCinco = this.subTotalCinco - this.articuloselect.monto;
+            this.form.controls.subTotalCinco.setValue(this.subTotalCinco);
+          } else {
+            console.log('exenta');
+            this.subTotalExenta = this.subTotalExenta - this.articuloselect.monto;
+            this.form.controls.subTotalExenta.setValue(this.subTotalExenta);
+          }
+          this.ivaTotal = this.ivaCinco + this.ivaDiez;
+          this.form.controls.ivaTotal.setValue(this.ivaTotal);
+          this.subTotalTotal = this.subTotalCinco + this.subTotalDiez + this.subTotalExenta;
+          this.form.controls.subTotalTotal.setValue(this.subTotalTotal);
+        }
+
+
+
+
+
+
+
+
+
+
         this.datosEliminar.push(new DetalleVenta(this.datos[cod].detalleId, this.datos[cod].cantidad, this.datos[cod].ventasId,
           this.datos[cod].precio, this.datos[cod].monto, this.datos[cod].productoId,
            this.datos[cod].servicioId));
@@ -225,7 +323,8 @@ export class VentaEditComponent implements OnInit {
 
       console.log('producto seleccionado' + this.selectedProd);
       if (this.esServicio) {
-        this.articuloselect.precio = this.articuloselect.productoId.costo * this.articuloselect.cantidad;
+        //this.articuloselect.precio = this.articuloselect.productoId.costo * this.articuloselect.cantidad;
+        this.articuloselect.precio = this.articuloselect.productoId.costo;
         this.articuloselect.monto = this.articuloselect.precio * this.articuloselect.cantidad;
         this.articuloselect.servicioId = this.articuloselect.productoId;
         console.log('asfsf' + this.articuloselect.monto);
@@ -247,11 +346,38 @@ export class VentaEditComponent implements OnInit {
 
         this.articuloselect.precio = this.articuloselect.productoId.precioVenta;
         this.articuloselect.monto = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad;
+        (this.selectedProd.impuestoId.impuestoId == 1) ? console.log('impuesto 10'): console.log('impuesto 5');
         this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId,
           this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
           null));
       }
 
+      /*-----------calculo de impuestos y subtotales------------ */
+      if (this.selectedProd.impuestoId.impuestoId == 1){
+        console.log('impuesto 10');
+        this.ivaDiez = this.ivaDiez + Math.round( this.articuloselect.monto/(((Math.round(this.articuloselect.monto * this.selectedProd.impuestoId.valor)/100) + this.articuloselect.monto)/Math.round((this.articuloselect.monto *this.selectedProd.impuestoId.valor)/100 )));
+        this.form.controls.ivaDiez.setValue(this.ivaDiez);
+        console.log(this.ivaDiez);
+        this.subTotalDiez = this.subTotalDiez + this.articuloselect.monto;
+        this.form.controls.subTotalDiez.setValue(this.subTotalDiez);
+      } else if (this.selectedProd.impuestoId.impuestoId == 2){
+        console.log('iva 5');
+        this.ivaCinco = this.ivaCinco + Math.round( this.articuloselect.monto/(((Math.round(this.articuloselect.monto * this.selectedProd.impuestoId.valor)/100) + this.articuloselect.monto)/Math.round((this.articuloselect.monto *this.selectedProd.impuestoId.valor)/100 )));
+        this.form.controls.ivaCinco.setValue(this.ivaCinco);
+        console.log(this.ivaCinco);
+        this.subTotalCinco = this.subTotalCinco + this.articuloselect.monto;
+        this.form.controls.subTotalCinco.setValue(this.subTotalCinco);
+      } else {
+        console.log('exenta');
+        this.subTotalExenta = this.subTotalExenta + this.articuloselect.monto;
+        this.form.controls.subTotalExenta.setValue(this.subTotalExenta);
+      }
+      this.ivaTotal = this.ivaCinco + this.ivaDiez;
+      this.form.controls.ivaTotal.setValue(this.ivaTotal);
+      this.subTotalTotal = this.subTotalCinco + this.subTotalDiez + this.subTotalExenta;
+      this.form.controls.subTotalTotal.setValue(this.subTotalTotal);
+
+      
       // this.articuloselect.subtotal = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad
       this.totalVenta = this.totalVenta + this.articuloselect.monto;
       console.log('this.totalVenta');
@@ -286,9 +412,39 @@ export class VentaEditComponent implements OnInit {
       this.medioService.listarRecurso()
       .subscribe( (resp: any[]) =>  this.medios = resp  );
 
-      this.ventaService.getNextId()
-      .subscribe( (resp: any) =>  this.nextComprobante = resp + 1);
+      /*this.ventaService.getNextId()
+      .subscribe( (resp: any) =>  this.nextComprobante = resp + 1);*/
 
+      this.comprobanteService.getNumeroActual()
+        .subscribe( (resp: any) => 
+        {
+          this.nextComprobante = resp;
+          console.log(this.nextComprobante);
+          //si ya se llegó al ultimo valor del talonario
+          if (this.nextComprobante && this.nextComprobante === 9999){
+          console.log(this.nextComprobante);
+          Swal.fire(
+            'Ha alcanzado el numero máximo del talonario',
+            'Debe registrar uno nuevo para continuar',
+            'warning'
+          );
+          this.router.navigate(['/ventas/listar']);
+        }
+        
+        //si no existen talonarios activos
+        if(!this.nextComprobante){
+          console.log(this.nextComprobante);
+          Swal.fire(
+            'No existen talonarios activos',
+            'Debe registrar uno para continuar',
+            'warning'
+          );
+          this.router.navigate(['/ventas/listar']);
+        }
+      });
+
+      this.comprobanteService.getComprobanteActivo()
+        .subscribe((resp:any) => this.comprobanteActual = resp);
 
       this.usuarioService.listarRecurso()
       .subscribe( (resp: any[]) =>  this.usuarios = resp  );
@@ -306,7 +462,15 @@ export class VentaEditComponent implements OnInit {
             fecha: [this.fechaActual],
             montoTotal: [this.totalVenta, Validators.required],
             numeroComprobante: ['', Validators.required],
+            ivaCinco: [this.ivaCinco],
+            ivaDiez: [this.ivaDiez],
+            ivaTotal: [this.ivaTotal],
+            subTotalCinco: [this.subTotalCinco],
+            subTotalDiez: [this.subTotalDiez],
+            subTotalExenta: [this.subTotalExenta],
+            subTotalTotal: [this.subTotalTotal],
             medioPagoId: ['', Validators.required],
+            comprobanteId: [this.comprobanteActual, Validators.required],
             usuarioId: [ Validators.required],
             estado: ['Activo']
         });
@@ -319,6 +483,7 @@ export class VentaEditComponent implements OnInit {
           this.totalVenta = Number(data.montoTotal);
           this.form.controls.numeroComprobante.setValue('001-001-'+ this.ceroIzquierda(data.numeroComprobante, 7));
           this.form.controls.medioPagoId.setValue(data.medioPagoId.medioPagoId);
+          this.form.controls.comprobanteId.setValue(data.comprobanteId.comprobanteId);
           this.form.controls.usuarioId.setValue(data.usuarioId.usuarioId);
           this.datos = data.ventasDetalleCollection;
           // this.datosGuardar = data.ventasDetalleCollection;
@@ -334,6 +499,7 @@ export class VentaEditComponent implements OnInit {
       console.log(this.form.get('fecha').value);
 
       if (typeof id === 'undefined') {
+        this.form.controls.comprobanteId.setValue(this.comprobanteActual.comprobanteId);
         peticion = this.ventaService.agregarRecurso(this.form.value);
         console.warn(this.form.value);
         peticion.subscribe((result: any) =>  {
@@ -359,6 +525,12 @@ export class VentaEditComponent implements OnInit {
               console.log(res);
             });
           }
+
+          /*this.ventaService.actualizarCabecera(ventasId).subscribe(( res: any) => {
+            console.log(res);
+            peticion = this.ventaService.modificarRecurso(res, ventasId);
+            peticion.subscribe((result: any) =>  {});
+          });*/
 
         });
       } else {
@@ -386,6 +558,9 @@ export class VentaEditComponent implements OnInit {
   
         });
       }
+      
+      this.router.navigate(['/ventas/listar']);
+
     }
 
     borrarDetalle(cod: number) {

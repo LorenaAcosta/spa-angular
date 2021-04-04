@@ -6,6 +6,7 @@ import { CategoriaService } from '../../../services/servicios/categoria.service'
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
+import { ImpuestoService } from 'src/app/services/servicios/impuesto.service';
 
 @Component({
   selector: 'app-servicio-edit',
@@ -15,14 +16,16 @@ import { UtilesService } from 'src/app/services/servicios/utiles.service';
 export class ServicioEditComponent implements OnInit {
 
   categorias: any[] = [];
+  impuestos: any[] = [];
 
   form = this.fb.group({
     nombre: ['', Validators.required],
     estado: ['', Validators.required],
     descripcion: ['', Validators.required],
     categoriaId: ['', Validators.required],
+    impuestoId: ['', Validators.required],
     costo: ['', Validators.required],
-    duracion: ['', Validators.required]
+    duracion: ['', Validators.required] 
   });
 
   constructor(private fb: FormBuilder,
@@ -30,6 +33,7 @@ export class ServicioEditComponent implements OnInit {
               private servicioService: ServicioService,
               private categoriaService: CategoriaService,
               private route: ActivatedRoute,
+              private impuestoService: ImpuestoService,
               private router: Router) {
   }
 
@@ -37,6 +41,7 @@ export class ServicioEditComponent implements OnInit {
     // this.categorias$ = this.categoriaService.listarRecurso();
      this.categoriaService.obtenerPorTipo('servicio').
      subscribe( (resp: any[]) =>  this.categorias = resp );
+     this.impuestoService.listarRecurso().subscribe( (resp: any[]) =>  this.impuestos = resp );
      const id = this.route.snapshot.params.id;
      if (typeof id !== 'undefined') {
       this.form = this.fb.group({
@@ -44,6 +49,7 @@ export class ServicioEditComponent implements OnInit {
         estado: ['', Validators.required],
         descripcion: ['', Validators.required],
         categoriaId: ['', Validators.required],
+        impuestoId: ['', Validators.required],
         costo: ['', Validators.required],
         duracion: ['', Validators.required]
       });
@@ -53,6 +59,7 @@ export class ServicioEditComponent implements OnInit {
         this.form.controls.estado.setValue(data.estado);
         this.form.controls.descripcion.setValue(data.descripcion);
         this.form.controls.categoriaId.setValue(data.categoriaId.categoriaId);
+        this.form.controls.impuestoId.setValue(data.impuestoId.impuestoId);
         this.form.controls.costo.setValue(data.costo);
         this.form.controls.duracion.setValue( this.util.cortarString(data.duracion, 0,5));
        });

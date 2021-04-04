@@ -268,8 +268,31 @@ strong {
     text-align: center;
 }
 
-.titulo5 p {
+#myRow {
     font-weight: 700;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+#myP {
+    font-weight: 400;
+    font-size: 1.1em;
+    margin: 0;
+    padding: 0.2rem 0;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+#myP2 {
+    font-weight: 400;
+    font-size: 1.1em;
+    padding: 0.2rem 0;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.titulo5 p {
+    font-weight: 400;
     font-size: 1.1em;
     margin: 0;
     padding: 0.2rem 0;

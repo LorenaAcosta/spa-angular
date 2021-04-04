@@ -22,7 +22,7 @@ import { Injectable } from '@angular/core';
       return (model.year + '-' + model.month + '-' + model.day as string);
     }
 
-    fotmatDecimales(x){
+    formatDecimales(x){
       x = x.toFixed(2);
       return x;
     }

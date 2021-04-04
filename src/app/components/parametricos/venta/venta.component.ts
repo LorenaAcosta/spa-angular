@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
+import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
 import { DetalleVentaService } from 'src/app/services/servicios/detalles-venta.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { VentaService } from 'src/app/services/servicios/venta.service';
@@ -20,10 +21,25 @@ export class VentaComponent implements OnInit {
   pageActual: 1;
   comprobanteAux: any;
   nroComprobante: number;
+  totalGeneral: number;
+  subTotalDiez: number;
+  subTotalTotal: number;
+  subTotalCinco: number;
+  subTotalExenta: number;
+  ivaDiez: number;
+  ivaCinco: number;
+  ivaTotal: number;
+  montoLetras: any;
+  inicioVigencia : any = null;
+  finVigencia : any = null;
+  timbrado: any = null;
+  comprobanteActual:any = null;
+  nombrePdf = null;
 
   constructor(
     private ventasService: VentaService,
     private detallesVentaService: DetalleVentaService,
+    private comprobanteService: ComprobanteService,
     private route: ActivatedRoute,
     private util: UtilesService
   ) { }
@@ -32,6 +48,14 @@ export class VentaComponent implements OnInit {
 
     this.ventasService.listarRecurso()
     .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+
+    this.comprobanteService.getComprobanteActivo()
+      .subscribe( (resp: any) => {
+        this.comprobanteActual = resp,
+        this.inicioVigencia = resp.inicioVigencia;
+        this.finVigencia = resp.finVigencia;
+        this.timbrado = resp.timbrado
+      });
 
     this.getNumeroComprobante(1);
     /*this.ventasService.getRecurso(id)
@@ -53,10 +77,28 @@ export class VentaComponent implements OnInit {
   }
 
   getNumeroComprobante(id){
+    /*this.ventasService.actualizarCabecera(id)
+      .subscribe( (resp:any) => {console.log(resp)} );*/
     this.ventasService.getRecurso(id)
-    .subscribe( (resp: any) =>  this.comprobanteAux = resp );
-    console.log(this.comprobanteAux.numeroComprobante + ' nro comprobante');
+    .subscribe( (resp: any) => {
+      this.comprobanteAux = resp.comprobanteCompleto,
+      this.totalGeneral = this.util.numberWithCommas(resp.montoTotal),
+      this.subTotalDiez = this.util.numberWithCommas(resp.subTotalDiez),
+      this.subTotalCinco = this.util.numberWithCommas(resp.subTotalCinco),
+      this.subTotalExenta = this.util.numberWithCommas(resp.subTotalExenta),
+      this.subTotalTotal = this.util.numberWithCommas(resp.subTotalTotal),
+      this.ivaDiez = this.util.numberWithCommas(resp.ivaDiez),
+      this.ivaCinco = this.util.numberWithCommas(resp.ivaCinco),
+      this.ivaTotal = this.util.numberWithCommas(resp.ivaTotal),
+      this.montoLetras = this.util.numberWithCommas(resp.montoTotalLetras)
+    });
+    console.log(this.comprobanteAux);
   }
+
+  /*getVentaById(id) {
+    this.ventasService.getRecurso(id)
+    .subscribe( (resp: any[]) =>  this.venta = resp  );
+  }*/
 
   getCategorias(id) {
     this.ventasService.getRecurso(id)

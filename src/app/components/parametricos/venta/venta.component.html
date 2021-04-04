@@ -32,12 +32,14 @@
                             <td>{{ v.ventasId}}</td>
                             <td>{{ v.fecha}}</td>
                             <td>{{ util.numberWithCommas(v.montoTotal)}}</td>
-                            <td (ngModel)=comprobanteAux>{{'001-001-'+ ceroIzquierda(v.numeroComprobante, 7) }}</td>
+                            <td>{{'001-001-'+ ceroIzquierda(v.numeroComprobante, 7) }}</td>
                             <td>{{ v.medioPagoId.descripcion}}</td>
                             <td>{{ v.usuarioId.nombre + ' ' + v.usuarioId.apellido}}</td>
                             <td>
 
-                                <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getNumeroComprobante(v.ventasId)" (click)="getDetalles( v.ventasId)">Detalles</button>
+                                <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getNumeroComprobante(v.ventasId)" (click)="getDetalles( v.ventasId)">
+                                    Detalles
+                                </button>
                                 <!-- Modal -->
                                 <div id="myModal" class="modal fade " role="dialog">
                                     <div class="modal-dialog modal-lg">
@@ -48,21 +50,23 @@
                                                 <table id="td1" width="650px" class="tabla-bordes table-responsive" border="0">
                                                     <tbody>
                                                         <tr>
-                                                            <td width="70%">
+                                                            <td width="60%">
                                                                 <div class="titulo1">Katty Spa S.A.</div>
                                                                 <div class="titulo2"></div>
                                                                 <div class="titulo2">10 de agosto y Gral. Caballero</div>
-                                                                <div class="titulo2">San Lorenzo - Paraguay</div>
                                                                 <div class="titulo2">Telefono 021-498-690</div>
+                                                                <div class="titulo2">San Lorenzo - Paraguay</div>
                                                             </td>
-                                                            <td>
-                                                                <div class="titulo5">
-                                                                    <p>Timbrado Nº 13765603</p>
-                                                                    <p>Codigo Control</p>
-                                                                    <p>Inicio de Vigencia 18/11/2019</p>
-                                                                    <p>RUC 80010539-1</p>
-                                                                    <p></p>
-                                                                    <p></p>
+                                                            <td width="50%">
+                                                                <div class="row container-fluid justify-content-center" id="myRow">
+                                                                    <p id="myP"><strong>Timbrado Nº {{timbrado}}</strong></p>
+                                                                    <p id="myP">Inicio de Vigencia &nbsp;</p>
+                                                                    <p id="myP"> {{ inicioVigencia | date:'dd-MM-yyyy' }}</p>
+                                                                    <p id="myP">Válido hasta &nbsp;</p>
+                                                                    <p id="myP"> {{ finVigencia | date:'dd-MM-yyyy' }}</p>
+                                                                    <p id="myP"> RUC 80010539-1</p>
+
+                                                                    <p id="myP"><strong>{{ comprobanteAux }}</strong></p>
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -82,7 +86,7 @@
                                                             <div class="bloque-parrafos">
                                                                 <p><span class="negrita">RUC / Cedula de Identidad:</span><span>{{' ' + v.usuarioId.ruc}}</span></p>
                                                                 <p><span class="negrita">Nombre o Razon Social:</span>{{' ' + v.usuarioId.nombre + ' ' + v.usuarioId.apellido}}</p>
-                                                                <p><span class="negrita">Direccion:</span><span>{{' ' + v.usuarioId.direccion}}</span></p>
+                                                                <p><span class="negrita">Direccion:</span><span>{{' ' + (v.usuarioId.direccion != null) ? v.usuarioId.direccion : " "}}</span></p>
                                                             </div>
                                                         </tr>
                                                     </tbody>
@@ -115,9 +119,21 @@
                                                                 <td>{{d.servicioId.descripcion}}</td>
                                                             </ng-template>
                                                             <td class="numerico">{{ util.numberWithCommas(d.precio)}}</td>
-                                                            <td class="numerico">0</td>
-                                                            <td class="numerico">0</td>
-                                                            <td class="numerico">{{ util.numberWithCommas(d.monto)}}</td>
+                                                            <td *ngIf="((d.servicioId != null && d.servicioId.impuestoId.impuestoId == 3) || (d.productoId != null && d.productoId.impuestoId.impuestoId == 3))  ; else servicio2" class="numerico">
+                                                                {{util.numberWithCommas(d.monto)}}
+                                                            </td>
+                                                            <td *ngIf="((d.servicioId != null && d.servicioId.impuestoId.impuestoId == 2) || (d.productoId != null && d.productoId.impuestoId.impuestoId == 2))  ; else servicio2" class="numerico">
+                                                                {{util.numberWithCommas(d.monto)}}
+                                                            </td>
+                                                            <ng-template #servicio2>
+                                                                <td>{{0}}</td>
+                                                            </ng-template>
+                                                            <td *ngIf="((d.servicioId != null && d.servicioId.impuestoId.impuestoId == 1) || (d.productoId != null && d.productoId.impuestoId.impuestoId == 1))  ; else servicio1" class="numerico">
+                                                                {{ util.numberWithCommas(d.monto) }}
+                                                            </td>
+                                                            <ng-template #servicio1>
+                                                                <td>{{0}}</td>
+                                                            </ng-template>
                                                         </tr>
                                                         <tr>
                                                             <td>&nbsp;</td>
@@ -141,25 +157,39 @@
                                                 <table id="td3" width="650px" class="tabla-bordes table-responsive" border="0">
                                                     <tbody>
                                                         <tr>
-
                                                             <td width="40%">Valor Parcial</td>
-                                                            <td class="numerico" width="13%">0</td>
-                                                            <td class="numerico" width="13%">0</td>
-                                                            <td class="numerico" width="14%"></td>
+                                                            <td class="numerico" width="13">{{subTotalExenta}}</td>
+                                                            <td class="numerico" width="13%">{{subTotalCinco}}</td>
+                                                            <td class="numerico" width="14%">{{subTotalDiez}}</td>
+                                                            <td class="numerico" width="13">{{subTotalTotal}}</td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="3">Total a Pagar</td>
-                                                            <td class="numerico">{{v.montoTotal}}</td>
+                                                            <td width="40%">Descuento</td>
+                                                            <td style="border-left: hidden" class="numerico" width="13%"></td>
+                                                            <td style="border-left: hidden" class="numerico" width="13%"></td>
+                                                            <td style="border-left: hidden" class="numerico" width="14%"></td>
+                                                            <td class="numerico" width="25%">{{v.totalDescuento}}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4" style="border-bottom: hidden">Total a Pagar:&nbsp; {{montoLetras + ' Gs.'}}</td>
+                                                            <td class="numerico" rowspan="3" style="text-align: center; vertical-align:middle;"> <strong> {{totalGeneral}}</strong></td>
+
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="4">&nbsp;</td>
+
                                                         </tr>
                                                         <tr>
                                                             <td>Liquidacion del IVA:</td>
-                                                            <td class="numerico">(5%) 0</td>
-                                                            <td class="numerico">(10%) {{util.fotmatDecimales(v.montoTotal/11)}}</td>
-                                                            <td class="numerico">(Total) {{util.fotmatDecimales(v.montoTotal/11)}}</td>
+                                                            <td class="numerico">
+                                                                (5%) {{ivaCinco}}
+                                                            </td>
+                                                            <td class="numerico">(10%) {{ivaDiez}}</td>
+                                                            <td class="numerico">(Total) {{ivaTotal}}</td>
                                                         </tr>
-                                                        <tr>
-                                                            <td colspan="3">&nbsp;</td>
-                                                        </tr>
+                                                        <!--<tr>
+                                                            <td colspan="4">&nbsp;</td>
+                                                        </tr>-->
                                                     </tbody>
                                                 </table>
                                             </div>

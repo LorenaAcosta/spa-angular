@@ -35,7 +35,7 @@ export class  ProductoEditComponent implements OnInit {
     costo: ['', Validators.required],
     precioVenta: ['', Validators.required],
     stockActual: ['', Validators.required],
-    impuestoId: ['', Validators.required], //el form control esta como impouestoId en el html
+    impuestoId: ['', Validators.required],
     imageName: [''],
     estado: ['', Validators.required]
   });

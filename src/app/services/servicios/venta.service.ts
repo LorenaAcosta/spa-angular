@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { saveAs } from 'file-saver';
 
 @Injectable({
   providedIn: 'root'
@@ -32,5 +34,11 @@ export class VentaService {
 
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
-    }
+  }
+
+  actualizarCabecera(id) {
+    return this.http.get(this.recurosBaseURL + 'actualizar-cabecera/' + id);
+  }
+
+
 }
