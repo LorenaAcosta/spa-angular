@@ -7,6 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, Validators } from '@angular/forms';
 import { HorarioService } from 'src/app/services/servicios/horario.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-horario',
@@ -16,77 +17,92 @@ import { UtilesService } from 'src/app/services/servicios/utiles.service';
 export class HorarioComponent implements OnInit {
 
   
-  form2 = this.fb.group({
-    horarioId: [''],
+  form = this.fb.group({
+    diaTrabajo: ['', Validators.required],
     horaFin: ['', Validators.required],
+    horaInicioDescanso: ['', Validators.required],
     horaInicio: ['', Validators.required],
-    empleadoId: ['', Validators.required]
+    horaFinDescanso: ['', Validators.required],
+    empleadoId: ['', Validators.required],
   });
-  categorias: any[] = [];
-  empleados: any[] = [];
+
+  horario: any[] = [];
   horarioId: any;
+  empleadoId: any;
+  closeResult: string;
+
+  weekDays = [
+    {"d": "Lunes", "cod": 1},
+    {"d": "Martes", "cod": 2},
+    {"d": "Miércoles", "cod":3},
+    {"d": "Jueves", "cod":4},
+    {"d": "Viernes", "cod":5},
+    {"d": "Sábado", "cod":6},
+    {"d": "Domingo", "cod":0}]
+
+
 
   constructor(private fb:             FormBuilder,
               private horarioService: HorarioService,
               private util:           UtilesService,
               private route:          ActivatedRoute,
-              private router:         Router) {
+              private router:         Router,
+              private modalService:   NgbModal) {
 
-      this.form2 = this.fb.group({
-      horarioId: [''],
-      horaFin: ['', Validators.required],
-      horaInicio: ['', Validators.required],
-      empleadoId: ['', Validators.required],
+      this.form = this.fb.group({    
+        diaTrabajo: ['', Validators.required],
+        horaFin: ['', Validators.required],
+        horaInicioDescanso: ['', Validators.required],
+        horaInicio: ['', Validators.required],
+        horaFinDescanso: ['', Validators.required],
+        empleadoId: ['', Validators.required],  
       });
 }
 
 
   ngOnInit() {
-     const id = this.route.snapshot.params.id;
-     //console.log(id);
-     if (typeof id !== 'undefined') {
-      this.form2 = this.fb.group({
-        horarioId: [''],
-        horaFin: ['', Validators.required],
-        horaInicio: ['', Validators.required],
-        empleadoId: ['', Validators.required]
-       });
-
-       this.horarioService.obtenerHorario(id)
-       .subscribe ((data: any) => {
-        this.form2.controls.empleadoId.setValue(data.empleadoId.nombre.concat(" ").concat(data.empleadoId.apellido) );
-
-        this.form2.controls.horaFin.setValue( this.util.cortarString(data.horaFin, 0,5)  );
-        this.form2.controls.horaInicio.setValue( this.util.cortarString(data.horaInicio, 0,5)  ); 
+    const id = this.route.snapshot.params.id;
+    this.empleadoId= id;
+    this.horarioService.getHorariosById(this.empleadoId).subscribe( (resp: any[]) => {
+        this.horario = resp ;
     });
   }
-}
+
 
 
   guardar() {
-    const id = this.route.snapshot.params.id;
+    this.form.controls.empleadoId.setValue(parseInt(this.empleadoId));
     let peticion: Observable<any>;
-    peticion = this.horarioService.obtenerHorario(id);
-    peticion.subscribe((r: any) =>  {
-      //console.log(r);
-      this.form2.controls.empleadoId.setValue(r.empleadoId.empleadoId);
-      this.form2.controls.horarioId.setValue(r.horarioId);
-      
-      console.log(this.form2.value);
-      peticion = this.horarioService.modificarRecurso(this.form2.value, this.form2.controls.
-        horarioId.value);
-      peticion.subscribe((result: any) =>  {
-        Swal.fire(
-          'Guardado!',
-          'Se actualizaron los datos!',
-          'success'
-        );
-        this.router.navigate(['/empleado/listar']);
-      });
+    peticion = this.horarioService.agregarRecurso(this.form.value);
+    peticion.subscribe((result: any) => {
+      Swal.fire(
+        'Guardado!',
+        'Se guardaron los datos!',
+        'success'
+      );
+    });
+    this.modalService.dismissAll();
+    this.ngOnInit();
+  }
 
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
   }
 
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
 
   
 }

@@ -5,6 +5,7 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { DisponibleService } from 'src/app/services/servicios/disponibilidad.service';
 import { ServicioService } from 'src/app/services/servicios/servicio.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import Swal from 'sweetalert2';
 import { EmpleadoService } from '../../../services/servicios/empleado.service';
 
@@ -22,6 +23,7 @@ export class DisponibleComponent implements OnInit {
   empleadoNombre: String;
   empleadoId;
   closeResult = '';
+  
 
   form = this.fb.group({
     comision: ['', Validators.required],
@@ -32,6 +34,7 @@ export class DisponibleComponent implements OnInit {
   constructor(private servicioService: ServicioService,
     private disponibleService: DisponibleService,
     private empleadoService: EmpleadoService,
+    private utilService: UtilesService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private modalService: NgbModal) { }
@@ -49,20 +52,16 @@ export class DisponibleComponent implements OnInit {
       } 
       );
 
-    this.servicioService.listarServiciosDisponibles(this.empleadoId).
+      this.servicioService.listarServiciosDisponibles(this.empleadoId).
       subscribe((resp: any[]) => {
-        console.log('servicios');
-        console.log(this.servicios);
-        this.servicios = resp; });
-
-    if (this.servicios.length == 0){
-      this.servicioService.listarRecurso()
-        .subscribe((resp: any[]) => {
-          console.log('servicios si está vacio');
-          this.servicios = resp;
-          console.log(this.servicios); });
-    }
-
+        this.servicios =  resp;
+     /*  if (this.servicios.length == 0){
+          this.servicioService.listarRecurso()
+            .subscribe((resp: any[]) => {
+              this.servicios = resp;
+             }); 
+        }*/
+      });
   }
 
 
@@ -81,6 +80,7 @@ export class DisponibleComponent implements OnInit {
       );
 
     });
+    this.modalService.dismissAll();
     this.ngOnInit();
   }
 
@@ -113,6 +113,7 @@ export class DisponibleComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+  
 
 
 }

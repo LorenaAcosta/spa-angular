@@ -15,48 +15,42 @@ export class ServicioListar2Component implements OnInit {
   servicios: any[] = [];
   detalle: any[] = [];
   categorias: any[] = [];
-  arrayList: any [] = [];
-  index: 0;
-  value: any;
-  sum = 0;
-  pageActual: 1;
   categoriaId: any;
 
   constructor(private categoriaService: CategoriaService,
-              private servicioService: ServicioService,
-              private route: ActivatedRoute, 
-              private util: UtilesService) {
-               }
+    private servicioService: ServicioService,
+    private route: ActivatedRoute,
+    private util: UtilesService) {
+  }
 
   ngOnInit(): void {
+    //obtener las categorias
     this.categoriaService.obtenerPorTipo('servicio')
-    .subscribe( (resp: any[]) =>  this.categorias = resp );
+      .subscribe((resp: any[]) => this.categorias = resp);
+
     /*Mostrar los servicios */
+    this.categoriaId = this.route.snapshot.paramMap.get('id');
 
-    this.categoriaId= this.route.snapshot.paramMap.get('id');
-    console.log(this.categoriaId);
     if (typeof this.categoriaId !== 'undefined') {
-    this.servicioService.listarRecursosActivos(this.categoriaId, 'ACTIVO')
+      this.servicioService.getServiciosCalendar(this.categoriaId)
+        .subscribe((resp: any[]) => this.servicios = resp);
 
-     .subscribe( (resp: any[]) =>  this.servicios = resp );
     } else {
-      this.servicioService.listarRecursosActivos(1, 'ACTIVO')
-      .subscribe( (resp: any[]) =>  this.servicios = resp );
+      this.servicioService.getServiciosCalendar(1)
+        .subscribe((resp: any[]) => this.servicios = resp);
     }
   }
 
 
-recargar(id: any) {
-  localStorage.setItem('categoria', id);
-   this.servicioService.listarRecursosActivos(id, 'ACTIVO')
-   .subscribe( (resp: any[]) =>  this.servicios = resp );
- }
+  recargar(id: any) {
+    this.servicioService.getServiciosCalendar(id)
+      .subscribe((resp: any[]) => this.servicios = resp);
+  }
 
-getDetalle(servicioId) {
-  this.servicioService.getRecurso(servicioId)
-   .subscribe( (resp: any[]) =>  this.detalle = resp );
-  console.log(this.detalle);
-}
+  getDetalle(servicioId) {
+    this.servicioService.getRecurso(servicioId)
+      .subscribe((resp: any[]) => this.detalle = resp);
+  }
 
 
 }

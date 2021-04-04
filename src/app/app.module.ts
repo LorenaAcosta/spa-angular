@@ -70,6 +70,10 @@ import { CategoriaListar2Component } from './components/parametricos/booking/cat
 import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
 import { ArchivosSubidosComponent } from './components/archivos-subidos/archivos-subidos.component';
 import { HorarioComponent } from './components/parametricos/horario/horario.component';
+import { BoxesListarComponent } from './components/parametricos/boxes/boxes-listar.component';
+import { BoxesEditComponent } from './components/parametricos/boxes/boxes-edit.component';
+import { DisponibleBoxComponent } from './components/parametricos/disponible-box/disponiblebox.component';
+import { HorarioListarComponent } from './components/parametricos/horario/horario-listar.component';
 
 
 
@@ -120,7 +124,11 @@ import { HorarioComponent } from './components/parametricos/horario/horario.comp
     DisponibleComponent,
     ListarComponent,
     ArchivosSubidosComponent,
-    HorarioComponent
+    HorarioComponent,
+    BoxesListarComponent,
+    BoxesEditComponent,
+    DisponibleBoxComponent,
+    HorarioListarComponent
   ],
   imports: [
     BrowserModule,

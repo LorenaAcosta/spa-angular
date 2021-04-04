@@ -45,14 +45,17 @@
               <td>{{ util.cortarString(item.duracion, 0, 5) }} h.</td>
               <td>{{ util.numberWithCommas( item.costo )}} gs.</td>
               <td>
-                <button class="btn btn-info mr-1" [routerLink]="['/servicio/modificar', item.servicioId ]"
+                <button class="btn btn-sm btn-info mr-1" [routerLink]="['/servicio/modificar', item.servicioId ]"
                   placement="top" ngbTooltip="Editar">
                   <i class="fas fa-pencil-alt"></i>
                 </button>
-                <button class="btn btn-info mr-1" (click)="borrar(item.servicioId, i)" placement="top"
+                <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.servicioId, i)" placement="top"
                   ngbTooltip="Eliminar">
                   <i class="fas fa-trash"></i>
                 </button>
+                <button class="btn btn-sm  btn-info mr-1" [routerLink]="['/servicio/asignar-boxes/', item.servicioId ]"
+                placement="top" ngbTooltip="Asignar boxes">
+                <i class="fas fa-clipboard-list"></i> </button>
               </td>
             </tr>
           </tbody>

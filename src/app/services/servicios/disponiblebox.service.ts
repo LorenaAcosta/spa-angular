@@ -9,24 +9,9 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class DisponibleService {
-  recurosBaseURL: string = environment.URL_BASE + '/disponible/';
+export class DisponibleBoxService {
+  recurosBaseURL: string = environment.URL_BASE + '/disponible-boxes/';
   constructor(private http: HttpClient) { }
-
-  listarRecurso() {
-    return this.http.get(this.recurosBaseURL + 'listar');
-  }
-  listarByEmpleado(servicioId) {
-    return this.http.get(this.recurosBaseURL + 'obtener-empleados-disponibles/' + servicioId) ;
-  }
-
-  listarByEmpleadoV2(empleadoId) {
-     return this.http.get(this.recurosBaseURL + 'listar-porempleado/' + empleadoId) ;
-  }
-
-  agregarDisponibilidad(recurso) {
-    return this.http.post(this.recurosBaseURL + 'agregar-diponibilidad', recurso);
-  }
 
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso).pipe(
@@ -38,6 +23,25 @@ export class DisponibleService {
       })
     );
   }
+
+  
+  listarByServicioV2(servicioId) {
+    return this.http.get(this.recurosBaseURL + 'listar-porservicio/' + servicioId) ;
+ }
+
+  listarRecurso() {
+    return this.http.get(this.recurosBaseURL + 'listar');
+  }
+  listarByServicio(servicioId) {
+    return this.http.get(this.recurosBaseURL + 'obtener-servicios-disponibles/' + servicioId) ;
+  }
+
+
+  agregarDisponibilidad(recurso) {
+    return this.http.post(this.recurosBaseURL + 'agregar-diponibilidad', recurso);
+  }
+
+
   
   modificarRecurso(recurso, id) {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
@@ -50,15 +54,10 @@ export class DisponibleService {
   getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
   }
-  getDatosRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar-datos/' + id);
-  }
 
   getDisponible(id) {
     return this.http.get(this.recurosBaseURL + 'get-disponibilidad/' + id);
   }
 
-  getHorasDisponibles(categoriaId, servicioId, empleadoId, fecha) {
-    return this.http.get(this.recurosBaseURL + 'getHorariosDisponibles/' + categoriaId +"/" + servicioId + "/" + empleadoId + "/" + fecha);
-  }
+
 }

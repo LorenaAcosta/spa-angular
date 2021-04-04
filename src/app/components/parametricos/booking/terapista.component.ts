@@ -15,16 +15,14 @@ export class TerapistaComponent implements OnInit {
   servicioId: number;
 
   constructor(
-              private disponibleService: DisponibleService,
-              private route: ActivatedRoute) { }
+    private disponibleService: DisponibleService,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-       /*Mostrar los empleados disponibles de ese servicio */
-       this.servicioId = this.route.snapshot.params.id;
-       localStorage.setItem('servicio', this.route.snapshot.params.id);
-      // console.log(this.servicioId);
-       this.disponibleService.listarByEmpleado(this.servicioId)
-       .subscribe( (resp: any[]) =>  this.disponible = resp );
+    /*Mostrar los empleados disponibles de ese servicio */
+    this.servicioId = this.route.snapshot.params.id;
+    this.disponibleService.listarByEmpleado(this.servicioId)
+      .subscribe((resp: any[]) => this.disponible = resp);
   }
 
 

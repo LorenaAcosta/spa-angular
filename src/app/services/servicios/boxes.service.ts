@@ -9,19 +9,21 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class DisponibleService {
-  recurosBaseURL: string = environment.URL_BASE + '/disponible/';
-  constructor(private http: HttpClient) { }
+export class BoxesService {
+  recurosBaseURL: string = environment.URL_BASE + '/boxes/';
+  constructor(private http: HttpClient,
+              private router: Router) { }
 
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
-  listarByEmpleado(servicioId) {
-    return this.http.get(this.recurosBaseURL + 'obtener-empleados-disponibles/' + servicioId) ;
+  
+  listarByServicio(servicioId) {
+    return this.http.get(this.recurosBaseURL + 'obtener-servicios-disponibles/' + servicioId) ;
   }
 
-  listarByEmpleadoV2(empleadoId) {
-     return this.http.get(this.recurosBaseURL + 'listar-porempleado/' + empleadoId) ;
+  listarByServicioId(servicioId) {
+     return this.http.get(this.recurosBaseURL + 'listar-porservicio/' + servicioId) ;
   }
 
   agregarDisponibilidad(recurso) {
@@ -50,15 +52,30 @@ export class DisponibleService {
   getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
   }
-  getDatosRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar-datos/' + id);
-  }
 
   getDisponible(id) {
-    return this.http.get(this.recurosBaseURL + 'get-disponibilidad/' + id);
+    return this.http.get(this.recurosBaseURL + 'get-boxes-id/' + id);
   }
 
-  getHorasDisponibles(categoriaId, servicioId, empleadoId, fecha) {
-    return this.http.get(this.recurosBaseURL + 'getHorariosDisponibles/' + categoriaId +"/" + servicioId + "/" + empleadoId + "/" + fecha);
+  listarBoxesDisponibles(id){
+    return this.http.get(this.recurosBaseURL + 'get-boxes-disponibles/' +  id ).pipe(
+      catchError( e=> {
+        this.router.navigate(['/servicio/listar']);
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
+  }
+
+
+    obtenerUnBoxLibre(fecha: any, hora: string, servicioId: number){
+    return this.http.get(this.recurosBaseURL + 'obtener-box-libre/' + fecha + '/' + hora + '/' + servicioId  );
   }
 }
+
+/*
+select disponible_boxes_id from disponible_boxes d
+where d.disponible_boxes_id not in (select r.disponible_boxes_id from reserva_detalle r
+									where fecha_reserva='2021-03-02' and hora='13:00'
+								   )
+								   and d.servicio_id=1*/

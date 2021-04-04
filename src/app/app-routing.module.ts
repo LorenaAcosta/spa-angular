@@ -40,6 +40,10 @@ import { DisponibleComponent } from './components/parametricos/disponible/dispon
 import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 
 import { HorarioComponent } from './components/parametricos/horario/horario.component';
+import { BoxesEditComponent } from './components/parametricos/boxes/boxes-edit.component';
+import { BoxesListarComponent } from './components/parametricos/boxes/boxes-listar.component';
+import { DisponibleBoxComponent } from './components/parametricos/disponible-box/disponiblebox.component';
+import { HorarioListarComponent } from './components/parametricos/horario/horario-listar.component';
 
 const routes: Routes = [
   {
@@ -70,6 +74,14 @@ const routes: Routes = [
     ]
   },
   {
+    path: 'boxes', data: { title: 'Boxes' },
+    children: [
+      { path: 'agregar', component: BoxesEditComponent , data: { title: 'Crear Boxes' }, },
+      { path: 'listar', component: BoxesListarComponent , data: { title: 'Listar Boxes' }, },
+      { path: 'modificar/:id', component: BoxesEditComponent , data: { title: 'Editar Boxes'}, }
+    ]
+  },
+  {
     path: 'cliente', data: { title: 'Cliente' },
     children: [
       { path: 'registrar', component: ClienteEditComponent , data: { title: 'Crear Cliente' }, },
@@ -84,6 +96,7 @@ const routes: Routes = [
       { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
       { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' } },
       { path: 'asignar-horario/:id', component: HorarioComponent , data: { title: 'Asignar Horario Empleado' } },
+      { path: 'listar-horario/:id', component: HorarioListarComponent , data: { title: 'Listar Horario Empleado' } },
       { path: 'asignar-disponibilidad/:id', component: DisponibleComponent , data: { title: 'Asignar Disponibilidad Empleado' } },
     ]
   },
@@ -100,8 +113,9 @@ const routes: Routes = [
       { path: 'agregar', component: ServicioEditComponent , data: { title: 'Crear Servicio' }, },
       { path: 'listar', component:  ServicioListarComponent, data: { title: 'Listar Servicios' }, },
       { path: 'servicio', component:  ServicioComponent, data: { title: 'Listar Servicios' }, },
-      { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } }
-     ]
+      { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } },
+      { path: 'asignar-boxes/:id', component: DisponibleBoxComponent , data: { title: 'Asignar Boxes Servicio' } }
+    ]
   },
   {
     path: 'reserva', data: { title: 'Reserva' },
