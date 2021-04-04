@@ -56,8 +56,8 @@ export class ServicioService {
       );
     }
 
-    listarRecursosActivos(categoriaId, estado) {
-      return this.http.get(this.recurosBaseURL + 'getServiciosActivos/' +  categoriaId + '/' + estado ).pipe(
+    getServiciosCalendar(categoriaId) {
+      return this.http.get(this.recurosBaseURL + 'getServiciosActivos/' +  categoriaId  ).pipe(
         catchError( e=> {
           this.router.navigate(['/servicio/listar']);
           Swal.fire(e.error.mensaje, e.error.error, 'error');

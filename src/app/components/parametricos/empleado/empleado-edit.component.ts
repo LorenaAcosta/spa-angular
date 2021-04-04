@@ -2,13 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
-import { HttpErrorResponse } from '@angular/common/http';
-import { HorarioService } from 'src/app/services/servicios/horario.service';
-import { getLocaleDateTimeFormat } from '@angular/common';
-
 
 @Component({
   selector: 'app-empleado-edit',
@@ -35,11 +30,6 @@ export class EmpleadoEditComponent implements OnInit {
     fechaIngreso: ['aa'],  
   });
 
-  horario = this.fb.group({
-    horaFin: ['', Validators.required],
-    horaInicio: ['', Validators.required],
-    empleadoId: ['', Validators.required],
-  });
 
   get cedula() { return this.form.get('cedula'); }
   get telefono() { return this.form.get('telefono'); }
@@ -51,7 +41,6 @@ export class EmpleadoEditComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private empleadoService: EmpleadoService,
-              private horarioService: HorarioService,
               private route: ActivatedRoute,
               private router: Router) {
 
@@ -133,27 +122,13 @@ export class EmpleadoEditComponent implements OnInit {
       console.log(this.form.value);
       peticion = this.empleadoService.agregarRecurso(this.form.value);
       peticion.subscribe((result: any) =>  {
-        
-        console.log(result);
-         this.horario.controls.horaFin.setValue("00:00");
-         this.horario.controls.horaInicio.setValue("00:00");
-         this.horario.controls.empleadoId.setValue(result.empleadoId);
-
-        /*Insertar horario tambien*/
-        peticion = this.horarioService.agregarRecurso(this.horario.value);
-        peticion.subscribe((result: any) =>  {
-                 Swal.fire(
-                 'Guardado!',
-                 'Empleado insertado. Debe asignar un horario!',
-                 'success'
-               );
-           this.router.navigate(['/empleado/listar']);
-         }); 
-
+          Swal.fire(
+            'Empelado Guardado!',
+            'Debe asignar un horario!',
+            'success'
+          );
+          this.router.navigate(['/empleado/listar']);
       }); 
-
-
-
 
       } else {
         peticion = this.empleadoService.modificarRecurso(this.form.value, id);

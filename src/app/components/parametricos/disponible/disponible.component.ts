@@ -113,6 +113,7 @@ export class DisponibleComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+  
 
 
 }

@@ -1,30 +1,28 @@
 <blockquote class="blockquote text-center">
-    <h1>Selecciona un especialista</h1>
-    <footer class="blockquote-footer">Estos son los especialistas disponibles por ahora</footer>
-  </blockquote>
+  <h1>Selecciona un especialista</h1>
+  <footer class="blockquote-footer">Estos son los especialistas disponibles por ahora</footer>
+</blockquote>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-sm">
-        <div *ngIf="disponible.length == 0" class="text-center">
-          <div class="alert alert-warning" role="alert">
-            <h4 >No hay especialistas disponibles por el momento <i class="fa fa-exclamation"></i></h4>  
-          </div>
+<div class="container">
+  <div class="row">
+    <div class="col-sm">
+      <div *ngIf="disponible.length == 0" class="text-center">
+        <div class="alert alert-warning" role="alert">
+          <h4>No hay especialistas disponibles por el momento <i class="fa fa-exclamation"></i></h4>
         </div>
-                  
-        <div class="card-columns">
-          <div class="col mb-4">
-              <!--  Lista las terapistas -->
-              <!-- ngif que controlevel horario asignado del empleado-->
-                  <div class="card btn btn-light" *ngFor="let item of disponible; let i= index" [routerLink]="['/booking/categorias/servicios/terapista/calendar', item.disponibleId ]">
-                      {{ item.empleadoId.nombre }} 
-                      {{ item.empleadoId.apellido}}  
-                      {{ item.disponibleId}}
+      </div>
+      <div class="card-columns">
+        <div class="col mb-4">
+          <!--  Lista las terapistas -->
+          <!-- ngif que controlevel horario asignado del empleado-->
+          <div class="card btn btn-light" *ngFor="let item of disponible; let i= index"
+            [routerLink]="['/booking/categorias/servicios/terapista/calendar', item.disponibleId ]">
+            {{ item.empleadoId.nombre }}
+            {{ item.empleadoId.apellido}}
+            {{ item.disponibleId}}
           </div>
         </div>
       </div>
-    
+
     </div>
   </div>
- 
-  

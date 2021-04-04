@@ -73,6 +73,7 @@ import { HorarioComponent } from './components/parametricos/horario/horario.comp
 import { BoxesListarComponent } from './components/parametricos/boxes/boxes-listar.component';
 import { BoxesEditComponent } from './components/parametricos/boxes/boxes-edit.component';
 import { DisponibleBoxComponent } from './components/parametricos/disponible-box/disponiblebox.component';
+import { HorarioListarComponent } from './components/parametricos/horario/horario-listar.component';
 
 
 
@@ -126,7 +127,8 @@ import { DisponibleBoxComponent } from './components/parametricos/disponible-box
     HorarioComponent,
     BoxesListarComponent,
     BoxesEditComponent,
-    DisponibleBoxComponent
+    DisponibleBoxComponent,
+    HorarioListarComponent
   ],
   imports: [
     BrowserModule,

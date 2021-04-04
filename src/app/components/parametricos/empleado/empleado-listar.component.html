@@ -4,15 +4,15 @@
   </div>
 
   <div class="input-group mb-3">
-    
+
     <div class="input-group-prepend">
       <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
     </div>
-    
+
     <input #termino type="text" class="form-control" placeholder="Buscar empleado..." aria-label="Username"
       aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
-     
-      <p>&nbsp;</p>
+
+    <p>&nbsp;</p>
 
     <button routerLink="/empleado/agregar" class="btn btn-info mr-1">
       <i class="fas fa-plus"></i> Agregar
@@ -51,14 +51,16 @@
                 <button class="btn btn-sm btn-info mr-1" [routerLink]="['/empleado/modificar', item.empleadoId ]"
                   placement="top" ngbTooltip="Editar">
                   <i class="fas fa-pencil-alt"></i></button>
-                <button type="button" class="btn btn-sm btn-info mr-1" (click)="borrar(item.empleadoId, i)" placement="top"
-                  ngbTooltip="Eliminar">
+                <button type="button" class="btn btn-sm btn-info mr-1" (click)="borrar(item.empleadoId, i)"
+                  placement="top" ngbTooltip="Eliminar">
                   <i class="fas fa-trash"></i> </button>
-                <button class="btn btn-sm  btn-info mr-1" [routerLink]="['/empleado/asignar-horario/', item.empleadoId ]"
-                  placement="top" ngbTooltip="Asignar Horarios">
+                <button class="btn btn-sm  btn-info mr-1"
+                  [routerLink]="['/empleado/asignar-horario/', item.empleadoId ]" placement="top"
+                  ngbTooltip="Asignar Horarios">
                   <i class="fas fa-clock"></i> </button>
-                <button class="btn btn-sm  btn-info mr-1" [routerLink]="['/empleado/asignar-disponibilidad/', item.empleadoId ]"
-                  placement="top" ngbTooltip="Ver Especialidades">
+                <button class="btn btn-sm  btn-info mr-1"
+                  [routerLink]="['/empleado/asignar-disponibilidad/', item.empleadoId ]" placement="top"
+                  ngbTooltip="Ver Especialidades">
                   <i class="fas fa-clipboard-list"></i> </button>
               </td>
             </tr>
@@ -73,6 +75,6 @@
 
 
 
-<div *ngIf="empleados.length == 0" class="alert alert-secondary text-center mt-3">
-  <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
-</div>
+  <div *ngIf="empleados.length == 0" class="alert alert-secondary text-center mt-3">
+    <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
+  </div>

@@ -13,21 +13,15 @@ export class CategoriaListar2Component implements OnInit {
   urlImagen: string = 'http://localhost:8084/api/files/';
   categoriaSelecionada: any = '';
   constructor(private categoriaService: CategoriaService,
-              private router: Router) { }
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.getCategorias();
-  }
-
-  getCategorias() {
     this.categoriaService.obtenerPorTipo('servicio')
-    .subscribe( (resp: any[]) =>  this.categorias = resp  );
+      .subscribe((resp: any[]) => this.categorias = resp);
   }
 
-  btnClick(categoriaId:any) {
-  //  console.log(categoriaId);
+  btnClick(categoriaId: any) {
     this.router.navigate(['booking/categorias/servicios', categoriaId]);
   }
-  //[routerLink]="['../../booking/categorias/servicios', item.categoriaId]"
 
 }

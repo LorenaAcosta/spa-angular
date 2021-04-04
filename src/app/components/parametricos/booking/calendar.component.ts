@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbCalendar, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { NgbCalendar, NgbDate, NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HorarioService } from 'src/app/services/servicios/horario.service';
 
 import { ReservaService } from 'src/app/services/servicios/reserva.service';
 import { Time } from '@angular/common';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { DisponibleService } from '../../../services/servicios/disponibilidad.service';
 import { Observable } from 'rxjs';
 import Swal from 'sweetalert2';
@@ -24,39 +24,43 @@ export class CalendarComponent implements OnInit {
   disponible: any;
   empleadoId: any;
   servicioId: number;
-  dispo: any;
-
-  horaInicial: any;
+  horario: [];
   box: any;
-  fecha: number;
-  horaInicio: any;
-  todayDate: any;
   selectedDate: any;
-
-  model: NgbDateStruct;
+  categoriaId:any;
+  //model: NgbDateStruct;
+  private _model: NgbDate;
   date: {year: number, month: number, day: number};
   turnosArray: any[] = [];
-
-  arrayObject: any[] = [];
-  turnos: any[] = [];
-
   selectedOption: string;
   printedOption: string;
 
+
+  disabledDates:NgbDateStruct[]=[
+    {year:2021,month:4,day:26}, {year:2021,month:4,day:20}
+  ]
+
+//  disabledDates:NgbDateStruct[]=[]
+
   form = this.fb.group({
-    empleado: [''],
-    fechaReserva: [''],
-    hora: ['' ],
-    disponibleId: [''],
-    usuarioId: [''],
-    estado: [''],
-    disponibleBoxesId:['']
+    empleado: ['', Validators.required],
+    fechaReserva: ['', Validators.required],
+    hora: ['', Validators.required],
+    disponibleId: ['',Validators.required],
+    usuarioId: ['', Validators.required],
+    estado: ['', Validators.required],
+    disponibleBoxesId:['',Validators.required]
   });
 
+  minDate = undefined;
+
+
+  horarioEmpleado = []
 
   constructor(private fb: FormBuilder,
               private router: Router,
               private calendar: NgbCalendar,
+              private config: NgbDatepickerConfig,
               private route: ActivatedRoute,
               private horarioService: HorarioService,
               private boxesService: BoxesService,
@@ -64,20 +68,79 @@ export class CalendarComponent implements OnInit {
               private empleadoService: EmpleadoService ,
               private disponibleService: DisponibleService,
               private util: UtilesService ) {
+               //deshabilita los dias desde HOY hacia atras 
+                const current = new Date();
+                this.minDate = {
+                  year: current.getFullYear(),
+                  month: current.getMonth() + 1,
+                  day: current.getDate()
+                };
   }
 
+  
+  weekDays = {
+    1: 'Lunes',
+    2: 'Martes',
+    3: 'Miércoles',
+    4: 'Jueves',
+    5: 'Viernes',
+    6: 'Sábado',
+    0: 'Domingo'
+  }
+
+
   ngOnInit(): void {
-    /* Obtiene el objeto disponible {disponibleId, } */
+
+  
+
+    /* Obtiene el objeto disponible { disponible_id} */
     this.disponibleId = this.route.snapshot.params.id;
-    
-    this.disponibleService.getRecurso(this.disponibleId)
+    this.disponibleService.getDatosRecurso(this.disponibleId)
      .subscribe( (resp: any) =>  {
-       this.disponible = resp.disponibleId;
-       this.empleadoId = resp.empleadoId.empleadoId;
-       this.servicioId =  resp.servicioId.servicioId;
-       this.dispo = resp;
-       localStorage.setItem('empleado', this.empleadoId);
+       this.disponible = resp.disponible.disponibleId;
+       this.empleadoId = resp.disponible.empleadoId.empleadoId;
+       this.servicioId =  resp.disponible.servicioId.servicioId;
+       this.categoriaId =  resp.disponible.servicioId.categoriaId.categoriaId;
+       const array  = resp.horario;
+       this.horario = resp.horario;
+
+       for (let index = 0; index < array.length; index++) {
+         const element:any = array[index];
+         this.horarioEmpleado.push(parseInt(element.diaTrabajo, 10)); 
+         //el array es de tipo horarioEmpleado[]? podemos imprimir loque ingresa en el array?
+       }
+       this.selectToday();
      });
+
+
+
+  }
+
+
+
+  isDisabled=(date:NgbDateStruct, current: {day:number, month: number,year:number})=> {
+      //in current we have the month and the year actual
+      if(this.horarioEmpleado.length == 0) return false;
+      const fecha = new Date( date.year, date.month-1,date.day )
+      const dia_semana = fecha.getDay(); //0,1,2,3,4,5,6,7
+     // const dia_encontrado = this.disabledDates.find(x=>new NgbDate(x.year,x.month,x.day).equals(date))?true:false;
+      const e = this.horarioEmpleado.find(val=> val == dia_semana); //3, 
+      return  typeof e == 'undefined' ? true:false
+  }
+
+
+
+
+
+  
+  selectedDay: string = '';
+  set model(val) {
+    this._model = val;
+    this.selectedDay = this.weekDays[this.calendar.getWeekday(this.model)]
+  }
+  
+  get model() {
+    return this._model;
   }
 
 
@@ -86,7 +149,7 @@ export class CalendarComponent implements OnInit {
   }
 
 
-  print() {
+  agendar() {
     this.printedOption = this.selectedOption;
     this.form.controls.empleado.setValue( this.empleadoId);
     this.form.controls.fechaReserva.setValue( this.selectedDate );
@@ -130,45 +193,19 @@ export class CalendarComponent implements OnInit {
 
 
   getHorariosDisponibles() {
-     /* Obtiene el objeto disponible {disponibleId, } */
-    this.disponibleId = this.route.snapshot.params.id;
-    
-    this.disponibleService.getRecurso(this.disponibleId).subscribe( (resp: any) =>  {
-       console.log(resp);
-       this.empleadoId=  resp.empleadoId.empleadoId;
+      this.selectedDate = Date(); 
+      this.selectedDate = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
+      console.log(this.selectedDate);
+      console.log(this.disponible);
   
-
-    this.selectedDate = Date();
-    this.selectedDate = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
-    console.log(this.selectedDate);
-    
-   /* this.selectedDate = ( this.model.year + '-' + this.model.month + '-' + this.model.day as string);
-    console.log(this.selectedDate);
-    console.log(this.todayDate);  */
-   
-
-      this.disponibleService.getHorasDisponibles(
-        resp.servicioId.categoriaId.categoriaId,
-        resp.servicioId.servicioId,
-        resp.empleadoId.empleadoId, 
+      this.disponibleService.getHorasDisponibles(this.categoriaId,this.servicioId,this.empleadoId,
         this.selectedDate)
       .subscribe( (resp: any) =>  {
-
-        if (resp == null){
-           Swal.fire('Lo siento!', 'No puedes seleccionar esta fecha', 'error');
-        }else{
           localStorage.setItem("horasDisponibles", JSON.stringify(resp));
           this.turnosArray = JSON.parse(localStorage.getItem("horasDisponibles"));
           console.log(this.turnosArray);
           console.log(this.turnosArray[0]);
-          if (this.turnosArray[0] == null){
-            Swal.fire('Lo siento!', 'No hay turnos disponibles para la fecha seleccionada', 'error');
-          }
-        }
-          
-      });
-
-    });
+        });
   }
 
 }

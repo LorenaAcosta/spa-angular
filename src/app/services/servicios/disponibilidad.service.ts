@@ -50,6 +50,9 @@ export class DisponibleService {
   getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
   }
+  getDatosRecurso(id) {
+    return this.http.get(this.recurosBaseURL + 'encontrar-datos/' + id);
+  }
 
   getDisponible(id) {
     return this.http.get(this.recurosBaseURL + 'get-disponibilidad/' + id);

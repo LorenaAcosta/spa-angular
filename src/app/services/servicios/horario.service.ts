@@ -64,4 +64,15 @@ export class HorarioService {
     );
   }
 
+  
+  getHorariosById(id) {
+    return this.http.get(this.recurosBaseURL + 'listar-horarios/' + id).pipe(
+      catchError( e=> {
+        this.router.navigate(['/empleado/listar']);
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
+  }
+
 }
