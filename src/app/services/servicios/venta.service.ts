@@ -39,5 +39,19 @@ export class VentaService {
     return this.http.get(this.recurosBaseURL + 'actualizar-cabecera/' + id);
   }
 
+  getFacturaReport(id) {
+    return this.http.get(this.recurosBaseURL + '/report/' + id);
+  }
+
+  public getFacturaPdf(): any {
+    var mediaType = 'application/pdf';
+    this.http.get(this.recurosBaseURL + 'files/factura.pdf',{ responseType: 'blob' }).subscribe(
+        (response) => {
+            var blob = new Blob([response], { type: mediaType });
+            
+        },
+        e => { throwError(e); }
+    );
+  }
 
 }

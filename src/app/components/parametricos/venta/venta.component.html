@@ -1,7 +1,7 @@
 <br>
 <div class="container-fluid">
     <div class="row">
-        <h5 class="display">Compras</h5>
+        <h2 class="display">Compras</h2>
         <div class="col text-right">
             <button routerLink="/ventas/agregar" class="btn btn-sm btn-info mr-1">
        <i class="fas fa-plus"></i> Agregar
@@ -195,8 +195,9 @@
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-info text-dark" onclick="return xepOnline.Formatter.Format('myModal',
-                                                {pageWidth:'200mm', pageHeight:'250mm'});"><strong>Imprimir</strong></button>
+                                                <button type="button" class="btn btn-info text-dark"><a class="text-dark" href="http://localhost:8084/api/ventas/files/factura.pdf"><strong>Imprimir</strong></a></button>
+                                                <!--<button type="button" class="btn btn-info text-dark" onclick="return xepOnline.Formatter.Format('myModal',
+                                                {pageWidth:'200mm', pageHeight:'250mm'});"><strong>Imprimir</strong></button>-->
                                             </div>
                                         </div>
 

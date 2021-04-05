@@ -108,6 +108,8 @@ export class VentaComponent implements OnInit {
     this.detallesVentaService.getRecurso(id)
     .subscribe( (resp: any[]) => this.detalles = resp);
     console.log(this.detalles);
+
+    this.getFacturaReport(id);
   }
 
   borrar( id: any, pos: any) {
@@ -149,6 +151,11 @@ export class VentaComponent implements OnInit {
             return ((zero.repeat(ancho - length)) + numberOutput.toString()); 
         }
     }
+  }
+
+  getFacturaReport(id) {
+    this.ventasService.getFacturaReport(id)
+    .subscribe( );
   }
 
 }
