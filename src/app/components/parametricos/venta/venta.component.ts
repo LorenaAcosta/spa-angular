@@ -108,8 +108,6 @@ export class VentaComponent implements OnInit {
     this.detallesVentaService.getRecurso(id)
     .subscribe( (resp: any[]) => this.detalles = resp);
     console.log(this.detalles);
-
-    this.getFacturaReport(id);
   }
 
   borrar( id: any, pos: any) {
@@ -155,7 +153,16 @@ export class VentaComponent implements OnInit {
 
   getFacturaReport(id) {
     this.ventasService.getFacturaReport(id)
-    .subscribe( );
+    .subscribe( (resp: any[]) =>  resp  );
+  }
+
+  clickEvent(){
+    this.ventasService.getPDF().subscribe((response)=>{
+  
+    let file = new Blob([response], { type: 'application/pdf' });            
+    var fileURL = URL.createObjectURL(file);
+    window.open(fileURL, "popup","width=600,height=600");
+  })
   }
 
 }
