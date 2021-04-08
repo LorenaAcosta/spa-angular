@@ -43,15 +43,16 @@ export class VentaService {
     return this.http.get(this.recurosBaseURL + '/report/' + id);
   }
 
-  public getFacturaPdf(): any {
-    var mediaType = 'application/pdf';
-    this.http.get(this.recurosBaseURL + 'files/factura.pdf',{ responseType: 'blob' }).subscribe(
-        (response) => {
-            var blob = new Blob([response], { type: mediaType });
-            
-        },
-        e => { throwError(e); }
-    );
-  }
+  getPDF(){
+    //const url = `${this.serviceUrl}/pdf`;
+    const id = 'factura.pdf';
+    const httpOptions = {
+      'responseType'  : 'arraybuffer' as 'json'
+       //'responseType'  : 'blob' as 'json'        //This also worked
+    };
+    
+    return this.http.get<any>(this.recurosBaseURL + '/files/' + id, httpOptions);
+    
+    }
 
 }
