@@ -106,8 +106,7 @@ export class CalendarComponent implements OnInit {
 
        for (let index = 0; index < array.length; index++) {
          const element:any = array[index];
-         this.horarioEmpleado.push(parseInt(element.diaTrabajo, 10)); 
-         //el array es de tipo horarioEmpleado[]? podemos imprimir loque ingresa en el array?
+         this.horarioEmpleado.push(parseInt(element.diaTrabajo, 10));  //{1,3,0}
        }
        this.selectToday();
      });
@@ -125,7 +124,7 @@ export class CalendarComponent implements OnInit {
       const dia_semana = fecha.getDay(); //0,1,2,3,4,5,6,7
      // const dia_encontrado = this.disabledDates.find(x=>new NgbDate(x.year,x.month,x.day).equals(date))?true:false;
       const e = this.horarioEmpleado.find(val=> val == dia_semana); //3, 
-      return  typeof e == 'undefined' ? true:false
+      return  typeof e == 'undefined' ? true:false   
   }
 
 
@@ -204,7 +203,7 @@ export class CalendarComponent implements OnInit {
           localStorage.setItem("horasDisponibles", JSON.stringify(resp));
           this.turnosArray = JSON.parse(localStorage.getItem("horasDisponibles"));
           console.log(this.turnosArray);
-          console.log(this.turnosArray[0]);
+          console.log(this.turnosArray[0]); //{[0]=null};
         });
   }
 

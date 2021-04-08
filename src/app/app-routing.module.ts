@@ -44,6 +44,10 @@ import { BoxesEditComponent } from './components/parametricos/boxes/boxes-edit.c
 import { BoxesListarComponent } from './components/parametricos/boxes/boxes-listar.component';
 import { DisponibleBoxComponent } from './components/parametricos/disponible-box/disponiblebox.component';
 import { HorarioListarComponent } from './components/parametricos/horario/horario-listar.component';
+import { TipoComprobanteComponent } from './components/parametricos/tipo-comprobante/tipo-comprobante.component';
+import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.component';
+import { MediosPagoComponent } from './components/parametricos/medios-pago/medios-pago.component';
+import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
 
 const routes: Routes = [
   {
@@ -63,14 +67,6 @@ const routes: Routes = [
       { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
       { path: 'upload/:id', component: CategoriaEditComponent , data: { title: 'Upload Categoria' }, },
      { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' } },
-    ]
-  },
-  {
-    path: 'medios-pago', data: { title: 'MediosPago' },
-    children: [
-      { path: 'agregar', component: MediosPagoEditComponent , data: { title: 'Crear Medio Pago' }, },
-      { path: 'listar', component: MediosPagoListarComponent , data: { title: 'Listar Medio Pago' }, },
-      { path: 'modificar/:id', component: MediosPagoEditComponent , data: { title: 'Editar Medio Pago' }, }
     ]
   },
   {
@@ -165,6 +161,15 @@ const routes: Routes = [
       //{ path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
       { path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
      ]
+  },
+  {
+    path: 'config', data: { title: 'Configuraciones' },
+    children: [
+      { path: 'tipo-comprobante/agregar', component: TipoComprobanteComponent , data: { title: 'Tipo Comprobante' }, },
+      { path: 'impuesto/agregar', component: ImpuestoComponent , data: { title: 'Impuesto' }, },
+      { path: 'medios-pago/agregar', component: MediosPagoComponent , data: { title: 'Medio Pago' }, },
+      { path: 'comprobante/agregar', component: ComprobanteComponent , data: { title: 'Comprobante' }, }
+    ]
   },
   {
   path: 'images', data: { title: 'Imagenes' },

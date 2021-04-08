@@ -74,6 +74,9 @@ import { BoxesListarComponent } from './components/parametricos/boxes/boxes-list
 import { BoxesEditComponent } from './components/parametricos/boxes/boxes-edit.component';
 import { DisponibleBoxComponent } from './components/parametricos/disponible-box/disponiblebox.component';
 import { HorarioListarComponent } from './components/parametricos/horario/horario-listar.component';
+import { TipoComprobanteComponent } from './components/parametricos/tipo-comprobante/tipo-comprobante.component';
+import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.component';
+import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
 
 
 
@@ -128,7 +131,10 @@ import { HorarioListarComponent } from './components/parametricos/horario/horari
     BoxesListarComponent,
     BoxesEditComponent,
     DisponibleBoxComponent,
-    HorarioListarComponent
+    HorarioListarComponent,
+    TipoComprobanteComponent,
+    ImpuestoComponent,
+    ComprobanteComponent
   ],
   imports: [
     BrowserModule,

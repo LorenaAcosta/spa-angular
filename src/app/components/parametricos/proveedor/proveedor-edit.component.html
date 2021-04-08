@@ -12,67 +12,128 @@
 <hr>
 
 <div class="container-fluid">
+
     <form [formGroup]="form">
-
-        <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Empresa</label>
-            <div class="col-sm-3">
-                <input formControlName="empresa" type="empresa" class="form-control" id="empresa" required>
-            </div>
-        </div>
-        <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Telefono</label>
-            <div class="col-sm-3">
-                <input formControlName="telefono" type="tel" pattern="[0-9]{4}[0-9]{3}[0-9]{3}" class="form-control" id="telefono" placeholder="09##-###-###" required><br>
-                <div class="row">
-                    <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="col-sm-9 text-danger">
-                        <br>
-                        <p class=""> * El número de telefono ingresado no es válido, el formato debe ser : 09##-###-###</p>
+        <div class="row">
+          <div class="col-6">
+            <div class="bd-content">
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label>Razón Social</label>
+                  <input formControlName="razonSocial" placeholder="razonSocial" type="razonSocial" maxlength="30"
+                    class="form-control form-control-sm" id="razonSocial" required>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label>Nombre de Empresa</label>
+                  <input formControlName="empresa" placeholder="empresa" type="empresa" maxlength="30"
+                    class="form-control form-control-sm" id="empresa" required>
+                </div>
+              </div>
+      
+              <div class="form-row">
+                <div class="form-group col-sm-12">
+                  <label>Dirección</label>
+                  <input formControlName="direccion" placeholder="dirección" type="direccion" maxlength="60"
+                    class="form-control form-control-sm" id="direccion" required>
+                </div>
+              </div>
+      
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label>Ciudad</label>
+                  <input formControlName="ciudad" placeholder="ciudad" type="ciudad" maxlength="30"
+                    class="form-control form-control-sm" id="ciudad" required>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label for="inputState">R.U.C.</label>
+                  <input formControlName="ruc" type="ruc" maxlength="30"
+                    class="form-control form-control-sm" id="ruc" required>
+                </div>
+              </div>
+      
+      
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label>Telefono</label>
+                  <input formControlName="telefono" placeholder="021xxx" type="telefono" class="form-control form-control-sm"
+                    pattern="^[0-9]*$" id="telefono" required>
+                    <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-sm alert-danger">
+                      Introduzca sólo dígitos. 
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Dirección</label>
-            <div class="col-sm-3">
-                <!--<input formControlName="direccion" type="direccion" class="form-control" id="direccion" required>-->
-                <textarea formControlName="direccion" type="text" class="form-control" rows="1" style="max-height:80px;"> </textarea>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Ruc</label>
-            <div class="col-sm-3">
-                <input formControlName="ruc" type="ruc" class="form-control" id="ruc" required>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Correo</label>
-            <div class="col-sm-3">
-                <input type="text" class="form-control" id="correo" placeholder="Correo" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="correo" required>
-                <div class="row">
-                    <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="col text-danger">
-                        <br>
-                        <p class="text-justify"> * El correo ingresado no es valido</p>
-                    </div>
+                <div class="form-group col-sm-6">
+                  <label>Celular</label>
+                  <input formControlName="celular" placeholder="098xxx" type="celular" class="form-control form-control-sm"
+                    pattern="^[0-9]*$" id="celular">
+                  <div *ngIf="celular.invalid && (celular.dirty || celular.touched)" class="alert alert-sm alert-danger">
+                    Introduzca sólo dígitos.
+                   </div>
                 </div>
+              </div>
+      
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label>Correo</label>
+                  <input type="text" class="form-control form-control-sm" id="correo" placeholder="Email" formControlName="correo" required>
+                <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="alert alert-danger">
+                  Correo inválido.</div>
+                </div>
+                <div class="form-group col-sm-6">
+                  <label>Nombre del gerente</label>
+                  <input formControlName="nombreGerente" type="text" class="form-control form-control-sm" placeholder="nombreGerente"
+                    id="nombreGerente" required>
+                </div>
+              </div>
+      
             </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Vendedor</label>
-            <div class="col-sm-3">
-                <input formControlName="nombreProveedor" type="nombre" class="form-control" id="nombre" required>
+          </div>
+          <div class="col-1">
+              <h6>   </h6>
+          </div>
+    
+          <div class="col-5">
+            <div class="bd-content">
+      
+              <div class="form-row form-group col-sm-6">
+                <label>Nombre del Proveedor de Contacto</label>
+                <input formControlName="nombreProveedor" placeholder="nombreProveedor" type="nombreProveedor" class="form-control form-control-sm"
+                 id="nombreProveedor" required>
+              </div>
+              <div class="form-row form-group col-sm-6">
+                <label>Cargo del Proveedor de Contacto</label>
+                <input formControlName="cargo" placeholder="cargo" type="cargo" class="form-control form-control-sm"
+                 id="cargo" required>
+              </div>
+              <div class="form-group col-sm-6">
+                <label>Telefono/Celular</label>
+                <input formControlName="telefonoContacto" placeholder="021xxx" type="telefonoContacto" class="form-control form-control-sm"
+                  pattern="^[0-9]*$" id="telefono">
+                  <div *ngIf="telefonoContacto.invalid && (telefonoContacto.dirty || telefonoContacto.touched)" class="alert alert-sm alert-danger">
+                    Introduzca sólo dígitos. 
+                  </div>
+              </div>
+              <div class="form-group col-sm-6">
+                <label>Estado</label>
+                <select id="estado" formControlName="estado" class="form-control form-control-sm" required>
+                  <option selected>...</option>
+                  <option value="activo">ACTIVO</option>
+                  <option value="inactivo">INACTIVO</option>
+                </select>
+              </div>
+      
             </div>
+          </div>
+      
+          <button routerLink="/empleado/listar" class="btn btn-sm btn-info mr-1">
+            <i class="fas fa-arrow-left"></i> Regresar
+          </button>
+          <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
+          " (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
+      
+      
+      
         </div>
+      
+      </form>
 
-
-        <div class="form-group row">
-            <div class="col-sm-3">
-                <button type="submit" [disabled]="!this.form.valid" routerLink="/proveedor/listar" class="btn btn-primary" (click)="guardar()">Guardar</button>
-            </div>
-        </div>
-    </form>
 </div>

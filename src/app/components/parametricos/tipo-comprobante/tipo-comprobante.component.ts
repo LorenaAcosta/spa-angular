@@ -2,30 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MediosPagoService } from 'src/app/services/servicios/medios-pago.service';
+import { TipoComprobanteService } from 'src/app/services/servicios/tipo-comprobante.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-medios-pago',
-  templateUrl: './medios-pago.component.html',
-  styleUrls: ['./medios-pago.component.scss']
+  selector: 'app-tipo-comprobante',
+  templateUrl: './tipo-comprobante.component.html',
+  styleUrls: ['./tipo-comprobante.component.scss']
 })
-export class MediosPagoComponent implements OnInit {
+export class TipoComprobanteComponent implements OnInit {
   public formSubmitted = false;
-  constructor(private mediosPagoService: MediosPagoService, 
-              private fb: FormBuilder,  private route: ActivatedRoute,) { }
+  constructor(private tipoComprobanteService: TipoComprobanteService, 
+    private fb: FormBuilder,  private route: ActivatedRoute,) { }
 
-  medios: any[] = [];
-  get valor() { return this.form.get('valor'); }
+  tipos: any[] = [];
 
   form = this.fb.group({
-    descripcion: ['', Validators.required],
-    codigo: ['', Validators.required]
+    descripcion: ['', Validators.required]
   });
 
   ngOnInit(): void {
-    this.mediosPagoService.listarRecurso()
-    .subscribe( (resp: any[]) =>  {this.medios = resp ;
+    this.tipoComprobanteService.listarRecurso()
+    .subscribe( (resp: any[]) =>  {this.tipos = resp ;
       console.log(resp);} );
   }
 
@@ -39,7 +37,7 @@ export class MediosPagoComponent implements OnInit {
     console.log(id);
     console.log(typeof id);
     if (typeof id === 'undefined') {
-      peticion = this.mediosPagoService.agregarRecurso(this.form.value);
+      peticion = this.tipoComprobanteService.agregarRecurso(this.form.value);
       console.log(this.form.value);
       peticion.subscribe((result: any) =>  {
         Swal.fire(
@@ -64,8 +62,8 @@ export class MediosPagoComponent implements OnInit {
       confirmButtonText: 'Si, eliminar!'
       }).then((result) => {
         if (result.value) {
-          this.medios.splice(pos, 1);
-          this.mediosPagoService.eliminarRecurso(id).subscribe();
+          this.tipos.splice(pos, 1);
+          this.tipoComprobanteService.eliminarRecurso(id).subscribe();
           Swal.fire(
             'Eliminado!',
             'Los datos han sido eliminados.',
@@ -74,4 +72,6 @@ export class MediosPagoComponent implements OnInit {
         }
       });
     }
+
+
 }

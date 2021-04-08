@@ -2,30 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { MediosPagoService } from 'src/app/services/servicios/medios-pago.service';
+import { ImpuestoService } from 'src/app/services/servicios/impuesto.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-medios-pago',
-  templateUrl: './medios-pago.component.html',
-  styleUrls: ['./medios-pago.component.scss']
+  selector: 'app-impuesto',
+  templateUrl: './impuesto.component.html',
+  styleUrls: ['./impuesto.component.scss']
 })
-export class MediosPagoComponent implements OnInit {
+export class ImpuestoComponent implements OnInit {
   public formSubmitted = false;
-  constructor(private mediosPagoService: MediosPagoService, 
+  constructor(private impuestoService: ImpuestoService, 
               private fb: FormBuilder,  private route: ActivatedRoute,) { }
 
-  medios: any[] = [];
+  impuestos: any[] = [];
   get valor() { return this.form.get('valor'); }
 
   form = this.fb.group({
     descripcion: ['', Validators.required],
-    codigo: ['', Validators.required]
+    valor: ['', Validators.required]
   });
 
   ngOnInit(): void {
-    this.mediosPagoService.listarRecurso()
-    .subscribe( (resp: any[]) =>  {this.medios = resp ;
+    this.impuestoService.listarRecurso()
+    .subscribe( (resp: any[]) =>  {this.impuestos = resp ;
       console.log(resp);} );
   }
 
@@ -39,7 +39,7 @@ export class MediosPagoComponent implements OnInit {
     console.log(id);
     console.log(typeof id);
     if (typeof id === 'undefined') {
-      peticion = this.mediosPagoService.agregarRecurso(this.form.value);
+      peticion = this.impuestoService.agregarRecurso(this.form.value);
       console.log(this.form.value);
       peticion.subscribe((result: any) =>  {
         Swal.fire(
@@ -64,8 +64,8 @@ export class MediosPagoComponent implements OnInit {
       confirmButtonText: 'Si, eliminar!'
       }).then((result) => {
         if (result.value) {
-          this.medios.splice(pos, 1);
-          this.mediosPagoService.eliminarRecurso(id).subscribe();
+          this.impuestos.splice(pos, 1);
+          this.impuestoService.eliminarRecurso(id).subscribe();
           Swal.fire(
             'Eliminado!',
             'Los datos han sido eliminados.',
