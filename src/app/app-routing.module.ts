@@ -40,6 +40,14 @@ import { DisponibleComponent } from './components/parametricos/disponible/dispon
 import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 
 import { HorarioComponent } from './components/parametricos/horario/horario.component';
+import { BoxesEditComponent } from './components/parametricos/boxes/boxes-edit.component';
+import { BoxesListarComponent } from './components/parametricos/boxes/boxes-listar.component';
+import { DisponibleBoxComponent } from './components/parametricos/disponible-box/disponiblebox.component';
+import { HorarioListarComponent } from './components/parametricos/horario/horario-listar.component';
+import { TipoComprobanteComponent } from './components/parametricos/tipo-comprobante/tipo-comprobante.component';
+import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.component';
+import { MediosPagoComponent } from './components/parametricos/medios-pago/medios-pago.component';
+import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
 
 const routes: Routes = [
   {
@@ -62,11 +70,11 @@ const routes: Routes = [
     ]
   },
   {
-    path: 'medios-pago', data: { title: 'MediosPago' },
+    path: 'boxes', data: { title: 'Boxes' },
     children: [
-      { path: 'agregar', component: MediosPagoEditComponent , data: { title: 'Crear Medio Pago' }, },
-      { path: 'listar', component: MediosPagoListarComponent , data: { title: 'Listar Medio Pago' }, },
-      { path: 'modificar/:id', component: MediosPagoEditComponent , data: { title: 'Editar Medio Pago' }, }
+      { path: 'agregar', component: BoxesEditComponent , data: { title: 'Crear Boxes' }, },
+      { path: 'listar', component: BoxesListarComponent , data: { title: 'Listar Boxes' }, },
+      { path: 'modificar/:id', component: BoxesEditComponent , data: { title: 'Editar Boxes'}, }
     ]
   },
   {
@@ -84,8 +92,8 @@ const routes: Routes = [
       { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
       { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' } },
       { path: 'asignar-horario/:id', component: HorarioComponent , data: { title: 'Asignar Horario Empleado' } },
-      { path: 'disponible', component: DisponibleComponent , data: { title: 'Asignar Disponibilidad' } },
-      { path: 'disponible-listar', component: DisponibleComponent , data: { title: 'Listar Disponibilidad' } }
+      { path: 'listar-horario/:id', component: HorarioListarComponent , data: { title: 'Listar Horario Empleado' } },
+      { path: 'asignar-disponibilidad/:id', component: DisponibleComponent , data: { title: 'Asignar Disponibilidad Empleado' } },
     ]
   },
   {
@@ -101,8 +109,9 @@ const routes: Routes = [
       { path: 'agregar', component: ServicioEditComponent , data: { title: 'Crear Servicio' }, },
       { path: 'listar', component:  ServicioListarComponent, data: { title: 'Listar Servicios' }, },
       { path: 'servicio', component:  ServicioComponent, data: { title: 'Listar Servicios' }, },
-      { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } }
-     ]
+      { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } },
+      { path: 'asignar-boxes/:id', component: DisponibleBoxComponent , data: { title: 'Asignar Boxes Servicio' } }
+    ]
   },
   {
     path: 'reserva', data: { title: 'Reserva' },
@@ -113,12 +122,13 @@ const routes: Routes = [
   },
   {
     path: 'booking', data: { title: 'Booking' },
-    children: [ { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
+    children: 
+    [ { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
       { path: 'ofertas', component: OfertaComponent, data: { title: 'Ofertas-Componente' }},
       { path: 'productos', component: ProductoListar2Component , data: { title: 'Listar Productos' } },
-      { path: 'terapista/:id', component:  TerapistaComponent, data: { title: 'terapista' }, },
-      { path: 'servicios/:id', component: ServicioListar2Component , data: { title: 'Listar Servicio' } },
-      { path: 'calendar/:id', component:  CalendarComponent, data: { title: 'Calendar' }, }
+      { path: 'categorias/servicios/terapista/:id', component:  TerapistaComponent, data: { title: 'terapista' }, },
+      { path: 'categorias/servicios/:id', component: ServicioListar2Component , data: { title: 'Listar Servicio' } },
+      { path: 'categorias/servicios/terapista/calendar/:id', component:  CalendarComponent, data: { title: 'Calendar' }, }
     ]
   },
   {
@@ -151,6 +161,15 @@ const routes: Routes = [
       //{ path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
       { path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
      ]
+  },
+  {
+    path: 'config', data: { title: 'Configuraciones' },
+    children: [
+      { path: 'tipo-comprobante/agregar', component: TipoComprobanteComponent , data: { title: 'Tipo Comprobante' }, },
+      { path: 'impuesto/agregar', component: ImpuestoComponent , data: { title: 'Impuesto' }, },
+      { path: 'medios-pago/agregar', component: MediosPagoComponent , data: { title: 'Medio Pago' }, },
+      { path: 'comprobante/agregar', component: ComprobanteComponent , data: { title: 'Comprobante' }, }
+    ]
   },
   {
   path: 'images', data: { title: 'Imagenes' },

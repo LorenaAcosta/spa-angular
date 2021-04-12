@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ProveedorService } from 'src/app/services/servicios/proveedor.service';
 import Swal from 'sweetalert2';
@@ -14,23 +14,30 @@ export class ProveedorEditComponent implements OnInit {
   public formSubmitted = false;
 
   form = this.fb.group({
-    nombreProveedor: ['', Validators.required],
-    telefono: ['', Validators.required],
+    razonSocial: ['', Validators.required],
     empresa: ['', Validators.required],
     direccion: ['', Validators.required],
+    ciudad: ['', Validators.required],
     ruc: ['', Validators.required],
-    correo: ['', 
-    Validators.compose([
-      Validators.required,
-      Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@' + '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')])
-    ]
+    telefono: ['', Validators.required],
+    celular: ['', Validators.required],
+    correo: ['',  Validators.required ],
+    nombreGerente: ['', Validators.required],
+    nombreProveedor: ['', Validators.required],
+    cargo: ['', Validators.required],
+    telefonoContacto: ['', Validators.required],
+    estado: ['', Validators.required],
   });
 
   get correo() { return this.form.get('correo'); }
   get telefono() { return this.form.get('telefono'); }
+  get celular() { return this.form.get('celular'); }
+  get telefonoContacto() { return this.form.get('telefonoContacto'); }
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private router: Router,
     private proveedorService: ProveedorService
     ) { }
 
@@ -40,25 +47,35 @@ export class ProveedorEditComponent implements OnInit {
    // console.log(id);
     if (typeof id !== 'undefined') {
       this.form = this.fb.group({
-        nombreProveedor: ['', Validators.required],
-        telefono: ['', Validators.required],
+        razonSocial: ['', Validators.required],
         empresa: ['', Validators.required],
         direccion: ['', Validators.required],
+        ciudad: ['', Validators.required],
         ruc: ['', Validators.required],
-        correo: ['',
-        Validators.compose([
-          Validators.required,
-          Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@' + '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')])
-        ]
+        telefono: ['', Validators.required],
+        celular: ['', Validators.required],
+        correo: ['',  Validators.required ],
+        nombreGerente: ['', Validators.required],
+        nombreProveedor: ['', Validators.required],
+        cargo: ['', Validators.required],
+        telefonoContacto: ['', Validators.required],
+        estado: ['', Validators.required],
       });
       this.proveedorService.getRecurso(id)
        .subscribe ((data: any) => {
-        this.form.controls.nombreProveedor.setValue(data.nombreProveedor);
-        this.form.controls.telefono.setValue(data.telefono);
+        this.form.controls.razonSocial.setValue(data.razonSocial);
         this.form.controls.empresa.setValue(data.empresa);
         this.form.controls.direccion.setValue(data.direccion);
+        this.form.controls.ciudad.setValue(data.ciudad);
         this.form.controls.ruc.setValue(data.ruc);
+        this.form.controls.telefono.setValue(data.telefono);
+        this.form.controls.celular.setValue(data.celular);
         this.form.controls.correo.setValue(data.correo);
+        this.form.controls.nombreGerente.setValue(data.nombreGerente);
+        this.form.controls.nombreProveedor.setValue(data.nombreProveedor);
+        this.form.controls.cargo.setValue(data.cargo);
+        this.form.controls.telefonoContacto.setValue(data.telefonoContacto);
+        this.form.controls.estado.setValue(data.estado);
        });
     }
   }
@@ -81,6 +98,7 @@ export class ProveedorEditComponent implements OnInit {
           'Se actualizaron los datos!',
           'success'
         );
+        this.router.navigate(['/proveedores/listar']);
       });
     } else {
       peticion = this.proveedorService.modificarRecurso(this.form.value, id);
@@ -90,6 +108,7 @@ export class ProveedorEditComponent implements OnInit {
           'Se actualizaron los datos!',
           'success'
         );
+        this.router.navigate(['/proveedores/listar']);
       });
     }
   }

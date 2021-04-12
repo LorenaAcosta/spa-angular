@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { DisponibleService } from 'src/app/services/servicios/disponibilidad.service';
 import { ServicioService } from 'src/app/services/servicios/servicio.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import Swal from 'sweetalert2';
 import { EmpleadoService } from '../../../services/servicios/empleado.service';
 
@@ -12,12 +14,17 @@ import { EmpleadoService } from '../../../services/servicios/empleado.service';
   templateUrl: './disponible.component.html',
   styleUrls: ['./disponible.component.scss']
 })
+
 export class DisponibleComponent implements OnInit {
 
-  empleados: any[] = [];
   servicios: any[] = [];
+  listaServicios: any[] = [];
   disponibles: any[] = [];
-  empId: number;
+  empleadoNombre: String;
+  empleadoId;
+  closeResult = '';
+  
+
   form = this.fb.group({
     comision: ['', Validators.required],
     empleadoId: ['', Validators.required],
@@ -25,54 +32,88 @@ export class DisponibleComponent implements OnInit {
   });
 
   constructor(private servicioService: ServicioService,
-              private empleadoService: EmpleadoService,
-              private disponibleService: DisponibleService,
-              private route: ActivatedRoute,
-              private fb: FormBuilder) { }
+    private disponibleService: DisponibleService,
+    private empleadoService: EmpleadoService,
+    private utilService: UtilesService,
+    private route: ActivatedRoute,
+    private fb: FormBuilder,
+    private modalService: NgbModal) { }
 
   ngOnInit(): void {
     const id = this.route.snapshot.params.id;
+    console.log(id);
+    this.empleadoId = parseInt(this.route.snapshot.params.id);
 
-    this.empleadoService.listarRecurso().
-     subscribe( (resp: any[]) =>  this.empleados = resp );
+    this.disponibleService.listarByEmpleadoV2(this.empleadoId).
+      subscribe((resp: any[]) =>{
+        this.disponibles = resp;
+        console.log('disponible');
+        console.log(resp);
+      } 
+      );
 
-    this.servicioService.listarRecurso().
-    subscribe( (resp: any[]) =>  this.servicios = resp );
-
-    if (typeof id !== 'undefined') {
-      this.form = this.fb.group({
-        comision: ['', Validators.required],
-        empleadoId: ['', Validators.required],
-        servicioId: ['', Validators.required]
+      this.servicioService.listarServiciosDisponibles(this.empleadoId).
+      subscribe((resp: any[]) => {
+        this.servicios =  resp;
+     /*  if (this.servicios.length == 0){
+          this.servicioService.listarRecurso()
+            .subscribe((resp: any[]) => {
+              this.servicios = resp;
+             }); 
+        }*/
       });
-
-      this.disponibleService.getRecurso(id)
-       .subscribe ((data: any) => {
-        this.form.controls.comision.setValue(data.comision);
-        this.form.controls.empleadoId.setValue(data.empleadoId);
-        this.form.controls.servicioId.setValue(data.servicioId);
-       });
-    }
   }
 
 
-
+  // (click)="modal.close('Save click')"
   guardar() {
-    const id = this.route.snapshot.params.id;
+    this.form.controls.empleadoId.setValue(parseInt(this.empleadoId));
+    console.log(this.form.value);
+    let peticion: Observable<any>;
 
-    if (typeof id === 'undefined') {
-     this.disponibleService.agregarRecurso(this.form.value)
-      .subscribe((result: any) =>  {
+    peticion = this.disponibleService.agregarRecurso(this.form.value);
+    peticion.subscribe((result: any) => {
+      Swal.fire(
+        'Guardado!',
+        'Se guardaron los datos!',
+        'success'
+      );
+
+    });
+    this.modalService.dismissAll();
+    this.ngOnInit();
+  }
+
+
+  open(content) {
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      this.form.controls.empleadoId.setValue(parseInt(this.empleadoId));
+      console.log(this.form.value);
+
+    this.disponibleService.agregarRecurso(this.form.value)
+    .subscribe((result: any) => {
         Swal.fire(
           'Guardado!',
-          'Se guardaron  los datos!',
+          'Se guardaron los datos!',
           'success'
         );
-      },(err)=>{
-        
       });
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
     }
   }
+  
 
 
 }

@@ -70,6 +70,14 @@ import { CategoriaListar2Component } from './components/parametricos/booking/cat
 import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
 import { ArchivosSubidosComponent } from './components/archivos-subidos/archivos-subidos.component';
 import { HorarioComponent } from './components/parametricos/horario/horario.component';
+import { BoxesListarComponent } from './components/parametricos/boxes/boxes-listar.component';
+import { BoxesEditComponent } from './components/parametricos/boxes/boxes-edit.component';
+import { DisponibleBoxComponent } from './components/parametricos/disponible-box/disponiblebox.component';
+import { HorarioListarComponent } from './components/parametricos/horario/horario-listar.component';
+import { TipoComprobanteComponent } from './components/parametricos/tipo-comprobante/tipo-comprobante.component';
+import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.component';
+import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
+
 
 
 @NgModule({
@@ -119,7 +127,14 @@ import { HorarioComponent } from './components/parametricos/horario/horario.comp
     DisponibleComponent,
     ListarComponent,
     ArchivosSubidosComponent,
-    HorarioComponent
+    HorarioComponent,
+    BoxesListarComponent,
+    BoxesEditComponent,
+    DisponibleBoxComponent,
+    HorarioListarComponent,
+    TipoComprobanteComponent,
+    ImpuestoComponent,
+    ComprobanteComponent
   ],
   imports: [
     BrowserModule,

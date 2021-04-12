@@ -76,4 +76,20 @@ export class ServicioListarComponent implements OnInit {
     doc.save('servicio-reporte.pdf');
   }
 
+
+  buscar(termino: String){
+    if (termino == ''){
+      this.servicioService.listarRecurso()
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.servicios = resp;
+      });
+    }else{
+      this.servicioService.getBusqueda(termino)
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.servicios = resp;
+      });
+    }
+  }
 }

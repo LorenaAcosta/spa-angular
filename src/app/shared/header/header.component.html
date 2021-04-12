@@ -20,22 +20,14 @@
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Gestión
           </a>
+
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" [routerLink]="['cliente/listar']"> Clientes</a>
-                <a class="dropdown-item" [routerLink]="['reserva/listar']"> Reservas</a>
                 <a class="dropdown-item" [routerLink]="['proveedor/listar']"> Proveedores</a>
                 <a class="dropdown-item" [routerLink]="['empleado/listar']"> Empleados</a>
-                <a class="dropdown-item" [routerLink]="['empleado/horario']"> Horarios de Empleados</a>
-                <a class="dropdown-item" [routerLink]="['empleado/disponible']"> Especialidades de Empleados</a>
+                <a class="dropdown-item" [routerLink]="['reserva/listar']"> Todas las Reservas</a>
             </div>
 
-            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" [routerLink]="['cliente/listar']"> Clientes</a>
-                <a class="dropdown-item" [routerLink]="['reserva/listar']"> Reservas</a>
-                <a class="dropdown-item" [routerLink]="['empleado/listar']"> Empleados</a>
-                <a class="dropdown-item" [routerLink]="['empleado/disponible']"> Especialidades de Empleados</a>
-
-            </div>
         </li>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -45,7 +37,6 @@
                 <a class="dropdown-item" [routerLink]="['servicio/listar']">Servicios</a>
                 <a class="dropdown-item" [routerLink]="['producto/listar']">Productos</a>
                 <a class="dropdown-item" [routerLink]="['categoria/listar']">Categorias</a>
-                <a class="dropdown-item" [routerLink]="['medios-pago/listar']">Medios de Pago</a>
             </div>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" [routerLink]="['servicio/listar']">Servicios</a>
@@ -63,6 +54,9 @@
                 <a class="dropdown-item" [routerLink]="['empleado/listar']">Pagos a Empleados</a>
                 <a class="dropdown-item" [routerLink]="['ventas/listar']">Ventas</a>
                 <a class="dropdown-item" [routerLink]="['ventas/reporte']">Ventas Reporte</a>
+                <a class="dropdown-item" [routerLink]="['config/tipo-comprobante/agregar']">Tipo-comprobante</a>      
+                <a class="dropdown-item" [routerLink]="['config/impuesto/agregar']">Impuesto</a>     
+                <a class="dropdown-item" [routerLink]="['config/medios-pago/agregar']">Medios de Pago</a> 
             </div>
         </li>
         <!--<li class="nav-item dropdown">

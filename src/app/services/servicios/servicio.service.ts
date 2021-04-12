@@ -9,7 +9,9 @@ import { throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ServicioService {
+   
     recurosBaseURL: string = environment.URL_BASE + '/servicio/';
     constructor(private http: HttpClient,
                 private router: Router) { }
@@ -54,8 +56,8 @@ export class ServicioService {
       );
     }
 
-    listarRecursosActivos(categoriaId, estado) {
-      return this.http.get(this.recurosBaseURL + 'getServiciosActivos/' +  categoriaId + '/' + estado ).pipe(
+    getServiciosCalendar(categoriaId) {
+      return this.http.get(this.recurosBaseURL + 'getServiciosActivos/' +  categoriaId  ).pipe(
         catchError( e=> {
           this.router.navigate(['/servicio/listar']);
           Swal.fire(e.error.mensaje, e.error.error, 'error');
@@ -82,5 +84,19 @@ export class ServicioService {
           return throwError(e);
         })
       );
+    }
+
+    listarServiciosDisponibles(id){
+      return this.http.get(this.recurosBaseURL + 'get-servicios-disponibles/' +  id ).pipe(
+        catchError( e=> {
+          this.router.navigate(['/empleado/listar']);
+          Swal.fire(e.error.mensaje, e.error.error, 'error');
+          return throwError(e);
+        })
+      );
+    }
+
+    getBusqueda(id) {
+      return this.http.get(this.recurosBaseURL + 'busqueda-servicios/' + id);
     }
 }

@@ -21,7 +21,8 @@ export class ProveedorComponent implements OnInit {
 
   ngOnInit() {
     this.proveedorService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.proveedores = resp  );
+    .subscribe( (resp: any[]) =>  {this.proveedores = resp ;
+      console.log(resp);} );
   }
 
   borrar( id: any, pos: any) {
@@ -45,5 +46,22 @@ export class ProveedorComponent implements OnInit {
         }
       });
     }
+
+    
+  buscar(termino: String){
+    if (termino == ''){
+      this.proveedorService.listarRecurso()
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.proveedores = resp;
+      });
+    }else{
+      this.proveedorService.getBusqueda(termino)
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.proveedores = resp;
+      });
+    }
+  }
 
 }

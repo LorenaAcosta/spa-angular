@@ -31,5 +31,6 @@ export class DetalleVentaService {
 
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
-    }
+  }
+
 }

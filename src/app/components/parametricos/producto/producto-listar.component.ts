@@ -47,4 +47,21 @@ export class ProductoListarComponent implements OnInit {
       });
   }
 
+  
+  buscar(termino: String){
+    if (termino == ''){
+      this.productoService.listarRecurso()
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.productos = resp;
+      });
+    }else{
+      this.productoService.getBusqueda(termino)
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.productos = resp;
+      });
+    }
+  }
+
 }

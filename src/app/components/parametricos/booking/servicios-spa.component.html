@@ -5,7 +5,8 @@
 
 <!--Lista las categorias-->
 <div>
-    <button *ngFor="let cat of categorias" type="button" class="btn btn-light btn-mg alert alert-primary" role="alert" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
+    <button *ngFor="let cat of categorias" type="button" class="btn btn-sm btn-light btn-mg alert alert-primary"
+        role="alert" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
 </div>
 
 <div class="row">
@@ -13,16 +14,18 @@
     <div class="p-3" *ngFor="let item of servicios; let i= index">
         <div class="">
             <div class="card">
-                <button class="btn btn-light" [routerLink]="['/booking/terapista', item.servicioId ]">
-                  <div class="card-body">
-                    <h5 class="card-title">{{item.nombre}}</h5>
-                  <p class="card-text">{{item.descripcion}}</p>
-                  <blockquote class="blockquote text-center">
-                    <i class="far fa-clock"></i><strong> {{ util.cortarString(item.duracion, 0, 5) }} h. |
-                      <i class="fas fa-money-bill-alt"></i>  {{util.numberWithCommas(item.costo) }}  Gs. </strong>
-                  </blockquote>
-              </div> 
-              </button>
+                <button class="btn btn-sm btn-light"
+                    [routerLink]="['/booking/categorias/servicios/terapista', item.servicioId ]">
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.nombre}}</h5>
+                        <p class="card-text">{{item.descripcion}}</p>
+                        <blockquote class="blockquote text-center">
+                            <i class="far fa-clock"></i><strong> {{ util.cortarString(item.duracion, 0, 5) }} h. |
+                                <i class="fas fa-money-bill-alt"></i> {{util.numberWithCommas(item.costo) }} Gs.
+                            </strong>
+                        </blockquote>
+                    </div>
+                </button>
             </div>
         </div>
     </div>

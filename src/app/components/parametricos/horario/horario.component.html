@@ -1,43 +1,97 @@
+<div class="row">
+  <h5 class="display">Horario del Empleado: </h5>
+</div>
 
-<div class="container-fluid">
-  <div class="row">
-    <h5 class="display">Horario del Empleado</h5>
-    <div class="col text-right">
-      <button routerLink="/empleado/listar" class="btn btn-info mr-1" >
-       <i class="fas fa-arrow-left"></i> Cancelar
-      </button>  
-    </div>
+<!-- Tabla que lista el horario del empleado -->
+<!-- array: horario-->
+<div class="col-md-12" id="htmlData" #htmlData>
+  <div class="card mb-4">
+      <div class="card-body">
+          <div class="table-responsive">
+              <table class="table table-bordered display" id="dataTable" *ngIf="horario.length>0" width="50%" cellspacing="0">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>DiaLaboral</th>
+                          <th>HoraEntrada</th>
+                          <th>HoraSalida</th>
+                          <th>HoraDescansp</th>
+                          <th>HoraFinDescanso</th>
+
+                      </tr>
+                  </thead>
+                  <tbody *ngFor="let item of horario; let i = index">
+                      <tr>
+                          <td>{{ i + 1}}</td>
+                          <td>{{ util.getDayOfTheWeek(item.diaTrabajo) }}</td>
+                          <td>{{ item.horaInicio}}</td>
+                          <td>{{ item.horaFin}}</td>
+                          <td>{{ item.horaInicioDescanso}}</td>
+                          <td>{{ item.horaFinDescanso}}</td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
   </div>
 </div>
-<hr>
 
-  <form [formGroup]="form2">
-    <div class="form-group row">
-        <label for="inputPassword3" class="col-sm-2 col-form-label">Especialista:</label>
-        <div class="col-sm-3">
-          <input formControlName="empleadoId" type="nombre" maxlength="30" class="form-control" id="empleadoId" disabled>
+
+
+
+
+
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Añadir Horario</button>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Añadir Horario</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="form">
+            <div class="form-group row">
+                <label for="inputState" class="col-sm-2 col-form-label">Servicios</label>
+                <div class="col-sm">
+                    <select id="day" formControlName="diaTrabajo" class="form-control">
+                       <option *ngFor="let day of weekDays" [ngValue]="day.cod"> {{ day.d }} </option>
+                   </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-2 col-form-label">HoraInicio</label>
+                <div class="col-sm">
+                  <input formControlName="horaInicio" type="time" class="form-control" id="horaInicio"
+                required></div>
+            </div>
+            <div class="form-group row">
+              <label for="inputCity" class="col-sm-2 col-form-label">HoraFin</label>
+              <div class="col-sm">
+                <input formControlName="horaFin" type="time" class="form-control" id="horaFin" 
+                required>    </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputCity" class="col-sm-2 col-form-label">HoraDescansoInicio</label>
+            <div class="col-sm">
+              <input formControlName="horaInicioDescanso" type="time" class="form-control" id="horaInicioDescanso"
+            required>   </div>
         </div>
+        <div class="form-group row">
+          <label for="inputCity" class="col-sm-2 col-form-label">HoraFinDescanso</label>
+          <div class="col-sm">
+            <input formControlName="horaFinDescanso" type="time" class="form-control" id="horaFinDescanso" 
+            required>   </div>
       </div>
-   
-    <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label">Hora de Entrada</label>
-        <div>
-        <input  formControlName="horaInicio" type="time" class="form-control" id="horaInicio"  min="06:00" max="11:00" required>
-        <span class="validity"></span>
-        <label>(Horas validas de entrada entre 06:00 a 11:00) </label>
-      </div>
+        </form>
     </div>
-    <div class="form-group row">
-      <label for="inputPassword3" class="col-sm-2 col-form-label">Hora de Salida</label>
-      <div>
-        <input  formControlName="horaFin" type="time" class="form-control" id="horaFin"  min="14:00" max="21:00" required>
-        <span class="validity"></span>
-        <label>(Horas validas de salida entre 14:00 a 21:00) </label>
-      </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardar()">Guardar</button>
     </div>
-    <div class="form-group row">
-      <div class="col-sm-10">
-        <button type="submit" [disabled]="!this.form2.valid" class="btn btn-primary" (click)="guardar()" >Guardar Cambios</button>
-      </div>
-    </div>
-  </form>
+</ng-template>
+
+
+
+

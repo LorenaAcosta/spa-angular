@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { map, catchError} from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import { Observable, throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +20,25 @@ export class DisponibleService {
     return this.http.get(this.recurosBaseURL + 'obtener-empleados-disponibles/' + servicioId) ;
   }
 
-  agregarRecurso(recurso) {
-    return this.http.post(this.recurosBaseURL + 'agregar', recurso);
+  listarByEmpleadoV2(empleadoId) {
+     return this.http.get(this.recurosBaseURL + 'listar-porempleado/' + empleadoId) ;
   }
+
+  agregarDisponibilidad(recurso) {
+    return this.http.post(this.recurosBaseURL + 'agregar-diponibilidad', recurso);
+  }
+
+  agregarRecurso(recurso) {
+    return this.http.post(this.recurosBaseURL + 'agregar', recurso).pipe(
+      catchError( e=> {
+       // this.router.navigate(['/categoria/listar']);
+        console.error(e.error.mensaje);
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
+  }
+  
   modificarRecurso(recurso, id) {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
   }
@@ -29,6 +49,13 @@ export class DisponibleService {
 
   getRecurso(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
+  }
+  getDatosRecurso(id) {
+    return this.http.get(this.recurosBaseURL + 'encontrar-datos/' + id);
+  }
+
+  getDisponible(id) {
+    return this.http.get(this.recurosBaseURL + 'get-disponibilidad/' + id);
   }
 
   getHorasDisponibles(categoriaId, servicioId, empleadoId, fecha) {

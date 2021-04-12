@@ -13,19 +13,15 @@ export class CategoriaListar2Component implements OnInit {
   urlImagen: string = 'https://spa-2021-springboot.herokuapp.com/api/files/';
   categoriaSelecionada: any = '';
   constructor(private categoriaService: CategoriaService,
-              private router: Router) { }
+    private router: Router) { }
 
   ngOnInit(): void {
-    this.getCategorias();
-  }
-
-  getCategorias() {
     this.categoriaService.obtenerPorTipo('servicio')
-    .subscribe( (resp: any[]) =>  this.categorias = resp  );
+      .subscribe((resp: any[]) => this.categorias = resp);
   }
 
-  btnClick() {
-    this.router.navigateByUrl('booking/servicios');
+  btnClick(categoriaId: any) {
+    this.router.navigate(['booking/categorias/servicios', categoriaId]);
   }
 
 }

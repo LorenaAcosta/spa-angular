@@ -1,11 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
+import { catchError } from 'rxjs/operators';
+import Swal from 'sweetalert2';
+import { throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ClienteService {
+ 
   recurosBaseURL: string = environment.URL_BASE + '/usuario/';
   constructor(private http: HttpClient) { }
 
@@ -31,8 +35,8 @@ export class ClienteService {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
 
- /* listarRecurso(filtros) {
-    return this.http.get(this.recurosBaseURL, {params: filtros});
-  }  */
+  getBusqueda(id) {
+    return this.http.get(this.recurosBaseURL + 'busqueda-clientes/' + id);
+  }
 
 }

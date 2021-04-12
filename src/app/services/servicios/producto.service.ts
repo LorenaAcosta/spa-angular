@@ -72,4 +72,8 @@ export class ProductoService {
         })
       );
     }
+
+    getBusqueda(id) {
+      return this.http.get(this.recurosBaseURL + 'busqueda-productos/' + id);
+    }
 }
