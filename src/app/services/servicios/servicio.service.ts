@@ -99,4 +99,14 @@ export class ServicioService {
     getBusqueda(id) {
       return this.http.get(this.recurosBaseURL + 'busqueda-servicios/' + id);
     }
+
+    getPDF(){
+      const id = 'servicios.pdf';
+      const httpOptions = {
+        'responseType'  : 'arraybuffer' as 'json'
+      };
+      
+      return this.http.get<any>(this.recurosBaseURL + '/files/' + id, httpOptions);
+      
+      }
 }
