@@ -6,8 +6,8 @@ import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-listar',
-  templateUrl: './disponible-listar.component.html',
-  styleUrls: ['./disponible-listar.component.scss']
+  templateUrl: './disponiblebox-listar.component.html',
+  styleUrls: ['./disponiblebox-listar.component.scss']
 })
 export class ListarComponent implements OnInit {
 
