@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
   templateUrl: './disponiblebox-listar.component.html',
   styleUrls: ['./disponiblebox-listar.component.scss']
 })
-export class ListarComponent implements OnInit {
+export class ListarBoxComponent implements OnInit {
 
   disponible: any[] = [];
   index = 0;
