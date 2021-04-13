@@ -10,14 +10,12 @@
     <div class="form-row">
         <div class="form-group col-md-2">
             <label>Descripción</label>
-            <input formControlName="descripcion" placeholder="descripcion" type="text" maxlength="30"
-                class="form-control form-control-sm" id="descripcion" required>
+            <input formControlName="descripcion" placeholder="descripcion" type="text" maxlength="30" class="form-control form-control-sm" id="descripcion" required>
         </div>
         <div class="form-group col-md-2">
             <label>Código</label>
-            <input formControlName="codigo" placeholder="codigo" type="text" maxlength="30"
-                class="form-control form-control-sm" id="codigo"  required>
-         </div>
+            <input formControlName="codigo" placeholder="codigo" type="text" maxlength="30" class="form-control form-control-sm" id="codigo" required>
+        </div>
     </div>
     <button routerLink="/" class="btn btn-sm btn-info mr-1">
         <i class="fas fa-arrow-left"></i> Regresar
@@ -34,8 +32,7 @@
         <div class="card-header"><i class="fas fa-table mr-1"></i>Listado</div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-sm table-bordered display" id="dataTable" *ngIf="medios.length>0"
-                    width="100%" cellspacing="0">
+                <table class="table table-sm table-bordered display" id="dataTable" *ngIf="medios.length>0" width="100%" cellspacing="0">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -44,21 +41,19 @@
                             <th>Opciones</th>
                         </tr>
                     </thead>
-                    <tbody
-                        *ngFor="let item of medios | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                    <tbody *ngFor="let item of medios | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                         <tr>
                             <td>{{ i + 1}}</td>
                             <td>{{ item.descripcion }}</td>
                             <td>{{ item.codigo }}</td>
                             <td>
-                                <button type="button" class="btn btn-sm btn-info mr-1"
-                                    (click)="borrar(item.medioPagoId, i)" placement="top" ngbTooltip="Eliminar">
+                                <button type="button" class="btn btn-sm btn-info mr-1" (click)="borrar(item.medioPagoId, i)" placement="top" ngbTooltip="Eliminar">
                                  <i class="fas fa-trash"></i> </button>
                             </td>
                         </tr>
                     </tbody>
                 </table>
-                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+                <pagination-controls></pagination-controls>
             </div>
         </div>
     </div>
