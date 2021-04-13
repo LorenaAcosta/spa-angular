@@ -67,7 +67,7 @@ export class CalendarComponent implements OnInit {
               private reservaService: ReservaService,
               private empleadoService: EmpleadoService ,
               private disponibleService: DisponibleService,
-              private util: UtilesService ) {
+              public util: UtilesService ) {
                //deshabilita los dias desde HOY hacia atras 
                 const current = new Date();
                 this.minDate = {

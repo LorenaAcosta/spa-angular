@@ -16,6 +16,7 @@ import { EmpleadoService } from '../../../services/servicios/empleado.service';
 })
 
 export class DisponibleBoxComponent implements OnInit {
+  pageActual: 1;
 
   servicios: any[] = [];
   disponibles: any[] = [];

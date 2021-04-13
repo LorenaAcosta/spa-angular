@@ -13,6 +13,7 @@ export class BoxesListarComponent implements OnInit {
   index: 1;
   categorias: any[] = [];
   pageActual: 1;
+  boxess: any;
 
   imageName : any;
 

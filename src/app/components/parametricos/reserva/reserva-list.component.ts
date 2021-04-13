@@ -13,6 +13,7 @@ import { EmpleadoService } from '../../../services/servicios/empleado.service';
 })
 
 export class ReservaListComponent implements OnInit {
+  pageActual: 1;
 
   constructor(private reservaService: ReservaService,
               private empleadoService: EmpleadoService,

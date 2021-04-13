@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class MediosPagoComponent implements OnInit {
   public formSubmitted = false;
+  pageActual: 1;
   constructor(private mediosPagoService: MediosPagoService, 
               private fb: FormBuilder,  private route: ActivatedRoute,) { }
 
