@@ -24,9 +24,9 @@
                             <td>{{ i + 1}}</td>
                             <td>{{ item.empleadoId.nombre}}</td>
                             <td>{{ item.servicioId.nombre}}</td>
-                            <td>{{ item.comision  }}</td>
+                            <td>{{ item.comision }}</td>
                             <td>
-                                <button class="btn btn-info mr-1" (click)="borrar(item.disponibleId, i)" placement="top" ngbTooltip="Eliminar"><i class="fas fa-trash"></i></button>
+                                <button class="btn btn-info mr-1" (click)="borrar()" placement="top" ngbTooltip="Eliminar"><i class="fas fa-trash"></i></button>
                             </td>
                         </tr>
                     </tbody>
