@@ -52,6 +52,8 @@ export class ReservaListComponent implements OnInit {
       this.reservas = resp;
       console.log(this.reservas);
     }  );
+
+    this.getReservaReport(dateString.toString());
    // this.arrayObject = this.reservas as string[];
   }
 
@@ -63,6 +65,21 @@ buscar(termino: String){
     console.log(resp);
     this.reservas = resp;
   });
+}
+
+getReservaReport(fecha) {
+  this.reservaService.getReservaReport(fecha)
+  .subscribe( (resp: any[]) =>  resp  );
+}
+
+//obtiene el pdf generado
+clickEvent(){
+  this.reservaService.getPDF().subscribe((response)=>{
+
+  let file = new Blob([response], { type: 'application/pdf' });            
+  var fileURL = URL.createObjectURL(file);
+  window.open(fileURL, "popup","width=800,height=800");
+})
 }
 
 }
