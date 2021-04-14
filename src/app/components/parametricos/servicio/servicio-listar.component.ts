@@ -22,7 +22,7 @@ export class ServicioListarComponent implements OnInit {
   @ViewChild('htmlData') htmlData: ElementRef;
 
   constructor(private servicioService: ServicioService, 
-              public util: UtilesService) { }
+              private util: UtilesService) { }
 
   ngOnInit() {
     this.servicioService.listarRecurso()
@@ -93,6 +93,13 @@ export class ServicioListarComponent implements OnInit {
     }
   }
 
+  getServicioReport() {
+    this.servicioService.getServicioReport()
+    .subscribe( (resp: any[]) =>  resp  );
+    this.clickEvent();
+  }
+
+  //obtiene el pdf generado
   clickEvent(){
     this.servicioService.getPDF().subscribe((response)=>{
   
@@ -101,5 +108,4 @@ export class ServicioListarComponent implements OnInit {
     window.open(fileURL, "popup","width=800,height=800");
   })
   }
-
 }

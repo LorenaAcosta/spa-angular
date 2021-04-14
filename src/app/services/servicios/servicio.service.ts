@@ -100,13 +100,19 @@ export class ServicioService {
       return this.http.get(this.recurosBaseURL + 'busqueda-servicios/' + id);
     }
 
+    getServicioReport() {
+      return this.http.get(this.recurosBaseURL + 'reporte');
+    }
+  
     getPDF(){
-      const id = 'servicios.pdf';
+      //const url = `${this.serviceUrl}/pdf`;
+      const archivo = 'servicios.pdf';
       const httpOptions = {
         'responseType'  : 'arraybuffer' as 'json'
+         //'responseType'  : 'blob' as 'json'        //This also worked
       };
       
-      return this.http.get<any>(this.recurosBaseURL + '/files/' + id, httpOptions);
+      return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
       
       }
 }

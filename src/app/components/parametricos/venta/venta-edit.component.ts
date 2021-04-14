@@ -614,5 +614,3 @@ export class DetalleVenta {
       ) {
   }
 }
-
-

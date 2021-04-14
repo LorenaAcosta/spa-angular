@@ -86,6 +86,21 @@ export class EmpleadoService {
     return this.http.get(this.recurosBaseURL + 'busqueda-empleados/' + id);
   }
 
-  
+  getEmpleadoReport() {
+    return this.http.get(this.recurosBaseURL + 'reporte');
+  }
+
+  getPDF(){
+    //const url = `${this.serviceUrl}/pdf`;
+    const archivo = 'empleados.pdf';
+    const httpOptions = {
+      'responseType'  : 'arraybuffer' as 'json'
+       //'responseType'  : 'blob' as 'json'        //This also worked
+    };
+    
+    return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
+    
+    }
+
 
 }
