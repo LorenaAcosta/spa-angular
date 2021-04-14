@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./impuesto.component.scss']
 })
 export class ImpuestoComponent implements OnInit {
+  pageActual: 1;
   public formSubmitted = false;
   constructor(private impuestoService: ImpuestoService, 
               private fb: FormBuilder,  private route: ActivatedRoute,) { }
