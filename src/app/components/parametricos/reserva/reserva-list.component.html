@@ -1,65 +1,65 @@
-
 <div class="row">
-  <h5 class="display">Informe de Reservas por Fecha</h5>
+    <h5 class="display">Informe de Reservas por Fecha</h5>
 </div>
 
 <div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
-  </div>
-  <input #termino type="text" class="form-control" placeholder="Buscar reservas..." 
-  aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
+    <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
+    </div>
+    <input #termino type="text" class="form-control" placeholder="Buscar reservas..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
 
     <form class="form-inline">
-      <div class="form-group">
-        <div class="input-group">
-          <input class="form-control" placeholder="yyyy-mm-dd"
-                name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)"
-                  ngbDatepicker #d="ngbDatepicker">
-          <div class="input-group-append">
-            <button class="btn btn-outline-secondary calendar" (click)="d.toggle()"
-            type="button"></button>
-          </div>
+        <div class="form-group">
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
         </div>
-      </div>
-    <hr/>
-  </form>
+        <hr/>
+    </form>
 
+    &nbsp;
+
+    <button (click)="clickEvent()" class="btn btn-danger mr-1" data-toggle="tooltip" data-placement="top" title="Exportar a pdf">
+            <i class="fas fa-file-pdf"></i>
+        </button>
 </div>
-       
-  <br>
-  <div class="col-md-12" id="htmlData" #htmlData>
+
+<br>
+<div class="col-md-12" id="htmlData" #htmlData>
     <div class="card mb-4">
-      <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Reservas</div>
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Reservas</div>
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-bordered display" id="dataTable" *ngIf="reservas.length>0" width="100%" cellspacing="0" >
+                <table class="table table-bordered display" id="dataTable" *ngIf="reservas.length>0" width="100%" cellspacing="0">
                     <thead>
                         <tr>
-                        <th>#</th>
-                        <th>Terapista</th>
-                        <th>Fecha </th>
-                        <th>Hora</th>
-                        <th>Servicio</th>
-                        <th>Cliente</th>
-                        <th>Estado</th>
-                        <th>Opciones</th>
+                            <th>#</th>
+                            <th>Terapista</th>
+                            <th>Fecha </th>
+                            <th>Hora</th>
+                            <th>Servicio</th>
+                            <th>Cliente</th>
+                            <th>Estado</th>
+                            <th>Opciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let reserva of reservas | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index " >
-                        <td>{{ i + 1}}</td>
-                        <td>{{ reserva.disponibleId.empleadoId.nombre}}</td>
-                        <td>{{ reserva.fechaReserva}}</td>
-                        <td>{{ reserva.hora}}</td>
-                        <td>{{ reserva.disponibleId.servicioId.nombre}}</td>
-                        <td>{{ reserva.usuarioId.nombre.concat(' ', reserva.usuarioId.apellido ) }}</td>
-                        <td>{{ reserva.estado }}</td>
+                        <tr *ngFor="let reserva of reservas | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index ">
+                            <td>{{ i + 1}}</td>
+                            <td>{{ reserva.disponibleId.empleadoId.nombre}}</td>
+                            <td>{{ reserva.fechaReserva}}</td>
+                            <td>{{ reserva.hora}}</td>
+                            <td>{{ reserva.disponibleId.servicioId.nombre}}</td>
+                            <td>{{ reserva.usuarioId.nombre.concat(' ', reserva.usuarioId.apellido ) }}</td>
+                            <td>{{ reserva.estado }}</td>
                         </tr>
                     </tbody>
-                    </table>
+                </table>
             </div>
             <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
         </div>
     </div>
-    </div>
+</div>

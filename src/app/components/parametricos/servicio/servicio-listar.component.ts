@@ -92,4 +92,20 @@ export class ServicioListarComponent implements OnInit {
       });
     }
   }
+
+  getServicioReport() {
+    this.servicioService.getServicioReport()
+    .subscribe( (resp: any[]) =>  resp  );
+    this.clickEvent();
+  }
+
+  //obtiene el pdf generado
+  clickEvent(){
+    this.servicioService.getPDF().subscribe((response)=>{
+  
+    let file = new Blob([response], { type: 'application/pdf' });            
+    var fileURL = URL.createObjectURL(file);
+    window.open(fileURL, "popup","width=800,height=800");
+  })
+  }
 }

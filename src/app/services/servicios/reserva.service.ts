@@ -50,7 +50,21 @@ export class ReservaService {
     return this.http.get(this.recurosBaseURL + 'busqueda-reservas/' + id);
   }
 
+  getReservaReport(fecha) {
+    return this.http.get(this.recurosBaseURL + 'reporte/' + fecha);
+  }
 
+  getPDF(){
+    //const url = `${this.serviceUrl}/pdf`;
+    const archivo = 'reservas_por_fecha.pdf';
+    const httpOptions = {
+      'responseType'  : 'arraybuffer' as 'json'
+       //'responseType'  : 'blob' as 'json'        //This also worked
+    };
+    
+    return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
+    
+    }
  
 
 
