@@ -78,6 +78,7 @@ import { TipoComprobanteComponent } from './components/parametricos/tipo-comprob
 import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.component';
 import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
 import { ComprobanteListarComponent } from './components/parametricos/comprobante/comprobante-listar/comprobante-listar.component';
+import { ListarBoxComponent } from './components/parametricos/disponible-box/disponiblebox-listar.component';
 
 
 
@@ -136,7 +137,8 @@ import { ComprobanteListarComponent } from './components/parametricos/comprobant
     TipoComprobanteComponent,
     ImpuestoComponent,
     ComprobanteComponent,
-    ComprobanteListarComponent
+    ComprobanteListarComponent,
+    ListarBoxComponent
   ],
   imports: [
     BrowserModule,

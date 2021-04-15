@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
   styleUrls: ['./tipo-comprobante.component.scss']
 })
 export class TipoComprobanteComponent implements OnInit {
+  pageActual: 1;
+  
   public formSubmitted = false;
   constructor(private tipoComprobanteService: TipoComprobanteService, 
     private fb: FormBuilder,  private route: ActivatedRoute,) { }

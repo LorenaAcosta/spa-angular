@@ -81,7 +81,7 @@ export class VentaEditComponent implements OnInit {
     private medioPagoService: MediosPagoService,
     private clienteService: ClienteService,
     private router: Router,
-    private util: UtilesService) { 
+    public util: UtilesService) { 
       this.formMedio = this.fmp.group({
         codigo: ['', Validators.required],
         descripcion: ['', Validators.required]
@@ -614,5 +614,3 @@ export class DetalleVenta {
       ) {
   }
 }
-
-

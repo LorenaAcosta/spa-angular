@@ -84,4 +84,20 @@ export class CategoriaListarComponent implements OnInit {
     }
   }
 
+  getCategoriaReport() {
+    this.categoriaService.getCategoriaReport()
+    .subscribe( (resp: any[]) =>  resp  );
+    this.clickEvent();
+  }
+
+  //obtiene el pdf generado
+  clickEvent(){
+    this.categoriaService.getPDF().subscribe((response)=>{
+  
+    let file = new Blob([response], { type: 'application/pdf' });            
+    var fileURL = URL.createObjectURL(file);
+    window.open(fileURL, "popup","width=800,height=800");
+  })
+  }
+
 }

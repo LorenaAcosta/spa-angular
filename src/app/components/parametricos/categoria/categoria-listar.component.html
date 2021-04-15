@@ -1,67 +1,64 @@
 <div class="container-fluid">
 
-  <div class="row">
-    <h5 class="display">Categorias</h5>
-  </div>
-
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
+    <div class="row">
+        <h5 class="display">Categorias</h5>
     </div>
-    <input #termino type="text" class="form-control" placeholder="Buscar categoria..." aria-label="Username"
-      aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
 
-    <button routerLink="/categoria/agregar" class="btn btn-info mr-1">
-      <i class="fas fa-plus"></i> Agregar
-    </button>
-  </div>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
+        </div>
+        <input #termino type="text" class="form-control" placeholder="Buscar categoria..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)"> &nbsp;
+        <button (click)="getCategoriaReport()" class="btn btn-danger mr-1" data-toggle="tooltip" data-placement="top" title="Exportar a pdf">
+          <i class="fas fa-file-pdf"></i>
+        </button>
+        <button routerLink="/categoria/agregar" class="btn btn-info mr-1">
+          <i class="fas fa-plus"></i> Agregar
+       </button>
+    </div>
 
 
-  <div class="col-md-12" id="htmlData" #htmlData>
-    <div class="card mb-4">
-      <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Categorias</div>
-      <div class="card-body">
-        <div class="table-responsive">
-          <table class="table table-bordered display" id="dataTable" *ngIf="categorias.length>0" width="100%"
-            cellspacing="0">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Tipo Servicio</th>
-                <th scope="col">Nombre de Categoria</th>
-                <th scope="col">Imagenes</th>
-                <th>Opciones</th>
-              </tr>
-            </thead>
-            <tbody *ngFor="let item of categorias | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
-              <tr>
-                <td>{{ i + 1 }}</td>
-                <td>{{ item.dataType}}</td>
-                <td>{{ item.descripcion}}</td>
-                <td><button (click)="getFilesPorNombre(item.imageName)">{{item.imageName}}</button></td>
-                <td>
-                  <button class="btn btn-info mr-1" [routerLink]="['/categoria/modificar', item.categoriaId ]"
-                    placement="top" ngbTooltip="Editar">
+    <div class="col-md-12" id="htmlData" #htmlData>
+        <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Categorias</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered display" id="dataTable" *ngIf="categorias.length>0" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tipo Servicio</th>
+                                <th scope="col">Nombre de Categoria</th>
+                                <th scope="col">Imagenes</th>
+                                <th>Opciones</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngFor="let item of categorias | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
+                            <tr>
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ item.dataType}}</td>
+                                <td>{{ item.descripcion}}</td>
+                                <td><button (click)="getFilesPorNombre(item.imageName)">{{item.imageName}}</button></td>
+                                <td>
+                                    <button class="btn btn-info mr-1" [routerLink]="['/categoria/modificar', item.categoriaId ]" placement="top" ngbTooltip="Editar">
                     <i class="fas fa-pencil-alt"></i>
                   </button>
-                  <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId, i)" placement="top"
-                    ngbTooltip="Eliminar">
+                                    <button class="btn btn-info mr-1" (click)="borrar(item.categoriaId, i)" placement="top" ngbTooltip="Eliminar">
                     <i class="fas fa-trash"></i>
                   </button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+            </div>
         </div>
-        <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
-      </div>
     </div>
-  </div>
 
-  <div *ngIf="categorias.length == 0" class="alertalert-warning text-center mt-3">
-    <h4 class="alert-heading">No hay registros.</h4>
-    <p>
-      <i class="fa fa-exclamation fa-2x"></i>
-    </p>
-  </div>
-
+    <div *ngIf="categorias.length == 0" class="alertalert-warning text-center mt-3">
+        <h4 class="alert-heading">No hay registros.</h4>
+        <p>
+            <i class="fa fa-exclamation fa-2x"></i>
+        </p>
+    </div>

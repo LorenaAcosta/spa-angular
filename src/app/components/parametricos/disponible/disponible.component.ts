@@ -23,6 +23,7 @@ export class DisponibleComponent implements OnInit {
   empleadoNombre: String;
   empleadoId;
   closeResult = '';
+  pageActual: 1;
   
 
   form = this.fb.group({
@@ -107,6 +108,8 @@ export class DisponibleComponent implements OnInit {
 
 
   
+  borrar(){
 
+  }
 
 }

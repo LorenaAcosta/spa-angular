@@ -40,18 +40,18 @@ export class VentaService {
   }
 
   getFacturaReport(id) {
-    return this.http.get(this.recurosBaseURL + '/report/' + id);
+    return this.http.get(this.recurosBaseURL + 'report/' + id);
   }
 
   getPDF(){
     //const url = `${this.serviceUrl}/pdf`;
-    const id = 'factura.pdf';
+    const archivo = 'factura.pdf';
     const httpOptions = {
       'responseType'  : 'arraybuffer' as 'json'
        //'responseType'  : 'blob' as 'json'        //This also worked
     };
     
-    return this.http.get<any>(this.recurosBaseURL + '/files/' + id, httpOptions);
+    return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
     
     }
 

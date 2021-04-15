@@ -44,7 +44,7 @@ export class HorarioComponent implements OnInit {
 
   constructor(private fb:             FormBuilder,
               private horarioService: HorarioService,
-              private util:           UtilesService,
+              public util:           UtilesService,
               private route:          ActivatedRoute,
               private router:         Router,
               private modalService:   NgbModal) {
@@ -130,4 +130,5 @@ export class HorarioComponent implements OnInit {
 
   
 }
+
 
