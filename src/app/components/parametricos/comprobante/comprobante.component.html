@@ -1,1 +1,133 @@
-<p>comprobante works!</p>
+<div class="row">
+  <h5 class="display">Lista de Comprobantes: </h5>
+</div>
+
+<!-- Tabla que lista el horario del empleado -->
+<!-- array: horario-->
+<div class="col-md-12" id="htmlData" #htmlData>
+  <div class="card mb-4">
+      <div class="card-body">
+          <div class="table-responsive">
+              <table class="table table-bordered display" id="dataTable" *ngIf="horario.length>0"
+                 width="50%" cellspacing="0">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Timbrado</th>
+                          <th>Inicio Vigencia</th>
+                          <th>Fin Vigencia</th>
+                          <th>Estado</th>
+                          <th>Opciones</th>
+
+                      </tr>
+                  </thead>
+                  <tbody *ngFor="let item of horario; let i = index">
+                      <tr>
+                          <td>{{ i + 1}}</td>
+                          <td>{{ item.timbrado}}</td>
+                          <td>{{ item.inicioVigencia}}</td>
+                          <td>{{ item.finVigencia}}</td>
+                          <td>{{ item.estado}}</td>
+                          <td> <button type="button" class="btn btn-sm btn-info mr-1" 
+                            (click)="borrar(item.comprobanteId, i)"
+                            placement="top" ngbTooltip="Eliminar">
+                            <i class="fas fa-trash"></i> </button>
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<div *ngIf="horario.length == 0" class="alertalert-warning text-center mt-3">
+  <h4 class="alert-heading">No hay registros.</h4>
+  <p>
+    <i class="fa fa-exclamation fa-2x"></i>
+  </p>
+</div>
+
+
+
+
+
+<button routerLink="/" class="btn btn-sm btn-info mr-1"><i class="fas fa-arrow-left"></i> Regresar
+</button>
+<button class="btn btn-sm btn-info mr-1" (click)="open(content)">Añadir Comprobante</button>
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Añadir Comprobante</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span> </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="form">
+            <div class="form-group row">
+                <label for="inputState" class="col-sm-2 col-form-label">TipoComprobante</label>
+                <div class="col-sm">
+                    <select id="tipoComprobanteId" formControlName="tipoComprobanteId" class="form-control">
+                       <option *ngFor="let tipo of tipos" [ngValue]="tipo.tipoComprobanteId"> {{ tipo.descripcion }} </option>
+                   </select>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Timbrado</label>
+                  <div class="col-sm">
+                  <input formControlName="timbrado" placeholder="timbrado" type="timbrado" maxlength="30"
+                    class="form-control form-control-sm" id="timbrado" required></div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Inicio Vigencia</label>
+                  <div class="col-sm">
+                  <input formControlName="inicioVigencia" placeholder="inicioVigencia" type="date" maxlength="30"
+                    class="form-control form-control-sm" id="inicioVigencia" required></div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Fin Vigencia</label>
+                  <div class="col-sm">
+                  <input formControlName="finVigencia" placeholder="finVigencia" type="date" maxlength="30"
+                    class="form-control form-control-sm" id="finVigencia" required></div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Numero Inicial</label>
+                  <div class="col-sm">
+                  <input formControlName="numeroInicial" placeholder="numeroInicial" type="number" maxlength="30"
+                    class="form-control form-control-sm" id="numeroInicial" required></div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Numero Final</label>
+                  <div class="col-sm">
+                  <input formControlName="numeroFinal" placeholder="numeroFinal" type="number" maxlength="30"
+                    class="form-control form-control-sm" id="numeroFinal" required></div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Numero Actual</label>
+                  <div class="col-sm">
+                  <input formControlName="numeroActual" placeholder="numeroActual" type="number" maxlength="30"
+                    class="form-control form-control-sm" id="numeroActual" required></div>
+                </div>
+                <div class="form-group row">
+                  <label class="col-sm-2 col-form-label">Numero Actual</label>
+                  <div class="col-sm">
+                      <select id="estado" formControlName="estado" class="form-control" required>
+                              <option selected>...</option>
+                              <option value="ACTIVO">ACTIVO</option>
+                              <option value="INACTIVO">INACTIVO</option>
+                          </select>
+                  </div>
+                </div>
+
+            </div>
+    </form>
+  </div>
+   
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardar()">Guardar</button>
+    </div>
+</ng-template>
+
+
+
+

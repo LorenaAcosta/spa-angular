@@ -169,7 +169,7 @@ const routes: Routes = [
       { path: 'impuesto/agregar', component: ImpuestoComponent , data: { title: 'Impuesto' }, },
       { path: 'medios-pago/agregar', component: MediosPagoComponent , data: { title: 'Medio Pago' }, },
       { path: 'comprobante/agregar', component: ComprobanteComponent , data: { title: 'Comprobante' }, }
-    ]
+   ]
   },
   {
   path: 'images', data: { title: 'Imagenes' },

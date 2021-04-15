@@ -77,6 +77,7 @@ import { HorarioListarComponent } from './components/parametricos/horario/horari
 import { TipoComprobanteComponent } from './components/parametricos/tipo-comprobante/tipo-comprobante.component';
 import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.component';
 import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
+import { ComprobanteListarComponent } from './components/parametricos/comprobante/comprobante-listar/comprobante-listar.component';
 
 
 
@@ -134,7 +135,8 @@ import { ComprobanteComponent } from './components/parametricos/comprobante/comp
     HorarioListarComponent,
     TipoComprobanteComponent,
     ImpuestoComponent,
-    ComprobanteComponent
+    ComprobanteComponent,
+    ComprobanteListarComponent
   ],
   imports: [
     BrowserModule,

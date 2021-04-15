@@ -27,7 +27,7 @@ export class DisponibleBoxComponent implements OnInit {
   boxesDiponibles: any[] = [];
 
   form = this.fb.group({
-    servicioId: ['', Validators.required],
+    servicioId: [''],
     boxesId: ['', Validators.required]
   });
 

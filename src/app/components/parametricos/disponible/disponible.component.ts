@@ -27,7 +27,7 @@ export class DisponibleComponent implements OnInit {
 
   form = this.fb.group({
     comision: ['', Validators.required],
-    empleadoId: ['', Validators.required],
+    empleadoId: [''],
     servicioId: ['', Validators.required]
   });
 
@@ -80,39 +80,32 @@ export class DisponibleComponent implements OnInit {
       );
 
     });
-    this.modalService.dismissAll();
     this.ngOnInit();
   }
 
-
-  open(content) {
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-      this.form.controls.empleadoId.setValue(parseInt(this.empleadoId));
-      console.log(this.form.value);
-
-    this.disponibleService.agregarRecurso(this.form.value)
-    .subscribe((result: any) => {
-        Swal.fire(
-          'Guardado!',
-          'Se guardaron los datos!',
-          'success'
-        );
+  borrar(id: any, pos: any) {
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: 'No podrás revertir esta operación!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!'
+      }).then((result) => {
+        if (result.value) {
+          this.disponibleService.eliminarRecurso(id).subscribe();
+          this.disponibles.splice(pos, 1);
+          Swal.fire(
+            'Eliminado!',
+            'Los datos han sido eliminados.',
+            'success'
+          );
+        }
       });
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
   }
 
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
+
   
 
 
