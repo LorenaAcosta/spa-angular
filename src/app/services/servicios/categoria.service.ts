@@ -96,7 +96,7 @@ export class CategoriaService {
        //'responseType'  : 'blob' as 'json'        //This also worked
     };
     
-    return this.http.get<any>(this.recurosBaseURL + '/files/' + archivo, httpOptions);
+    return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
     
     }
 
