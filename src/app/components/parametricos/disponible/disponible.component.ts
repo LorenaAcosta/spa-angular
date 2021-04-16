@@ -106,10 +106,4 @@ export class DisponibleComponent implements OnInit {
       });
   }
 
-
-  
-  borrar(){
-
-  }
-
 }
