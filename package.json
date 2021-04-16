@@ -40,6 +40,7 @@
         "rxjs-compat": "^6.5.5",
         "save": "^2.4.0",
         "sweetalert2": "^9.10.5",
+        "express": "^4.17.1",
         "tslib": "^1.10.0",
         "zone.js": "~0.10.3"
     },
