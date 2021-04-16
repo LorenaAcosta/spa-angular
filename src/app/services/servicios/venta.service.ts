@@ -40,7 +40,7 @@ export class VentaService {
   }
 
   getFacturaReport(id) {
-    return this.http.get(this.recurosBaseURL + '/report/' + id);
+    return this.http.get(this.recurosBaseURL + 'report/' + id);
   }
 
   getPDF(){
@@ -51,7 +51,7 @@ export class VentaService {
        //'responseType'  : 'blob' as 'json'        //This also worked
     };
     
-    return this.http.get<any>(this.recurosBaseURL + '/files/' + archivo, httpOptions);
+    return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
     
     }
 
