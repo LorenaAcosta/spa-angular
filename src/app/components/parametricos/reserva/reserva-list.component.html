@@ -55,6 +55,12 @@
                             <td>{{ reserva.disponibleId.servicioId.nombre}}</td>
                             <td>{{ reserva.usuarioId.nombre.concat(' ', reserva.usuarioId.apellido ) }}</td>
                             <td>{{ reserva.estado }}</td>
+                            <td>
+                                <button class="btn btn-info mr-1" placement="top" (click)="confirmarReserva(reserva.reservaDetalleId)" 
+                                ngbTooltip="Confirmar"> <i class="far fa-check-circle"></i></button>
+                                <button class="btn btn-danger mr-1" placement="top" (click)="anularReserva(reserva.reservaDetalleId, i)" 
+                                ngbTooltip="Anular"> <i class="fas fa-ban"></i></button>
+                            </td>
                         </tr>
                     </tbody>
                 </table>

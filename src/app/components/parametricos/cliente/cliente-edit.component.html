@@ -29,7 +29,7 @@
         <div class="form-row">
           <div class="form-group col-sm-6">
             <label id="myLabel">Nombre de Usuario</label>
-            <input type="text" autocomplete="username" class="form-control form-control-sm" id="username"
+            <input type="text" autocomplete="username" class="form-control form-control-sm"  id="username"
               placeholder="username" formControlName="username">
           </div>
           <div class="form-group col-sm-6">
@@ -67,7 +67,7 @@
           </div>
           <div class="form-group col-sm-6">
             <label for="inputState">Nacionalidad</label>
-            <input formControlName="nacionalidad" type="nacionalidad" maxlength="30"
+            <input formControlName="nacionalidad" type="nacionalidad" maxlength="30"  placeholder="nacionalidad"
               class="form-control form-control-sm" id="nacionalidad" required>
           </div>
         </div>
@@ -106,7 +106,7 @@
 
         <div class="form-row form-group col-sm-6">
           <label>Tarjeta de TC/TD</label>
-          <input type="tarjeta" formControlName="tarjeta" class="form-control form-control-sm" id="tarjeta" formControlName="tarjeta"   pattern="^[0-9]*$" id="tarjeta" required>
+          <input type="tarjeta" formControlName="tarjeta" class="form-control form-control-sm" id="tarjeta" formControlName="tarjeta"   pattern="^[0-9]*$" id="tarjeta"  placeholder="tarjeta" required>
           <div *ngIf="tarjeta.invalid && (tarjeta.dirty || tarjeta.touched)" class="alert alert-danger">Introduzca sólo
           dígitos.</div>
         </div>

@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ReservaService } from 'src/app/services/servicios/reserva.service';
 import { EmpleadoService } from '../../../services/servicios/empleado.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reserva-list',
@@ -70,6 +71,48 @@ buscar(termino: String){
 getReservaReport(fecha) {
   this.reservaService.getReservaReport(fecha)
   .subscribe( (resp: any[]) =>  resp  );
+}
+
+confirmarReserva(id) {
+  Swal.fire({
+    title: 'Desea confirmar esta reserva?',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, confirmar!'
+    }).then((result) => {
+      if (result.value) {
+        this.reservaService.confirmarReserva(id).subscribe();
+        Swal.fire(
+          'Confirmado!',
+          'Los datos han sido confirmados.',
+          'success'
+        );
+      }
+    });
+}
+
+anularReserva(id: any, pos: any) {
+    Swal.fire({
+      title: 'Desea anular esta reserva?',
+      text: 'No podrás revertir esta operación!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar!'
+      }).then((result) => {
+        if (result.value) {
+          this.reservas.splice(pos, 1);
+          this.reservaService.eliminarRecurso(id).subscribe();
+          Swal.fire(
+            'Eliminado!',
+            'Los datos han sido eliminados.',
+            'success'
+          );
+        }
+      });
 }
 
 //obtiene el pdf generado
