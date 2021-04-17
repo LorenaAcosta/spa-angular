@@ -28,8 +28,7 @@ export class ReservaListComponent implements OnInit {
   filtroEmpleado:'';
 
   ngOnInit() {
-    this.empleadoService.listarRecurso()
-    .subscribe( (resp: any) =>  this.empleados = resp  );
+    this.reservaService.listarRecursos().subscribe( (resp: any) =>  this.empleados = resp  );
   }
 
   // tslint:disable-next-line:member-ordering
@@ -47,6 +46,7 @@ export class ReservaListComponent implements OnInit {
     // tslint:disable-next-line:prefer-const
     let dateString = (this.model.year + '-'  + this.model.month + '-' + this.model.day as string);
     console.log(dateString);
+    
     this.reservaService.listarporfecha(dateString.toString())
     .subscribe( (resp: any ) =>  {
       this.reservas = resp;
