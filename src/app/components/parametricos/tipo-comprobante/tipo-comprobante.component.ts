@@ -48,6 +48,7 @@ export class TipoComprobanteComponent implements OnInit {
           'success'
         );
       });
+      this.form.reset(this.form.controls.value);
     }
     this.ngOnInit();
   }

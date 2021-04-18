@@ -29,7 +29,7 @@ export class ReservaListComponent implements OnInit {
   filtroEmpleado:'';
 
   ngOnInit() {
-    this.reservaService.listarRecursos().subscribe( (resp: any) =>  this.empleados = resp  );
+    this.reservaService.listarRecursos().subscribe( (resp: any) =>  this.reservas = resp  );
   }
 
   // tslint:disable-next-line:member-ordering

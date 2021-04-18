@@ -20,7 +20,6 @@
            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" [routerLink]="['cliente/listar']"> Clientes</a>
                 <a class="dropdown-item" [routerLink]="['servicio/listar']">Servicios</a>
-                <a class="dropdown-item" [routerLink]="['producto/listar']">Productos</a>
                 <a class="dropdown-item" [routerLink]="['categoria/listar']">Categorias</a>
                 <a class="dropdown-item" [routerLink]="['reserva/listar']"> Reservas</a>
             </div>
@@ -42,8 +41,10 @@
           </a>
 
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" [routerLink]="['producto/listar']">Inventario Productos</a>
                 <a class="dropdown-item" [routerLink]="['proveedor/listar']"> Proveedores</a>
-                <a class="dropdown-item" [routerLink]="['compras/listar']">Compras</a>
+                <a class="dropdown-item" [routerLink]="['compras/listar']">Cargar Facturas</a>
+                <div class="dropdown-divider"></div>
                 <a class="dropdown-item" [routerLink]="['config/comprobante/agregar']">Comprobante</a>     
                 <a class="dropdown-item" [routerLink]="['config/impuesto/agregar']">Impuesto</a>     
                 <a class="dropdown-item" [routerLink]="['config/tipo-comprobante/agregar']">Tipo-comprobante</a>  

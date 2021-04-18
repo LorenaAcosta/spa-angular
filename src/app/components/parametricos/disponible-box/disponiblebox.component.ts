@@ -161,6 +161,7 @@ export class DisponibleBoxComponent implements OnInit {
       );
       
     });
+    this.boxForm.reset(this.boxForm.controls.boxesId );
     this.modalService.dismissAll();
     this.ngOnInit();
   }

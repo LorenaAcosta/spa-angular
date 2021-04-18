@@ -1,16 +1,30 @@
-<br>
-<div class="container-fluid">
-    <div class="row">
-        <h5 class="display">Compras</h5>
-        <div class="col text-right">
-            <button routerLink="/compras/agregar" class="btn btn-sm btn-info mr-1">
-       <i class="fas fa-plus"></i> Agregar
-      </button><br>
-        </div>
+<h2 class="display">Gestión de Facturas</h2>
+
+
+
+
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
     </div>
-    <div class="table-responsive">
-        <table *ngIf="compras.length >  0" class="table table-hover animated fadedIn faster">
-            <thead>
+    <input #termino type="text" class="form-control" placeholder="Buscar factura..." aria-label="Username"
+      aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
+      <p>&nbsp;</p>
+    <button routerLink="/compras/agregar" class="btn btn-info mr-1">
+      <i class="fas fa-plus"></i> Agregar
+    </button>
+  </div>
+
+
+
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Facturas cargadas</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="compras.length>0" width="100%"
+              cellspacing="0">
+              <thead>
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Id</th>
@@ -20,8 +34,8 @@
                     <th scope="col">Detalles</th>
                     <th scope="col">Opciones</th>
                 </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody *ngFor="let item of compras| paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index">
                 <tr *ngFor="let c of compras | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                     <td>{{ i + 1}}</td>
                     <td>{{ c.comprasId}}</td>
@@ -95,12 +109,22 @@
 
                 </tr>
             </tbody>
-        </table>
-    </div>
-    <pagination-controls (pageChange)="pageActual = $event" class="my-pagination"></pagination-controls>
-    <div *ngIf="compras.length == 0" class="alertalert-warning text-center mt-3">
+            </table>
+            <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    
+    
+      <div *ngIf="compras.length == 0" class="alertalert-warning text-center mt-3">
         <h4 class="alert-heading">No hay registros</h4>
         <p>
             <i class="fa fa-exclamation fa-2x"></i>
         </p>
     </div>
+    
+
+
+
+
+
