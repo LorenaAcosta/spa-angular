@@ -35,7 +35,7 @@
                     <th scope="col">Opciones</th>
                 </tr>
               </thead>
-              <tbody *ngFor="let item of compras| paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index">
+              <tbody>
                 <tr *ngFor="let c of compras | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                     <td>{{ i + 1}}</td>
                     <td>{{ c.comprasId}}</td>
@@ -44,7 +44,7 @@
                     <td>{{ c.proveedorId.empresa}}</td>
                     <td>
 
-                        <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getDetalles( c.comprasId)">Detalles</button>
+                        <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getDetalles(c.comprasId)">Detalles</button>
                         <!-- Modal -->
                         <div id="myModal" class="modal fade " role="dialog">
                             <div class="modal-dialog modal-lg">
@@ -56,7 +56,7 @@
                                         <h4 class="modal-title">Detalles</h4>
                                     </div>
                                     <div class="modal-body">
-                                        <table *ngIf="c.detallesCollection.length >  0" class="table table-hover animated fadedIn faster">
+                                        <table *ngIf="c.detallesCollection.length > 0" class="table table-hover animated fadedIn faster">
                                             <thead>
                                                 <tr>
                                                     <th scope="col">#</th>
