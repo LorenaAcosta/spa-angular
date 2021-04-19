@@ -57,18 +57,18 @@ export class VentaComponent implements OnInit {
     if (typeof id !== 'undefined') {
       this.ventasService.listarRecursoPorPuntoExpedicion(id)
       .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
-    }else{
-      this.ventasService.listarRecurso()
-      .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
-    }
 
-    this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(id)
+      this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(id)
       .subscribe( (resp: any) => {
         this.comprobanteActual = resp,
         this.inicioVigencia = resp.inicioVigencia;
         this.finVigencia = resp.finVigencia;
         this.timbrado = resp.timbrado
       });
+    }else{
+      this.ventasService.listarRecurso()
+      .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+    }
 
     this.getNumeroComprobante(1);
     /*this.ventasService.getRecurso(id)
