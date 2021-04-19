@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import jsPDF from 'jspdf';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
 import { DetalleVentaService } from 'src/app/services/servicios/detalles-venta.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
@@ -41,15 +42,27 @@ export class VentaComponent implements OnInit {
     private detallesVentaService: DetalleVentaService,
     private comprobanteService: ComprobanteService,
     private route: ActivatedRoute,
-    private util: UtilesService
+    private util: UtilesService,
+    private spinnerService: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.params.id;
+    console.log(id);
 
-    this.ventasService.listarRecurso()
-    .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+    localStorage.setItem('punto', id);
+    /*this.ventasService.listarRecurso()
+    .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );*/
+    
+    if (typeof id !== 'undefined') {
+      this.ventasService.listarRecursoPorPuntoExpedicion(id)
+      .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+    }else{
+      this.ventasService.listarRecurso()
+      .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+    }
 
-    this.comprobanteService.getComprobanteActivo()
+    this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(id)
       .subscribe( (resp: any) => {
         this.comprobanteActual = resp,
         this.inicioVigencia = resp.inicioVigencia;

@@ -32,7 +32,7 @@
                             <td>{{ v.ventasId}}</td>
                             <td>{{ v.fecha}}</td>
                             <td>{{ util.numberWithCommas(v.montoTotal)}}</td>
-                            <td>{{'001-001-'+ ceroIzquierda(v.numeroComprobante, 7) }}</td>
+                            <td>{{'001-'+ v.comprobanteId.puntoExpedicionCodigo + '-' + ceroIzquierda(v.numeroComprobante, 7) }}</td>
                             <td>{{ v.medioPagoId.descripcion}}</td>
                             <td>{{ v.usuarioId.nombre + ' ' + v.usuarioId.apellido}}</td>
                             <td>

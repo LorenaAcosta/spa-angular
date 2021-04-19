@@ -48,6 +48,7 @@ import { TipoComprobanteComponent } from './components/parametricos/tipo-comprob
 import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.component';
 import { MediosPagoComponent } from './components/parametricos/medios-pago/medios-pago.component';
 import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
+import { PuntosExpedicionComponent } from './components/parametricos/puntos-expedicion/puntos-expedicion.component';
 
 const routes: Routes = [
   {
@@ -157,7 +158,9 @@ const routes: Routes = [
     path: 'ventas', data: { title: 'Ventas' },
     children: [
       { path: 'agregar', component: VentaEditComponent , data: { title: 'Crear venta' }, },
+      { path: 'agregar/:id', component: VentaEditComponent , data: { title: 'Crear venta' }, },
       { path: 'listar', component: VentaComponent , data: { title: 'Listar ventas' }, },
+      { path: 'listar/:id', component:  VentaComponent, data: { title: 'Listar ventas' }, },
       //{ path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
       { path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
      ]
@@ -170,6 +173,15 @@ const routes: Routes = [
       { path: 'medios-pago/agregar', component: MediosPagoComponent , data: { title: 'Medio Pago' }, },
       { path: 'comprobante/agregar', component: ComprobanteComponent , data: { title: 'Comprobante' }, }
    ]
+  },
+  {
+    path: 'puntos-expedicion', data: { title: 'Puntos de Expedición' },
+    children: [
+      { path: 'agregar', component: PuntosExpedicionComponent , data: { title: 'Crear Nuevo Punto' }, },
+      { path: 'listar', component: PuntosExpedicionComponent , data: { title: 'Listar puntos' }, },
+      //{ path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
+      //{ path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
+     ]
   },
   {
   path: 'images', data: { title: 'Imagenes' },

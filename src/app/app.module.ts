@@ -57,6 +57,7 @@ import { VentaEditComponent } from './components/parametricos/venta/venta-edit.c
 import { VentaReporteComponent } from './components/parametricos/venta/venta-reporte.component';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import {NgxSpinnerModule} from 'ngx-spinner';
 
 
 import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
@@ -79,6 +80,7 @@ import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.c
 import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
 import { ComprobanteListarComponent } from './components/parametricos/comprobante/comprobante-listar/comprobante-listar.component';
 import { ListarBoxComponent } from './components/parametricos/disponible-box/disponiblebox-listar.component';
+import { PuntosExpedicionComponent } from './components/parametricos/puntos-expedicion/puntos-expedicion.component';
 
 
 
@@ -138,7 +140,8 @@ import { ListarBoxComponent } from './components/parametricos/disponible-box/dis
     ImpuestoComponent,
     ComprobanteComponent,
     ComprobanteListarComponent,
-    ListarBoxComponent
+    ListarBoxComponent,
+    PuntosExpedicionComponent
   ],
   imports: [
     BrowserModule,
@@ -166,7 +169,8 @@ import { ListarBoxComponent } from './components/parametricos/disponible-box/dis
     MatButtonModule,
     MatCardModule,
     MatIconModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    NgxSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

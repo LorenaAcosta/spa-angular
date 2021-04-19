@@ -34,13 +34,17 @@ export class ComprobanteService {
       return this.http.get(this.recurosBaseURL + 'busqueda-comprobantes/' + id);
     }
 
-    getNumeroActual(){
-      return this.http.get(this.recurosBaseURL + 'numero-actual/');
+    getNumeroActual(id){
+      return this.http.get(this.recurosBaseURL + 'numero-actual-por-punto/' + id);
     }
 
     
     getComprobanteActivo(){
       return this.http.get(this.recurosBaseURL + 'comprobante-activo/');
+    }
+
+    getComprobanteActivoPorPuntoExpedicion(id){
+      return this.http.get(this.recurosBaseURL + 'comprobante-activo-por-punto/' + id);
     }
 }
 

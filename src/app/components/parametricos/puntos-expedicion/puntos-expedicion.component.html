@@ -1,0 +1,70 @@
+<div class="row">
+    <h1 class="display">Puntos de Expedición: </h1>
+</div>
+<div>
+    <button routerLink="/" class="btn btn-sm btn-info mr-1"><i class="fas fa-arrow-left"></i> Regresar</button>
+    <button class="btn btn-sm btn-info mr-1" (click)="open(content)">Habilitar nuevo punto</button>
+</div>
+
+<br>
+<!-- Tabla que lista el horario del empleado -->
+<!-- array: horario-->
+<div class="col-md-12" id="htmlData" #htmlData>
+    <div class="card-deck">
+        <div *ngFor="let p of puntos" class="card col-3">
+            <a (click)="btnClick(p.puntoExpedicionId)" data-toggle="tooltip" data-placement="top" title="Ver listado de ventas"><img class="card-img-top" src="./assets/img/caja.jpg" alt="Card image cap"></a>
+            <div class="card-body">
+                <h3 class="card-title text-center">{{p.descripcion}}</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Añadir Horario</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="form">
+            <div class="form-group row">
+                <label for="inputState" class="col-sm-2 col-form-label">Servicios</label>
+                <div class="col-sm">
+                    <select id="day" formControlName="diaTrabajo" class="form-control">
+                         <option *ngFor="let day of weekDays" [ngValue]="day.cod"> {{ day.d }} </option>
+                     </select>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-2 col-form-label">HoraInicio</label>
+                <div class="col-sm">
+                    <input formControlName="horaInicio" type="time" class="form-control" id="horaInicio" required></div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-2 col-form-label">HoraFin</label>
+                <div class="col-sm">
+                    <input formControlName="horaFin" type="time" class="form-control" id="horaFin" required> </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-2 col-form-label">HoraDescansoInicio</label>
+                <div class="col-sm">
+                    <input formControlName="horaInicioDescanso" type="time" class="form-control" id="horaInicioDescanso" required> </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-2 col-form-label">HoraFinDescanso</label>
+                <div class="col-sm">
+                    <input formControlName="horaFinDescanso" type="time" class="form-control" id="horaFinDescanso" required> </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardar()">Guardar</button>
+    </div>
+</ng-template>

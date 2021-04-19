@@ -14,6 +14,10 @@ export class VentaService {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
 
+  listarRecursoPorPuntoExpedicion(id) {
+    return this.http.get(this.recurosBaseURL + 'listar/' + id);
+  }
+
   getNextId() {
     return this.http.get(this.recurosBaseURL + 'next-id');
   }

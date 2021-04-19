@@ -58,6 +58,7 @@ export class VentaEditComponent implements OnInit {
   subTotalTotal = 0;
   nextComprobante = 0;
   comprobanteActual:any = null;
+  codigoPuntoExpedicion:any = 0;
   fechaActual: number = Date.now();
   index: 0;
   pageActual: 1;
@@ -404,6 +405,10 @@ export class VentaEditComponent implements OnInit {
 
 
     ngOnInit(): void {
+
+      const id = this.route.snapshot.params.id;
+      console.log(id);
+
       this.esServicio = false;
       let currentDate = Date.now();
       this.proveedorService.listarRecurso()
@@ -415,7 +420,7 @@ export class VentaEditComponent implements OnInit {
       /*this.ventaService.getNextId()
       .subscribe( (resp: any) =>  this.nextComprobante = resp + 1);*/
 
-      this.comprobanteService.getNumeroActual()
+      this.comprobanteService.getNumeroActual(localStorage.getItem('punto'))
         .subscribe( (resp: any) => 
         {
           this.nextComprobante = resp;
@@ -428,7 +433,8 @@ export class VentaEditComponent implements OnInit {
             'Debe registrar uno nuevo para continuar',
             'warning'
           );
-          this.router.navigate(['/ventas/listar']);
+          //this.router.navigate(['/ventas/listar']);
+          this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
         }
         
         //si no existen talonarios activos
@@ -439,12 +445,30 @@ export class VentaEditComponent implements OnInit {
             'Debe registrar uno para continuar',
             'warning'
           );
-          this.router.navigate(['/ventas/listar']);
+          //this.router.navigate(['/ventas/listar']);
+          this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
         }
       });
 
-      this.comprobanteService.getComprobanteActivo()
-        .subscribe((resp:any) => this.comprobanteActual = resp);
+      /*this.comprobanteService.getComprobanteActivo()
+        .subscribe((resp:any) => {
+          this.comprobanteActual = resp,
+          this.codigoPuntoExpedicion = resp.puntoExpedicionCodigo
+        });*/
+
+        if (localStorage.getItem('punto') !== 'undefined') {
+          this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(localStorage.getItem('punto'))
+          .subscribe((resp:any) => {
+            this.comprobanteActual = resp,
+            this.codigoPuntoExpedicion = resp.puntoExpedicionCodigo
+          });
+        }else{
+          this.comprobanteService.getComprobanteActivo()
+          .subscribe((resp:any) => {
+            this.comprobanteActual = resp,
+            this.codigoPuntoExpedicion = resp.puntoExpedicionCodigo
+          });
+        }
 
       this.usuarioService.listarRecurso()
       .subscribe( (resp: any[]) =>  this.usuarios = resp  );
@@ -452,7 +476,7 @@ export class VentaEditComponent implements OnInit {
       this.productoService.listarRecurso()
       .subscribe( (resp: any[]) =>  this.productos = resp  );
 
-      const id = this.route.snapshot.params.id;
+      //const id = this.route.snapshot.params.id;
       if (typeof id !== 'undefined') {
         /*this.form = this.fb.group({
           fecha: [this.fechaActual],
@@ -559,7 +583,7 @@ export class VentaEditComponent implements OnInit {
         });
       }
       
-      this.router.navigate(['/ventas/listar']);
+      this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
 
     }
 
@@ -604,6 +628,9 @@ export class VentaEditComponent implements OnInit {
            });
            this.ngOnInit();
        }
+    regresar(){
+       this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
+    }
 
 }
 
