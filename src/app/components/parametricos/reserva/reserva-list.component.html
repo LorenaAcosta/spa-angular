@@ -1,6 +1,6 @@
-<div class="row">
-    <h5 class="display">Informe de Reservas por Fecha</h5>
-</div>
+<div class="container-fluid">
+<h2 class="display">Informe de Reservas por Fecha</h2>
+
 
 <div class="input-group mb-3">
     <div class="input-group-prepend">
@@ -27,39 +27,55 @@
         </button>
 </div>
 
-<br>
-<div class="col-md-12" id="htmlData" #htmlData>
-    <div class="card mb-4">
-        <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Reservas</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-bordered display" id="dataTable" *ngIf="reservas.length>0" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Terapista</th>
-                            <th>Fecha </th>
-                            <th>Hora</th>
-                            <th>Servicio</th>
-                            <th>Cliente</th>
-                            <th>Estado</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let reserva of reservas | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index ">
-                            <td>{{ i + 1}}</td>
-                            <td>{{ reserva.disponibleId.empleadoId.nombre}}</td>
-                            <td>{{ reserva.fechaReserva}}</td>
-                            <td>{{ reserva.hora}}</td>
-                            <td>{{ reserva.disponibleId.servicioId.nombre}}</td>
-                            <td>{{ reserva.usuarioId.nombre.concat(' ', reserva.usuarioId.apellido ) }}</td>
-                            <td>{{ reserva.estado }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
-        </div>
+
+ 
+<div class="card mb-4">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Reservas por Fecha</div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="reservas.length>0" width="100%"
+          cellspacing="0">
+          <thead>
+            <tr>
+                <th>#</th>
+                <th>Terapista</th>
+                <th>Fecha </th>
+                <th>Hora</th>
+                <th>Servicio</th>
+                <th>Cliente</th>
+                <th>Estado</th>
+                <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of reservas | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
+            <tr *ngFor="let reserva of reservas | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index ">
+                <td>{{ i + 1}}</td>
+                <td>{{ reserva.disponibleId.empleadoId.nombre}}</td>
+                <td>{{ reserva.fechaReserva}}</td>
+                <td>{{ reserva.hora}}</td>
+                <td>{{ reserva.disponibleId.servicioId.nombre}}</td>
+                <td>{{ reserva.usuarioId.nombre.concat(' ', reserva.usuarioId.apellido ) }}</td>
+                <td>{{ reserva.estado }}</td>
+                <td>
+                    <button class="btn btn-info mr-1" placement="top" (click)="confirmarReserva(reserva.reservaDetalleId)" 
+                    ngbTooltip="Confirmar"> <i class="far fa-check-circle"></i></button>
+                    <button class="btn btn-danger mr-1" placement="top" (click)="anularReserva(reserva.reservaDetalleId, i)" 
+                    ngbTooltip="Anular"> <i class="fas fa-ban"></i></button>
+                </td>
+            </tr>
+          </tbody>
+        </table>
+        <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+      </div>
     </div>
+  </div>
+
+
+
+  <div *ngIf="reservas.length == 0" class="alert alert-secondary text-center mt-3">
+    <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
+  </div>
+
+
+
 </div>

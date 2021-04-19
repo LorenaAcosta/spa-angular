@@ -26,7 +26,8 @@ export class CompraComponent implements OnInit {
 
   ngOnInit(): void {
     this.compraService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.compras = resp  );
+    .subscribe( (resp: any[]) => { this.compras = resp; console.log(this.compras); } );
+    
   }
 
   getCategorias(id) {

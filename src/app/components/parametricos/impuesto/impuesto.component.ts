@@ -49,7 +49,7 @@ export class ImpuestoComponent implements OnInit {
           'success'
         );
       });
-      this.form.reset(this.form.controls.descripcion);
+      this.form.reset(this.form.controls.value);
     }
     this.ngOnInit();
   }

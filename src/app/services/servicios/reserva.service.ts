@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
   providedIn: 'root'
 })
 export class ReservaService {
+ 
 
  
   recurosBaseURL: string = environment.URL_BASE + '/reserva-detalle/';
@@ -64,6 +65,14 @@ export class ReservaService {
     
     return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
     
+    }
+
+    confirmarReserva(id: any) {
+      return this.http.post(this.recurosBaseURL + 'confirmar', id);
+    }
+
+    anularReserva(id: any) {
+      return this.http.post(this.recurosBaseURL + 'confirmar', id);
     }
  
 

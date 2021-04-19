@@ -3,51 +3,54 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" [routerLink]="['']">Inicio</a>
-        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['booking/categorias']">SERVICIOS</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" [routerLink]="['booking/productos']">PRODUCTOS</a>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a class="navbar-brand" [routerLink]="['']">Kathy Spa</a>
+        <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#">
+            <i class="fas fa-bars"></i></button>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['booking/categorias']">SERVICIOS</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['booking/productos']">PRODUCTOS</a>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             GESTIÓN
           </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" [routerLink]="['cliente/listar']"> Clientes</a>
-                    <a class="dropdown-item" [routerLink]="['servicio/listar']">Servicios</a>
-                    <a class="dropdown-item" [routerLink]="['producto/listar']">Productos</a>
-                    <a class="dropdown-item" [routerLink]="['categoria/listar']">Categorias</a>
-                    <a class="dropdown-item" [routerLink]="['reserva/listar']"> Reservas</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            FINANZAS
+           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" [routerLink]="['cliente/listar']"> Clientes</a>
+                <a class="dropdown-item" [routerLink]="['servicio/listar']">Servicios</a>
+                <a class="dropdown-item" [routerLink]="['categoria/listar']">Categorias</a>
+                <a class="dropdown-item" [routerLink]="['reserva/listar']"> Reservas</a>
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            TESORERIA
            </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" [routerLink]="['ventas/listar']">Ventas</a>
-                    <a class="dropdown-item" [routerLink]="['ventas/reporte']">Ventas Reporte</a>
-                    <a class="dropdown-item" [routerLink]="['puntos-expedicion/listar']">Puntos de Expedición</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" [routerLink]="['config/medios-pago/agregar']">Medios de Pago</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" [routerLink]="['ventas/listar']">Ventas</a>
+                <a class="dropdown-item" [routerLink]="['ventas/reporte']">Ventas Reporte</a>
+                <a class="dropdown-item" [routerLink]="['puntos-expedicion/listar']">Puntos de Expedición</a>
+                <div class="dropdown-divider"></div>    
+               <a class="dropdown-item" [routerLink]="['config/comprobante/agregar']">Comprobante</a>   
+               <a class="dropdown-item" [routerLink]="['config/tipo-comprobante/agregar']">Tipo-comprobante</a>  
+               <a class="dropdown-item" [routerLink]="['config/medios-pago/agregar']">Medios de Pago</a> 
+            </div>
+        </li>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             COMPRAS
           </a>
 
-                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                    <a class="dropdown-item" [routerLink]="['proveedor/listar']"> Proveedores</a>
-                    <a class="dropdown-item" [routerLink]="['compras/listar']">Compras</a>
-                    <a class="dropdown-item" [routerLink]="['config/comprobante/agregar']">Comprobante</a>
-                    <a class="dropdown-item" [routerLink]="['config/impuesto/agregar']">Impuesto</a>
-                    <a class="dropdown-item" [routerLink]="['config/tipo-comprobante/agregar']">Tipo-comprobante</a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" [routerLink]="['producto/listar']">Inventario Productos</a>
+                <a class="dropdown-item" [routerLink]="['proveedor/listar']"> Proveedores</a>
+                <a class="dropdown-item" [routerLink]="['compras/listar']">Cargar Facturas</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" [routerLink]="['config/impuesto/agregar']">Impuesto</a>  
+            </div>
 
-                </div>
 
             </li>
             <li class="nav-item dropdown">
