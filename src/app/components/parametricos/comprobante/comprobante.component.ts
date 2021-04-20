@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
+import { PuntosExpedicionService } from 'src/app/services/servicios/puntos-expedicion.service';
 import { TipoComprobanteService } from 'src/app/services/servicios/tipo-comprobante.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import Swal from 'sweetalert2';
@@ -17,17 +18,19 @@ export class ComprobanteComponent implements OnInit {
   
   form = this.fb.group({
     tipoComprobanteId: ['', Validators.required],
-    timbrado: ['', Validators.required],
+    timbrado: ['', Validators.required, Validators.maxLength(8), Validators.minLength(8)],
     inicioVigencia: ['', Validators.required],
     finVigencia: ['', Validators.required],
     numeroInicial: ['', Validators.required],
     numeroFinal: ['', Validators.required],
-    numeroActual: ['', Validators.required],
+    puntoExpedicionId: ['', Validators.required],
+    puntoExpedicionCodigo: ['', Validators.required],
     estado: ['', Validators.required],
   });
 
   horario: any[] = [];
   tipos: any[] = [];
+  puntos: any[] = [];
   horarioId: any;
   get timbrado() { return this.form.get('timbrado'); }
   closeResult: string;
@@ -36,6 +39,7 @@ export class ComprobanteComponent implements OnInit {
   constructor(private fb:             FormBuilder,
               private comprobanteService: ComprobanteService,
               private tipoComprobanteService: TipoComprobanteService,
+              private puntoExpedicionService: PuntosExpedicionService,
               private util:           UtilesService,
               private route:          ActivatedRoute,
               private router:         Router,
@@ -48,8 +52,9 @@ export class ComprobanteComponent implements OnInit {
         finVigencia: ['', Validators.required],
         numeroInicial: ['', Validators.required],
         numeroFinal: ['', Validators.required],
-        numeroActual: ['', Validators.required],
-        estado: ['', Validators.required],
+        puntoExpedicionId: ['', Validators.required],
+        puntoExpedicionCodigo: ['', Validators.required],
+        estado: ['ACTIVO', Validators.required],
       });
 }
 
@@ -60,7 +65,10 @@ export class ComprobanteComponent implements OnInit {
     });
     this.tipoComprobanteService.listarRecurso().subscribe( (resp: any[]) => {
       this.tipos = resp ;
-  });
+    });
+    this.puntoExpedicionService.listarRecurso().subscribe( (resp: any[]) => {
+      this.puntos = resp ;
+    });
   }
 
 
@@ -74,9 +82,12 @@ export class ComprobanteComponent implements OnInit {
         'Se guardaron los datos!',
         'success'
       );
+      this.form.reset(this.form.controls.timbrado );
     });
     this.modalService.dismissAll();
-    this.ngOnInit();
+    this.comprobanteService.listarRecurso().subscribe( (data: any[]) => {
+      this.horario = data ;
+  });
   }
 
 
