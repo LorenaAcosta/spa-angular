@@ -460,10 +460,12 @@ export class VentaEditComponent implements OnInit {
           this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(localStorage.getItem('punto'))
           .subscribe((resp:any) => {
             /*---------------------Controlamos si el timbrado está vencido--------*/
-            let fecha = new Date(resp.finVigencia).getTime();            
+            let fecha = new Date(resp.finVigencia);            
             let fechaActual= new Date();
-            console.log(fechaActual.getTime() > fecha);
-            if(fechaActual.getTime() > fecha){
+            console.log(fechaActual.getTime());
+            console.log(fecha.getTime() + 86400000);
+            console.log(fechaActual.getTime() > (fecha.getTime() + 86400000));
+            if(fechaActual.getTime() > (fecha.getTime() + 86400000)){
               console.log(this.nextComprobante);
               Swal.fire(
                 'Tibrado vencido',
