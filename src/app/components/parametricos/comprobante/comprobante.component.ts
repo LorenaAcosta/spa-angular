@@ -71,8 +71,6 @@ export class ComprobanteComponent implements OnInit {
     });
   }
 
-
-
   guardar() {
     let peticion: Observable<any>;
     peticion = this.comprobanteService.agregarRecurso(this.form.value);
