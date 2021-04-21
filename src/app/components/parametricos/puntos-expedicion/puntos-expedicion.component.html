@@ -14,7 +14,7 @@
         <div class="card-deck">
             <div *ngFor="let p of puntos" class="card">
                 <div class="card-body">
-                    <a (click)="btnClick(p.puntoExpedicionId)" data-toggle="tooltip" data-placement="top" title="Ver listado de ventas"><img class="card-img-top" src="./assets/img/caja.jpg" alt="Card image cap"></a>
+                    <a (click)="btnClick(p.puntoExpedicionId)" placement="top" ngbTooltip="Acceder"><img class="card-img-top" src="./assets/img/caja.jpg" alt="Card image cap"></a>
                     <h5 class="card-title text-center">{{p.descripcion}}</h5>
                 </div>
             </div>

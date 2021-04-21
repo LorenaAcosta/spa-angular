@@ -27,8 +27,8 @@
                             <td>{{ item.inicioVigencia}}</td>
                             <td>{{ item.finVigencia}}</td>
                             <td>{{ item.estado}}</td>
-                            <td> <button type="button" class="btn btn-sm btn-info mr-1" (click)="borrar(item.comprobanteId, i)" placement="top" ngbTooltip="Eliminar">
-                            <i class="fas fa-trash"></i> </button>
+                            <td> <button type="button" class="btn btn-sm btn-warning mr-1" (click)="borrar(item.comprobanteId, i)" placement="top" ngbTooltip="Dar de baja">
+                            <i class="fas fa-minus-circle"></i> </button>
                             </td>
                         </tr>
                     </tbody>
