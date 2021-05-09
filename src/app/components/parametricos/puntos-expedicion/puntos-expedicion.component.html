@@ -3,7 +3,7 @@
 </div>
 <div>
     <button routerLink="/" class="btn btn-sm btn-info mr-1"><i class="fas fa-arrow-left"></i> Regresar</button>
-    <button class="btn btn-sm btn-info mr-1" (click)="open(content)">Habilitar nuevo punto</button>
+    <button *ngIf="admin" class="btn btn-sm btn-info mr-1" (click)="open(content)">Habilitar nuevo punto</button>
 </div>
 
 <br>

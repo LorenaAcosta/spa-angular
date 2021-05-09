@@ -34,8 +34,6 @@ export class AdminGuard implements CanActivate {
       return true;
       console.log('Tiene rol admin');
     }
-
-
     return true;
   }
 }

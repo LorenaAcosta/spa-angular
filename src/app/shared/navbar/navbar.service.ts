@@ -56,20 +56,34 @@ export class NavbarService {
       titulo: 'VISTA PARA USUARIOS NO ADMIN',
       url: '',
       submenu: [
-        {titulo: 'Servicios', url: 'servicio/listar'},
+        {titulo: 'Servicios', url: '/servicio/listar'},
         {titulo: 'Productos', url: '/producto/listar'},
         {titulo: 'Categorias', url: '/categoria/listar'},
-        {titulo: 'Medios de Pago', url: '/cliente/listar'}
+        {titulo: 'Medios de Pago', url: '/config/medios-pago/agregar'}
       ]
     },
     {
-      titulo: 'RRHH',
+      titulo: 'RRHH NO ADMIN',
       url: '',
       submenu: [
         {titulo: 'Empleados', url: '/empleado/listar'},
         {titulo: 'Pagos a Empleados', url: '/empleado/listar'},
         {titulo: 'Cargar Facturas', url: '/compras/listar'},
         {titulo: 'Impuesto', url: '/config/impuesto/agregar'}
+      ]
+    }
+  ];
+
+  menuCaja: any[] = [
+    {
+      titulo: 'TESORERIA',
+      url: '',
+      submenu: [
+        {titulo: 'Puntos de Expedición', url: '/puntos-expedicion/listar'},
+        {titulo: 'Medios de Pago', url: '/config/medios-pago/agregar'},
+        {titulo: 'Clientes', url: '/cliente/listar'},
+        {titulo: 'Comprobante', url: '/config/comprobante/agregar'},
+        {titulo: 'Tipo Comprobante', url: '/config/tipo-comprobante/agregar'}
       ]
     }
   ];

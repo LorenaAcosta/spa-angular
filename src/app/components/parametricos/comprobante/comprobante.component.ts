@@ -9,6 +9,7 @@ import { TipoComprobanteService } from 'src/app/services/servicios/tipo-comproba
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import Swal from 'sweetalert2';
 import { exit } from 'process';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comprobante',
@@ -74,28 +75,6 @@ export class ComprobanteComponent implements OnInit {
   }
 
   guardar() {
-    /*----------------Si existe un comprobante activo para el punto se emite un mensaje--------------- */
-    this.timbradoActivo = this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(this.form.get('puntoExpedicionId').value).subscribe( (resp: any) => {
-      console.log(resp);
-      if (resp){
-        console.log('tiene comprobante');
-        Swal.fire(
-          'Ya existe un comprobante para este punto!',
-          'Debe darlo de baja para registrar uno nuevo',
-          'warning'
-        );
-        return true;
-      } else {
-        return false;
-      }
-
-    });
-    if (this.timbradoActivo){
-      this.modalService.dismissAll();
-      exit();
-    }
-    /*---------------------------------------------------------------------------------------- */
-
     let peticion: Observable<any>;
     peticion = this.comprobanteService.agregarRecurso(this.form.value);
     peticion.subscribe((result: any) => {
@@ -105,6 +84,10 @@ export class ComprobanteComponent implements OnInit {
         'success'
       );
       this.form.reset(this.form.controls.timbrado );
+      this.ngOnInit();
+    }, (error) => {
+      console.log(error.error.error);
+      Swal.fire(error.error.error, error.error.mensaje, 'warning');
     });
     this.modalService.dismissAll();
     this.comprobanteService.listarRecurso().subscribe( (data: any[]) => {this.horario = data ;});

@@ -71,6 +71,8 @@ export class UsuarioService {
     localStorage.removeItem('token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('punto');
+    localStorage.removeItem('admin');
     this.router.navigate(['/login']);
   }
 
@@ -80,6 +82,11 @@ crearUsuario( formData: any ) {
   const url = URL_SERVICIOS + '/usuarios/agregar';
   return this.http.post( url, formData );
 
+}
+
+asignarRol( usuarioId: any, rolId: any ) {
+  const url = URL_SERVICIOS + '/usuarios/asignar-rol/'+ usuarioId + '/' + rolId;
+  return this.http.post( url, usuarioId, rolId );
 }
 
 login( formData: any ) {

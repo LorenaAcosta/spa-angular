@@ -55,167 +55,40 @@ import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.c
 import { MediosPagoComponent } from './components/parametricos/medios-pago/medios-pago.component';
 import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
 import { PuntosExpedicionComponent } from './components/parametricos/puntos-expedicion/puntos-expedicion.component';
+import { CajeroGuard } from './guards/cajero.guard';
 
 const routes: Routes = [
   { path: '',
     component: PagesComponent,
     children: [
       { path: '', component: DashboardComponent, data: { title: 'Dashboard-Componente' } },
-      { path: 'registrar', component: ClienteEditComponent, data: { title: 'Registrar-Componente' }}
-    ]
-  },
-  {
-    path: 'categoria', data: { title: 'Categorias' },
-    children: [
-      // { path: '', component: UsuariosComponent, data: { title: 'Listado' } }
-      { path: 'agregar', component: CategoriaEditComponent, data: { title: 'Crear Categoria' }, },
-      { path: 'listar', component: CategoriaListarComponent, data: { title: 'Listar Categoria' }, },
-      { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
-      { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
-      { path: 'upload/:id', component: CategoriaEditComponent , data: { title: 'Upload Categoria' }, },
-     { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' } },
-    ]
-  },
-  {
-    path: 'boxes', data: { title: 'Boxes' },
-    children: [
-      { path: 'agregar', component: BoxesEditComponent , data: { title: 'Crear Boxes' }, },
-      { path: 'listar', component: BoxesListarComponent , data: { title: 'Listar Boxes' }, },
-      { path: 'modificar/:id', component: BoxesEditComponent , data: { title: 'Editar Boxes'}, }
-    ]
-  },
-  {
-    path: 'cliente', data: { title: 'Cliente' },
-    children: [
-      { path: 'registrar', component: ClienteEditComponent , data: { title: 'Crear Cliente' }, },
-      { path: 'listar', component: ClienteListarComponent , data: { title: 'Listar Cliente' }, },
-      { path: 'modificar/:id', component: ClienteEditComponent , data: { title: 'Editar Cliente' } }
-     ]
-  },
-  {
-    path: 'empleado', data: { title: 'Empleado' },
-    children: [
-      { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
-      { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
-      { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' } },
-      { path: 'asignar-horario/:id', component: HorarioComponent , data: { title: 'Asignar Horario Empleado' } },
-      { path: 'listar-horario/:id', component: HorarioListarComponent , data: { title: 'Listar Horario Empleado' } },
-      { path: 'asignar-disponibilidad/:id', component: DisponibleComponent , data: { title: 'Asignar Disponibilidad Empleado' } },
-    ]
-  },
-  {
-    path: 'producto', data: { title: 'Producto' },
-    children: [
-      { path: 'agregar', component: ProductoEditComponent , data: { title: 'Crear Producto' }, },
-      { path: 'listar', component:  ProductoListarComponent, data: { title: 'Listar Producto' }, },
-      { path: 'modificar/:id', component: ProductoEditComponent , data: { title: 'Editar Producto' } } ]
-  },
-  {
-    path: 'servicio', data: { title: 'Servicio' },
-    children: [
-      { path: 'agregar', component: ServicioEditComponent , data: { title: 'Crear Servicio' }, },
-      { path: 'listar', component:  ServicioListarComponent, data: { title: 'Listar Servicios' }, },
-      { path: 'servicio', component:  ServicioComponent, data: { title: 'Listar Servicios' }, },
-      { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } },
-      { path: 'asignar-boxes/:id', component: DisponibleBoxComponent , data: { title: 'Asignar Boxes Servicio' } }
-    ]
-  },
-  {
-    path: 'reserva', data: { title: 'Reserva' },
-    children: [
-      { path: 'agregar', component: ReservEditComponent , data: { title: 'Agregar Reserva' }, },
-      { path: 'listar', component: ReservaListComponent , data: { title: 'Listar Reserva' }, }
-     ]
-  },
-  {
-    path: 'booking', data: { title: 'Booking' },
-    children: 
-    [ { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
-      { path: 'ofertas', component: OfertaComponent, data: { title: 'Ofertas-Componente' }},
-      { path: 'productos', component: ProductoListar2Component , data: { title: 'Listar Productos' } },
-      { path: 'categorias/servicios/terapista/:id', component:  TerapistaComponent, data: { title: 'terapista' }, },
-      { path: 'categorias/servicios/:id', component: ServicioListar2Component , data: { title: 'Listar Servicio' } },
-      { path: 'categorias/servicios/terapista/calendar/:id', component:  CalendarComponent, data: { title: 'Calendar' }, }
-    ]
-  },
-  {
-    path: 'planilla', data: { title: 'Planilla' },
-    children: [
-      { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' }, }
-     ]
-  },
-  {
-    path: 'proveedor', data: { title: 'Proveedores' },
-    children: [
-      { path: 'agregar', component: ProveedorEditComponent , data: { title: 'Crear proveedor' }, },
-      { path: 'listar', component: ProveedorComponent , data: { title: 'Listar Proveedores' }, },
-      { path: 'modificar/:id', component: ProveedorEditComponent , data: { title: 'Editar Proveedor' }, }
-     ]
-  },
-  {
-    path: 'compras', data: { title: 'Compras' },
-    children: [
-      { path: 'agregar', component: CompraEditComponent , data: { title: 'Crear compra' }, },
-      { path: 'listar', component: CompraComponent , data: { title: 'Listar compras' }, },
-       { path: 'modificar/:id', component: CompraEditComponent , data: { title: 'Editar compra' }, }
-     ]
-  },
-  {
-    path: 'ventas', data: { title: 'Ventas' },
-    children: [
-      { path: 'agregar', component: VentaEditComponent , data: { title: 'Crear venta' }, },
-      { path: 'agregar/:id', component: VentaEditComponent , data: { title: 'Crear venta' }, },
-      { path: 'listar', component: VentaComponent , data: { title: 'Listar ventas' }, },
-      { path: 'listar/:id', component:  VentaComponent, data: { title: 'Listar ventas' }, },
-      //{ path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
-      { path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
-     ]
-  },
-  {
-    path: 'config', data: { title: 'Configuraciones' },
-    children: [
-      { path: 'tipo-comprobante/agregar', component: TipoComprobanteComponent , data: { title: 'Tipo Comprobante' }, },
-      { path: 'impuesto/agregar', component: ImpuestoComponent , data: { title: 'Impuesto' }, },
-      { path: 'medios-pago/agregar', component: MediosPagoComponent , data: { title: 'Medio Pago' }, },
-      { path: 'comprobante/agregar', component: ComprobanteComponent , data: { title: 'Comprobante' }, }
-   ]
-  },
-  {
-    path: 'puntos-expedicion', data: { title: 'Puntos de Expedición' },
-    children: [
-      { path: 'agregar', component: PuntosExpedicionComponent , data: { title: 'Crear Nuevo Punto' }, },
-      { path: 'listar', component: PuntosExpedicionComponent , data: { title: 'Listar puntos' }, },
-      //{ path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
-      //{ path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
-     ]
-  },
-  {
-  path: 'images', data: { title: 'Imagenes' },
-  children: [
-    { path: 'agregar', component: ArchivosSubidosComponent , data: { title: 'Subir imagen' }, },
-    { path: 'buscar', component: ArchivosSubidosComponent , data: { title: 'Listar ventas' }, },
-    { path: 'modificar/:id', component: ArchivosSubidosComponent , data: { title: 'Editar venta' }, },
-    { path: 'get/:filename', component: ArchivosSubidosComponent , data: { title: 'Get Archivo' }, },
-    { path: 'reporte', component: ArchivosSubidosComponent , data: { title: 'Reporte de ventas' }, }
-   ]
-  },
-     /* {
+      { path: 'registrar', component: ClienteEditComponent, data: { title: 'Registrar-Componente' }},
+      {
         path: 'categoria', data: { title: 'Categorias' },
         children: [
           // { path: '', component: UsuariosComponent, data: { title: 'Listado' } }
-          { path: 'agregar', component: CategoriaEditComponent, canActivate: [ AutenticadoGuard],
-                data: { title: 'Crear Categoria' }, },
+          { path: 'agregar', component: CategoriaEditComponent, data: { title: 'Crear Categoria' }, },
           { path: 'listar', component: CategoriaListarComponent,  data: { title: 'Listar Categoria' }, },
           { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
           { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
+          { path: 'upload/:id', component: CategoriaEditComponent , data: { title: 'Upload Categoria' }, },
+         { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' } },
+        ]
+      },
+      {
+        path: 'boxes', data: { title: 'Boxes' },
+        children: [
+          { path: 'agregar', component: BoxesEditComponent , data: { title: 'Crear Boxes' }, },
+          { path: 'listar', component: BoxesListarComponent , data: { title: 'Listar Boxes' }, },
+          { path: 'modificar/:id', component: BoxesEditComponent , data: { title: 'Editar Boxes'}, }
         ]
       },
       {
         path: 'cliente', data: { title: 'Cliente' },
         children: [
-          { path: 'registrar', component: ClienteEditComponent , data: { title: 'Crear Cliente' }, },
-          { path: 'listar', component: ClienteListarComponent , data: { title: 'Listar Cliente' }, },
-          { path: 'modificar/:id', component: ClienteEditComponent , data: { title: 'Editar Cliente' }, }
+          { path: 'registrar', component: ClienteEditComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Crear Cliente' }, },
+          { path: 'listar', component: ClienteListarComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Listar Cliente' }, },
+          { path: 'modificar/:id', component: ClienteEditComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Editar Cliente' } }
          ]
       },
       {
@@ -223,7 +96,10 @@ const routes: Routes = [
         children: [
           { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
           { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
-          { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' }, }
+          { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' } },
+          { path: 'asignar-horario/:id', component: HorarioComponent , data: { title: 'Asignar Horario Empleado' } },
+          { path: 'listar-horario/:id', component: HorarioListarComponent , data: { title: 'Listar Horario Empleado' } },
+          { path: 'asignar-disponibilidad/:id', component: DisponibleComponent , data: { title: 'Asignar Disponibilidad Empleado' } },
         ]
       },
       {
@@ -231,8 +107,7 @@ const routes: Routes = [
         children: [
           { path: 'agregar', component: ProductoEditComponent , data: { title: 'Crear Producto' }, },
           { path: 'listar', component:  ProductoListarComponent, data: { title: 'Listar Producto' }, },
-          { path: 'modificar/:id', component: ProductoEditComponent , data: { title: 'Editar Producto' } }
-         ]
+          { path: 'modificar/:id', component: ProductoEditComponent , data: { title: 'Editar Producto' } } ]
       },
       {
         path: 'servicio', data: { title: 'Servicio' },
@@ -240,24 +115,91 @@ const routes: Routes = [
           { path: 'agregar', component: ServicioEditComponent , data: { title: 'Crear Servicio' }, },
           { path: 'listar', component:  ServicioListarComponent, data: { title: 'Listar Servicios' }, },
           { path: 'servicio', component:  ServicioComponent, data: { title: 'Listar Servicios' }, },
-          { path: 'servicios/:id', component:  ServicioListar2Component, data: { title: 'Listar Servicios' }, },
-          { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } }
-         ]
+          { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } },
+          { path: 'asignar-boxes/:id', component: DisponibleBoxComponent , data: { title: 'Asignar Boxes Servicio' } }
+        ]
       },
       {
         path: 'reserva', data: { title: 'Reserva' },
         children: [
-          { path: 'agregar', component: ReservEditComponent , data: { title: 'Agregar Reserva' }, }
+          { path: 'agregar', component: ReservEditComponent , data: { title: 'Agregar Reserva' }, },
+          { path: 'listar', component: ReservaListComponent , data: { title: 'Listar Reserva' }, }
          ]
       },
       {
-        path: '', data: { title: 'Dashboard' },
-        children: [
-          { path: '', component: DashboardComponent, data: { title: 'Dashboard-Componente' } },
+        path: 'booking', data: { title: 'Booking' },
+        children: 
+        [ { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
+          { path: 'ofertas', component: OfertaComponent, data: { title: 'Ofertas-Componente' }},
+          { path: 'productos', component: ProductoListar2Component , data: { title: 'Listar Productos' } },
+          { path: 'categorias/servicios/terapista/:id', component:  TerapistaComponent, data: { title: 'terapista' }, },
+          { path: 'categorias/servicios/:id', component: ServicioListar2Component , data: { title: 'Listar Servicio' } },
+          { path: 'categorias/servicios/terapista/calendar/:id', component:  CalendarComponent, data: { title: 'Calendar' }, }
         ]
-      }
+      },
+      {
+        path: 'planilla', data: { title: 'Planilla' },
+        children: [
+          { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' }, }
+         ]
+      },
+      {
+        path: 'proveedor', data: { title: 'Proveedores' },
+        children: [
+          { path: 'agregar', component: ProveedorEditComponent , data: { title: 'Crear proveedor' }, },
+          { path: 'listar', component: ProveedorComponent , data: { title: 'Listar Proveedores' }, },
+          { path: 'modificar/:id', component: ProveedorEditComponent , data: { title: 'Editar Proveedor' }, }
+         ]
+      },
+      {
+        path: 'compras', data: { title: 'Compras' },
+        children: [
+          { path: 'agregar', component: CompraEditComponent , data: { title: 'Crear compra' }, },
+          { path: 'listar', component: CompraComponent , data: { title: 'Listar compras' }, },
+           { path: 'modificar/:id', component: CompraEditComponent , data: { title: 'Editar compra' }, }
+         ]
+      },
+      {
+        path: 'ventas', data: { title: 'Ventas' },
+        children: [
+          { path: 'agregar', component: VentaEditComponent , data: { title: 'Crear venta' }, },
+          { path: 'agregar/:id', component: VentaEditComponent , data: { title: 'Crear venta' }, },
+          { path: 'listar', component: VentaComponent , data: { title: 'Listar ventas' }, },
+          { path: 'listar/:id', component:  VentaComponent, canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Listar ventas' }, },
+          //{ path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
+          { path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
+         ]
+      },
+      {
+        path: 'config', data: { title: 'Configuraciones' },
+        children: [
+          { path: 'tipo-comprobante/agregar', component: TipoComprobanteComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Tipo Comprobante' }, },
+          { path: 'impuesto/agregar', component: ImpuestoComponent , data: { title: 'Impuesto' }, },
+          { path: 'medios-pago/agregar', component: MediosPagoComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Medio Pago' }, },
+          { path: 'comprobante/agregar', component: ComprobanteComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Comprobante' }, }
+       ]
+      },
+      {
+        path: 'puntos-expedicion', data: { title: 'Puntos de Expedición' },
+        children: [
+          { path: 'agregar', component: PuntosExpedicionComponent , data: { title: 'Crear Nuevo Punto' }, },
+          { path: 'listar', component: PuntosExpedicionComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Listar puntos' }, },
+          //{ path: 'modificar/:id', component: VentaEditComponent , data: { title: 'Editar venta' }, },
+          //{ path: 'reporte', component: VentaReporteComponent , data: { title: 'Reporte de ventas' }, }
+         ]
+      },
+      {
+      path: 'images', data: { title: 'Imagenes' },
+      children: [
+        { path: 'agregar', component: ArchivosSubidosComponent , data: { title: 'Subir imagen' }, },
+        { path: 'buscar', component: ArchivosSubidosComponent , data: { title: 'Listar ventas' }, },
+        { path: 'modificar/:id', component: ArchivosSubidosComponent , data: { title: 'Editar venta' }, },
+        { path: 'get/:filename', component: ArchivosSubidosComponent , data: { title: 'Get Archivo' }, },
+        { path: 'reporte', component: ArchivosSubidosComponent , data: { title: 'Reporte de ventas' }, }
+       ]
+      },
     ]
-  },*/
+  },
 
   { path: 'registro', component: RegisterComponent, data: { title: 'Register' }},
   { path: 'login', component: LoginComponent, data: { title: 'Login' }}

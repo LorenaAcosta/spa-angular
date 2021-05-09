@@ -9,7 +9,10 @@ import { NavbarService } from './navbar.service';
 })
 export class NavbarComponent implements OnInit {
 
-  menuItems: any[];
+  menuItems: any[] = [];
+  menuCliente: any[] = [];
+  menuCajero: any[] = [];
+  menuAdmin: any[] = [];
   constructor(
     private navbarService: NavbarService,
     public usuarioService: UsuarioService
@@ -17,22 +20,30 @@ export class NavbarComponent implements OnInit {
 
     let roles: any[];
     roles = JSON.parse(localStorage.getItem('usuario')) || ' ';
-    let band = 0;
+    let band:any = null;
+    localStorage.setItem('admin', 'false');
     // tslint:disable-next-line: prefer-for-of
     for ( let i = 0; i < roles.length; i++) {
         console.log(roles[i]);
         if (roles[i].nombre === 'ROLE_ADMIN') {
-          band = 1;
+          localStorage.setItem('admin', 'true');
+          this.menuAdmin = navbarService.menu;
+          console.log(this.menuItems);
           break;
         }
+        if (roles[i].nombre === 'ROLE_CLIENTE') {
+          this.menuCliente = navbarService.menu1;
+          console.log(this.menuCliente);
+        }
+        if (roles[i].nombre === 'ROLE_CAJERO') {
+          this.menuCajero = navbarService.menuCaja;
+          console.log(this.menuCajero);
+        }
     }
-    if (band === 0 ) {
-      this.menuItems = navbarService.menu1;
-      console.log(this.menuItems);
-    } else {
-      this.menuItems = navbarService.menu;
-      console.log(this.menuItems);
-    }
+    //se concatena los menus en caso de tener mas de un rol
+    this.menuItems = [].concat(this.menuCliente, this.menuCajero, this.menuAdmin);
+    console.log(this.menuItems, this.menuItems.length);
+    
   }
 
   ngOnInit(): void {
