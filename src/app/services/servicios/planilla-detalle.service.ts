@@ -5,20 +5,20 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class DetallesCompraService {
-  recurosBaseURL: string = environment.URL_BASE + '/detalles-compra/';
+export class PlanillaDetalleService {
+  recurosBaseURL: string = environment.URL_BASE + '/detalles-venta/';
   constructor(private http: HttpClient) { }
 
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
 
-  getRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar-detalles/' + id);
+  getRankingProductos() {
+    return this.http.get(this.recurosBaseURL + 'ranking');
   }
 
-  getRecursoByCompraId(id) {
-    return this.http.get(this.recurosBaseURL + 'get-detalles/' + id);
+  getRecurso(id) {
+    return this.http.get(this.recurosBaseURL + 'encontrar-detalles/' + id);
   }
 
   agregarRecurso(recurso) {
@@ -31,5 +31,6 @@ export class DetallesCompraService {
 
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
-    }
+  }
+
 }

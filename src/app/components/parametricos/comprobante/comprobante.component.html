@@ -58,69 +58,67 @@
 <button class="btn btn-sm btn-info mr-1" (click)="open(content)">Añadir Comprobante</button>
 
 <ng-template #content let-modal>
-    <div class="modal-header">
+    <div class="modal-header alert-info">
         <h4 class="modal-title" id="modal-basic-title">Añadir Comprobante</h4>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span> </button>
     </div>
     <div class="modal-body">
-        <form [formGroup]="form">
-            <div class="form-group row">
-                <label for="inputState" class="col-sm-2 col-form-label">TipoComprobante</label>
-                <div class="col-sm">
-                    <select id="tipoComprobanteId" formControlName="tipoComprobanteId" class="form-control">
-                       <option *ngFor="let tipo of tipos" [ngValue]="tipo.tipoComprobanteId"> {{ tipo.descripcion }} </option>
-                   </select>
+      <form [formGroup]="form">
+        <div class="row">
+          <div class="col-6">
+            <div class="bd-content">
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label>TipoComprobante</label>
+                  <select id="tipoComprobanteId" formControlName="tipoComprobanteId" class="form-control" required>
+                      <option *ngFor="let tipo of tipos" [ngValue]="tipo.tipoComprobanteId">
+                        {{ tipo.descripcion }}
+                      </option>
+                    </select>
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Timbrado</label>
-                  <div class="col-sm">
-                  <input formControlName="timbrado" placeholder="timbrado" type="timbrado" maxlength="30"
-                    class="form-control form-control-sm" id="timbrado" required></div>
+                <div class="form-group col-sm-6">
+                  <label id="myLabel">Timbrado </label>
+                  <input type="text"  class="form-control form-control-sm" id="timbrado" formControlName="timbrado">
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Inicio Vigencia</label>
-                  <div class="col-sm">
-                  <input formControlName="inicioVigencia" placeholder="inicioVigencia" type="date" maxlength="30"
-                    class="form-control form-control-sm" id="inicioVigencia" required></div>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-sm-6">
+                  <label for="inputZip">InicioVigencia</label>
+                  <input formControlName="inicioVigencia" type="date" class="form-control form-control-sm" id="inicioVigencia" required>
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Fin Vigencia</label>
-                  <div class="col-sm">
-                  <input formControlName="finVigencia" placeholder="finVigencia" type="date" maxlength="30"
-                    class="form-control form-control-sm" id="finVigencia" required></div>
+                <div class="form-group col-sm-6">
+                  <label for="inputZip">FinVigencia</label>
+                  <input formControlName="finVigencia" placeholder="finVigencia" type="date" maxlength="60"
+                  class="form-control form-control-sm" id="finVigencia" required>
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Numero Inicial</label>
-                  <div class="col-sm">
-                  <input formControlName="numeroInicial" placeholder="numeroInicial" type="number" maxlength="30"
-                    class="form-control form-control-sm" id="numeroInicial" required></div>
+              </div>
+              <div class="form-group">
+                <label for="inputAddress">NumeroInicio</label>
+                <input formControlName="numeroInicial" type="number" maxlength="30"  placeholder="numeroInicial"
+                  class="form-control form-control-sm" id="numeroInicial" required>
+              </div>
+              <div class="form-row">
+                <div class="form-row form-group col-sm-6">
+                  <label for="inputState">NumeroFinal</label>
+                  <input formControlName="numeroFinal" type="number" maxlength="30"  placeholder="numeroFinal"
+                    class="form-control form-control-sm" id="numeroFinal" required>
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Numero Final</label>
-                  <div class="col-sm">
-                  <input formControlName="numeroFinal" placeholder="numeroFinal" type="number" maxlength="30"
-                    class="form-control form-control-sm" id="numeroFinal" required></div>
+                <div class="form-group col-sm-6">
+                  <label for="inputState">NumeroActual</label>
+                  <input formControlName="numeroActual" type="number" maxlength="30"  placeholder="numeroActual"
+                    class="form-control form-control-sm" id="numeroActual" required>
                 </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Numero Actual</label>
-                  <div class="col-sm">
-                  <input formControlName="numeroActual" placeholder="numeroActual" type="number" maxlength="30"
-                    class="form-control form-control-sm" id="numeroActual" required></div>
-                </div>
-                <div class="form-group row">
-                  <label class="col-sm-2 col-form-label">Numero Actual</label>
-                  <div class="col-sm">
-                      <select id="estado" formControlName="estado" class="form-control" required>
-                              <option selected>...</option>
-                              <option value="ACTIVO">ACTIVO</option>
-                              <option value="INACTIVO">INACTIVO</option>
-                          </select>
-                  </div>
-                </div>
-
+              </div>
+      
             </div>
-    </form>
+          </div>
+      
+        </div>
+      
+      </form>
+
+
   </div>
    
     <div class="modal-footer">

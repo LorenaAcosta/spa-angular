@@ -24,6 +24,11 @@ export class ProductoService {
         })
       );
     }
+
+    listarRecursosActivos() {
+      return this.http.get(this.recurosBaseURL + 'listarActivos');
+    }
+
     agregarRecurso(recurso) {
       return this.http.post(this.recurosBaseURL + 'agregar', recurso).pipe(
         catchError( e=> {

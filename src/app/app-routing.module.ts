@@ -49,6 +49,7 @@ import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.c
 import { MediosPagoComponent } from './components/parametricos/medios-pago/medios-pago.component';
 import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
 import { PuntosExpedicionComponent } from './components/parametricos/puntos-expedicion/puntos-expedicion.component';
+import { ListarComponent } from './components/parametricos/planilla/listar.component';
 
 const routes: Routes = [
   {
@@ -135,7 +136,8 @@ const routes: Routes = [
   {
     path: 'planilla', data: { title: 'Planilla' },
     children: [
-      { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' }, }
+      { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' }, },
+      { path: 'listar-salario', component: ListarComponent , data: { title: 'Listar planilla' }, }
      ]
   },
   {

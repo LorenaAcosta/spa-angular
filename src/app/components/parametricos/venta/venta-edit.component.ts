@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { exit } from 'process';
 import { Observable } from 'rxjs';
 import { ClienteService } from 'src/app/services/servicios/cliente.service';
@@ -65,12 +65,14 @@ export class VentaEditComponent implements OnInit {
 
   selectedValue: number;
   selectedProd: any;
+  closeResult: string;
   constructor(
     private fbc: FormBuilder,
     private fmp: FormBuilder,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private compraService: ComprasService,
+    private modalService: NgbModal,
     private ventaService: VentaService,
     private comprobanteService: ComprobanteService,
     private proveedorService: ProveedorService,
@@ -164,7 +166,7 @@ export class VentaEditComponent implements OnInit {
     cargaServicio(){
       console.log('cargaServicio funciona');
       this.esServicio = true;
-      this.servicioService.listarRecurso()
+      this.servicioService.listarRecursosActivos()
       .subscribe( (resp: any[]) =>  this.productos = resp  );
     }
 
@@ -172,7 +174,7 @@ export class VentaEditComponent implements OnInit {
       console.log('cargaProducto funciona');
       this.esProducto = true;
       this.esServicio = false;
-      this.productoService.listarRecurso()
+      this.productoService.listarRecursosActivos()
       .subscribe( (resp: any[]) =>  this.productos = resp  );
     }
 
@@ -257,14 +259,6 @@ export class VentaEditComponent implements OnInit {
           this.subTotalTotal = this.subTotalCinco + this.subTotalDiez + this.subTotalExenta;
           this.form.controls.subTotalTotal.setValue(this.subTotalTotal);
         }
-
-
-
-
-
-
-
-
 
 
         this.datosEliminar.push(new DetalleVenta(this.datos[cod].detalleId, this.datos[cod].cantidad, this.datos[cod].ventasId,
@@ -473,7 +467,7 @@ export class VentaEditComponent implements OnInit {
       this.usuarioService.listarRecurso()
       .subscribe( (resp: any[]) =>  this.usuarios = resp  );
 
-      this.productoService.listarRecurso()
+      this.productoService.listarRecursosActivos()
       .subscribe( (resp: any[]) =>  this.productos = resp  );
 
       //const id = this.route.snapshot.params.id;
@@ -627,10 +621,41 @@ export class VentaEditComponent implements OnInit {
              );
            });
            this.ngOnInit();
-       }
-    regresar(){
-       this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
     }
+
+    
+  //open modal PROveedor
+  openFormCliente(content) {  
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      console.log(this.formCliente.value);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+ //open modal MedioPago
+  openFormMedio(content1) {  
+    this.modalService.open(content1, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      console.log(this.formCliente.value);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+
 
 }
 

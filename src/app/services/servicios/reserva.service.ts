@@ -3,17 +3,19 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { map } from 'jquery';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
+import { catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ReservaService {
  
-
- 
   recurosBaseURL: string = environment.URL_BASE + '/reserva-detalle/';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,  private router: Router) { }
 
   listarRecursos() {
     return this.http.get(this.recurosBaseURL + 'listar');
@@ -21,6 +23,16 @@ export class ReservaService {
 
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
+  }
+
+  modificarRecurso(id, valorEstado) {
+    return this.http.put(this.recurosBaseURL + 'modificar/' + id, valorEstado).pipe(
+      catchError( e=> {
+        this.router.navigate(['/reserva/listar']);
+        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        return throwError(e);
+      })
+    );
   }
 
   getRecurso(id) {
@@ -73,6 +85,10 @@ export class ReservaService {
 
     anularReserva(id: any) {
       return this.http.post(this.recurosBaseURL + 'confirmar', id);
+    }
+
+    getReservasConfirmadasEmpleado(id, mes) {
+      return this.http.get(this.recurosBaseURL + 'reservas-confirmadas/' + id + '/' + mes);
     }
  
 

@@ -64,8 +64,6 @@ import { PlanillaComponent } from './components/parametricos/planilla/planilla.c
 import { TerapistaComponent } from './components/parametricos/booking/terapista.component';
 import { CalendarComponent } from './components/parametricos/booking/calendar.component';
 import { OfertaComponent } from './components/parametricos/oferta/oferta/oferta.component';
-import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
-import { ListarComponent } from './components/parametricos/disponible/disponible-listar.component';
 //import { HorarioListComponent } from './components/parametricos/horario/horario-list.component';
 import { CategoriaListar2Component } from './components/parametricos/booking/categoria-listar2.component';
 import { ServicioListar2Component } from './components/parametricos/booking/servicios-spa.component';
@@ -79,8 +77,9 @@ import { TipoComprobanteComponent } from './components/parametricos/tipo-comprob
 import { ImpuestoComponent } from './components/parametricos/impuesto/impuesto.component';
 import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
 import { ComprobanteListarComponent } from './components/parametricos/comprobante/comprobante-listar/comprobante-listar.component';
-import { ListarBoxComponent } from './components/parametricos/disponible-box/disponiblebox-listar.component';
 import { PuntosExpedicionComponent } from './components/parametricos/puntos-expedicion/puntos-expedicion.component';
+import { ListarComponent } from './components/parametricos/planilla/listar.component';
+import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
 
 
 
@@ -128,20 +127,19 @@ import { PuntosExpedicionComponent } from './components/parametricos/puntos-expe
     TerapistaComponent,
     CalendarComponent,
     OfertaComponent,
-    DisponibleComponent,
-    ListarComponent,
     ArchivosSubidosComponent,
     HorarioComponent,
     BoxesListarComponent,
     BoxesEditComponent,
     DisponibleBoxComponent,
+    DisponibleComponent,
     HorarioListarComponent,
     TipoComprobanteComponent,
     ImpuestoComponent,
     ComprobanteComponent,
     ComprobanteListarComponent,
-    ListarBoxComponent,
-    PuntosExpedicionComponent
+    PuntosExpedicionComponent, 
+    ListarComponent
   ],
   imports: [
     BrowserModule,
