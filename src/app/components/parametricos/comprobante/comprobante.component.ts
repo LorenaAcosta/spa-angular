@@ -4,9 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
+import { PuntosExpedicionService } from 'src/app/services/servicios/puntos-expedicion.service';
 import { TipoComprobanteService } from 'src/app/services/servicios/tipo-comprobante.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import Swal from 'sweetalert2';
+import { exit } from 'process';
 
 @Component({
   selector: 'app-comprobante',
@@ -17,18 +19,21 @@ export class ComprobanteComponent implements OnInit {
   
   form = this.fb.group({
     tipoComprobanteId: ['', Validators.required],
-    timbrado: ['', Validators.required],
+    timbrado: ['', Validators.required, Validators.maxLength(8), Validators.minLength(8)],
     inicioVigencia: ['', Validators.required],
     finVigencia: ['', Validators.required],
     numeroInicial: ['', Validators.required],
     numeroFinal: ['', Validators.required],
-    numeroActual: ['', Validators.required],
+    puntoExpedicionId: ['', Validators.required],
+    puntoExpedicionCodigo: ['', Validators.required],
     estado: ['', Validators.required],
   });
 
   horario: any[] = [];
   tipos: any[] = [];
+  puntos: any[] = [];
   horarioId: any;
+  timbradoActivo: any;
   get timbrado() { return this.form.get('timbrado'); }
   closeResult: string;
 
@@ -36,6 +41,7 @@ export class ComprobanteComponent implements OnInit {
   constructor(private fb:             FormBuilder,
               private comprobanteService: ComprobanteService,
               private tipoComprobanteService: TipoComprobanteService,
+              private puntoExpedicionService: PuntosExpedicionService,
               private util:           UtilesService,
               private route:          ActivatedRoute,
               private router:         Router,
@@ -48,8 +54,9 @@ export class ComprobanteComponent implements OnInit {
         finVigencia: ['', Validators.required],
         numeroInicial: ['', Validators.required],
         numeroFinal: ['', Validators.required],
-        numeroActual: ['', Validators.required],
-        estado: ['', Validators.required],
+        puntoExpedicionId: ['', Validators.required],
+        puntoExpedicionCodigo: ['', Validators.required],
+        estado: ['ACTIVO', Validators.required],
       });
 }
 
@@ -60,12 +67,35 @@ export class ComprobanteComponent implements OnInit {
     });
     this.tipoComprobanteService.listarRecurso().subscribe( (resp: any[]) => {
       this.tipos = resp ;
-  });
+    });
+    this.puntoExpedicionService.listarRecurso().subscribe( (resp: any[]) => {
+      this.puntos = resp ;
+    });
   }
 
-
-
   guardar() {
+    /*----------------Si existe un comprobante activo para el punto se emite un mensaje--------------- */
+    this.timbradoActivo = this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(this.form.get('puntoExpedicionId').value).subscribe( (resp: any) => {
+      console.log(resp);
+      if (resp){
+        console.log('tiene comprobante');
+        Swal.fire(
+          'Ya existe un comprobante para este punto!',
+          'Debe darlo de baja para registrar uno nuevo',
+          'warning'
+        );
+        return true;
+      } else {
+        return false;
+      }
+
+    });
+    if (this.timbradoActivo){
+      this.modalService.dismissAll();
+      exit();
+    }
+    /*---------------------------------------------------------------------------------------- */
+
     let peticion: Observable<any>;
     this.form.controls.estado.setValue('ACTIVO');
     peticion = this.comprobanteService.agregarRecurso(this.form.value);
@@ -75,9 +105,10 @@ export class ComprobanteComponent implements OnInit {
         'Se guardaron los datos!',
         'success'
       );
+      this.form.reset(this.form.controls.timbrado );
     });
     this.modalService.dismissAll();
-    this.ngOnInit();
+    this.comprobanteService.listarRecurso().subscribe( (data: any[]) => {this.horario = data ;});
   }
 
 
@@ -112,13 +143,14 @@ export class ComprobanteComponent implements OnInit {
       }).then((result) => {
         if (result.value) {
           this.comprobanteService.eliminarRecurso(id).subscribe();
-          this.horario.splice(pos, 1);
+          //this.horario.splice(pos, 1);
           Swal.fire(
             'Eliminado!',
             'Los datos han sido eliminados.',
             'success'
           );
         }
+        this.ngOnInit();
       });
   }
 

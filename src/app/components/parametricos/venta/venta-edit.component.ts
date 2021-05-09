@@ -453,6 +453,22 @@ export class VentaEditComponent implements OnInit {
         if (localStorage.getItem('punto') !== 'undefined') {
           this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(localStorage.getItem('punto'))
           .subscribe((resp:any) => {
+            /*---------------------Controlamos si el timbrado está vencido--------*/
+            let fecha = new Date(resp.finVigencia);            
+            let fechaActual= new Date();
+            console.log(fechaActual.getTime());
+            console.log(fecha.getTime() + 86400000);
+            console.log(fechaActual.getTime() > (fecha.getTime() + 86400000));
+            if(fechaActual.getTime() > (fecha.getTime() + 86400000)){
+              console.log(this.nextComprobante);
+              Swal.fire(
+                'Tibrado vencido',
+                'Debe registrar un nuevo talonario',
+                'warning'
+              );
+              this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
+            }
+            /*----------------------------------------------------------------------*/
             this.comprobanteActual = resp,
             this.codigoPuntoExpedicion = resp.puntoExpedicionCodigo
           });

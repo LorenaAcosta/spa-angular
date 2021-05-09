@@ -19,12 +19,7 @@ export class PuntosExpedicionComponent implements OnInit {
  
   
   form = this.fb.group({
-    diaTrabajo: ['', Validators.required],
-    horaFin: ['', Validators.required],
-    horaInicioDescanso: ['', Validators.required],
-    horaInicio: ['', Validators.required],
-    horaFinDescanso: ['', Validators.required],
-    empleadoId: ['', Validators.required],
+    descripcion: ['', Validators.required],
   });
 
   puntos: any[] = [];
@@ -43,12 +38,7 @@ export class PuntosExpedicionComponent implements OnInit {
               private spinnerService: NgxSpinnerService) {
 
       this.form = this.fb.group({    
-        diaTrabajo: ['', Validators.required],
-        horaFin: ['', Validators.required],
-        horaInicioDescanso: ['', Validators.required],
-        horaInicio: ['', Validators.required],
-        horaFinDescanso: ['', Validators.required],
-        empleadoId: ['', Validators.required],  
+        descripcion: ['', Validators.required], 
       });
 }
 
@@ -64,7 +54,6 @@ export class PuntosExpedicionComponent implements OnInit {
 
 
   guardar() {
-    this.form.controls.empleadoId.setValue(parseInt(this.empleadoId));
     let peticion: Observable<any>;
     peticion = this.puntoService.agregarRecurso(this.form.value);
     peticion.subscribe((result: any) => {
@@ -73,9 +62,13 @@ export class PuntosExpedicionComponent implements OnInit {
         'Se guardaron los datos!',
         'success'
       );
+      this.form.reset(this.form.controls.descripcion );
     });
+    
     this.modalService.dismissAll();
-    this.ngOnInit();
+    this.puntoService.listarRecurso().subscribe( (resp: any[]) => {
+      this.puntos = resp ;
+    });
   }
 
 

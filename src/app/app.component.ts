@@ -12,6 +12,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.spinner();
   }
+  
 
   spinner(): void{
     this.spinnerService.show();
