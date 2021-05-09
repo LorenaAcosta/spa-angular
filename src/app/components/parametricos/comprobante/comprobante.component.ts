@@ -76,6 +76,7 @@ export class ComprobanteComponent implements OnInit {
 
   guardar() {
     let peticion: Observable<any>;
+    this.form.controls.estado.setValue('ACTIVO');
     peticion = this.comprobanteService.agregarRecurso(this.form.value);
     peticion.subscribe((result: any) => {
       Swal.fire(

@@ -81,6 +81,7 @@ export class DisponibleComponent implements OnInit {
       );
 
     });
+    this.form.reset(this.form.controls.nombre );
     this.ngOnInit();
   }
 

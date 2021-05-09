@@ -77,8 +77,8 @@
 
 <!--Modal para agregar un nuevo Box-->
 <ng-template #content1 let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Añadir Box</h4>
+    <div class="modal-header alert-info">
+        <h2>Añadir Box</h2>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -86,20 +86,19 @@
     <div class="modal-body">
         <form [formGroup]="boxForm">
                 <div class="col-sm">
-                    <input formControlName="nombre" type="string" class="form-control" id="nombre" required>
+                    <input formControlName="nombre" type="string" class="form-control" id="nombre" placeholder="nombre del box" required>
                 </div>
                 <label class="col-sm-2 col-form-label" for="inputZip">Estado</label>
                 <div class="col-sm-10">
                     <select  formControlName="estado" class="form-control" id="estado" required>
-                            <option selected>...</option>
                             <option value="ACTIVO">ACTIVO</option>
                             <option value="INACTIVO">INACTIVO</option>
-                        </select>
+                    </select>
                 </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="guardarBox()">Guardar</button>
+        <button type="button" class="btn btn-info mr-1"  (click)="guardarBox()">Guardar</button>
     </div>
 </ng-template>
 
@@ -109,7 +108,7 @@
 <!--Modal para  listar boxes-->
 
 <ng-template #content2 let-modal>
-    <div class="modal-header">
+    <div class="modal-header  alert-info">
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>

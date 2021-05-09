@@ -6,6 +6,8 @@ import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ReservaService } from 'src/app/services/servicios/reserva.service';
 import { EmpleadoService } from '../../../services/servicios/empleado.service';
 import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reserva-list',
@@ -18,7 +20,8 @@ export class ReservaListComponent implements OnInit {
 
   constructor(private reservaService: ReservaService,
               private empleadoService: EmpleadoService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private router: Router) { }
   reservas: any;
   model: NgbDateStruct;
   fecha;
@@ -29,7 +32,9 @@ export class ReservaListComponent implements OnInit {
   filtroEmpleado:'';
 
   ngOnInit() {
-    this.reservaService.listarRecursos().subscribe( (resp: any) =>  this.reservas = resp  );
+    this.reservaService.listarRecursos().subscribe( (resp: any) => { 
+      this.reservas = resp ; 
+      console.log(this.reservas) } );
   }
 
   // tslint:disable-next-line:member-ordering
@@ -40,7 +45,7 @@ export class ReservaListComponent implements OnInit {
 
 
 
-  cambiaLado(valor) {
+  buscarFecha(valor) {
     this.lado = valor;
     console.log(this.lado);
 
@@ -61,11 +66,19 @@ export class ReservaListComponent implements OnInit {
 
 buscar(termino: String){
   console.log(termino);
-  this.reservaService.getBusqueda(termino)
-  .subscribe( (resp: any ) =>  {
-    console.log(resp);
-    this.reservas = resp;
-  });
+
+  if (termino === ""){
+    this.reservaService.listarRecursos().subscribe( (resp: any) => { 
+      this.reservas = resp ; 
+      console.log(this.reservas) } );
+  }else{
+    this.reservaService.getBusqueda(termino)
+    .subscribe( (resp: any ) =>  {
+      console.log(resp);
+      this.reservas = resp;
+    });
+  }
+  
 }
 
 getReservaReport(fecha) {
@@ -74,45 +87,28 @@ getReservaReport(fecha) {
 }
 
 confirmarReserva(id) {
-  Swal.fire({
-    title: 'Desea confirmar esta reserva?',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Si, confirmar!'
-    }).then((result) => {
-      if (result.value) {
-        this.reservaService.confirmarReserva(id).subscribe();
-        Swal.fire(
-          'Confirmado!',
-          'Los datos han sido confirmados.',
-          'success'
-        );
-      }
-    });
+  let peticion: Observable<any>;
+  peticion = this.reservaService.modificarRecurso( id, 'Confirmado');
+  peticion.subscribe((result: any) =>  {
+    Swal.fire(
+      'Reserva Confirmada!',
+      'success'
+    );
+    this.ngOnInit();
+  });
 }
 
 anularReserva(id: any, pos: any) {
-    Swal.fire({
-      title: 'Desea anular esta reserva?',
-      text: 'No podrás revertir esta operación!',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar!'
-      }).then((result) => {
-        if (result.value) {
-          this.reservas.splice(pos, 1);
-          this.reservaService.eliminarRecurso(id).subscribe();
-          Swal.fire(
-            'Eliminado!',
-            'Los datos han sido eliminados.',
-            'success'
-          );
-        }
-      });
+  let peticion: Observable<any>;
+  peticion = this.reservaService.modificarRecurso( id, 'ANULADO');
+  peticion.subscribe((result: any) =>  {
+    Swal.fire(
+      'Reserva Anulada!',
+      '',
+      'success'
+    );
+    this.ngOnInit();
+  });
 }
 
 //obtiene el pdf generado

@@ -12,6 +12,7 @@ import { MatTable } from '@angular/material/table';
 import { DetallesCompraService } from 'src/app/services/servicios/detalles-compra.service';
 import { MediosPagoService } from 'src/app/services/servicios/medios-pago.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 @Component({
   selector: 'app-compra-edit',
@@ -40,12 +41,13 @@ export class CompraEditComponent implements OnInit {
   selectedProd: any;
   esProducto: false;
   closeResult: string;
-  model: any;
 
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    public util: UtilesService,
+    private fmp: FormBuilder,
     private modalService: NgbModal,
     private compraService: ComprasService,
     private proveedorService: ProveedorService,
@@ -55,10 +57,10 @@ export class CompraEditComponent implements OnInit {
 
   form = this.fb.group({
     fecha: [this.fechaActual],
-    numeroFactura: [Validators.required],
-    timbrado: [Validators.required],
+    numeroFactura: ['', Validators.required],
+    timbrado: ['', Validators.required],
     montoTotal: [this.totalCompra, Validators.required],
-    proveedorId: [ Validators.required]
+    proveedorId: ['', Validators.required]
   });
 
   proveedorForm = this.fb.group({
@@ -66,15 +68,12 @@ export class CompraEditComponent implements OnInit {
     empresa: ['', Validators.required],
     direccion: ['', Validators.required],
     ciudad: ['', Validators.required],
-    ruc: ['', Validators.required],
-    telefono: ['', Validators.required],
-    celular: ['', Validators.required],
-    correo: ['',  Validators.required ],
-    nombreGerente: ['', Validators.required],
-    nombreProveedor: ['', Validators.required],
-    cargo: ['', Validators.required],
-    telefonoContacto: ['', Validators.required],
-    estado: ['', Validators.required],
+    ruc: ['', Validators.required]
+  });
+
+  formMedio = this.fmp.group({
+    codigo: ['', Validators.required],
+    descripcion: ['', Validators.required]
   });
 
 
@@ -152,19 +151,22 @@ export class CompraEditComponent implements OnInit {
   ngOnInit(): void {
     let currentDate = Date.now();
     this.proveedorService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.proveedores = resp  );
+    .subscribe( (resp: any[]) =>  {
+      this.proveedores = resp 
+      console.log(this.proveedores);
+    } );
 
-    this.productoService.listarRecurso()
+    this.productoService.listarRecursosActivos()
     .subscribe( (resp: any[]) =>  this.productos = resp  );
 
     const id = this.route.snapshot.params.id;
     if (typeof id !== 'undefined') {
       this.form = this.fb.group({
         fecha: [this.fechaActual],
-        numeroFactura: [Validators.required],
-        timbrado: [Validators.required],
+        numeroFactura: ['',Validators.required],
+        timbrado: ['',Validators.required],
         montoTotal: [this.totalCompra, Validators.required],
-        proveedorId: [ Validators.required]
+        proveedorId: [ '', Validators.required]
       });
       this.compraService.getRecurso(id)
        .subscribe ((data: any) => {
@@ -239,9 +241,6 @@ export class CompraEditComponent implements OnInit {
   }
 
 
-
-  
-
   //open modal PROveedor
   openFormProveedor(content) {  
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
@@ -250,8 +249,8 @@ export class CompraEditComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-  }
-//example-container
+  }   
+
 
   guardarProveedor(){
     console.log(this.proveedorForm.value);
@@ -271,6 +270,7 @@ export class CompraEditComponent implements OnInit {
     
   }
 
+ 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';

@@ -56,6 +56,7 @@ import { MediosPagoComponent } from './components/parametricos/medios-pago/medio
 import { ComprobanteComponent } from './components/parametricos/comprobante/comprobante.component';
 import { PuntosExpedicionComponent } from './components/parametricos/puntos-expedicion/puntos-expedicion.component';
 import { CajeroGuard } from './guards/cajero.guard';
+import { ListarComponent } from './components/parametricos/planilla/listar.component';
 
 const routes: Routes = [
   { path: '',

@@ -1,22 +1,38 @@
-<br>
-<div class="container-fluid">
-    <div class="row">
-        <h2 class="display">Compras</h2>
-        <div class="col text-right">
-            <button routerLink="/ventas/agregar" class="btn btn-sm btn-info mr-1">
-       <i class="fas fa-plus"></i> Agregar
-      </button><br>
-        </div>
+<h2 class="display">Gestión de Facturas</h2>
+
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
     </div>
+    <input #termino type="text" class="form-control" placeholder="Buscar factura..." aria-label="Username"
+      aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
+      <form class="form-inline" >
+        <div class="form-group" *ngIf="this.valor == false">
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <p>&nbsp;</p>
+    <button routerLink="/ventas/agregar" class="btn btn-info mr-1">
+      <i class="fas fa-plus"></i> Agregar
+    </button>
+  </div>
+
+
+
     <div class="card mb-4">
-        <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de VENTAS</div>
+        <div class="card-header"><i class="fas fa-table mr-1"></i>FACTURAS</div>
         <div class="card-body">
             <div class="table-responsive" id="tb">
                 <table id="my" *ngIf="ventas.length >  0" class="table table-hover animated fadedIn faster table  display">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Id</th>
                             <th scope="col">Fecha</th>
                             <th scope="col">Monto total</th>
                             <th scope="col">Numero de factura</th>
@@ -29,7 +45,6 @@
                     <tbody>
                         <tr *ngFor="let v of ventas | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                             <td>{{ i + 1}}</td>
-                            <td>{{ v.ventasId}}</td>
                             <td>{{ v.fecha}}</td>
                             <td>{{ util.numberWithCommas(v.montoTotal)}}</td>
                             <td>{{'001-'+ v.comprobanteId.puntoExpedicionCodigo + '-' + ceroIzquierda(v.numeroComprobante, 7) }}</td>
@@ -210,7 +225,7 @@
                                         <i class="fas fa-pencil-alt "></i>
                                     </button>-->
 
-                                    <button class="btn btn-sm btn-danger mr-1 " data-toggle="tooltip" data-type="warning" data-placement="top" title="Anular" (click)="borrar(v.ventasId, i)">
+                                    <button class="btn btn-sm btn-danger mr-1 " data-toggle="tooltip" data-type="warning" data-placement="top" title="Anular" (click)="anularFactura(v.ventasId, i)">
                                         Anular  <i class="fas fa-trash" ></i>
                                     </button>
                                 </td>
@@ -230,3 +245,4 @@
             <i class="fa fa-exclamation fa-2x"></i>
         </p>
     </div>
+

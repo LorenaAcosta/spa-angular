@@ -30,9 +30,9 @@ export class VentaService {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
   }
 
-  modificarRecurso(recurso, id) {
-    console.log(recurso);
-    return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
+  modificarRecurso(id, estado) {
+    console.log(estado);
+    return this.http.put(this.recurosBaseURL + 'modificar/' + id, estado);
   }
 
   eliminarRecurso(id) {
@@ -57,6 +57,15 @@ export class VentaService {
     
     return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
     
+    }
+
+
+    getBusqueda(id) {
+      return this.http.get(this.recurosBaseURL + 'busqueda-ventas/' + id);
+    }
+
+    listarporfecha(fecha) {
+      return this.http.get(this.recurosBaseURL + 'listarporfecha/' + fecha);
     }
 
 }

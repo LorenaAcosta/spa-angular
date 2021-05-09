@@ -11,7 +11,7 @@
     <form class="form-inline">
         <div class="form-group">
             <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)" ngbDatepicker #d="ngbDatepicker">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="buscarFecha($event)" ngbDatepicker #d="ngbDatepicker">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
                 </div>
@@ -47,19 +47,19 @@
                 <th>Opciones</th>
             </tr>
           </thead>
-          <tbody *ngFor="let item of reservas | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
-            <tr *ngFor="let reserva of reservas | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index ">
+          <tbody *ngFor="let item of reservas | paginate: {itemsPerPage: 10 , currentPage: pageActual};let i = index  ">
+            <tr>
                 <td>{{ i + 1}}</td>
-                <td>{{ reserva.disponibleId.empleadoId.nombre}}</td>
-                <td>{{ reserva.fechaReserva}}</td>
-                <td>{{ reserva.hora}}</td>
-                <td>{{ reserva.disponibleId.servicioId.nombre}}</td>
-                <td>{{ reserva.usuarioId.nombre.concat(' ', reserva.usuarioId.apellido ) }}</td>
-                <td>{{ reserva.estado }}</td>
+                <td>{{ item.disponibleId.empleadoId.nombre }}</td>
+                <td>{{ item.fechaReserva}}</td>
+                <td>{{ item.hora}}</td>
+                <td>{{ item.disponibleId.servicioId.descripcion}}</td>
+                <td>{{ item.usuarioId.nombre  }}</td>
+                <td >{{ item.estado }}</td>
                 <td>
-                    <button class="btn btn-info mr-1" placement="top" (click)="confirmarReserva(reserva.reservaDetalleId)" 
+                    <button [disabled]="item.estado==='Confirmado'" class="btn btn-info mr-1" placement="top" (click)="confirmarReserva(item.reservaId)" 
                     ngbTooltip="Confirmar"> <i class="far fa-check-circle"></i></button>
-                    <button class="btn btn-danger mr-1" placement="top" (click)="anularReserva(reserva.reservaDetalleId, i)" 
+                    <button [disabled]="item.estado==='Anulado'" class="btn btn-danger mr-1" placement="top" (click)="anularReserva(item.reservaId, i)" 
                     ngbTooltip="Anular"> <i class="fas fa-ban"></i></button>
                 </td>
             </tr>
