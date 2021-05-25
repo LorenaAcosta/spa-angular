@@ -17,14 +17,21 @@ export class AutenticadoGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot) {
-      console.log(this.usuarioService.validaToken());
+      console.log('expiro?', this.usuarioService.getExpiracion());
+
+      if ( this.usuarioService.getExpiracion() ) {
+        Swal.fire('Error', 'Su sesión ha expirado...', 'error');
+        this.router.navigateByUrl('/');
+        return false;
+      }
+
       return this.usuarioService.validaToken()
         .pipe(
           tap( estaAutenticado => {
             if ( !estaAutenticado ) {
               Swal.fire('Error', 'No tiene permisos para acceder a esta pagina...', 'error');
               this.router.navigateByUrl('/');
-            }
+            } 
           })
         );
   }

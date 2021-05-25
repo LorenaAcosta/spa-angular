@@ -12,11 +12,18 @@ export class ClienteListarComponent implements OnInit {
   clientes: any[] = [];
   index = 0;
   pageActual: 1;
+  admin: boolean;
   constructor(private clienteService: ClienteService) { }
 
   ngOnInit() {
     this.clienteService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.clientes = resp );
+
+    if(localStorage.getItem('admin') == 'true'){
+      this.admin = true;
+    } else{
+      this.admin = false;
+    }
   }
 
   borrar(id: any, pos: any) {
@@ -53,7 +60,7 @@ export class ClienteListarComponent implements OnInit {
       this.clienteService.getBusqueda(termino)
       .subscribe( (resp: any ) =>  {
         console.log(resp);
-        this.clientes = resp;
+        this.clientes = resp; 
       });
     }
   }

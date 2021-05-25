@@ -57,6 +57,9 @@ import { ComprobanteComponent } from './components/parametricos/comprobante/comp
 import { PuntosExpedicionComponent } from './components/parametricos/puntos-expedicion/puntos-expedicion.component';
 import { CajeroGuard } from './guards/cajero.guard';
 import { ListarComponent } from './components/parametricos/planilla/listar.component';
+import { UsuarioSistemaComponent } from './components/parametricos/usuario-sistema/usuario-sistema.component';
+import { RolComponent } from './components/parametricos/rol/rol.component';
+import { RecepcionGuard } from './guards/recepcion.guard';
 
 const routes: Routes = [
   { path: '',
@@ -68,12 +71,12 @@ const routes: Routes = [
         path: 'categoria', data: { title: 'Categorias' },
         children: [
           // { path: '', component: UsuariosComponent, data: { title: 'Listado' } }
-          { path: 'agregar', component: CategoriaEditComponent, data: { title: 'Crear Categoria' }, },
-          { path: 'listar', component: CategoriaListarComponent,  data: { title: 'Listar Categoria' }, },
-          { path: 'categorias', component: CategoriaListar2Component, data: { title: 'Listar Categoria' }, },
-          { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' }, },
-          { path: 'upload/:id', component: CategoriaEditComponent , data: { title: 'Upload Categoria' }, },
-         { path: 'modificar/:id', component: CategoriaEditComponent , data: { title: 'Modificar Categoria' } },
+          { path: 'agregar', component: CategoriaEditComponent, canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Crear Categoria' }, },
+          { path: 'listar', component: CategoriaListarComponent, canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Listar Categoria' }, },
+          { path: 'categorias', component: CategoriaListar2Component, canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Listar Categoria' }, },
+          { path: 'modificar/:id', component: CategoriaEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Modificar Categoria' }, },
+          { path: 'upload/:id', component: CategoriaEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Upload Categoria' }, },
+         { path: 'modificar/:id', component: CategoriaEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Modificar Categoria' } },
         ]
       },
       {
@@ -87,44 +90,45 @@ const routes: Routes = [
       {
         path: 'cliente', data: { title: 'Cliente' },
         children: [
-          { path: 'registrar', component: ClienteEditComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Crear Cliente' }, },
-          { path: 'listar', component: ClienteListarComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Listar Cliente' }, },
-          { path: 'modificar/:id', component: ClienteEditComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Editar Cliente' } }
+          { path: 'registrar', component: ClienteEditComponent , canActivate: [ AutenticadoGuard, CajeroGuard, RecepcionGuard], data: { title: 'Crear Cliente' }, },
+          { path: 'listar', component: ClienteListarComponent , canActivate: [ AutenticadoGuard, CajeroGuard, RecepcionGuard], data: { title: 'Listar Cliente' }, },
+          { path: 'modificar/:id', component: ClienteEditComponent , canActivate: [ AutenticadoGuard, CajeroGuard, RecepcionGuard], data: { title: 'Editar Cliente' } }
          ]
       },
       {
         path: 'empleado', data: { title: 'Empleado' },
         children: [
-          { path: 'agregar', component: EmpleadoEditComponent , data: { title: 'Crear Empleado' }, },
-          { path: 'listar', component: EmpleadoListarComponent , data: { title: 'Listar Empleado' }, },
-          { path: 'modificar/:id', component: EmpleadoEditComponent , data: { title: 'Editar Empleado' } },
-          { path: 'asignar-horario/:id', component: HorarioComponent , data: { title: 'Asignar Horario Empleado' } },
-          { path: 'listar-horario/:id', component: HorarioListarComponent , data: { title: 'Listar Horario Empleado' } },
-          { path: 'asignar-disponibilidad/:id', component: DisponibleComponent , data: { title: 'Asignar Disponibilidad Empleado' } },
+          { path: 'agregar', component: EmpleadoEditComponent , canActivate: [ AutenticadoGuard], data: { title: 'Crear Empleado' }, },
+          { path: 'listar', component: EmpleadoListarComponent , canActivate: [ AutenticadoGuard], data: { title: 'Listar Empleado' }, },
+          { path: 'modificar/:id', component: EmpleadoEditComponent , canActivate: [ AutenticadoGuard], data: { title: 'Editar Empleado' } },
+          { path: 'asignar-horario/:id', component: HorarioComponent , canActivate: [ AutenticadoGuard], data: { title: 'Asignar Horario Empleado' } },
+          { path: 'listar-horario/:id', component: HorarioListarComponent , canActivate: [ AutenticadoGuard], data: { title: 'Listar Horario Empleado' } },
+          { path: 'asignar-disponibilidad/:id', component: DisponibleComponent , canActivate: [ AutenticadoGuard], data: { title: 'Asignar Disponibilidad Empleado' } },
         ]
       },
       {
         path: 'producto', data: { title: 'Producto' },
         children: [
-          { path: 'agregar', component: ProductoEditComponent , data: { title: 'Crear Producto' }, },
-          { path: 'listar', component:  ProductoListarComponent, data: { title: 'Listar Producto' }, },
-          { path: 'modificar/:id', component: ProductoEditComponent , data: { title: 'Editar Producto' } } ]
+          { path: 'agregar', component: ProductoEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Crear Producto' }, },
+          { path: 'listar', component:  ProductoListarComponent, canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Listar Producto' }, },
+          { path: 'modificar/:id', component: ProductoEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Editar Producto' } } ]
       },
       {
         path: 'servicio', data: { title: 'Servicio' },
         children: [
-          { path: 'agregar', component: ServicioEditComponent , data: { title: 'Crear Servicio' }, },
-          { path: 'listar', component:  ServicioListarComponent, data: { title: 'Listar Servicios' }, },
-          { path: 'servicio', component:  ServicioComponent, data: { title: 'Listar Servicios' }, },
-          { path: 'modificar/:id', component: ServicioEditComponent , data: { title: 'Editar Servicio' } },
-          { path: 'asignar-boxes/:id', component: DisponibleBoxComponent , data: { title: 'Asignar Boxes Servicio' } }
+          { path: 'agregar', component: ServicioEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Crear Servicio' }, },
+          { path: 'listar', component:  ServicioListarComponent, canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Listar Servicios' }, },
+          { path: 'servicio', component:  ServicioComponent, canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Listar Servicios' }, },
+          { path: 'modificar/:id', component: ServicioEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Editar Servicio' } },
+          { path: 'asignar-boxes/:id', component: DisponibleBoxComponent , canActivate: [ AutenticadoGuard], data: { title: 'Asignar Boxes Servicio' } }
         ]
       },
       {
         path: 'reserva', data: { title: 'Reserva' },
         children: [
-          { path: 'agregar', component: ReservEditComponent , data: { title: 'Agregar Reserva' }, },
-          { path: 'listar', component: ReservaListComponent , data: { title: 'Listar Reserva' }, }
+          { path: 'agregar', component: ReservEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Agregar Reserva' }, },
+          { path: 'listar', component: ReservaListComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Listar Reserva' }, },
+          { path: 'mis-reservas/:id', component: ReservaListComponent , canActivate: [ AutenticadoGuard], data: { title: 'Mis Reservas' }, }
          ]
       },
       {
@@ -141,23 +145,24 @@ const routes: Routes = [
       {
         path: 'planilla', data: { title: 'Planilla' },
         children: [
-          { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' }, }
+          { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' }, },
+          { path: 'listar-salario', component: ListarComponent , data: { title: 'Listar Planilla' }, }
          ]
       },
       {
         path: 'proveedor', data: { title: 'Proveedores' },
         children: [
-          { path: 'agregar', component: ProveedorEditComponent , data: { title: 'Crear proveedor' }, },
-          { path: 'listar', component: ProveedorComponent , data: { title: 'Listar Proveedores' }, },
-          { path: 'modificar/:id', component: ProveedorEditComponent , data: { title: 'Editar Proveedor' }, }
+          { path: 'agregar', component: ProveedorEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Crear proveedor' }, },
+          { path: 'listar', component: ProveedorComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Listar Proveedores' }, },
+          { path: 'modificar/:id', component: ProveedorEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Editar Proveedor' }, }
          ]
       },
       {
         path: 'compras', data: { title: 'Compras' },
         children: [
-          { path: 'agregar', component: CompraEditComponent , data: { title: 'Crear compra' }, },
-          { path: 'listar', component: CompraComponent , data: { title: 'Listar compras' }, },
-           { path: 'modificar/:id', component: CompraEditComponent , data: { title: 'Editar compra' }, }
+          { path: 'agregar', component: CompraEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Crear compra' }, },
+          { path: 'listar', component: CompraComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Listar compras' }, },
+           { path: 'modificar/:id', component: CompraEditComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Editar compra' }, }
          ]
       },
       {
@@ -175,9 +180,18 @@ const routes: Routes = [
         path: 'config', data: { title: 'Configuraciones' },
         children: [
           { path: 'tipo-comprobante/agregar', component: TipoComprobanteComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Tipo Comprobante' }, },
-          { path: 'impuesto/agregar', component: ImpuestoComponent , data: { title: 'Impuesto' }, },
+          { path: 'impuesto/agregar', component: ImpuestoComponent , canActivate: [ AutenticadoGuard, RecepcionGuard], data: { title: 'Impuesto' }, },
           { path: 'medios-pago/agregar', component: MediosPagoComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Medio Pago' }, },
           { path: 'comprobante/agregar', component: ComprobanteComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Comprobante' }, }
+          //{ path: 'usuarios-sistema/agregar', component: UsuarioSistemaComponent , canActivate: [ AutenticadoGuard, AdminGuard], data: { title: 'Crear nuevo usuario' }, },
+          //{ path: 'usuarios-sistema/rol:id', component: RolComponent , data: { title: 'Asignar roles de usuarios' }, }
+       ]
+      },
+      {
+        path: 'usuarios-sistema', data: { title: 'Usuarios del sistema' },
+        children: [
+          { path: 'agregar', component: UsuarioSistemaComponent , canActivate: [ AutenticadoGuard, AdminGuard], data: { title: 'Crear nuevo usuario' }, },
+          { path: 'rol/:id', component: RolComponent , canActivate: [ AutenticadoGuard, AdminGuard], data: { title: 'Asignar roles de usuarios' }, }
        ]
       },
       {

@@ -45,33 +45,13 @@ export class NavbarService {
       submenu: [
         {titulo: 'Empleados', url: '/empleado/listar'},
         {titulo: 'Pagos a Empleados', url: '/empleado/listar'},
-        {titulo: 'Cargar Facturas', url: '/compras/listar'},
-        {titulo: 'Impuesto', url: '/config/impuesto/agregar'}
+        {titulo: 'Mantenimiento Usuarios', url:'/usuarios-sistema/agregar'}
       ]
     }
   ];
 
   menu1: any[] = [
-    {
-      titulo: 'VISTA PARA USUARIOS NO ADMIN',
-      url: '',
-      submenu: [
-        {titulo: 'Servicios', url: '/servicio/listar'},
-        {titulo: 'Productos', url: '/producto/listar'},
-        {titulo: 'Categorias', url: '/categoria/listar'},
-        {titulo: 'Medios de Pago', url: '/config/medios-pago/agregar'}
-      ]
-    },
-    {
-      titulo: 'RRHH NO ADMIN',
-      url: '',
-      submenu: [
-        {titulo: 'Empleados', url: '/empleado/listar'},
-        {titulo: 'Pagos a Empleados', url: '/empleado/listar'},
-        {titulo: 'Cargar Facturas', url: '/compras/listar'},
-        {titulo: 'Impuesto', url: '/config/impuesto/agregar'}
-      ]
-    }
+    
   ];
 
   menuCaja: any[] = [
@@ -84,6 +64,29 @@ export class NavbarService {
         {titulo: 'Clientes', url: '/cliente/listar'},
         {titulo: 'Comprobante', url: '/config/comprobante/agregar'},
         {titulo: 'Tipo Comprobante', url: '/config/tipo-comprobante/agregar'}
+      ]
+    }
+  ];
+
+  menuRecepcion: any[] = [
+    {
+      titulo: 'GESTIÓN',
+      url: '',
+      submenu: [
+        {titulo: 'Clientes', url: '/cliente/listar'},
+        {titulo: 'Servicios', url: '/servicio/listar'},
+        {titulo: 'Categorias', url: '/categoria/listar'},
+        {titulo: 'Reservas', url: '/reserva/listar'}
+      ]
+    },
+    {
+      titulo: 'COMPRAS',
+      url: '',
+      submenu: [
+        {titulo: 'Inventario Productos', url: '/producto/listar'},
+        {titulo: 'Proveedores', url: '/proveedor/listar'},
+        {titulo: 'Cargar Facturas', url: '/compras/listar'},
+        {titulo: 'Impuesto', url: '/config/impuesto/agregar'}
       ]
     }
   ];

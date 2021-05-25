@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { BoxesService } from 'src/app/services/servicios/boxes.service';
+import { UsuarioService } from '../../../services/servicios/usuario.service';
 
 @Component({
   selector: 'app-calendar',
@@ -60,6 +61,7 @@ export class CalendarComponent implements OnInit {
   constructor(private fb: FormBuilder,
               private router: Router,
               private calendar: NgbCalendar,
+              private usuarioService: UsuarioService,
               private config: NgbDatepickerConfig,
               private route: ActivatedRoute,
               private horarioService: HorarioService,
@@ -149,12 +151,22 @@ export class CalendarComponent implements OnInit {
 
 
   agendar() {
+    if (!this.usuarioService.obtenerUsuarioLogueado()){
+      console.log('no está logueado');
+      Swal.fire(
+        'Atención!',
+        'Debe iniciar sesión para continuar!',
+        'info'
+        );
+      this.router.navigateByUrl('/login');
+      return false;
+    }
     this.printedOption = this.selectedOption;
     this.form.controls.empleado.setValue( this.empleadoId);
     this.form.controls.fechaReserva.setValue( this.selectedDate );
     this.form.controls.hora.setValue(this.selectedOption.toString().substr(-20, 5));
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
-    this.form.controls.usuarioId.setValue(1);
+    this.form.controls.usuarioId.setValue(this.usuarioService.obtenerUsuarioLogueado());
     this.form.controls.estado.setValue('pendiente');
     //setear el box -> disponibilidadBoxId
     let peticion: Observable<any>;

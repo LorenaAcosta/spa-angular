@@ -87,6 +87,8 @@ import { ComprobanteListarComponent } from './components/parametricos/comprobant
 import { PuntosExpedicionComponent } from './components/parametricos/puntos-expedicion/puntos-expedicion.component';
 import { ListarComponent } from './components/parametricos/planilla/listar.component';
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
+import { UsuarioSistemaComponent } from './components/parametricos/usuario-sistema/usuario-sistema.component';
+import { RolComponent } from './components/parametricos/rol/rol.component';
 
 
 
@@ -152,7 +154,9 @@ import { DisponibleComponent } from './components/parametricos/disponible/dispon
     PagesComponent,
     NavbarComponent,
     PuntosExpedicionComponent, 
-    ListarComponent
+    ListarComponent,
+    UsuarioSistemaComponent,
+    RolComponent
   ],
   imports: [
     BrowserModule,

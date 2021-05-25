@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { URL_SERVICIOS } from '../../config/config';
 import { retry, map, filter, catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 @Injectable({
@@ -19,6 +20,7 @@ export class UsuarioService {
 
   constructor(
     public http: HttpClient,
+    private spinnerService: NgxSpinnerService,
     public router: Router
   ) {
     this.cargarStorage();
@@ -48,7 +50,13 @@ export class UsuarioService {
               );
     }
 
-
+    getRol() {
+      let user: Usuario;
+      user = JSON.parse( localStorage.getItem('usuario'));
+      console.log ('roles', user[0].nombre);
+      console.log ('roles', localStorage.getItem('usuario'));
+      return user.roles;
+    }
 
 
    cargarStorage() {
@@ -67,12 +75,21 @@ export class UsuarioService {
 
   }
 
-  logout() {
+  limpiarStorage(){
     localStorage.removeItem('token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('usuario');
     localStorage.removeItem('punto');
     localStorage.removeItem('admin');
+  }
+
+  logout() {
+    /*localStorage.removeItem('token');
+    localStorage.removeItem('refresh_token');
+    localStorage.removeItem('usuario');
+    localStorage.removeItem('punto');
+    localStorage.removeItem('admin');*/
+    this.limpiarStorage();
     this.router.navigate(['/login']);
   }
 
@@ -101,6 +118,7 @@ login( formData: any ) {
     headers: headers1,
     body: 'username=' + formData.username + '&password=' + formData.password + '&grant_type=password'
   };
+  this.spinner();
   return this.http.post( url, options.body, options )
   .pipe(
      map( (resp: any) => {
@@ -113,6 +131,13 @@ login( formData: any ) {
      })
    );
 
+}
+
+spinner(): void{
+  this.spinnerService.show();
+  setTimeout(() => {
+    this.spinnerService.hide();
+  }, 2000);
 }
 
 validaToken(): Observable<boolean> {
@@ -138,5 +163,40 @@ validaToken(): Observable<boolean> {
      catchError( error => of(false) )
    );
 }
+
+  //devuelve true si el token expiró, false si el token aun es valido
+  getExpiracion(){
+    if (localStorage.getItem('token')) {
+      const payload = JSON.parse( atob( localStorage.getItem('token').split('.')[1] ) );
+      const ahora = new Date().getTime();
+      if (ahora > payload.exp * 1000){
+        return true;
+      }else {
+        return false;
+      }
+    }
+  }
+
+  obtenerUsuarioLogueado() {
+    if (localStorage.getItem('token')) {
+      const payload = JSON.parse( atob( localStorage.getItem('token').split('.')[1] ) );
+      console.log('usuarioId', payload.usuarioId);
+      return payload.usuarioId;
+    }
+  }
+
+  obtenerPerfilUsuario(id) {
+    
+    return this.http.get(URL_SERVICIOS + '/usuarios/encontrar/' + id);
+  }
+  modificarPerfilUsuario(recurso, id) {
+    //const url = URL_SERVICIOS + '/usuarios/modificar/' + id, recurso;
+    return this.http.put(URL_SERVICIOS + '/usuarios/modificar/' + id, recurso);
+  }
+
+  obtenerRoles() {
+    const url = URL_SERVICIOS + '/usuarios/listar-roles';
+    return this.http.get( url);
+  }
 
 }

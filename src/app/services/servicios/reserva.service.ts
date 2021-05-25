@@ -91,6 +91,9 @@ export class ReservaService {
       return this.http.get(this.recurosBaseURL + 'reservas-confirmadas/' + id + '/' + mes);
     }
  
+    misReservas(id) {
+      return this.http.get(this.recurosBaseURL + 'mis-reservas/' + id);
+    }
 
 
 }

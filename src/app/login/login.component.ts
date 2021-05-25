@@ -4,6 +4,7 @@ import { Router, Route } from '@angular/router';
 import { NgForm, FormBuilder, Validators } from '@angular/forms';
 import { Usuario } from '../models/usuario.model';
 import { UsuarioService } from '../services/servicios/usuario.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 
 // declare function init_plugins();

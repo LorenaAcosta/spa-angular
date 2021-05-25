@@ -130,6 +130,7 @@ export class VentaComponent implements OnInit {
     this.detallesVentaService.getRecurso(id)
     .subscribe( (resp: any[]) => this.detalles = resp);
     console.log(this.detalles);
+    this.getFacturaReport(id);
   }
 
   anularFactura( id: any, pos: any) {

@@ -80,6 +80,7 @@ export class HorarioComponent implements OnInit {
         'Se guardaron los datos!',
         'success'
       );
+      this.ngOnInit();
     });
     this.modalService.dismissAll();
     this.ngOnInit();

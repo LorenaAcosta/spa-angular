@@ -48,6 +48,7 @@ export class ImpuestoComponent implements OnInit {
           'Se guardaron los datos!',
           'success'
         );
+        this.ngOnInit();
       });
       this.form.reset(this.form.controls.value);
     }

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../services/servicios/usuario.service';
 import { AutenticadoGuard } from './autenticado.guard';
@@ -9,7 +8,7 @@ import { AutenticadoGuard } from './autenticado.guard';
 @Injectable({
   providedIn: 'root'
 })
-export class CajeroGuard implements CanActivate {
+export class RecepcionGuard implements CanActivate {
   constructor(
     public router: Router,
     public autenticado: AutenticadoGuard,
@@ -27,7 +26,7 @@ export class CajeroGuard implements CanActivate {
         
         for ( let i = 0; i < roles.length; i++) {
           console.log(roles[i].nombre)
-          if (roles[i].nombre === 'ROLE_CAJERO' ||  roles[i].nombre === 'ROLE_ADMIN' || roles[i].nombre === 'ROLE_RECEPCION') {
+          if (roles[i].nombre === 'ROLE_RECEPCION' ||  roles[i].nombre === 'ROLE_ADMIN' || roles[i].nombre === 'ROLE_CAJERO') {
             band = 1;
             break;
           }
