@@ -6,7 +6,7 @@
         <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
     </div>
 
-    <input #termino type="text" class="form-control" placeholder="Buscar empleado..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)"> &nbsp;
+    <input #termino type="text" class="form-control" placeholder="Buscar empleado..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscarTermino()"> &nbsp;
 
     <button routerLink="/planilla/listar-salario" class="btn btn-info mr-1">
       <i class="fas fa-plus"></i> Agregar

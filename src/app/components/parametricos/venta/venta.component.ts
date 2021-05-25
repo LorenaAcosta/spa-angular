@@ -47,7 +47,7 @@ export class VentaComponent implements OnInit {
     private detallesVentaService: DetalleVentaService,
     private comprobanteService: ComprobanteService,
     private route: ActivatedRoute,
-    private util: UtilesService,
+    public util: UtilesService,
     private spinnerService: NgxSpinnerService
   ) { }
 

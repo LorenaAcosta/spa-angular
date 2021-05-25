@@ -14,7 +14,7 @@ import { CompraEditComponent } from './compra-edit.component';
 export class CompraComponent implements OnInit {
 
   compras: any[] = [];
-  cabecera: any[] = [];
+  cabecera: any;
   detalles: any[] = [];
   compra: any;
   index: 0;

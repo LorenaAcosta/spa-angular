@@ -262,11 +262,11 @@ export class CompraEditComponent implements OnInit {
         'Se guardaron los datos!',
         'success'
       );
+      this.proveedorService.listarRecurso()
+      .subscribe( (resp: any[]) =>  this.proveedores = resp  );
     });
     this.proveedorForm.reset(this.proveedorForm.controls.empresa );
     this.modalService.dismissAll();
-    this.proveedorService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.proveedores = resp  );
     
   }
 

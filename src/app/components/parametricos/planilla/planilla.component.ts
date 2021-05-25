@@ -9,11 +9,16 @@ import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 export class PlanillaComponent implements OnInit {
   
   empleados: any[] = [];
+  pageActual: any;
   constructor(private empleadoService: EmpleadoService) { }
 
   ngOnInit(): void {
     this.empleadoService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.empleados = resp );
+  }
+
+  buscarTermino(){
+    
   }
 
 }
