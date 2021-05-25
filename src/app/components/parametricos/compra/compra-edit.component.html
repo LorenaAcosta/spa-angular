@@ -1,63 +1,125 @@
-<br>
-<div class="container-fluid">
-    <div class="row">
-        <h5 class="display">Nueva compra</h5>
-        <div class="col text-right">
-            <button routerLink="/compras/listar" class="btn btn-info mr-1">
-       <i class="fas fa-arrow-left"></i> Regresar
-      </button>
+<form [formGroup]="form">
+
+    <!--Cabecera-->
+    <div class="alert alert-info" role="alert">
+                <div class="row">
+                  <div class="col-sm">
+                    <a class="pt-2 d-inline-block" href="/" data-abc="true">FACTURA</a><br>
+                    <a class="pt-2 d-inline-block" href="/" data-abc="true"></a>
+                  </div>
+                  <div class="col-sm">
+                   </div>
+                  <div class="col-sm float-right">
+                    <div class="form-group">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" >N° FACTURA</label>
+                            </div>
+                            <input [(ngModel)]="numeroFactura" formControlName="numeroFactura" type="text" value="{{numeroFactura}}" class="form-control" id="numeroFactura" placeholder="00-000-000000 -numero">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" id="inputGroup-sizing-sm">TIMBRADO</label>
+                            </div>
+                            <input [(ngModel)]="timbrado" formControlName="timbrado" type="timbrado" value="{{timbrado}}" class="form-control" id="timbrado" placeholder="timbrado">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">FECHA EMISIÓN</label>
+                            </div>
+                            <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+            <hr>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Proveeedor</label>
+                        </div>
+                        <select id="proveedorId" formControlName="proveedorId" class="form-control form-control-sm">
+                            <option selected>Seleccionar...</option>
+                            <option *ngFor="let p of proveedores" [ngValue]="p.proveedorId">
+                                {{ p.empresa }}
+                            </option>
+                        </select>
+                        <div class="input-group-prepend">
+                            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top"
+                             title="Agregar proveedor"   (click)="openFormProveedor(content)">
+                                <i class="fas fa-1x fa-plus-circle"></i>
+                                </button>
+                          </div>
+                    </div>
+                </div>
+                <div class="form-group col-sm-2 ">
+                </div>
+            </div>
+        <div class="form-group">
+            <div class="input-group input-group-sm mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">Monto Total</label>
+                </div>
+                <input [(ngModel)]="totalCompra" formControlName="montoTotal" type="montoTotal" value="{{ util.numberWithCommas(totalCompra)}}" class="form-control form-control-sm" id="montoTotal" disabled>
+                <div class="input-group-prepend">
+                    <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Gs.">
+                        <i class="fas fa-dollar-sign"></i> </button>
+                       
+                </div>
+            </div>
         </div>
+
+
+   </div>
+</form> 
+
+
+
+<hr>
+<h3 style="text-align: center;">DETALLES</h3>
+
+
+
+<!--Inicio tabla para detalles-->
+<div class="example-container" >
+
+    <div class="row">
+        <mat-form-field appearance="fill" style="width:30%; margin-left:10px;">
+            <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
+        </mat-form-field>
+
+        <!--<mat-form-field>
+            <input matInput [(ngModel)]="articuloselect.comprasId" type="number" placeholder="CompraId">
+        </mat-form-field>-->
+
+        <mat-form-field appearance="fill" style="width:30%;">
+            <input matInput [(ngModel)]="articuloselect.precioCompra" type="number" placeholder="Ingrese precio">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill" style="width:30%">
+            <mat-label>Seleccione el producto</mat-label>
+            <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
+            <option value="" selected></option>
+            <option *ngFor="let prod of productos" [ngValue]="prod" >
+                {{prod.descripcion}}
+            </option>
+            </select>
+        </mat-form-field>
+        <button mat-raised-button class="btn btn-info mr-1" (click)="agregar()" style="height:50px">Agregar</button>
     </div>
 </div>
-<hr>
-
-<div class="container-fluid">
-    <form [formGroup]="form">
-
-        <div class="form-group row-cols-6">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Fecha</label>
-            <div class="col-sm-3">
-                <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true>
-            </div>
-        </div>
-        <div class="form-group row-cols-6 ">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Monto Total</label>
-            <div class="col-sm-3">
-                <input [(ngModel)]="totalCompra" formControlName="montoTotal" type="montoTotal" value="{{totalCompra}}" class="form-control" id="montoTotal" disabled>
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="inputState" class="col-sm-2 col-form-label">Proveedor</label>
-            <div class="form-group col-md-3">
-                <select id="proveedorId" formControlName="proveedorId" class="form-control">
-              <option *ngFor="let p of proveedores" [ngValue]="p.proveedorId">
-                {{ p.empresa }}
-              </option>
-            </select>
-            </div>
-            <div class="d-inline ">
-                <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar cliente" [routerLink]="['/proveedor/agregar' ]">
-                <i class="fas fa-1x fa-plus-circle"></i>
-            </button>
-            </div>
-        </div>
 
 
-
-
-
-
-
-        <div class="form-group row">
-            <div class="col-sm-3">
-                <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary" (click)="guardar()">Guardar</button>
-            </div>
-        </div>
-    </form>
-</div>
+    
 
 <!--Agregar tabla para detalles-->
+
+<strong><p class="text-center">Productos</p></strong>
 <table mat-table [dataSource]="datos" class="mat-elevation-z8" #tabla1>
 
     <ng-container matColumnDef="cantidad">
@@ -84,39 +146,80 @@
         <th mat-header-cell *matHeaderCellDef> Borrar? </th>
         <td mat-cell *matCellDef="let j = index;">
             <button mat-raised-button color="warn" focusable="false" (click)="borrarFila(j)">
-                  Borrar?
-                </button>
+            Borrar? </button>
         </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columnas"></tr>
     <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
 </table>
-<div class="contenedor">
 
-    <mat-form-field>
-        <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
-    </mat-form-field>
 
-    <!--<mat-form-field>
-        <input matInput [(ngModel)]="articuloselect.comprasId" type="number" placeholder="CompraId">
-    </mat-form-field>-->
 
-    <mat-form-field>
-        <input matInput [(ngModel)]="articuloselect.precioCompra" type="number" placeholder="Ingrese precio">
-    </mat-form-field>
 
-    <mat-form-field>
-        <mat-label>Seleccione el producto</mat-label>
-        <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
-          <option value="" selected></option>
-          <option *ngFor="let prod of productos " [ngValue]="prod" >
-            {{prod.descripcion}}
-          </option>
-        </select>
-    </mat-form-field>
+    <button routerLink="/compras/listar" class="btn btn-sm btn-info mr-1">
+    <i class="fas fa-arrow-left"></i> Regresar
+    </button>
+    <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1"
+     (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
+    
 
-    <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
 
-</div>
-<!--Fin tabla para detalles-->
+
+<!--     Modal para agregar un nuevo Proveedor-->
+<ng-template #content let-modal>
+    <div class="modal-header alert-info">
+        <h2 class="modal-title" id="modal-basic-title">Añadir Proveedor</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="proveedorForm">
+            <div class="row">
+                <div class="bd-content">
+                  <div class="form-row">
+                    <div class="form-group col-sm-6">
+                      <label>Razón Social</label>
+                      <input formControlName="razonSocial" placeholder="razonSocial" type="razonSocial" maxlength="30"
+                        class="form-control form-control-sm"  required>
+                    </div>
+                    <div class="form-group col-sm-6">
+                      <label>Nombre de Empresa</label>
+                      <input formControlName="empresa" placeholder="empresa" type="empresa" maxlength="30"
+                        class="form-control form-control-sm"  required>
+                    </div>
+                  </div>
+          
+                  <div class="form-row">
+                    <div class="form-group col-sm-12">
+                      <label>Dirección</label>
+                      <input formControlName="direccion" placeholder="dirección" type="direccion" maxlength="60"
+                        class="form-control form-control-sm" required>
+                    </div>
+                  </div>
+          
+                  <div class="form-row">
+                    <div class="form-group col-sm-6">
+                      <label>Ciudad</label>
+                      <input formControlName="ciudad" placeholder="ciudad" type="ciudad" maxlength="30"
+                        class="form-control form-control-sm"  required>
+                    </div>
+                    <div class="form-group col-sm-6">
+                      <label for="inputState">R.U.C.</label>
+                      <input formControlName="ruc" type="ruc" maxlength="30"
+                        class="form-control form-control-sm" id="ruc" required>
+                    </div>
+                  </div>
+              </div> 
+            </div>
+          </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="!this.proveedorForm.valid" class="btn btn-outline-dark" 
+        (click)="guardarProveedor()"> <i class="fas fa-save"></i>Guardar</button>
+    </div>
+</ng-template>
+
+
+

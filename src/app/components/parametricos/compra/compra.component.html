@@ -1,88 +1,59 @@
-<br>
-<div class="container-fluid">
-    <div class="row">
-        <h5 class="display">Compras</h5>
-        <div class="col text-right">
-            <button routerLink="/compras/agregar" class="btn btn-sm btn-info mr-1">
-       <i class="fas fa-plus"></i> Agregar
-      </button><br>
-        </div>
+<h2 class="display">Gestión de Facturas</h2>
+
+
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
     </div>
-    <div class="table-responsive">
-        <table *ngIf="compras.length >  0" class="table table-hover animated fadedIn faster">
-            <thead>
+    <input #termino type="text" class="form-control" placeholder="Buscar factura..." aria-label="Username"
+      aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
+      <form class="form-inline">
+        <div class="form-group">
+            <div class="input-group">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+        <hr/>
+    </form>
+    <p>&nbsp;</p>
+    <button routerLink="/compras/agregar" class="btn btn-info mr-1">
+      <i class="fas fa-plus"></i> Agregar
+    </button>
+  </div>
+
+
+
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Facturas cargadas</div>
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="compras.length>0" width="100%"
+              cellspacing="0">
+              <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Id</th>
                     <th scope="col">Fecha</th>
+                    <th scope="col">Factura</th>
+                    <th scope="col">Timbrado</th>
                     <th scope="col">Monto total</th>
                     <th scope="col">Proveedor</th>
-                    <th scope="col">Detalles</th>
                     <th scope="col">Opciones</th>
                 </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
                 <tr *ngFor="let c of compras | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                     <td>{{ i + 1}}</td>
-                    <td>{{ c.comprasId}}</td>
                     <td>{{ c.fecha}}</td>
+                    <td>{{ c.numeroFactura}}</td>
+                    <td>{{ c.timbrado}}</td>
                     <td>{{ c.montoTotal}}</td>
                     <td>{{ c.proveedorId.empresa}}</td>
                     <td>
-
-                        <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getDetalles( c.comprasId)">Detalles</button>
-                        <!-- Modal -->
-                        <div id="myModal" class="modal fade " role="dialog">
-                            <div class="modal-dialog modal-lg">
-
-                                <!-- Modal content-->
-                                <div class="modal-content col-lg-12 col-md-6">
-                                    <div class="modal-header bg-info row">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title">Detalles</h4>
-                                    </div>
-                                    <div class="modal-body">
-                                        <table *ngIf="c.detallesCollection.length >  0" class="table table-hover animated fadedIn faster">
-                                            <thead>
-                                                <tr>
-                                                    <th scope="col">#</th>
-                                                    <th scope="col">Id</th>
-                                                    <th scope="col">CompraId</th>
-                                                    <th scope="col">Cantidad</th>
-                                                    <th scope="col">Precio compra</th>
-                                                    <th scope="col">Producto</th>
-                                                    <th scope="col">Total</th>
-                                                    <!--<th scope="col">Opciones</th>-->
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index  ">
-                                                    <td>{{ j + 1}}</td>
-                                                    <td>{{ d.detalleId}}</td>
-                                                    <td>{{ d.comprasId }}</td>
-                                                    <td>{{ d.cantidad}}</td>
-                                                    <td>{{ d.precioCompra}}</td>
-                                                    <td>{{ d.productoId.descripcion}}</td>
-                                                    <td>{{ d.precioCompra * d.cantidad}}</td>
-                                                    <!--<td>
-                                                    <button class="btn btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
-                                                        <i class="fas fa-pencil-alt"></i>
-                                                    </button>
-                                                    <button class="btn btn-info mr-1" (click)="borrar(c.comprasId, i)">
-                                                        <i class="fas fa-trash"></i>
-                                                    </button>
-                                                </td>-->
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </div>
+                        <button  class="btn btn-sm btn-info mr-1"  (click)="openBox(content, c.comprasId)">Detalles</button>
                     </td>
                     <td>
                         <button class="btn btn-sm btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
@@ -92,15 +63,92 @@
                         <i class="fas fa-trash"></i>
                     </button>
                     </td>
-
                 </tr>
             </tbody>
-        </table>
-    </div>
-    <pagination-controls (pageChange)="pageActual = $event" class="my-pagination"></pagination-controls>
-    <div *ngIf="compras.length == 0" class="alertalert-warning text-center mt-3">
+            </table>
+            <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    
+    
+      <div *ngIf="compras.length == 0" class="alertalert-warning text-center mt-3">
         <h4 class="alert-heading">No hay registros</h4>
         <p>
             <i class="fa fa-exclamation fa-2x"></i>
         </p>
     </div>
+    
+
+
+    
+
+<!--Modal para agregar un nuevo Box-->
+<ng-template #content let-modal>
+    <div class="modal-header modal-header-info">
+        <h4 class="modal-title" id="modal-basic-title">Detalles de Factura</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row">
+            <h4 class="display">Fecha: {{ cabecera.fecha}}</h4>
+            <div class="col text-right">
+                <h4 class="display">Nro Factura: {{ cabecera.numeroFactura}}</h4>
+            </div>
+        </div>
+        <div class="row">
+            <h4 class="display">Proveedor: {{ cabecera.proveedorId.empresa}}</h4>
+            <div class="col text-right">
+                <h4 class="display">Timbrado: {{ cabecera.timbrado}}</h4>
+            </div>
+        </div>
+        
+        <table  class="table table-hover animated fadedIn faster">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio compra</th>
+                    <th scope="col">Producto</th>
+                    <th scope="col">Total</th>
+                    <!--<th scope="col">Opciones</th>-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index  ">
+                    <td>{{ j + 1}}</td>
+                    <td>{{ d.cantidad}}</td>
+                    <td>{{ d.precioCompra}}</td>
+                    <td>{{ d.productoId.descripcion}}</td>
+                    <td>{{ d.precioCompra * d.cantidad}}</td>
+                    <!--<td>
+                    <button class="btn btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button class="btn btn-info mr-1" (click)="borrar(c.comprasId, i)">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </td>-->
+                </tr>
+            </tbody>
+        </table>
+        <div class="alert alert-info" role="alert">
+            <h4 class="display text-right">MontoTotal: {{ cabecera.montoTotal}}</h4>
+        </div>
+  
+
+
+    </div>
+    <div class="modal-footer">
+        
+    </div>
+</ng-template>
+
+
+
+
+
+

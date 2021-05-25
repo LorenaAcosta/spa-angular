@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import jsPDF from 'jspdf';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { Observable } from 'rxjs';
 import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
 import { DetalleVentaService } from 'src/app/services/servicios/detalles-venta.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
@@ -35,27 +38,45 @@ export class VentaComponent implements OnInit {
   timbrado: any = null;
   comprobanteActual:any = null;
   nombrePdf = null;
+  valor= null;
+  model: NgbDateStruct;
+  lado;
 
   constructor(
     private ventasService: VentaService,
     private detallesVentaService: DetalleVentaService,
     private comprobanteService: ComprobanteService,
     private route: ActivatedRoute,
-    public util: UtilesService
+    public util: UtilesService,
+    private spinnerService: NgxSpinnerService
   ) { }
 
   ngOnInit(): void {
+    const id = this.route.snapshot.params.id;
+    console.log(id);
 
-    this.ventasService.listarRecurso()
-    .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+    localStorage.setItem('punto', id);
+    /*this.ventasService.listarRecurso()
+    .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );*/
+    
+    if (typeof id !== 'undefined') {
 
-    this.comprobanteService.getComprobanteActivo()
+      this.ventasService.listarRecursoPorPuntoExpedicion(id)
+      .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+
+      this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(id)
       .subscribe( (resp: any) => {
         this.comprobanteActual = resp,
         this.inicioVigencia = resp.inicioVigencia;
         this.finVigencia = resp.finVigencia;
         this.timbrado = resp.timbrado
       });
+    }else{
+      this.ventasService.listarRecurso()
+      .subscribe( (resp: any[]) =>  {this.ventas = resp, console.log(this.ventas) } );
+    }
+    this.valor = typeof id !== 'undefined';
+    console.log('valor: '+ this.valor);
 
     this.getNumeroComprobante(1);
     /*this.ventasService.getRecurso(id)
@@ -104,13 +125,15 @@ export class VentaComponent implements OnInit {
     this.ventasService.getRecurso(id)
     .subscribe( (resp: any[]) =>  this.venta = resp  );
   }
+  
   getDetalles(id) {
     this.detallesVentaService.getRecurso(id)
     .subscribe( (resp: any[]) => this.detalles = resp);
     console.log(this.detalles);
+    this.getFacturaReport(id);
   }
 
-  borrar( id: any, pos: any) {
+  anularFactura( id: any, pos: any) {
     Swal.fire({
       title: 'Estas seguro?',
       text: 'No podrás revertir esta operación!',
@@ -118,20 +141,23 @@ export class VentaComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Si, eliminar!'
+      confirmButtonText: 'Si, anular!'
       }).then((result) => {
         if (result.value) {
           this.ventas.splice(pos, 1);
-          this.ventasService.eliminarRecurso(id).subscribe();
+          -//this.ventasService.eliminarRecurso(id).subscribe();
+          this.ventasService.modificarRecurso(id, 'ANULADO').subscribe();
           Swal.fire(
-            'Eliminado!',
-            'Los datos han sido eliminados.',
+            'Anulado!',
+            'Los datos han sido anulados.',
             'success'
           );
         }
       });
+      this.ngOnInit();
   }
 
+  
   ceroIzquierda(numero, ancho) {
     const numberOutput = Math.abs(numero); /* Valor absoluto del número */
     const length = numero.toString().length; /* Largo del número */ 
@@ -163,6 +189,41 @@ export class VentaComponent implements OnInit {
     var fileURL = URL.createObjectURL(file);
     window.open(fileURL, "popup","width=600,height=600");
   })
+  }
+
+  buscar(termino: String){
+    if (termino == ''){
+      this.ventasService.listarRecurso()
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.ventas = resp;
+      });
+    }else{
+      this.ventasService.getBusqueda(termino)
+      .subscribe( (resp: any ) =>  {
+        console.log(resp);
+        this.ventas = resp;
+      });
+    }
+  }
+
+  
+  buscarFecha(valor) {
+    this.lado = valor;
+    console.log(this.lado);
+
+    // tslint:disable-next-line:prefer-const
+    let dateString = (this.model.year + '-'  + this.model.month + '-' + this.model.day as string);
+    console.log(dateString);
+    
+    this.ventasService.listarporfecha(dateString.toString())
+    .subscribe( (resp: any ) =>  {
+      this.ventas = resp;
+      console.log(this.ventas);
+    }  );
+
+   // this.getReservaReport(dateString.toString());
+   // this.arrayObject = this.reservas as string[];
   }
 
 }

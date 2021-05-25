@@ -1,16 +1,93 @@
-<br>
-<div class="container-fluid">
-    <div class="row">
-        <h5 class="display">Nueva venta</h5>
-        <div class="col text-right">
-            <button routerLink="/ventas/listar" class="btn btn-info mr-1">
-       <i class="fas fa-arrow-left"></i> Regresar
-      </button>
+<form [formGroup]="form">
+
+    <!--Cabecera-->
+    <div class="alert alert-info" role="alert">
+        <div class="card-header p-4">
+            <div class="row">
+                <div class="col-sm">
+                    <a class="pt-2 d-inline-block" href="/" data-abc="true">KATHY SPA.com</a><br>
+                    <a class="pt-2 d-inline-block" href="/" data-abc="true">RUC: 80031970-2</a>
+                </div>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm float-right">
+                    <h2 class="mb-0">Factura # {{'001-' + this.codigoPuntoExpedicion + '-'+ceroIzquierda(this.nextComprobante, 7)}}</h2>
+                    <h3>Fecha Emisión: {{currentDate | date:'yyyy-MM-dd' }} </h3>
+                    <h3>Timbrado: {{ timbrado }}</h3>
+                </div>
+            </div>
+            <hr>
+            <div class="form-row">
+                <div class="form-group col-sm-6">
+
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Cliente</label>
+                        </div>
+                        <select id="usuarioId" formControlName="usuarioId" class="form-control form-control-sm">
+                            <option *ngFor="let u of usuarios" [ngValue]="u.usuarioId">
+                              {{ u.nombre + ' ' + u.apellido }}
+                            </option>
+                          </select>
+                        <div class="input-group-prepend">
+                            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar cliente" (click)="openFormCliente(content)">
+                                <i class="fas fa-1x fa-plus-circle"></i>
+                                </button>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="form-group col-sm-2 ">
+                </div>
+                <div class="form-group col-sm-4 ">
+
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Forma de Pago</label>
+                        </div>
+                        <select id="medioPagoId" formControlName="medioPagoId" class="form-control form-control-sm">
+                          <option *ngFor="let m of medios" [ngValue]="m.medioPagoId">
+                            {{ m.descripcion }}
+                          </option>
+                        </select>
+                        <div class="input-group-prepend">
+                            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar Medio Pago" (click)="openFormMedio(content1)">
+                                <i class="fas fa-1x fa-plus-circle"></i>
+                                </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Monto Total</label>
+                    </div>
+                    <input [(ngModel)]="totalVenta" formControlName="montoTotal" type="montoTotal" value="{{ util.numberWithCommas(totalVenta)}}" class="form-control form-control-sm" id="montoTotal" disabled>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Gs.">
+                <i class="fas fa-dollar-sign"></i>
+                </button>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <input [(ngModel)]="fechaActual" formControlName="fecha" type="hidden" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fecha" disabled>
+            <input formControlName="numeroComprobante" type="hidden" value="{{'001-' + this.codigoPuntoExpedicion + '-'+ceroIzquierda(this.nextComprobante, 7)}}" class="form-control form-control-sm" id="numeroComprobante" disabled>
+
+
         </div>
     </div>
-</div>
-<hr>
 
+</form>
+
+
+<!--
 <div class="container-fluid">
     <form [formGroup]="form">
         <div class="form-group row">
@@ -21,16 +98,9 @@
         </div>
 
         <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label ">Monto Total</label>
-            <div class="col-sm-3">
-                <input [(ngModel)]="totalVenta" formControlName="montoTotal" type="montoTotal" value="{{ util.numberWithCommas(totalVenta)}}" class="form-control form-control-sm" id="montoTotal" disabled>
-            </div>
-        </div>
-
-        <div class="form-group row">
             <label for="inputPassword3" class="col-sm-2 col-form-label">Numero comprobante</label>
             <div class="col-sm-3">
-                <input formControlName="numeroComprobante" type="numeroComprobante" value="{{'001-001-'+ceroIzquierda(this.nextComprobante, 7)}}" class="form-control form-control-sm" id="numeroComprobante" disabled>
+                <input formControlName="numeroComprobante" type="numeroComprobante" value="{{'001-' + this.codigoPuntoExpedicion + '-'+ceroIzquierda(this.nextComprobante, 7)}}" class="form-control form-control-sm" id="numeroComprobante" disabled>
             </div>
         </div>
 
@@ -48,42 +118,6 @@
                 <i class="fas fa-1x fa-plus-circle"></i>
             </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header bg-info">
-                                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Registro de Medios de Pago</strong></h3>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <form [formGroup]="formMedio">
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Codigo</label>
-                                            <div class="col-sm-6">
-                                                <input formControlName="codigo" type="codigo" class="form-control" id="codigo" required>
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputPassword3" class="col-sm-4 col-form-label">Descripción</label>
-                                            <div class="col-sm-6">
-                                                <!--<input formControlName="descripcion" type="text" class="form-control" id="descripcion" required>-->
-                                                <textarea formControlName="descripcion" type="text" class="form-control" rows="1" style="max-height:50px;"> </textarea>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" [disabled]="!this.formMedio.valid" class="btn btn-info" (click)="guardarMedio()" data-dismiss="modal">Guardar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -102,105 +136,16 @@
                 <i class="fas fa-1x fa-plus-circle"></i>
             </button>
 
-                <!-- Modal -->
-                <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header bg-info">
-                                <h3 class="modal-title" id="exampleModalLongTitle"><strong>Registro de Clientes</strong></h3>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <form [formGroup]="formCliente">
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre de Usuario</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" autocomplete="username" class="form-control" id="username" placeholder="username" formControlName="username">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Contraseña</label>
-                                            <div class="col-sm-6">
-                                                <input type="password" autocomplete="current-password" class="form-control" id="password" formControlName="password">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Apellido</label>
-                                            <div class="col-sm-6">
-                                                <input type="apellido" class="form-control" id="apellido" placeholder="Apellido" formControlName="apellido">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Correo electrónico</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="correo" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="correo">
-
-                                                <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="">
-                                                    <br>
-                                                    <p class="text-danger"> * Correo no válido.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label">RUC</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="ruc" placeholder="000-0000-0000-00" formControlName="ruc">
-                                            </div>
-                                        </div>
-                                        <div class="form-group row">
-                                            <label for="inputEmail3" class="col-sm-4 col-form-label">Teléfono</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="telefono" placeholder="(0986) 111-555" pattern="^[0-9]*$" formControlName="telefono">
-
-                                                <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
-                                                    Introduzca sólo dígitos. </div>
-                                            </div>
-                                        </div>
-
-                                        <fieldset class="form-group">
-                                            <div class="row">
-                                                <legend class="col-form-label col-sm-4 pt-0">Género</legend>
-                                                <div class="col-sm-6">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio" name="sexo" id="gridRadios1" value="femenino" formControlName="sexo" checked>
-                                                        <label class="form-check-label" for="gridRadios1">
-                                                          FEMENINO
-                                                        </label>
-                                                        <br>
-                                                        <input class="form-check-input" type="radio" name="sexo" id="gridRadios2" value="masculino" formControlName="sexo">
-                                                        <label class="form-check-label" for="gridRadios2">
-                                                            MASCULINO
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
-                                            <button type="submit" [disabled]="!this.formCliente.valid" class="btn btn-info" (click)="guardarCliente()" (click)="ngOnInit()" data-dismiss="modal">Guardar</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
         </div>
 
-
-
+        <div class="form-group row">
+            <label for="inputPassword3" class="col-sm-2 col-form-label ">Monto Total</label>
+            <div class="col-sm-3">
+                <input [(ngModel)]="totalVenta" formControlName="montoTotal" type="montoTotal" value="{{ util.numberWithCommas(totalVenta)}}" class="form-control form-control-sm" id="montoTotal" disabled>
+            </div>
+        </div>
 
         <div class="form-group row">
             <div class="col-sm-3">
@@ -209,9 +154,47 @@
         </div>
     </form>
 </div>
+-->
+<hr>
+<h3 style="text-align: center;">DETALLES</h3>
+
+
+<!--form que recibe parametros para detalle-->
+<div class="contenedor">
+    <section>
+        <label>Seleccione el tipo de detalle que desea agregar:  </label>
+        <mat-radio-group>
+            <mat-radio-button value="after" (click)=cargaProducto() [checked]="true">PRODUCTO</mat-radio-button>
+            <mat-radio-button value="before" (click)=cargaServicio()>SERVICIO</mat-radio-button>
+        </mat-radio-group>
+    </section>
+</div>
+<mat-form-field appearance="fill" style="width:40%;">
+    <mat-label>Seleccione el producto</mat-label>
+    <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
+          <option value="--" selected></option>
+          <option *ngFor="let prod of productos " [ngValue]="prod" >
+            {{prod.descripcion}}
+          </option>
+        </select>
+</mat-form-field>
+<mat-form-field appearance="fill" style="width:40%;">
+    <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
+</mat-form-field>
+<button mat-raised-button class="btn btn-info mr-1" (click)="agregar()" style="height:50px">Agregar</button>
+<!--Fin tabla para detalles-->
+
+
+
+
+
+
+
+
+
 
 <!--Agregar tabla para detalles-->
-<br><br>
+
 <strong><p class="text-center">Productos</p></strong>
 <table mat-table [dataSource]="datos" class="mat-elevation-z8" #tabla1>
 
@@ -262,79 +245,152 @@
     <tr mat-header-row *matHeaderRowDef="columnas"></tr>
     <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
 </table>
-<!--<table mat-table [dataSource]="datosTemporal" class="mat-elevation-z8" #tab>
 
 
-    <tr mat-header-cell *matHeaderCellDef> Productos </tr>
 
 
-    <ng-container matColumnDef="cantidad">
-        <th mat-header-cell *matHeaderCellDef> Cantidad </th>
-        <td mat-cell *matCellDef="let detalle"> {{detalle.cantidad}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="producto_servicio">
-        <th mat-header-cell *matHeaderCellDef> Producto o Servico </th>
-        <ng-container *matCellDef="let detalle">
-            <td mat-cell *ngIf="(detalle.productoId.descripcion !== ''); else noprod">
-                {{detalle.productoId.descripcion}}
-            </td>
-        </ng-container>
-        <ng-template #noprod>-</ng-template>
-    </ng-container>
+<button routerLink="/ventas/listar/{{this.codigoPuntoExpedicion}}" class="btn btn-sm btn-info mr-1">
+    <i class="fas fa-arrow-left"></i> Regresar
+    </button>
+<button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
+    " (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
 
 
-    <ng-container matColumnDef="precioVenta">
-        <th mat-header-cell *matHeaderCellDef> Precio </th>
-        <td mat-cell *matCellDef="let detalle"> {{detalle.productoId.precioVenta}} </td>
-    </ng-container>
 
-    <ng-container matColumnDef="monto" invisible>
-        <th mat-header-cell *matHeaderCellDef> Total </th>
-        <td mat-cell *matCellDef="let detalle">
-            {{ detalle.productoId.precioVenta * detalle.cantidad}}
-        </td>
-    </ng-container>
 
-    <ng-container matColumnDef="borrar">
-        <th mat-header-cell *matHeaderCellDef> Borrar? </th>
-        <td mat-cell *matCellDef="let j = index;">
-            <button mat-raised-button color="warn" focusable="false" (click)="borrarFila(j)">
-                  Borrar?
-                </button>
-        </td>
-    </ng-container>
+<hr>
 
-    <tr mat-header-row *matHeaderRowDef="columnas"></tr>
-    <tr mat-row *matRowDef="let row; columns: columnas;"></tr>
-</table>-->
+<br>
+<br>
 
-<!--form que recibe parametros para detalle-->
-<div class="contenedor">
+<br>
+<br>
 
-    <mat-form-field>
-        <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
-    </mat-form-field>
-    <br>
-    <section class="example-section">
-        <label>Seleccione el tipo de detalle que desea agregar:</label>
-        <mat-radio-group>
-            <mat-radio-button class="example-margin" value="after" (click)=cargaProducto() [checked]="true">Producto</mat-radio-button>
-            <mat-radio-button class="example-margin" value="before" (click)=cargaServicio()>Servicio</mat-radio-button>
-        </mat-radio-group>
-    </section>
 
-    <mat-form-field appearance="fill">
-        <mat-label>Seleccione el producto</mat-label>
-        <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
-          <option value="--" selected></option>
-          <option *ngFor="let prod of productos " [ngValue]="prod" >
-            {{prod.descripcion}}
-          </option>
-        </select>
-    </mat-form-field>
 
-    <button mat-raised-button color="primary" (click)="agregar()">Agregar</button>
 
-</div>
-<!--Fin tabla para detalles-->
+
+<!-- Modal Medio de Pago -->
+<ng-template #content1 let-modal>
+    <div class="modal-header alert-info">
+        <h2 class="modal-title" id="modal-basic-title">Añadir Medio Pago</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+        <div class="container-fluid">
+            <form [formGroup]="formMedio">
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Codigo</label>
+                    <div class="col-sm-6">
+                        <input formControlName="codigo" type="codigo" class="form-control" id="codigo" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-4 col-form-label">Descripción</label>
+                    <div class="col-sm-6">
+                        <!--<input formControlName="descripcion" type="text" class="form-control" id="descripcion" required>-->
+                        <textarea formControlName="descripcion" type="text" class="form-control" rows="1" style="max-height:50px;"> </textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="!this.formMedio.valid" class="btn btn-info mr-1" (click)="guardarMedio()"> <i class="fas fa-save"></i>Guardar</button>
+    </div>
+</ng-template>
+
+
+
+
+
+<ng-template #content let-modal>
+    <div class="modal-header alert-info">
+        <h2 class="modal-title" id="modal-basic-title">Añadir Cliente</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <form [formGroup]="formCliente">
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre de Usuario</label>
+                    <div class="col-sm-6">
+                        <input type="text" autocomplete="username" class="form-control" id="username" placeholder="username" formControlName="username">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Contraseña</label>
+                    <div class="col-sm-6">
+                        <input type="password" autocomplete="current-password" class="form-control" id="password" formControlName="password">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Apellido</label>
+                    <div class="col-sm-6">
+                        <input type="apellido" class="form-control" id="apellido" placeholder="Apellido" formControlName="apellido">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Correo electrónico</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="correo" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="correo">
+
+                        <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="">
+                            <br>
+                            <p class="text-danger"> * Correo no válido.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">RUC</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="ruc" placeholder="000-0000-0000-00" formControlName="ruc">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Teléfono</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="telefono" placeholder="(0986) 111-555" pattern="^[0-9]*$" formControlName="telefono">
+
+                        <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
+                            Introduzca sólo dígitos. </div>
+                    </div>
+                </div>
+
+                <fieldset class="form-group">
+                    <div class="row">
+                        <legend class="col-form-label col-sm-4 pt-0">Género</legend>
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sexo" id="gridRadios1" value="femenino" formControlName="sexo" checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                  FEMENINO
+                                </label>
+                                <br>
+                                <input class="form-check-input" type="radio" name="sexo" id="gridRadios2" value="masculino" formControlName="sexo">
+                                <label class="form-check-label" for="gridRadios2">
+                                    MASCULINO
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="!this.formCliente.valid" class="btn btn-info mr-1" (click)="guardarCliente()"> <i class="fas fa-save"></i>Guardar</button>
+    </div>
+</ng-template>

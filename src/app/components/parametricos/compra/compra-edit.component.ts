@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
+import { exit } from 'process';
 import { ComprasService } from 'src/app/services/servicios/compras.service';
 import { ProductoService } from 'src/app/services/servicios/producto.service';
 import { ProveedorService } from 'src/app/services/servicios/proveedor.service';
@@ -10,6 +11,8 @@ import Swal from 'sweetalert2';
 import { MatTable } from '@angular/material/table';
 import { DetallesCompraService } from 'src/app/services/servicios/detalles-compra.service';
 import { MediosPagoService } from 'src/app/services/servicios/medios-pago.service';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 
 @Component({
   selector: 'app-compra-edit',
@@ -36,12 +39,16 @@ export class CompraEditComponent implements OnInit {
 
   selectedValue: number;
   selectedProd: any;
-
+  esProducto: false;
+  closeResult: string;
 
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    public util: UtilesService,
+    private fmp: FormBuilder,
+    private modalService: NgbModal,
     private compraService: ComprasService,
     private proveedorService: ProveedorService,
     private productoService: ProductoService,
@@ -50,9 +57,25 @@ export class CompraEditComponent implements OnInit {
 
   form = this.fb.group({
     fecha: [this.fechaActual],
+    numeroFactura: ['', Validators.required],
+    timbrado: ['', Validators.required],
     montoTotal: [this.totalCompra, Validators.required],
-    proveedorId: [ Validators.required]
+    proveedorId: ['', Validators.required]
   });
+
+  proveedorForm = this.fb.group({
+    razonSocial: ['', Validators.required],
+    empresa: ['', Validators.required],
+    direccion: ['', Validators.required],
+    ciudad: ['', Validators.required],
+    ruc: ['', Validators.required]
+  });
+
+  formMedio = this.fmp.group({
+    codigo: ['', Validators.required],
+    descripcion: ['', Validators.required]
+  });
+
 
   currentDate: number = Date.now();
   articuloselect: Detalle = new Detalle(0, 0, 0, 0, 0);
@@ -72,10 +95,49 @@ export class CompraEditComponent implements OnInit {
   }
  
   agregar() {
+     /* controlar que se seleccione el producto para agregar fila a la tabla */
+    if (this.selectedProd === 0 ||  this.selectedProd === '--' || this.selectedProd === undefined) {
+      console.log('hay que validar');
+      console.log(this.articuloselect.productoId);
+      Swal.fire(
+        '',
+        'Debe selecionar un producto!',
+        'warning'
+      );
+      exit();
+    }
+
+     /* controlar que se seleccione el producto para agregar fila a la tabla */
+     if (this.articuloselect.cantidad <= 0 ||  this.articuloselect.precioCompra <= 0) {
+      console.log('hay que validar');
+      Swal.fire(
+        '',
+        'Debe introducir un monto!',
+        'warning'
+      );
+      exit();
+    }
+
+     /* controlar que no se dupliquen productos antes de agregar fila a la tabla */
+     for (let detalle of this.datos) {
+      console.log('articulo seleccionado');
+      console.log(detalle);
+          if (detalle.productoId.productoId === this.selectedProd.productoId) {
+                  console.log('hay que validar producto');
+                  console.log(this.articuloselect.productoId);
+                  Swal.fire(
+                    'Duplicado',
+                    'Debes seleccionar otro producto!',
+                    'warning'
+                  );
+                  exit();
+          }
+    }
+
     console.log('producto seleccionado' + this.selectedProd);
     this.totalCompra = this.totalCompra + (this.articuloselect.cantidad * this.articuloselect.precioCompra);
-    this.datosGuardar.push(new Detalle(0, this.articuloselect.cantidad, this.articuloselect.comprasId, this.articuloselect.precioCompra,
-      this.articuloselect.productoId));
+    this.datosGuardar.push(new Detalle(0, this.articuloselect.cantidad, this.articuloselect.comprasId
+                           ,this.articuloselect.precioCompra,this.articuloselect.productoId));
     // this.articuloselect.productoId = this.selectedProd.descripcion;
     this.datos.push(new Detalle(0, this.articuloselect.cantidad, this.articuloselect.comprasId, this.articuloselect.precioCompra,
       this.articuloselect.productoId));
@@ -89,17 +151,22 @@ export class CompraEditComponent implements OnInit {
   ngOnInit(): void {
     let currentDate = Date.now();
     this.proveedorService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.proveedores = resp  );
+    .subscribe( (resp: any[]) =>  {
+      this.proveedores = resp 
+      console.log(this.proveedores);
+    } );
 
-    this.productoService.listarRecurso()
+    this.productoService.listarRecursosActivos()
     .subscribe( (resp: any[]) =>  this.productos = resp  );
 
     const id = this.route.snapshot.params.id;
     if (typeof id !== 'undefined') {
       this.form = this.fb.group({
         fecha: [this.fechaActual],
+        numeroFactura: ['',Validators.required],
+        timbrado: ['',Validators.required],
         montoTotal: [this.totalCompra, Validators.required],
-        proveedorId: [ Validators.required]
+        proveedorId: [ '', Validators.required]
       });
       this.compraService.getRecurso(id)
        .subscribe ((data: any) => {
@@ -123,7 +190,8 @@ export class CompraEditComponent implements OnInit {
       console.warn(this.form.value);
       peticion.subscribe((result: any) =>  {
         console.log(result),
-        compraId = result.comprasId,
+        compraId = result.compras.comprasId,
+        console.log(compraId);
         Swal.fire(
           'Guardado!',
           'Se guardaron  los datos!',
@@ -173,6 +241,48 @@ export class CompraEditComponent implements OnInit {
   }
 
 
+  //open modal PROveedor
+  openFormProveedor(content) {  
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      console.log(this.proveedorForm.value);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }   
+
+
+  guardarProveedor(){
+    console.log(this.proveedorForm.value);
+    let peticion: Observable<any>;
+    peticion = this.proveedorService.agregarRecurso(this.proveedorForm.value);
+    peticion.subscribe((result: any) => {
+      Swal.fire(
+        'Guardado!',
+        'Se guardaron los datos!',
+        'success'
+      );
+    });
+    this.proveedorForm.reset(this.proveedorForm.controls.empresa );
+    this.modalService.dismissAll();
+    this.proveedorService.listarRecurso()
+    .subscribe( (resp: any[]) =>  this.proveedores = resp  );
+    
+  }
+
+ 
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+
+
 
 }
 
@@ -184,3 +294,4 @@ export class Detalle {
       ) {
   }
 }
+

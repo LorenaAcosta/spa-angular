@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { exit } from 'process';
 import { Observable } from 'rxjs';
 import { ClienteService } from 'src/app/services/servicios/cliente.service';
@@ -58,18 +58,22 @@ export class VentaEditComponent implements OnInit {
   subTotalTotal = 0;
   nextComprobante = 0;
   comprobanteActual:any = null;
+  timbrado = 0;
+  codigoPuntoExpedicion:any = 0;
   fechaActual: number = Date.now();
   index: 0;
   pageActual: 1;
 
   selectedValue: number;
   selectedProd: any;
+  closeResult: string;
   constructor(
     private fbc: FormBuilder,
     private fmp: FormBuilder,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private compraService: ComprasService,
+    private modalService: NgbModal,
     private ventaService: VentaService,
     private comprobanteService: ComprobanteService,
     private proveedorService: ProveedorService,
@@ -163,7 +167,7 @@ export class VentaEditComponent implements OnInit {
     cargaServicio(){
       console.log('cargaServicio funciona');
       this.esServicio = true;
-      this.servicioService.listarRecurso()
+      this.servicioService.listarRecursosActivos()
       .subscribe( (resp: any[]) =>  this.productos = resp  );
     }
 
@@ -171,7 +175,7 @@ export class VentaEditComponent implements OnInit {
       console.log('cargaProducto funciona');
       this.esProducto = true;
       this.esServicio = false;
-      this.productoService.listarRecurso()
+      this.productoService.listarRecursosActivos()
       .subscribe( (resp: any[]) =>  this.productos = resp  );
     }
 
@@ -256,14 +260,6 @@ export class VentaEditComponent implements OnInit {
           this.subTotalTotal = this.subTotalCinco + this.subTotalDiez + this.subTotalExenta;
           this.form.controls.subTotalTotal.setValue(this.subTotalTotal);
         }
-
-
-
-
-
-
-
-
 
 
         this.datosEliminar.push(new DetalleVenta(this.datos[cod].detalleId, this.datos[cod].cantidad, this.datos[cod].ventasId,
@@ -404,6 +400,10 @@ export class VentaEditComponent implements OnInit {
 
 
     ngOnInit(): void {
+
+      const id = this.route.snapshot.params.id;
+      console.log(id);
+
       this.esServicio = false;
       let currentDate = Date.now();
       this.proveedorService.listarRecurso()
@@ -415,7 +415,7 @@ export class VentaEditComponent implements OnInit {
       /*this.ventaService.getNextId()
       .subscribe( (resp: any) =>  this.nextComprobante = resp + 1);*/
 
-      this.comprobanteService.getNumeroActual()
+      this.comprobanteService.getNumeroActual(localStorage.getItem('punto'))
         .subscribe( (resp: any) => 
         {
           this.nextComprobante = resp;
@@ -428,7 +428,8 @@ export class VentaEditComponent implements OnInit {
             'Debe registrar uno nuevo para continuar',
             'warning'
           );
-          this.router.navigate(['/ventas/listar']);
+          //this.router.navigate(['/ventas/listar']);
+          this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
         }
         
         //si no existen talonarios activos
@@ -439,20 +440,56 @@ export class VentaEditComponent implements OnInit {
             'Debe registrar uno para continuar',
             'warning'
           );
-          this.router.navigate(['/ventas/listar']);
+          //this.router.navigate(['/ventas/listar']);
+          this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
         }
       });
 
-      this.comprobanteService.getComprobanteActivo()
-        .subscribe((resp:any) => this.comprobanteActual = resp);
+      /*this.comprobanteService.getComprobanteActivo()
+        .subscribe((resp:any) => {
+          this.comprobanteActual = resp,
+          this.codigoPuntoExpedicion = resp.puntoExpedicionCodigo
+        });*/
+
+        if (localStorage.getItem('punto') !== 'undefined') {
+          this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(localStorage.getItem('punto'))
+          .subscribe((resp:any) => {
+            /*---------------------Controlamos si el timbrado está vencido--------*/
+            console.log(resp.finVigencia);
+            let fecha = new Date(resp.finVigencia);            
+            let fechaActual= new Date();
+            console.log(fechaActual.getTime());
+            console.log((fecha.getTime() + 86400000));
+            console.log(fechaActual.getTime() > (fecha.getTime() + 86400000));
+            if(fechaActual.getTime() > (fecha.getTime() + 86400000)){
+              console.log(this.nextComprobante);
+              Swal.fire(
+                'Tibrado vencido',
+                'Debe registrar un nuevo talonario',
+                'warning'
+              );
+              this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
+            }
+            /*----------------------------------------------------------------------*/
+            this.comprobanteActual = resp,
+            this.timbrado = resp.timbrado;
+            this.codigoPuntoExpedicion = resp.puntoExpedicionCodigo
+          });
+        }else{
+          this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(localStorage.getItem('punto'))
+          .subscribe((resp:any) => {
+            this.comprobanteActual = resp,
+            this.codigoPuntoExpedicion = resp.puntoExpedicionCodigo
+          });
+        }
 
       this.usuarioService.listarRecurso()
       .subscribe( (resp: any[]) =>  this.usuarios = resp  );
 
-      this.productoService.listarRecurso()
+      this.productoService.listarRecursosActivos()
       .subscribe( (resp: any[]) =>  this.productos = resp  );
 
-      const id = this.route.snapshot.params.id;
+      //const id = this.route.snapshot.params.id;
       if (typeof id !== 'undefined') {
         /*this.form = this.fb.group({
           fecha: [this.fechaActual],
@@ -559,7 +596,7 @@ export class VentaEditComponent implements OnInit {
         });
       }
       
-      this.router.navigate(['/ventas/listar']);
+      this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
 
     }
 
@@ -603,7 +640,41 @@ export class VentaEditComponent implements OnInit {
              );
            });
            this.ngOnInit();
-       }
+    }
+
+    
+  //open modal PROveedor
+  openFormCliente(content) {  
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      console.log(this.formCliente.value);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+ //open modal MedioPago
+  openFormMedio(content1) {  
+    this.modalService.open(content1, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      console.log(this.formCliente.value);
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+
 
 }
 

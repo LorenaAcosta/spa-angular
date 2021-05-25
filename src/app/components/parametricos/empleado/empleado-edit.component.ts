@@ -123,7 +123,7 @@ export class EmpleadoEditComponent implements OnInit {
       peticion = this.empleadoService.agregarRecurso(this.form.value);
       peticion.subscribe((result: any) =>  {
           Swal.fire(
-            'Empelado Guardado!',
+            'Empleado Guardado!',
             'Debe asignar un horario!',
             'success'
           );

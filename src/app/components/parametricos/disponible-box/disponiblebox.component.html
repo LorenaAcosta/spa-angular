@@ -30,36 +30,40 @@
 
 
 
-<div class="row">
-    <div class="card">
-        <div class="card-header"><i class="fas fa-table mr-1"></i>Listado</div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-sm table-bordered display" id="dataTable" *ngIf="disponibles.length>0"
-                    width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Nombre</th>
-                            <th>Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody *ngFor="let item of disponibles;let i = index">
-                        <tr>
-                            <td>{{ i + 1}}</td>
-                            <td>{{ item.boxesId.nombre}}</td>
-                            <td>
-                                <button class="btn btn-info mr-1" (click)="borrar(item.boxesId.boxesId, i)" placement="top" ngbTooltip="Eliminar">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+
+<div class="card mb-4">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de boxes habilitados</div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="disponibles.length>0" width="100%"
+          cellspacing="0">
+          <thead>
+            <tr>
+                <th>#</th>
+                <th>Box</th>
+                <th>Servicio</th>
+                <th>Opciones</th>
+            </tr>
+          </thead>
+          <tbody *ngFor="let item of disponibles| paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index">
+            <tr>
+                <td>{{ i + 1}}</td>
+                <td>{{ item.boxesId.nombre}}</td>
+                <td>{{ item.servicioId.nombre}}</td>
+                <td>
+                    <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.boxesId.boxesId, i)" placement="top" ngbTooltip="Eliminar">
+            <i class="fas fa-trash"></i>
+          </button>
+                </td>
+            </tr>
+        </tbody>
+        </table>
+        <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+      </div>
     </div>
-</div>
+  </div>
+
+
 
 <div *ngIf="disponibles.length == 0" class="alertalert-warning text-center mt-3">
     <h4 class="alert-heading">No hay registros</h4>  
@@ -73,8 +77,8 @@
 
 <!--Modal para agregar un nuevo Box-->
 <ng-template #content1 let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Añadir Box</h4>
+    <div class="modal-header alert-info">
+        <h2>Añadir Box</h2>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
       <span aria-hidden="true">&times;</span>
     </button>
@@ -82,20 +86,19 @@
     <div class="modal-body">
         <form [formGroup]="boxForm">
                 <div class="col-sm">
-                    <input formControlName="nombre" type="string" class="form-control" id="nombre" required>
+                    <input formControlName="nombre" type="string" class="form-control" id="nombre" placeholder="nombre del box" required>
                 </div>
                 <label class="col-sm-2 col-form-label" for="inputZip">Estado</label>
                 <div class="col-sm-10">
                     <select  formControlName="estado" class="form-control" id="estado" required>
-                            <option selected>...</option>
                             <option value="ACTIVO">ACTIVO</option>
                             <option value="INACTIVO">INACTIVO</option>
-                        </select>
+                    </select>
                 </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="guardarBox()">Guardar</button>
+        <button type="button" class="btn btn-info mr-1"  (click)="guardarBox()">Guardar</button>
     </div>
 </ng-template>
 
@@ -105,7 +108,7 @@
 <!--Modal para  listar boxes-->
 
 <ng-template #content2 let-modal>
-    <div class="modal-header">
+    <div class="modal-header  alert-info">
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
@@ -132,7 +135,7 @@
                         <td>{{ item.nombre}}</td>
                         <td>{{ item.estado}}</td>
                         <td>
-                        <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.boxesId, i)" placement="top"
+                        <button class="btn btn-sm btn-info mr-1" (click)="borrarBox(item.boxesId, i)" placement="top"
                             ngbTooltip="Eliminar">
                             <i class="fas fa-trash"></i>
                         </button>

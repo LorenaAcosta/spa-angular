@@ -1,0 +1,130 @@
+<form [formGroup]="form">
+
+
+    <div class="alert alert-info" role="alert">
+        <div class="card-header p-4">
+                <div class="row">
+                  <div class="col-sm">
+                    <h2 class="mb-0">Liquidación Salario # </h2>
+                    <h3>Fecha Emisión: {{currentDate | date:'yyyy-MM-dd' }} </h3>
+                  </div>
+                  <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Empleado</label>
+                    </div>
+                    <select id="empleadoId" formControlName="empleadoId" class="form-control form-control-sm">
+                        <option *ngFor="let e of empleados" [ngValue]="e.empleadoId">
+                          {{ e.nombre + ' ' + e.apellido }}
+                        </option>
+                    </select>
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Periodo Pago</label>
+                    </div>
+                    <select id="mesPago" formControlName="mesPago" class="form-control form-control-sm">
+                      <option *ngFor="let m of months" [ngValue]="m.cod">
+                        {{ m.mes }}
+                      </option>
+                    </select>
+
+                    <div class="input-group-prepend">
+                       <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top"
+                        title="Procesar Comisiones"   (click)="procesarComisiones()"> Procesar Comisiones
+                        </button>
+                      </div>
+                </div>
+            </div>
+    <div class="form-group">
+        <div class="input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="inputGroupSelect01">Monto Total</label>
+            </div>
+            <input [(ngModel)]="totalVenta" formControlName="total" type="total" value="" class="form-control form-control-sm" id="total" disabled>
+            <div class="input-group-prepend">
+                <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Gs.">
+                    <i class="fas fa-dollar-sign"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+        </div>
+    </div>
+</form> 
+
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered display" id="dataTable" *ngIf="confirmados.length>0" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Fecha</th>
+                        <th>Room</th>
+                        <th>Servicio</th>
+                        <th>Costo</th>
+                        <th>Comision</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let item of confirmados;let i = index  ">
+                    <tr>
+                        <td>{{ i + 1}}</td>
+                        <td>{{ item.fechaReserva }}</td>
+                        <td>{{ item.disponibleBoxesId.boxesId.nombre}}</td>
+                        <td>{{ item.disponibleId.servicioId.nombre}}</td>
+                        <td>{{ item.disponibleId.servicioId.costo}}</td>
+                        <td>{{ item.disponibleId.servicioId.impuestoId.valor}}</td>
+                        <td>{{ (item.disponibleId.servicioId.costo * (item.disponibleId.servicioId.impuestoId.valor/100)) }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+<hr>
+<div class="col text-right">
+    <button  (click)="openModal(content)">Agregar Conceptos</button>
+</div>
+
+
+
+
+<!--Modal para agregar onceptos-->
+<ng-template #content let-modal>
+    <div class="modal-header alert-info">
+        <h2>Agregar Conceptos</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="boxForm">
+            <table class="table table-sm table-bordered display" id="dataTable" *ngIf="conceptos.length>0" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Concepto</th>
+                        <th>SubTotal</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let item of confirmados;let i = index  ">
+                    <tr>
+                        <td>{{ item.descripcion}}</td>
+                        <td>  </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-info mr-1"  (click)="insertarTabla()">Guardar</button>
+    </div>
+</ng-template>
+
+
+

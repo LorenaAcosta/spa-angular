@@ -1,71 +1,70 @@
 <div class="container-fluid">
-
-    <div class="row">
-        <h5 class="display">Servicios</h5>
-    </div>
+    <h2 class="display">Gestión de Servicios</h2>
 
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
         </div>
-        <input #termino type="text" class="form-control" placeholder="Buscar servicio..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)"> &nbsp;
-
+        <input #termino type="text" class="form-control" placeholder="Buscar servicio..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
+        <p>&nbsp;</p>
         <button (click)="getServicioReport()" class="btn btn-danger mr-1" data-toggle="tooltip" data-placement="top" title="Exportar a pdf">
           <i class="fas fa-file-pdf"></i>
-      </button>
+        </button>
         <button routerLink="/servicio/agregar" class="btn btn-info mr-1">
-      <i class="fas fa-plus"></i> Agregar
-    </button>
+        <i class="fas fa-plus"></i> Agregar
+      </button>
     </div>
 
 
-    <div class="col-md-12" id="htmlData" #htmlData>
-        <div class="card mb-4">
-            <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Servicios</div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered display" id="dataTable" *ngIf="servicios.length>0" width="100%" cellspacing="0">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Nombre</th>
-                                <th>Estado</th>
-                                <th>Categoria</th>
-                                <th>Duracion</th>
-                                <th>Costo</th>
-                                <th>Opciones</th>
-                            </tr>
-                        </thead>
-                        <tbody *ngFor="let item of servicios | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
-                            <tr>
-                                <td>{{ i + 1}}</td>
-                                <td>{{ item.nombre}}</td>
-                                <td>{{ item.estado}}</td>
-                                <td>{{ item.categoriaId.descripcion}}</td>
-                                <td>{{ util.cortarString(item.duracion, 0, 5) }} h.</td>
-                                <td>{{ util.numberWithCommas( item.costo )}} gs.</td>
-                                <td>
-                                    <button class="btn btn-sm btn-info mr-1" [routerLink]="['/servicio/modificar', item.servicioId ]" placement="top" ngbTooltip="Editar">
-                  <i class="fas fa-pencil-alt"></i>
-                </button>
-                                    <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.servicioId, i)" placement="top" ngbTooltip="Eliminar">
-                  <i class="fas fa-trash"></i>
-                </button>
-                                    <button class="btn btn-sm  btn-info mr-1" [routerLink]="['/servicio/asignar-boxes/', item.servicioId ]" placement="top" ngbTooltip="Asignar boxes">
-                <i class="fas fa-clipboard-list"></i> </button>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+
+
+
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Servicios</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="servicios.length>0" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Nombre</th>
+                            <th>Estado</th>
+                            <th>Categoria</th>
+                            <th>Duracion</th>
+                            <th>Costo</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of servicios | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
+                        <tr>
+                            <td>{{ i + 1}}</td>
+                            <td>{{ item.nombre}}</td>
+                            <td>{{ item.estado}}</td>
+                            <td>{{ item.categoriaId.descripcion}}</td>
+                            <td>{{ util.cortarString(item.duracion, 0, 5) }} h.</td>
+                            <td>{{ util.numberWithCommas( item.costo )}} gs.</td>
+                            <td>
+                                <button class="btn btn-sm btn-info mr-1" [routerLink]="['/servicio/modificar', item.servicioId ]" placement="top" ngbTooltip="Editar">
+      <i class="fas fa-pencil-alt"></i>
+    </button>
+                                <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.servicioId, i)" placement="top" ngbTooltip="Eliminar">
+      <i class="fas fa-trash"></i>
+    </button>
+                                <button class="btn btn-sm  btn-info mr-1" [routerLink]="['/servicio/asignar-boxes/', item.servicioId ]" placement="top" ngbTooltip="Asignar boxes">
+    <i class="fas fa-clipboard-list"></i> </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
                 <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
             </div>
         </div>
     </div>
 
 
+</div>
 
 
-    <div *ngIf="servicios.length == 0" class="alert alert-secondary text-center mt-3">
-        <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
-    </div>
+<div *ngIf="servicios.length == 0" class="alert alert-secondary text-center mt-3">
+    <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
+</div>

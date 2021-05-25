@@ -79,8 +79,9 @@ export class DisponibleComponent implements OnInit {
         'Se guardaron los datos!',
         'success'
       );
-
+      this.ngOnInit();
     });
+    this.form.reset(this.form.controls.nombre );
     this.ngOnInit();
   }
 
@@ -105,5 +106,6 @@ export class DisponibleComponent implements OnInit {
         }
       });
   }
+
 
 }

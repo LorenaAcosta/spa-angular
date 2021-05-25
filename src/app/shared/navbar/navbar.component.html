@@ -1,0 +1,132 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark  me-auto">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+        <a class="navbar-brand" [routerLink]="['']">Kathy Spa</a>
+
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/booking/categorias']">SERVICIOS</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/booking/productos']">PRODUCTOS</a>
+            </li>
+
+            <li *ngFor="let item of menuItems" class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ item.titulo }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <li *ngFor="let submenu of item.submenu">
+                        <a class="dropdown-item" [routerLink]="submenu.url">{{ submenu.titulo }}</a>
+                    </li>
+                </div>
+            </li>
+        </ul>
+        <div class=" float-right ">
+            <button class="btn btn-outline-primary text-white mr-2 mt-lg-0 mt-md-0" [routerLink]="[ '/login'] " type="button ">Login </button>
+        </div>
+        <div class=" float-right ">
+            <button class="btn btn-outline-primary text-white mr-2 mt-lg-0 mt-md-0 " (click)="logout() ">Logout</button>
+        </div>
+
+        <ul class="navbar-nav ml-auto ml-md-0">
+            <li class="nav-item dropdown">
+                <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
+                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                </a>
+                <!--<a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a> -->
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+                    <a id="editar" class="dropdown-item manito" (click)="open(content)">Editar Perfil</a>
+                    <a id="reservas" class="dropdown-item manito" (click)="misReservas()">Mis Reservas</a>
+                    <div class="dropdown-divider"></div>
+                    <button class="dropdown-item" (click)="logout()">Logout</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<ng-template #content let-modal>
+    <div class="modal-header alert-info">
+        <h2 class="modal-title" id="modal-basic-title">Mis datos</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <form [formGroup]="formCliente">
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre de Usuario</label>
+                    <div class="col-sm-6">
+                        <input type="text" autocomplete="username" class="form-control" id="username" formControlName="username">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Apellido</label>
+                    <div class="col-sm-6">
+                        <input type="apellido" class="form-control" id="apellido" placeholder="Apellido" formControlName="apellido">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Correo electrónico</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="correo" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email">
+
+                        <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="">
+                            <br>
+                            <p class="text-danger"> * Correo no válido.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">RUC</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="ruc" placeholder="000-0000-0000-00" formControlName="ruc">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Teléfono</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="telefono" placeholder="(0986) 111-555" pattern="^[0-9]*$" formControlName="telefono">
+
+                        <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
+                            Introduzca sólo dígitos. </div>
+                    </div>
+                </div>
+
+                <fieldset class="form-group">
+                    <div class="row">
+                        <legend class="col-form-label col-sm-4 pt-0">Género</legend>
+                        <div class="col-sm-6">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="sexo" id="gridRadios1" value="femenino" formControlName="sexo" checked>
+                                <label class="form-check-label" for="gridRadios1">
+                                  FEMENINO
+                                </label>
+                                <br>
+                                <input class="form-check-input" type="radio" name="sexo" id="gridRadios2" value="masculino" formControlName="sexo">
+                                <label class="form-check-label" for="gridRadios2">
+                                    MASCULINO
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="!this.formCliente.valid" class="btn btn-info mr-1" (click)="guardarCliente()"> <i class="fas fa-save"></i>Guardar</button>
+    </div>
+</ng-template>

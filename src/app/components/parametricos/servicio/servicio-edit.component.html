@@ -1,79 +1,76 @@
-<br>
-<div class="container-fluid">
-    <div class="row">
-        <h5 class="display">Nuevo Servicio</h5>
-        <div class="col text-right">
-            <button routerLink="/servicio/listar" class="btn btn-info mr-1">
-        <i class="fas fa-arrow-left"></i> Regresar
-      </button>
-        </div>
-    </div>
-</div>
+<h2 class="display">Nuevo Servicio</h2>
 <hr>
 
-<div class="container-fluid">
-    <form [formGroup]="form">
-        <div class="form-group row">
-            <label for="inputEmail3" class="col-sm-2 col-form-label">Nombre del Servicio</label>
-            <div class="col-sm-4">
-                <input formControlName="nombre" type="nombre" maxlength="30" class="form-control" id="nombre" required>
-            </div>
+
+<form [formGroup]="form">
+  <div class="row">
+    <div class="col-6">
+      <div class="bd-content">
+        <div class="form-row">
+          <div class="form-group col-sm-6">
+            <label id="myLabel">Nombre del Servicio</label>
+            <input formControlName="nombre" type="nombre" maxlength="30" class="form-control form-control-sm" placeholder="nombre del servicio"  id="nombre" required>
+          </div>
+          <div class="form-group col-sm-6">
+            <label id="myLabel">Impuesto</label>
+            <select id="impuestoId" formControlName="impuestoId" class="form-control form-control-sm">
+              <option *ngFor="let imp of impuestos" [ngValue]="imp.impuestoId">
+                {{ imp.descripcion }}
+              </option>
+            </select >
+          </div>
         </div>
-        <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label">Caracteristicas del Servicio</label>
-            <div class="col-sm-4">
-                <input formControlName="descripcion" type="descripcion" maxlength="60" class="form-control" id="descripcion" required>
-            </div>
+        <div class="form-row">
+          <div class="form-group col-sm-12">
+            <label id="myLabel">Características del servicio</label>
+            <input formControlName="descripcion" type="descripcion" maxlength="60" class="form-control form-control-sm" placeholder="caracteristicas del servicio"  id="descripcion" required>
+          </div>
         </div>
-        <div class="form-group row">
-            <label for="inputZip" class="col-sm-2 col-form-label">Estado</label>
-            <div class="col-sm-4">
-                <select id="estado" formControlName="estado" class="form-control" required>
-          <option selected>...</option>
-          <option value="ACTIVO">Activo</option>
-          <option value="INACTIVO">Inactivo</option>
-          <option value="PROMO">Promoción</option>
-        </select>
-            </div>
+        <div class="form-row">
+          <div class="form-group col-sm-6">
+            <label id="myLabel">Categoria</label>
+            <select id="categoriaId" formControlName="categoriaId" class="form-control form-control-sm">
+              <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
+                {{ cat.descripcion }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group col-sm-6">
+            <label for="inputPassword4">Duración</label>
+            <input formControlName="duracion" type="time" class="form-control form-control-sm" id="duracion" min="01:00" max="03:00"
+          required> <span class="validity"></span>
+          </div>
         </div>
-        <div class="form-group row">
-            <label for="inputState" class="col-sm-2 col-form-label">Categoria</label>
-            <div class="col-sm-4">
-                <select id="categoriaId" formControlName="categoriaId" class="form-control">
-          <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
-            {{ cat.descripcion }}
-          </option>
-        </select>
-            </div>
+        <div class="form-row">
+          <div class="form-group col-sm-6">
+          <label for="inputAddress">Costo</label>
+          <input formControlName="costo" type="number" max="1500000" class="form-control form-control-sm" placeholder="numeros"  id="costo" required>
         </div>
-        <div class="form-group row">
-            <label for="inputState" class="col-sm-2 col-form-label">Impuesto</label>
-            <div class="form-group col-md-4">
-                <select id="impuestoId" formControlName="impuestoId" class="form-control">
-                  <option *ngFor="let imp of impuestos" [ngValue]="imp.impuestoId">
-                    {{ imp.descripcion }}
-                  </option>
-                </select >
-            </div>
+          <div class="form-group col-sm-6">
+            <label>Estado</label>
+            <select id="estado" formControlName="estado" class="form-control form-control-sm" placeholder="seleccionar"  required>
+              <option selected>...</option>
+              <option value="ACTIVO">Activo</option>
+              <option value="INACTIVO">Inactivo</option>
+              <option value="PROMO">Promoción</option>
+            </select>
+          </div>
         </div>
-    <div class="form-group row">
-      <label for="inputCity" class="col-sm-2 col-form-label">Duracion</label>
-      <div class="col-sm-4">
-        <input formControlName="duracion" type="time" class="form-control" id="duracion" min="01:00" max="03:00"
-          required>
-        <span class="validity"></span>
+
       </div>
     </div>
-    <div class="form-group row">
-      <label for="inputState" class="col-sm-2 col-form-label">Costo</label>
-      <div class="col-sm-4">
-        <input formControlName="costo" type="number" max="1500000" class="form-control" id="costo" required>
-      </div>
-    </div>
-    <div class="form-group row"> 
-      <div class="col-sm-10">
-        <button type="submit" [disabled]="!this.form.valid" class="btn btn-primary" (click)="guardar()">Guardar</button>
-      </div>
-    </div>
-  </form>
-</div>
+
+  </div>
+
+  <button routerLink="/servicio/listar" class="btn btn-sm btn-info mr-1">
+    <i class="fas fa-arrow-left"></i> Regresar
+  </button>
+  <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
+  " (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
+
+</form>
+
+
+
+
+

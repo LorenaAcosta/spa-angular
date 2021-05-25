@@ -17,6 +17,10 @@ export class DetallesCompraService {
     return this.http.get(this.recurosBaseURL + 'encontrar-detalles/' + id);
   }
 
+  getRecursoByCompraId(id) {
+    return this.http.get(this.recurosBaseURL + 'get-detalles/' + id);
+  }
+
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
   }

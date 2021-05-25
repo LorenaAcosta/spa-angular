@@ -5,6 +5,9 @@ import { FormsModule } from '@angular/forms';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 import { ReservaService } from 'src/app/services/servicios/reserva.service';
 import { EmpleadoService } from '../../../services/servicios/empleado.service';
+import Swal from 'sweetalert2';
+import { Observable } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reserva-list',
@@ -17,7 +20,9 @@ export class ReservaListComponent implements OnInit {
 
   constructor(private reservaService: ReservaService,
               private empleadoService: EmpleadoService,
-              private fb: FormBuilder) { }
+              private route: ActivatedRoute,
+              private fb: FormBuilder,
+              private router: Router) { }
   reservas: any;
   model: NgbDateStruct;
   fecha;
@@ -28,8 +33,16 @@ export class ReservaListComponent implements OnInit {
   filtroEmpleado:'';
 
   ngOnInit() {
-    this.empleadoService.listarRecurso()
-    .subscribe( (resp: any) =>  this.empleados = resp  );
+    const id = this.route.snapshot.params.id;
+    if (typeof id !== 'undefined') {
+      this.reservaService.misReservas(id).subscribe( (resp: any) => { 
+        this.reservas = resp ; 
+        console.log(this.reservas) } );
+    } else {
+      this.reservaService.listarRecursos().subscribe( (resp: any) => { 
+        this.reservas = resp ; 
+        console.log(this.reservas) } );
+    }
   }
 
   // tslint:disable-next-line:member-ordering
@@ -40,13 +53,14 @@ export class ReservaListComponent implements OnInit {
 
 
 
-  cambiaLado(valor) {
+  buscarFecha(valor) {
     this.lado = valor;
     console.log(this.lado);
 
     // tslint:disable-next-line:prefer-const
     let dateString = (this.model.year + '-'  + this.model.month + '-' + this.model.day as string);
     console.log(dateString);
+    
     this.reservaService.listarporfecha(dateString.toString())
     .subscribe( (resp: any ) =>  {
       this.reservas = resp;
@@ -60,16 +74,49 @@ export class ReservaListComponent implements OnInit {
 
 buscar(termino: String){
   console.log(termino);
-  this.reservaService.getBusqueda(termino)
-  .subscribe( (resp: any ) =>  {
-    console.log(resp);
-    this.reservas = resp;
-  });
+
+  if (termino === ""){
+    this.reservaService.listarRecursos().subscribe( (resp: any) => { 
+      this.reservas = resp ; 
+      console.log(this.reservas) } );
+  }else{
+    this.reservaService.getBusqueda(termino)
+    .subscribe( (resp: any ) =>  {
+      console.log(resp);
+      this.reservas = resp;
+    });
+  }
+  
 }
 
 getReservaReport(fecha) {
   this.reservaService.getReservaReport(fecha)
   .subscribe( (resp: any[]) =>  resp  );
+}
+
+confirmarReserva(id) {
+  let peticion: Observable<any>;
+  peticion = this.reservaService.modificarRecurso( id, 'Confirmado');
+  peticion.subscribe((result: any) =>  {
+    Swal.fire(
+      'Reserva Confirmada!',
+      'success'
+    );
+    this.ngOnInit();
+  });
+}
+
+anularReserva(id: any, pos: any) {
+  let peticion: Observable<any>;
+  peticion = this.reservaService.modificarRecurso( id, 'ANULADO');
+  peticion.subscribe((result: any) =>  {
+    Swal.fire(
+      'Reserva Anulada!',
+      '',
+      'success'
+    );
+    this.ngOnInit();
+  });
 }
 
 //obtiene el pdf generado
