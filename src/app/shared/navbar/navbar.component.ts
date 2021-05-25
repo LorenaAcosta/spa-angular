@@ -101,24 +101,29 @@ export class NavbarComponent implements OnInit {
   }
 
   open(content) {
-    //cargar los datos del usuario
-    this.usuarioService.obtenerPerfilUsuario(this.usuarioService.obtenerUsuarioLogueado())
-    .subscribe( (resp: any[]) => {
-       this.usuarioPerfil = resp,
-       this.formCliente.controls.username.setValue(this.usuarioPerfil.username);
-       this.formCliente.controls.nombre.setValue(this.usuarioPerfil.nombre);
-       this.formCliente.controls.apellido.setValue(this.usuarioPerfil.apellido);
-       this.formCliente.controls.email.setValue(this.usuarioPerfil.email);
-       this.formCliente.controls.ruc.setValue(this.usuarioPerfil.ruc);
-       this.formCliente.controls.telefono.setValue(this.usuarioPerfil.telefono);
-       this.formCliente.controls.sexo.setValue(this.usuarioPerfil.sexo);
-       this.formCliente.controls.estado.setValue(this.usuarioPerfil.estado);
-    });;
-    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    if(this.usuarioService.obtenerUsuarioLogueado()){
+      //cargar los datos del usuario
+      this.usuarioService.obtenerPerfilUsuario(this.usuarioService.obtenerUsuarioLogueado())
+      .subscribe( (resp: any[]) => {
+         this.usuarioPerfil = resp,
+         this.formCliente.controls.username.setValue(this.usuarioPerfil.username);
+         this.formCliente.controls.nombre.setValue(this.usuarioPerfil.nombre);
+         this.formCliente.controls.apellido.setValue(this.usuarioPerfil.apellido);
+         this.formCliente.controls.email.setValue(this.usuarioPerfil.email);
+         this.formCliente.controls.ruc.setValue(this.usuarioPerfil.ruc);
+         this.formCliente.controls.telefono.setValue(this.usuarioPerfil.telefono);
+         this.formCliente.controls.sexo.setValue(this.usuarioPerfil.sexo);
+         this.formCliente.controls.estado.setValue(this.usuarioPerfil.estado);
+      });;
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    } else {
+      Swal.fire('Error', 'No tiene permisos para acceder a esta pagina...', 'error');
+      this.route.navigateByUrl('/');
+    }
   }
 
   private getDismissReason(reason: any): string {
