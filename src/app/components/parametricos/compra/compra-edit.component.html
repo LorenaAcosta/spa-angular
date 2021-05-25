@@ -2,64 +2,63 @@
 
     <!--Cabecera-->
     <div class="alert alert-info" role="alert">
-                <div class="row">
-                  <div class="col-sm">
-                    <a class="pt-2 d-inline-block" href="/" data-abc="true">FACTURA</a><br>
-                    <a class="pt-2 d-inline-block" href="/" data-abc="true"></a>
-                  </div>
-                  <div class="col-sm">
-                   </div>
-                  <div class="col-sm float-right">
-                    <div class="form-group">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" >N° FACTURA</label>
-                            </div>
-                            <input [(ngModel)]="numeroFactura" formControlName="numeroFactura" type="text" value="{{numeroFactura}}" class="form-control" id="numeroFactura" placeholder="00-000-000000 -numero">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" id="inputGroup-sizing-sm">TIMBRADO</label>
-                            </div>
-                            <input [(ngModel)]="timbrado" formControlName="timbrado" type="timbrado" value="{{timbrado}}" class="form-control" id="timbrado" placeholder="timbrado">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text">FECHA EMISIÓN</label>
-                            </div>
-                            <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true>
-                        </div>
-                    </div>
-                  </div>
-                </div>
-            <hr>
-            <div class="form-row">
-                <div class="form-group col-sm-6">
+        <div class="row">
+            <div class="col-sm">
+                <a class="pt-2 d-inline-block" href="/" data-abc="true">FACTURA</a><br>
+                <a class="pt-2 d-inline-block" href="/" data-abc="true"></a>
+            </div>
+            <div class="col-sm">
+            </div>
+            <div class="col-sm float-right">
+                <div class="form-group">
                     <div class="input-group input-group-sm mb-3">
                         <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Proveeedor</label>
+                            <label class="input-group-text">N° FACTURA</label>
                         </div>
-                        <select id="proveedorId" formControlName="proveedorId" class="form-control form-control-sm">
+                        <input formControlName="numeroFactura" type="text" class="form-control" id="numeroFactura" placeholder="00-000-000000 -numero">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" id="inputGroup-sizing-sm">TIMBRADO</label>
+                        </div>
+                        <input formControlName="timbrado" type="timbrado" class="form-control" id="timbrado" placeholder="timbrado">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="input-group input-group-sm mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">FECHA EMISIÓN</label>
+                        </div>
+                        <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="form-row">
+            <div class="form-group col-sm-6">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Proveeedor</label>
+                    </div>
+                    <select id="proveedorId" formControlName="proveedorId" class="form-control form-control-sm">
                             <option selected>Seleccionar...</option>
                             <option *ngFor="let p of proveedores" [ngValue]="p.proveedorId">
                                 {{ p.empresa }}
                             </option>
                         </select>
-                        <div class="input-group-prepend">
-                            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top"
-                             title="Agregar proveedor"   (click)="openFormProveedor(content)">
+                    <div class="input-group-prepend">
+                        <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar proveedor" (click)="openFormProveedor(content)">
                                 <i class="fas fa-1x fa-plus-circle"></i>
                                 </button>
-                          </div>
                     </div>
                 </div>
-                <div class="form-group col-sm-2 ">
-                </div>
             </div>
+            <div class="form-group col-sm-2 ">
+            </div>
+        </div>
         <div class="form-group">
             <div class="input-group input-group-sm mb-3">
                 <div class="input-group-prepend">
@@ -69,14 +68,14 @@
                 <div class="input-group-prepend">
                     <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Gs.">
                         <i class="fas fa-dollar-sign"></i> </button>
-                       
+
                 </div>
             </div>
         </div>
 
 
-   </div>
-</form> 
+    </div>
+</form>
 
 
 
@@ -86,7 +85,7 @@
 
 
 <!--Inicio tabla para detalles-->
-<div class="example-container" >
+<div class="example-container">
 
     <div class="row">
         <mat-form-field appearance="fill" style="width:30%; margin-left:10px;">
@@ -115,7 +114,7 @@
 </div>
 
 
-    
+
 
 <!--Agregar tabla para detalles-->
 
@@ -157,12 +156,11 @@
 
 
 
-    <button routerLink="/compras/listar" class="btn btn-sm btn-info mr-1">
+<button routerLink="/compras/listar" class="btn btn-sm btn-info mr-1">
     <i class="fas fa-arrow-left"></i> Regresar
     </button>
-    <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1"
-     (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
-    
+<button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1" (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
+
 
 
 
@@ -178,48 +176,39 @@
         <form [formGroup]="proveedorForm">
             <div class="row">
                 <div class="bd-content">
-                  <div class="form-row">
-                    <div class="form-group col-sm-6">
-                      <label>Razón Social</label>
-                      <input formControlName="razonSocial" placeholder="razonSocial" type="razonSocial" maxlength="30"
-                        class="form-control form-control-sm"  required>
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <label>Razón Social</label>
+                            <input formControlName="razonSocial" placeholder="razonSocial" type="razonSocial" maxlength="30" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label>Nombre de Empresa</label>
+                            <input formControlName="empresa" placeholder="empresa" type="empresa" maxlength="30" class="form-control form-control-sm" required>
+                        </div>
                     </div>
-                    <div class="form-group col-sm-6">
-                      <label>Nombre de Empresa</label>
-                      <input formControlName="empresa" placeholder="empresa" type="empresa" maxlength="30"
-                        class="form-control form-control-sm"  required>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-12">
+                            <label>Dirección</label>
+                            <input formControlName="direccion" placeholder="dirección" type="direccion" maxlength="60" class="form-control form-control-sm" required>
+                        </div>
                     </div>
-                  </div>
-          
-                  <div class="form-row">
-                    <div class="form-group col-sm-12">
-                      <label>Dirección</label>
-                      <input formControlName="direccion" placeholder="dirección" type="direccion" maxlength="60"
-                        class="form-control form-control-sm" required>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <label>Ciudad</label>
+                            <input formControlName="ciudad" placeholder="ciudad" type="ciudad" maxlength="30" class="form-control form-control-sm" required>
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="inputState">R.U.C.</label>
+                            <input formControlName="ruc" type="ruc" maxlength="30" class="form-control form-control-sm" id="ruc" required>
+                        </div>
                     </div>
-                  </div>
-          
-                  <div class="form-row">
-                    <div class="form-group col-sm-6">
-                      <label>Ciudad</label>
-                      <input formControlName="ciudad" placeholder="ciudad" type="ciudad" maxlength="30"
-                        class="form-control form-control-sm"  required>
-                    </div>
-                    <div class="form-group col-sm-6">
-                      <label for="inputState">R.U.C.</label>
-                      <input formControlName="ruc" type="ruc" maxlength="30"
-                        class="form-control form-control-sm" id="ruc" required>
-                    </div>
-                  </div>
-              </div> 
+                </div>
             </div>
-          </form>
+        </form>
     </div>
     <div class="modal-footer">
-        <button type="submit" [disabled]="!this.proveedorForm.valid" class="btn btn-outline-dark" 
-        (click)="guardarProveedor()"> <i class="fas fa-save"></i>Guardar</button>
+        <button type="submit" [disabled]="!this.proveedorForm.valid" class="btn btn-outline-dark" (click)="guardarProveedor()"> <i class="fas fa-save"></i>Guardar</button>
     </div>
 </ng-template>
-
-
-

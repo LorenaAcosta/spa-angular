@@ -3,14 +3,13 @@
 
 <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
+        <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
     </div>
-    <input #termino type="text" class="form-control" placeholder="Buscar factura..." aria-label="Username"
-      aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
-      <form class="form-inline" >
+    <input #termino type="text" class="form-control" placeholder="Buscar factura..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
+    <form class="form-inline">
         <div class="form-group" *ngIf="this.valor == false">
             <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)" ngbDatepicker #d="ngbDatepicker">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="buscarFecha($event)" ngbDatepicker #d="ngbDatepicker">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
                 </div>
@@ -21,228 +20,227 @@
     <button routerLink="/ventas/agregar" class="btn btn-info mr-1">
       <i class="fas fa-plus"></i> Agregar
     </button>
-  </div>
+</div>
 
 
 
-    <div class="card mb-4">
-        <div class="card-header"><i class="fas fa-table mr-1"></i>FACTURAS</div>
-        <div class="card-body">
-            <div class="table-responsive" id="tb">
-                <table id="my" *ngIf="ventas.length >  0" class="table table-hover animated fadedIn faster table  display">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Monto total</th>
-                            <th scope="col">Numero de factura</th>
-                            <th scope="col">Medio de pago</th>
-                            <th scope="col">Cliente</th>
-                            <th scope="col">Detalles</th>
-                            <th scope="col">Opciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let v of ventas | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
-                            <td>{{ i + 1}}</td>
-                            <td>{{ v.fecha}}</td>
-                            <td>{{ util.numberWithCommas(v.montoTotal)}}</td>
-                            <td>{{'001-'+ v.comprobanteId.puntoExpedicionCodigo + '-' + ceroIzquierda(v.numeroComprobante, 7) }}</td>
-                            <td>{{ v.medioPagoId.descripcion}}</td>
-                            <td>{{ v.usuarioId.nombre + ' ' + v.usuarioId.apellido}}</td>
-                            <td>
+<div class="card mb-4">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>FACTURAS</div>
+    <div class="card-body">
+        <div class="table-responsive" id="tb">
+            <table id="my" *ngIf="ventas.length >  0" class="table table-hover animated fadedIn faster table  display">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Monto total</th>
+                        <th scope="col">Numero de factura</th>
+                        <th scope="col">Medio de pago</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Detalles</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let v of ventas | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                        <td>{{ i + 1}}</td>
+                        <td>{{ v.fecha}}</td>
+                        <td>{{ util.numberWithCommas(v.montoTotal)}}</td>
+                        <td>{{'001-'+ v.comprobanteId.puntoExpedicionCodigo + '-' + ceroIzquierda(v.numeroComprobante, 7) }}</td>
+                        <td>{{ v.medioPagoId.descripcion}}</td>
+                        <td>{{ v.usuarioId.nombre + ' ' + v.usuarioId.apellido}}</td>
+                        <td>
 
-                                <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getNumeroComprobante(v.ventasId)" (click)="getDetalles( v.ventasId)">
+                            <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getNumeroComprobante(v.ventasId)" (click)="getDetalles( v.ventasId)">
                                     Detalles
                                 </button>
-                                <!-- Modal -->
-                                <div id="myModal" class="modal fade " role="dialog">
-                                    <div class="modal-dialog modal-lg">
+                            <!-- Modal -->
+                            <div id="myModal" class="modal fade " role="dialog">
+                                <div class="modal-dialog modal-lg">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content ">
-                                            <div class="modal-header ">
-                                                <table id="td1" width="650px" class="tabla-bordes table-responsive" border="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td width="60%">
-                                                                <div class="titulo1">Katty Spa S.A.</div>
-                                                                <div class="titulo2"></div>
-                                                                <div class="titulo2">10 de agosto y Gral. Caballero</div>
-                                                                <div class="titulo2">Telefono 021-498-690</div>
-                                                                <div class="titulo2">San Lorenzo - Paraguay</div>
-                                                            </td>
-                                                            <td width="50%">
-                                                                <div class="row container-fluid justify-content-center" id="myRow">
-                                                                    <p id="myP"><strong>Timbrado Nº {{timbrado}}</strong></p>
-                                                                    <p id="myP">Inicio de Vigencia &nbsp;</p>
-                                                                    <p id="myP"> {{ inicioVigencia | date:'dd-MM-yyyy' }}</p>
-                                                                    <p id="myP">Válido hasta &nbsp;</p>
-                                                                    <p id="myP"> {{ finVigencia | date:'dd-MM-yyyy' }}</p>
-                                                                    <p id="myP"> RUC 80010539-1</p>
+                                    <!-- Modal content-->
+                                    <div class="modal-content ">
+                                        <div class="modal-header ">
+                                            <table id="td1" width="650px" class="tabla-bordes table-responsive" border="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="60%">
+                                                            <div class="titulo1">Katty Spa S.A.</div>
+                                                            <div class="titulo2"></div>
+                                                            <div class="titulo2">10 de agosto y Gral. Caballero</div>
+                                                            <div class="titulo2">Telefono 021-498-690</div>
+                                                            <div class="titulo2">San Lorenzo - Paraguay</div>
+                                                        </td>
+                                                        <td width="50%">
+                                                            <div class="row container-fluid justify-content-center" id="myRow">
+                                                                <p id="myP"><strong>Timbrado Nº {{timbrado}}</strong></p>
+                                                                <p id="myP">Inicio de Vigencia &nbsp;</p>
+                                                                <p id="myP"> {{ inicioVigencia | date:'dd-MM-yyyy' }}</p>
+                                                                <p id="myP">Válido hasta &nbsp;</p>
+                                                                <p id="myP"> {{ finVigencia | date:'dd-MM-yyyy' }}</p>
+                                                                <p id="myP"> RUC 80010539-1</p>
 
-                                                                    <p id="myP"><strong>{{ comprobanteAux }}</strong></p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="50%">
-                                                                <div class="bloque-parrafos">
-                                                                    <p><span class="negrita">Fecha de Emision:</span><span> {{' ' + v.fecha | date:'dd--MM-yyyy' }}</span></p>
-                                                                </div>
-                                                            </td>
-                                                            <td width="50%">
-                                                                <div class="bloque-parrafos">
-                                                                    <p><strong>Condicion de Venta:</strong><br><span class="negrita">CONTADO</span><span class="negrita"> [ X ] </span><span>     CREDITO</span><span class=""> [  ] </span></p>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <div class="bloque-parrafos">
-                                                                <p><span class="negrita">RUC / Cedula de Identidad:</span><span>{{' ' + v.usuarioId.ruc}}</span></p>
-                                                                <p><span class="negrita">Nombre o Razon Social:</span>{{' ' + v.usuarioId.nombre + ' ' + v.usuarioId.apellido}}</p>
-                                                                <p><span class="negrita">Direccion:</span><span>{{' ' + (v.usuarioId.direccion != null) ? v.usuarioId.direccion : " "}}</span></p>
+                                                                <p id="myP"><strong>{{ comprobanteAux }}</strong></p>
                                                             </div>
-                                                        </tr>
-                                                    </tbody>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="50%">
+                                                            <div class="bloque-parrafos">
+                                                                <p><span class="negrita">Fecha de Emision:</span><span> {{' ' + v.fecha | date:'dd--MM-yyyy' }}</span></p>
+                                                            </div>
+                                                        </td>
+                                                        <td width="50%">
+                                                            <div class="bloque-parrafos">
+                                                                <p><strong>Condicion de Venta:</strong><br><span class="negrita">CONTADO</span><span class="negrita"> [ X ] </span><span>     CREDITO</span><span class=""> [  ] </span></p>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <div class="bloque-parrafos">
+                                                            <p><span class="negrita">RUC / Cedula de Identidad:</span><span>{{' ' + v.usuarioId.ruc}}</span></p>
+                                                            <p><span class="negrita">Nombre o Razon Social:</span>{{' ' + v.usuarioId.nombre + ' ' + v.usuarioId.apellido}}</p>
+                                                            <p><span class="negrita">Direccion:</span><span>{{' ' + (v.usuarioId.direccion != null) ? v.usuarioId.direccion : " "}}</span></p>
+                                                        </div>
+                                                    </tr>
+                                                </tbody>
 
-                                                </table>
+                                            </table>
 
-                                            </div>
-                                            <div class="modal-body  container-fluid ">
-                                                <table id="td2" width="650px" class="tabla-bordes table-responsive" border="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th class="text-center" rowspan="2" width="10%">Cantidad</th>
-                                                            <th class="text-center" rowspan="2" width="40%">Descripcion</th>
-                                                            <th class="text-center" rowspan="2" width="10%">Precio Unitario</th>
-                                                            <th class="text-center" colspan="3" width="40%">Valor Venta</th>
-                                                        </tr>
-                                                        <tr>
-                                                            <th class="text-center" width="13%">Exentas</th>
-                                                            <th class="text-center" width="13%">IVA 5%</th>
-                                                            <th class="text-center" width="14%">IVA 10%</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index">
-                                                            <td class="numerico text-center">{{d.cantidad}}</td>
-                                                            <td *ngIf="d.productoId !== null; else servicio">
-                                                                {{d.productoId.descripcion}}
-                                                            </td>
-                                                            <ng-template #servicio>
-                                                                <td>{{d.servicioId.descripcion}}</td>
-                                                            </ng-template>
-                                                            <td class="numerico">{{ util.numberWithCommas(d.precio)}}</td>
-                                                            <td *ngIf="((d.servicioId != null && d.servicioId.impuestoId.impuestoId == 3) || (d.productoId != null && d.productoId.impuestoId.impuestoId == 3))  ; else servicio2" class="numerico">
-                                                                {{util.numberWithCommas(d.monto)}}
-                                                            </td>
-                                                            <td *ngIf="((d.servicioId != null && d.servicioId.impuestoId.impuestoId == 2) || (d.productoId != null && d.productoId.impuestoId.impuestoId == 2))  ; else servicio2" class="numerico">
-                                                                {{util.numberWithCommas(d.monto)}}
-                                                            </td>
-                                                            <ng-template #servicio2>
-                                                                <td>{{0}}</td>
-                                                            </ng-template>
-                                                            <td *ngIf="((d.servicioId != null && d.servicioId.impuestoId.impuestoId == 1) || (d.productoId != null && d.productoId.impuestoId.impuestoId == 1))  ; else servicio1" class="numerico">
-                                                                {{ util.numberWithCommas(d.monto) }}
-                                                            </td>
-                                                            <ng-template #servicio1>
-                                                                <td>{{0}}</td>
-                                                            </ng-template>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                            <td>&nbsp;</td>
-                                                        </tr>
+                                        </div>
+                                        <div class="modal-body  container-fluid ">
+                                            <table id="td2" width="650px" class="tabla-bordes table-responsive" border="0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center" rowspan="2" width="10%">Cantidad</th>
+                                                        <th class="text-center" rowspan="2" width="40%">Descripcion</th>
+                                                        <th class="text-center" rowspan="2" width="10%">Precio Unitario</th>
+                                                        <th class="text-center" colspan="3" width="40%">Valor Venta</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th class="text-center" width="13%">Exentas</th>
+                                                        <th class="text-center" width="13%">IVA 5%</th>
+                                                        <th class="text-center" width="14%">IVA 10%</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index">
+                                                        <td class="numerico text-center">{{d.cantidad}}</td>
+                                                        <td *ngIf="d.productoId !== null; else servicio">
+                                                            {{d.productoId.descripcion}}
+                                                        </td>
+                                                        <ng-template #servicio>
+                                                            <td>{{d.servicioId.descripcion}}</td>
+                                                        </ng-template>
+                                                        <td class="numerico">{{ util.numberWithCommas(d.precio)}}</td>
+                                                        <td *ngIf="((d.servicioId != null && d.servicioId.impuestoId.impuestoId == 3) || (d.productoId != null && d.productoId.impuestoId.impuestoId == 3))  ; else servicio2" class="numerico">
+                                                            {{util.numberWithCommas(d.monto)}}
+                                                        </td>
+                                                        <td *ngIf="((d.servicioId != null && d.servicioId.impuestoId.impuestoId == 2) || (d.productoId != null && d.productoId.impuestoId.impuestoId == 2))  ; else servicio2" class="numerico">
+                                                            {{util.numberWithCommas(d.monto)}}
+                                                        </td>
+                                                        <ng-template #servicio2>
+                                                            <td>{{0}}</td>
+                                                        </ng-template>
+                                                        <td *ngIf="((d.servicioId != null && d.servicioId.impuestoId.impuestoId == 1) || (d.productoId != null && d.productoId.impuestoId.impuestoId == 1))  ; else servicio1" class="numerico">
+                                                            {{ util.numberWithCommas(d.monto) }}
+                                                        </td>
+                                                        <ng-template #servicio1>
+                                                            <td>{{0}}</td>
+                                                        </ng-template>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                        <td>&nbsp;</td>
+                                                    </tr>
 
-                                                    </tbody>
-                                                </table>
-                                                <table id="td3" width="650px" class="tabla-bordes table-responsive" border="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td width="40%">Valor Parcial</td>
-                                                            <td class="numerico" width="13">{{subTotalExenta}}</td>
-                                                            <td class="numerico" width="13%">{{subTotalCinco}}</td>
-                                                            <td class="numerico" width="14%">{{subTotalDiez}}</td>
-                                                            <td class="numerico" width="13">{{subTotalTotal}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="40%">Descuento</td>
-                                                            <td style="border-left: hidden" class="numerico" width="13%"></td>
-                                                            <td style="border-left: hidden" class="numerico" width="13%"></td>
-                                                            <td style="border-left: hidden" class="numerico" width="14%"></td>
-                                                            <td class="numerico" width="25%">{{v.totalDescuento}}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="4" style="border-bottom: hidden">Total a Pagar:&nbsp; {{montoLetras + ' Gs.'}}</td>
-                                                            <td class="numerico" rowspan="3" style="text-align: center; vertical-align:middle;"> <strong> {{totalGeneral}}</strong></td>
+                                                </tbody>
+                                            </table>
+                                            <table id="td3" width="650px" class="tabla-bordes table-responsive" border="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="40%">Valor Parcial</td>
+                                                        <td class="numerico" width="13">{{subTotalExenta}}</td>
+                                                        <td class="numerico" width="13%">{{subTotalCinco}}</td>
+                                                        <td class="numerico" width="14%">{{subTotalDiez}}</td>
+                                                        <td class="numerico" width="13">{{subTotalTotal}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="40%">Descuento</td>
+                                                        <td style="border-left: hidden" class="numerico" width="13%"></td>
+                                                        <td style="border-left: hidden" class="numerico" width="13%"></td>
+                                                        <td style="border-left: hidden" class="numerico" width="14%"></td>
+                                                        <td class="numerico" width="25%">{{v.totalDescuento}}</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4" style="border-bottom: hidden">Total a Pagar:&nbsp; {{montoLetras + ' Gs.'}}</td>
+                                                        <td class="numerico" rowspan="3" style="text-align: center; vertical-align:middle;"> <strong> {{totalGeneral}}</strong></td>
 
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="4">&nbsp;</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4">&nbsp;</td>
 
-                                                        </tr>
-                                                        <tr>
-                                                            <td>Liquidacion del IVA:</td>
-                                                            <td class="numerico">
-                                                                (5%) {{ivaCinco}}
-                                                            </td>
-                                                            <td class="numerico">(10%) {{ivaDiez}}</td>
-                                                            <td class="numerico">(Total) {{ivaTotal}}</td>
-                                                        </tr>
-                                                        <!--<tr>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Liquidacion del IVA:</td>
+                                                        <td class="numerico">
+                                                            (5%) {{ivaCinco}}
+                                                        </td>
+                                                        <td class="numerico">(10%) {{ivaDiez}}</td>
+                                                        <td class="numerico">(Total) {{ivaTotal}}</td>
+                                                    </tr>
+                                                    <!--<tr>
                                                             <td colspan="4">&nbsp;</td>
                                                         </tr>-->
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                <button type="button" class="btn btn-info text-dark" (click)="clickEvent()">Imprimir</button>
-                                                <!--<button type="button" class="btn btn-info text-dark" onclick="return xepOnline.Formatter.Format('myModal',
-                                                {pageWidth:'200mm', pageHeight:'250mm'});"><strong>Imprimir</strong></button>-->
-                                            </div>
+                                                </tbody>
+                                            </table>
                                         </div>
-
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-info text-dark" (click)="clickEvent()">Imprimir</button>
+                                            <!--<button type="button" class="btn btn-info text-dark" onclick="return xepOnline.Formatter.Format('myModal',
+                                                {pageWidth:'200mm', pageHeight:'250mm'});"><strong>Imprimir</strong></button>-->
+                                        </div>
                                     </div>
+
                                 </div>
-                            </td>
-                            <div class="container-fluid">
-                                <td>
-                                    <!--<button class="btn btn-sm btn-info mr-1 " [routerLink]="['/ventas/modificar', v.ventasId ]">
+                            </div>
+                        </td>
+                        <div class="container-fluid">
+                            <td>
+                                <!--<button class="btn btn-sm btn-info mr-1 " [routerLink]="['/ventas/modificar', v.ventasId ]">
                                         <i class="fas fa-pencil-alt "></i>
                                     </button>-->
 
-                                    <button class="btn btn-sm btn-danger mr-1 " data-toggle="tooltip" data-type="warning" data-placement="top" title="Anular" (click)="anularFactura(v.ventasId, i)">
+                                <button class="btn btn-sm btn-danger mr-1 " data-toggle="tooltip" data-type="warning" data-placement="top" title="Anular" (click)="anularFactura(v.ventasId, i)">
                                         Anular  <i class="fas fa-trash" ></i>
                                     </button>
-                                </td>
-                            </div>
-                        </tr>
-                    </tbody>
-                </table>
-                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
-            </div>
+                            </td>
+                        </div>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
         </div>
-
     </div>
 
-    <div *ngIf="ventas.length == 0" class="alertalert-warning text-center mt-3">
-        <h4 class="alert-heading">No hay registros</h4>
-        <p>
-            <i class="fa fa-exclamation fa-2x"></i>
-        </p>
-    </div>
+</div>
 
+<div *ngIf="ventas.length == 0" class="alertalert-warning text-center mt-3">
+    <h4 class="alert-heading">No hay registros</h4>
+    <p>
+        <i class="fa fa-exclamation fa-2x"></i>
+    </p>
+</div>
