@@ -6,13 +6,14 @@ import { URL_SERVICIOS } from '../../config/config';
 import { retry, map, filter, catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from 'src/environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
-
+  recurosBaseURL: string = environment.URL_BASE;
   usuario: Usuario;
   usuarioLogueado: Usuario;
   token: string;
@@ -36,7 +37,7 @@ export class UsuarioService {
 
 
   getUsuarioLogueado() {
-    const url = URL_SERVICIOS + '/usuarios';
+    const url = this.recurosBaseURL + '/usuarios';
 
     return this.http.get( url, {headers: this.headers} )
               .pipe(
@@ -96,18 +97,18 @@ export class UsuarioService {
 
 
 crearUsuario( formData: any ) {
-  const url = URL_SERVICIOS + '/usuarios/agregar';
+  const url = this.recurosBaseURL + '/usuarios/agregar';
   return this.http.post( url, formData );
 
 }
 
 asignarRol( usuarioId: any, rolId: any ) {
-  const url = URL_SERVICIOS + '/usuarios/asignar-rol/'+ usuarioId + '/' + rolId;
+  const url = this.recurosBaseURL + '/usuarios/asignar-rol/'+ usuarioId + '/' + rolId;
   return this.http.post( url, usuarioId, rolId );
 }
 
 login( formData: any ) {
-  const url = URL_SERVICIOS + '/oauth/token';
+  const url = this.recurosBaseURL + '/oauth/token';
   const payload = '';
   let headers1: HttpHeaders;
   headers1 = new HttpHeaders({
@@ -141,7 +142,7 @@ spinner(): void{
 }
 
 validaToken(): Observable<boolean> {
-  const url = URL_SERVICIOS + '/oauth/token';
+  const url = this.recurosBaseURL + '/oauth/token';
   // tslint:disable-next-line: variable-name
   const refresh_token = localStorage.getItem('refresh_token') || '';
   let headers1: HttpHeaders;
@@ -187,15 +188,15 @@ validaToken(): Observable<boolean> {
 
   obtenerPerfilUsuario(id) {
     
-    return this.http.get(URL_SERVICIOS + '/usuarios/encontrar/' + id);
+    return this.http.get(this.recurosBaseURL + '/usuarios/encontrar/' + id);
   }
   modificarPerfilUsuario(recurso, id) {
     //const url = URL_SERVICIOS + '/usuarios/modificar/' + id, recurso;
-    return this.http.put(URL_SERVICIOS + '/usuarios/modificar/' + id, recurso);
+    return this.http.put(this.recurosBaseURL + '/usuarios/modificar/' + id, recurso);
   }
 
   obtenerRoles() {
-    const url = URL_SERVICIOS + '/usuarios/listar-roles';
+    const url = this.recurosBaseURL + '/usuarios/listar-roles';
     return this.http.get( url);
   }
 
