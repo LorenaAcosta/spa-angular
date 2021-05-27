@@ -24,7 +24,7 @@ export class UsuarioSistemaComponent implements OnInit {
   public registerForm = this.fb.group({
     nombre: ['', Validators.required],
     apellido: ['', Validators.required],
-    sexo: ['', Validators.required],
+    //sexo: ['', Validators.required],
     username: ['', Validators.required],
     email: ['', Validators.compose([
       Validators.required,
@@ -77,7 +77,33 @@ export class UsuarioSistemaComponent implements OnInit {
   }
 
   guardar() {
-  
+    let usuarioId;
+    this.formSubmitted = true;
+    console.log( this.registerForm.value );
+
+    if ( this.registerForm.invalid ) {
+      console.log('no anda');
+      return;
+    }
+
+    this.usuarioService.crearUsuario( this.registerForm.value )
+      .subscribe( (resp:any) => {
+        usuarioId = resp.usuarioId;
+        console.log('usuario creado')
+        console.log(resp);
+        /*this.usuarioService.asignarRol(usuarioId, 2 )
+        .subscribe( (resp:any) => {});*/
+        Swal.fire(
+          'Guardado!',
+          'Se guardaron los datos!',
+          'success'
+        );
+        this.ngOnInit();
+      }, (err) => {
+        console.log(err);
+        Swal.fire('Error', err.error, 'error');
+      });
+      this.modalService.dismissAll();
   }
 
   redirigir(id) {
