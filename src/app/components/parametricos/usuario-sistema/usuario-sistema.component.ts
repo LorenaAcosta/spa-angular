@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
 import { ClienteService } from 'src/app/services/servicios/cliente.service';
 import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
@@ -54,13 +55,18 @@ export class UsuarioSistemaComponent implements OnInit {
               private util:           UtilesService,
               private route:          ActivatedRoute,
               private router:         Router,
+              private spinnerService: NgxSpinnerService,
               private modalService:   NgbModal) {
 }
 
 
   ngOnInit() {
+    this.spinnerService.show();
     this.clienteService.listarRecurso().subscribe( (resp: any[]) => {
       this.usuarios = resp ;
+      setTimeout(() => {
+        this.spinnerService.hide();
+      }, 200);
     });
 
     this.rolService.listarRecurso().subscribe( (resp: any[]) => {
@@ -68,12 +74,12 @@ export class UsuarioSistemaComponent implements OnInit {
       console.log('roles', resp)
     });
     
-    this.tipoComprobanteService.listarRecurso().subscribe( (resp: any[]) => {
+    /*this.tipoComprobanteService.listarRecurso().subscribe( (resp: any[]) => {
       this.tipos = resp ;
     });
     this.puntoExpedicionService.listarRecurso().subscribe( (resp: any[]) => {
       this.puntos = resp ;
-    });
+    });*/
   }
 
   guardar() {
