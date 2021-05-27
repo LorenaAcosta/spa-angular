@@ -1,6 +1,5 @@
 <form [formGroup]="form">
 
-
     <div class="alert alert-info" role="alert">
         <div class="card-header p-4">
                 <div class="row">
@@ -35,25 +34,19 @@
             </div>
     <div class="form-group">
         <div class="input-group input-group-sm mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="inputGroupSelect01">Monto Total</label>
-            </div>
-            <input [(ngModel)]="totalVenta" formControlName="total" type="total" value="" class="form-control form-control-sm" id="total" disabled>
-            <div class="input-group-prepend">
-                <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Gs.">
-                    <i class="fas fa-dollar-sign"></i>
-                </button>
-            </div>
         </div>
     </div>
         </div>
     </div>
+    <input [(ngModel)]="fechaPago" formControlName="fechaPago" type="hidden" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fechaPago" disabled>
+
+
 </form> 
 
 
 <div class="card mb-4">
     <div class="card-body">
-        <div class="table-responsive">
+        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
             <table class="table table-sm table-bordered display" id="dataTable" *ngIf="confirmados.length>0" width="100%" cellspacing="0">
                 <thead>
                     <tr>
@@ -66,15 +59,81 @@
                         <th>Subtotal</th>
                     </tr>
                 </thead>
-                <tbody *ngFor="let item of confirmados;let i = index  ">
-                    <tr>
+                <tbody>
+                    <tr *ngFor="let item of confirmados; let i = index  ">
                         <td>{{ i + 1}}</td>
                         <td>{{ item.fechaReserva }}</td>
                         <td>{{ item.disponibleBoxesId.boxesId.nombre}}</td>
                         <td>{{ item.disponibleId.servicioId.nombre}}</td>
                         <td>{{ item.disponibleId.servicioId.costo}}</td>
-                        <td>{{ item.disponibleId.servicioId.impuestoId.valor}}</td>
-                        <td>{{ (item.disponibleId.servicioId.costo * (item.disponibleId.servicioId.impuestoId.valor/100)) }}</td>
+                        <td>{{ item.disponibleId.comision }}</td>
+                        <td>{{ (item.disponibleId.servicioId.costo * (item.disponibleId.comision/100)) }}</td>
+                    </tr>
+                    <hr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>SubTotal:</td>
+                      <td>
+                        {{ this.subtotal }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                        <td>Salario Base:</td>
+                        <td> {{ this.empleado.sueldo }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<br><br>
+
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+            <table class="table table-sm table-bordered display" id="dataTable" *ngIf="confirmados.length>0" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Concepto</th>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>Valor</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of conceptos; let i = index  ">
+                        <td>{{ i + 1}}</td>
+                        <td>{{ item.descripcion }}</td>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <td><input [(ngModel)]="item.valor"  type="text" value="{{item.valor}}"
+                            class="form-control form-control-sm" id="valor"  (change)="reCalcularSubtotal()" required>
+                        </td>
+                    </tr>
+                    <hr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>Total:</td>
+                      <td> {{ this.subtotal2 }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -86,45 +145,19 @@
 
 
 
-<hr>
-<div class="col text-right">
-    <button  (click)="openModal(content)">Agregar Conceptos</button>
-</div>
 
 
+    
 
 
-<!--Modal para agregar onceptos-->
-<ng-template #content let-modal>
-    <div class="modal-header alert-info">
-        <h2>Agregar Conceptos</h2>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
+    <button routerLink="/planilla/generar" class="btn btn-sm btn-info mr-1">
+    <i class="fas fa-arrow-left"></i> Regresar
     </button>
-    </div>
-    <div class="modal-body">
-        <form [formGroup]="boxForm">
-            <table class="table table-sm table-bordered display" id="dataTable" *ngIf="conceptos.length>0" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Concepto</th>
-                        <th>SubTotal</th>
-                    </tr>
-                </thead>
-                <tbody *ngFor="let item of confirmados;let i = index  ">
-                    <tr>
-                        <td>{{ item.descripcion}}</td>
-                        <td>  </td>
-                    </tr>
-                </tbody>
-            </table>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <button type="button" class="btn btn-info mr-1"  (click)="insertarTabla()">Guardar</button>
-    </div>
-</ng-template>
+    <button type="submit"  class="btn btn-sm btn-info mr-1"
+     (click)="guardar()"> <i class="fas fa-save"></i> Procesar</button>
+    
 
 
-
+<br>
+<br>
+<br>

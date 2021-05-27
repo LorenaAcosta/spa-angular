@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { BoxesService } from 'src/app/services/servicios/boxes.service';
+import { HttpService } from 'src/app/services/servicios/http.service';
 
 @Component({
   selector: 'app-calendar',
@@ -34,6 +35,9 @@ export class CalendarComponent implements OnInit {
   turnosArray: any[] = [];
   selectedOption: string;
   printedOption: string;
+
+  loading = false;
+  buttionText = "Submit";
 
 
   disabledDates:NgbDateStruct[]=[
@@ -59,6 +63,7 @@ export class CalendarComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
+              public http: HttpService,
               private calendar: NgbCalendar,
               private config: NgbDatepickerConfig,
               private route: ActivatedRoute,
@@ -91,7 +96,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
 
-  
+    console.log(this.http.test);
 
     /* Obtiene el objeto disponible { disponible_id} */
     this.disponibleId = this.route.snapshot.params.id;
@@ -175,6 +180,10 @@ export class CalendarComponent implements OnInit {
             'success'
             );
           });
+
+          //mandar correo de confirmacion
+          this.mandarCorreo();
+
           this.router.navigateByUrl('booking/categorias');
       
         } else{
@@ -207,4 +216,33 @@ export class CalendarComponent implements OnInit {
         });
   }
 
+
+  mandarCorreo(){
+    this.loading = true;
+    this.buttionText = "Submiting...";
+    let user = {
+      name: 'Lorena' ,
+      email: 'lorena.acosta95@gmail.com'
+    }
+    this.http.sendEmail("http://localhost:3000/sendmail", user).subscribe(
+      data => {
+        let res:any = data; 
+        console.log(
+          `👏 > 👏 > 👏 > 👏 ${user.name} 
+         El correo ha sido enviado y el ID es ${res.messageId}`
+        );
+      },
+      err => {
+        console.log(err);
+        this.loading = false;
+        this.buttionText = "Submit";
+      },() => {
+        this.loading = false;
+        this.buttionText = "Submit";
+      }
+    );
+  }
+
 }
+
+

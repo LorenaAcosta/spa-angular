@@ -6,15 +6,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PlanillaService {
-  recurosBaseURL: string = environment.URL_BASE + '/detalles-venta/';
+  recurosBaseURL: string = environment.URL_BASE + '/planilla/';
   constructor(private http: HttpClient) { }
 
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
-  }
-
-  getRankingProductos() {
-    return this.http.get(this.recurosBaseURL + 'ranking');
   }
 
   getRecurso(id) {

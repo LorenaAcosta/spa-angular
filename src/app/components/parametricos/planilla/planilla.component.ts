@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
+import { PlanillaService } from 'src/app/services/servicios/planilla.service';
 
 @Component({
   selector: 'app-planilla',
@@ -9,11 +10,11 @@ import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 export class PlanillaComponent implements OnInit {
   
   empleados: any[] = [];
-  constructor(private empleadoService: EmpleadoService) { }
+  constructor(private planillaService: PlanillaService) { }
 
   ngOnInit(): void {
-    this.empleadoService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.empleados = resp );
+    this.planillaService.listarRecurso()
+    .subscribe( (resp: any[]) => { this.empleados = resp; console.log(this.empleados); });
   }
 
 }

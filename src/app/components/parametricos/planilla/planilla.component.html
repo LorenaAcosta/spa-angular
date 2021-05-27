@@ -33,9 +33,9 @@
                     <tbody *ngFor="let item of empleados | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                         <tr>
                             <td>{{ i + 1}}</td>
-                            <td>{{ item.nombre}}</td>
-                            <td>{{ item.apellido}}</td>
-                            <td>{{ item.apellido}}</td>
+                            <td>{{ item.empleadoId.nombre}}</td>
+                            <td>{{ item.empleadoId.apellido}}</td>
+                            <td>{{ item.fechaPago}}</td>
                             <td>
                                 <button class="btn btn-sm btn-info mr-1"  placement="top" ngbTooltip="Resumen"> 
                                     Resumen</button>
