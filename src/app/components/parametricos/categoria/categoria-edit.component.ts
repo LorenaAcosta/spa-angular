@@ -23,6 +23,7 @@ export class CategoriaEditComponent implements OnInit {
   fileName = "";
   fileInfos: Observable<any>;
   imagen="";
+  urlImagen: string = 'https://spa-2021-springboot.herokuapp.com/api/files/';
 
 
   form = this.fb.group({
