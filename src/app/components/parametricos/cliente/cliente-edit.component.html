@@ -5,121 +5,110 @@
 <hr>
 
 <form [formGroup]="form">
-  <div class="row">
-    <div class="col-6">
-      <div class="bd-content">
-        <div class="form-row">
-          <div class="form-group col-sm-6">
-            <label id="myLabel">Nombres</label>
-            <input formControlName="nombre" placeholder="nombre" type="nombre" maxlength="30"
-              class="form-control form-control-sm" id="nombre" required>
-          </div>
-          <div class="form-group col-sm-6">
-            <label id="myLabel">Apellidos</label>
-            <input formControlName="apellido" placeholder="apellido" type="apellido" maxlength="30"
-              class="form-control form-control-sm" id="apellido" required>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-sm-6">
-            <label id="myLabel">Nombre de Usuario</label>
-            <input type="text" autocomplete="username" class="form-control form-control-sm"  id="username"
-              placeholder="username" formControlName="username">
-          </div>
-          <div class="form-group col-sm-6">
-            <label id="myLabel">Contraseña</label>
-            <input type="password" autocomplete="current-password" class="form-control form-control-sm" id="password"
-              formControlName="password">
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-sm-6">
-            <label id="myLabel">Email</label>
-            <input type="text" class="form-control form-control-sm" id="correo" placeholder="Email"
-              pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="correo">
-            <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="alert alert-danger">
-              Correo inválido.</div>
-          </div>
-          <div class="form-group col-sm-6">
-            <label for="inputPassword4">Cedula</label>
-            <input formControlName="cedula" placeholder="cedula" type="cedula" class="form-control form-control-sm"
-              pattern="^[0-9]*$" id="cedula" required>
-            <div *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)" class="alert alert-danger">Introduzca sólo
-              dígitos.</div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label for="inputAddress">Dirección</label>
-          <input formControlName="direccion" placeholder="dirección" type="direccion" maxlength="60"
-            class="form-control form-control-sm" id="direccion" required>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-sm-6">
-            <label>Ciudad</label>
-            <input formControlName="ciudad" placeholder="ciudad" type="ciudad" maxlength="30"
-              class="form-control form-control-sm" id="ciudad" required>
-          </div>
-          <div class="form-group col-sm-6">
-            <label for="inputState">Nacionalidad</label>
-            <input formControlName="nacionalidad" type="nacionalidad" maxlength="30"  placeholder="nacionalidad"
-              class="form-control form-control-sm" id="nacionalidad" required>
-          </div>
-        </div>
+    <div class="row">
+        <div class="col-6">
+            <div class="bd-content">
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label id="myLabel">Nombres</label>
+                        <input formControlName="nombre" placeholder="nombre" type="nombre" maxlength="30" class="form-control form-control-sm" id="nombre" required>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label id="myLabel">Apellidos</label>
+                        <input formControlName="apellido" placeholder="apellido" type="apellido" maxlength="30" class="form-control form-control-sm" id="apellido" required>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label id="myLabel">Nombre de Usuario</label>
+                        <input type="text" autocomplete="username" class="form-control form-control-sm" id="username" placeholder="username" formControlName="username">
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label id="myLabel">Contraseña</label>
+                        <input type="password" autocomplete="current-password" class="form-control form-control-sm" id="password" formControlName="password">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label id="myLabel">Email</label>
+                        <input type="text" class="form-control form-control-sm" id="correo" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email">
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
+                            Correo inválido.</div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="inputPassword4">Cedula</label>
+                        <input formControlName="cedula" placeholder="cedula" type="cedula" class="form-control form-control-sm" pattern="^[0-9]*$" id="cedula" required>
+                        <div *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)" class="alert alert-danger">Introduzca sólo dígitos.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Dirección</label>
+                    <input formControlName="direccion" placeholder="dirección" type="direccion" maxlength="60" class="form-control form-control-sm" id="direccion" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label>Ciudad</label>
+                        <input formControlName="ciudad" placeholder="ciudad" type="ciudad" maxlength="30" class="form-control form-control-sm" id="ciudad" required>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="inputState">Nacionalidad</label>
+                        <input formControlName="nacionalidad" type="nacionalidad" maxlength="30" placeholder="nacionalidad" class="form-control form-control-sm" id="nacionalidad" required>
+                    </div>
+                </div>
 
-      </div>
-    </div>
+            </div>
+        </div>
 
 
 
 
 
-    <div class="col-6">
-      <div class="bd-content">
-        <div class="form-row form-group col-sm-6">
-          <label for="inputCity">Telefono</label>
-          <input formControlName="telefono" placeholder="telefono" type="telefono" class="form-control form-control-sm"
-          pattern="^[0-9]*$" id="telefono" required>
-            <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">Introduzca sólo
-            dígitos.</div>
-        </div>
-        <div class="form-row form-group col-sm-6">
-          <label for="inputState">Sexo</label>
-          <select id="sexo" formControlName="sexo" class="form-control form-control-sm">
+        <div class="col-6">
+            <div class="bd-content">
+                <div class="form-row form-group col-sm-6">
+                    <label for="inputCity">Telefono</label>
+                    <input formControlName="telefono" placeholder="telefono" type="telefono" class="form-control form-control-sm" pattern="^[0-9]*$" id="telefono" required>
+                    <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">Introduzca sólo dígitos.
+                    </div>
+                </div>
+                <div class="form-row form-group col-sm-6">
+                    <label for="inputState">Sexo</label>
+                    <select id="sexo" formControlName="sexo" class="form-control form-control-sm">
             <option selected>Choose...</option>
             <option value="femenino">FEMENINO</option>
             <option value="masculino">MASCULINO</option>
           </select>
+                </div>
+
+                <div class="form-row form-group col-md-6">
+                    <label for="inputZip">RUC</label>
+                    <input type="text" formControlName="ruc" class="form-control form-control-sm" id="ruc" placeholder="000-0000-0000-00" formControlName="ruc">
+                </div>
+
+
+                <div class="form-row form-group col-sm-6">
+                    <label>Tarjeta de TC/TD</label>
+                    <input type="tarjeta" formControlName="tarjeta" class="form-control form-control-sm" id="tarjeta" formControlName="tarjeta" pattern="^[0-9]*$" id="tarjeta" placeholder="tarjeta" required>
+                    <div *ngIf="tarjeta.invalid && (tarjeta.dirty || tarjeta.touched)" class="alert alert-danger">Introduzca sólo dígitos.
+                    </div>
+                </div>
+
+                <div class="form-row form-group col-sm-6">
+                    <label for="inputZip">FechaNac</label>
+                    <input formControlName="fechaNac" type="date" class="form-control form-control-sm" id="fechaNac" required>
+                </div>
+
+            </div>
         </div>
 
-        <div class="form-row form-group col-md-6">
-          <label for="inputZip">RUC</label>
-          <input type="text" formControlName="ruc" class="form-control form-control-sm" id="ruc" placeholder="000-0000-0000-00"
-            formControlName="ruc">
-        </div>
 
-
-        <div class="form-row form-group col-sm-6">
-          <label>Tarjeta de TC/TD</label>
-          <input type="tarjeta" formControlName="tarjeta" class="form-control form-control-sm" id="tarjeta" formControlName="tarjeta"   pattern="^[0-9]*$" id="tarjeta"  placeholder="tarjeta" required>
-          <div *ngIf="tarjeta.invalid && (tarjeta.dirty || tarjeta.touched)" class="alert alert-danger">Introduzca sólo
-          dígitos.</div>
-        </div>
-
-        <div class="form-row form-group col-sm-6">
-          <label for="inputZip">FechaNac</label>
-          <input formControlName="fechaNac" type="date" class="form-control form-control-sm" id="fechaNac" required>
-        </div>
-
-      </div>
-    </div>
-
-
-    <button routerLink="/cliente/listar" class="btn btn-sm btn-info mr-1">
+        <button routerLink="/cliente/listar" class="btn btn-sm btn-info mr-1">
       <i class="fas fa-arrow-left"></i> Regresar
     </button>
-    <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
+        <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
     " (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
 
-  </div>
+    </div>
 
 </form>

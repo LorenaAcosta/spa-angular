@@ -16,7 +16,7 @@ export class ClienteEditComponent implements OnInit {
     username: ['', Validators.required],
     password: ['', Validators.required],
     apellido: ['', Validators.required],
-    correo: ['', Validators.required],
+    email: ['', Validators.required],
     cedula: ['', Validators.required],
     ruc: ['', Validators.required],
     telefono: ['', Validators.required],
@@ -26,10 +26,11 @@ export class ClienteEditComponent implements OnInit {
     direccion: ['', Validators.required],
     fechaNac: ['', Validators.required],
     tarjeta: ['', Validators.required],
-    estado: ['']
+    estado: [1],
+    enabled: true
   });
 
-  get correo() { return this.form.get('correo'); }
+  get email() { return this.form.get('email'); }
   get telefono() { return this.form.get('telefono'); }
   get cedula() { return this.form.get('cedula'); }
   get tarjeta() { return this.form.get('tarjeta'); }
@@ -44,7 +45,7 @@ export class ClienteEditComponent implements OnInit {
     username: ['', Validators.required],
     password: ['', Validators.required],
     apellido: ['', Validators.required],
-    correo: ['', Validators.required],
+    email: ['', Validators.required],
     cedula: ['', Validators.required],
     direccion: ['', Validators.required],
     ciudad: ['', Validators.required],
@@ -54,7 +55,8 @@ export class ClienteEditComponent implements OnInit {
     tarjeta: ['', Validators.required],
     sexo: ['', Validators.required],
     fechaNac: ['', Validators.required],
-    estado: ['']
+    estado: [1],
+    enabled: true
     });
   }
 
@@ -67,7 +69,7 @@ export class ClienteEditComponent implements OnInit {
         username: ['', Validators.required],
         password: ['', Validators.required],
         apellido: ['', Validators.required],
-        correo: ['', Validators.required],
+        email: ['', Validators.required],
         cedula: ['', Validators.required],
         direccion: ['', Validators.required],
         ciudad: ['', Validators.required],
@@ -84,7 +86,7 @@ export class ClienteEditComponent implements OnInit {
         this.form.controls.username.setValue(data.username);
         this.form.controls.password.setValue(data.password);
         this.form.controls.apellido.setValue(data.apellido);
-        this.form.controls.correo.setValue(data.correo);
+        this.form.controls.email.setValue(data.email);
         this.form.controls.cedula.setValue(data.cedula);
         this.form.controls.direccion.setValue(data.direccion);
         this.form.controls.ciudad.setValue(data.ciudad);
@@ -103,6 +105,7 @@ export class ClienteEditComponent implements OnInit {
     const id = this.route.snapshot.params.id;
     let peticion: Observable<any>;
     if (typeof id === 'undefined') {
+      console.log('usuario', this.form.value);
       peticion = this.clienteService.agregarRecurso(this.form.value);
       peticion.subscribe((result: any) => {
         Swal.fire(

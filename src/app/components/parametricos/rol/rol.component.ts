@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
 import { DisponibleService } from 'src/app/services/servicios/disponibilidad.service';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
@@ -38,6 +39,7 @@ export class RolComponent implements OnInit {
     public util:           UtilesService,
     private route:          ActivatedRoute,
     private router:         Router,
+    private spinnerService: NgxSpinnerService,
     private modalService:   NgbModal) { 
       this.form = this.fb.group({    
         usuarioId: ['', Validators.required],
@@ -48,8 +50,12 @@ export class RolComponent implements OnInit {
     ngOnInit() {
       const id = this.route.snapshot.params.id;
       this.usuarioId= id;
+      this.spinnerService.show();
       this.rolService.listarRolPorUsuario(this.usuarioId).subscribe( (resp: any[]) => {
           this.rolesUsuario = resp ;
+          setTimeout(() => {
+            this.spinnerService.hide();
+          }, 200);
       });
 
       this.rolService.listarRolNoAsignadosPorUsuario(this.usuarioId).subscribe( (resp: any[]) => {

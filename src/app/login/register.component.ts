@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../services/servicios/usuario.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -27,7 +28,8 @@ export class RegisterComponent implements OnInit{
   });
 
   constructor( private fb: FormBuilder,
-               private usuarioService: UsuarioService
+               private usuarioService: UsuarioService,
+               public router: Router
   ) { }
 
   ngOnInit(){
@@ -51,6 +53,12 @@ export class RegisterComponent implements OnInit{
         console.log(resp);
         this.usuarioService.asignarRol(usuarioId, 2 )
         .subscribe( (resp:any) => {});
+        Swal.fire(
+          'Guardado!',
+          'Se guardaron los datos!',
+          'success'
+        );
+        this.router.navigate(['/login']);
       }, (err) => {
         console.log(err);
         Swal.fire('Error', err.error, 'error');

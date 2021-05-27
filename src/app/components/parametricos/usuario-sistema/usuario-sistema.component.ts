@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import { Observable } from 'rxjs';
 import { ClienteService } from 'src/app/services/servicios/cliente.service';
 import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
@@ -24,7 +25,7 @@ export class UsuarioSistemaComponent implements OnInit {
   public registerForm = this.fb.group({
     nombre: ['', Validators.required],
     apellido: ['', Validators.required],
-    sexo: ['', Validators.required],
+    //sexo: ['', Validators.required],
     username: ['', Validators.required],
     email: ['', Validators.compose([
       Validators.required,
@@ -54,13 +55,18 @@ export class UsuarioSistemaComponent implements OnInit {
               private util:           UtilesService,
               private route:          ActivatedRoute,
               private router:         Router,
+              private spinnerService: NgxSpinnerService,
               private modalService:   NgbModal) {
 }
 
 
   ngOnInit() {
+    this.spinnerService.show();
     this.clienteService.listarRecurso().subscribe( (resp: any[]) => {
       this.usuarios = resp ;
+      setTimeout(() => {
+        this.spinnerService.hide();
+      }, 200);
     });
 
     this.rolService.listarRecurso().subscribe( (resp: any[]) => {
@@ -68,16 +74,42 @@ export class UsuarioSistemaComponent implements OnInit {
       console.log('roles', resp)
     });
     
-    this.tipoComprobanteService.listarRecurso().subscribe( (resp: any[]) => {
+    /*this.tipoComprobanteService.listarRecurso().subscribe( (resp: any[]) => {
       this.tipos = resp ;
     });
     this.puntoExpedicionService.listarRecurso().subscribe( (resp: any[]) => {
       this.puntos = resp ;
-    });
+    });*/
   }
 
   guardar() {
-  
+    let usuarioId;
+    this.formSubmitted = true;
+    console.log( this.registerForm.value );
+
+    if ( this.registerForm.invalid ) {
+      console.log('no anda');
+      return;
+    }
+
+    this.usuarioService.crearUsuario( this.registerForm.value )
+      .subscribe( (resp:any) => {
+        usuarioId = resp.usuarioId;
+        console.log('usuario creado')
+        console.log(resp);
+        /*this.usuarioService.asignarRol(usuarioId, 2 )
+        .subscribe( (resp:any) => {});*/
+        Swal.fire(
+          'Guardado!',
+          'Se guardaron los datos!',
+          'success'
+        );
+        this.ngOnInit();
+      }, (err) => {
+        console.log(err);
+        Swal.fire('Error', err.error, 'error');
+      });
+      this.modalService.dismissAll();
   }
 
   redirigir(id) {
