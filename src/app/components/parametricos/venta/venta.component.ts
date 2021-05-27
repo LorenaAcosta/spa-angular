@@ -47,7 +47,7 @@ export class VentaComponent implements OnInit {
     private detallesVentaService: DetalleVentaService,
     private comprobanteService: ComprobanteService,
     private route: ActivatedRoute,
-    private util: UtilesService,
+    public util: UtilesService,
     private spinnerService: NgxSpinnerService
   ) { }
 
@@ -130,6 +130,7 @@ export class VentaComponent implements OnInit {
     this.detallesVentaService.getRecurso(id)
     .subscribe( (resp: any[]) => this.detalles = resp);
     console.log(this.detalles);
+    this.getFacturaReport(id);
   }
 
   anularFactura( id: any, pos: any) {

@@ -4,14 +4,13 @@
 
 <div class="input-group mb-3">
     <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
+        <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
     </div>
-    <input #termino type="text" class="form-control" placeholder="Buscar factura..." aria-label="Username"
-      aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
-      <form class="form-inline">
+    <input #termino type="text" class="form-control" placeholder="Buscar factura..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
+    <form class="form-inline">
         <div class="form-group">
             <div class="input-group">
-                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="cambiaLado($event)" ngbDatepicker #d="ngbDatepicker">
+                <input class="form-control" placeholder="yyyy-mm-dd" name="dp" [(ngModel)]="model" (ngModelChange)="buscarFecha($event)" ngbDatepicker #d="ngbDatepicker">
                 <div class="input-group-append">
                     <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
                 </div>
@@ -23,65 +22,64 @@
     <button routerLink="/compras/agregar" class="btn btn-info mr-1">
       <i class="fas fa-plus"></i> Agregar
     </button>
-  </div>
+</div>
 
 
 
-    <div class="card mb-4">
-        <div class="card-header"><i class="fas fa-table mr-1"></i>Facturas cargadas</div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="compras.length>0" width="100%"
-              cellspacing="0">
-              <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Factura</th>
-                    <th scope="col">Timbrado</th>
-                    <th scope="col">Monto total</th>
-                    <th scope="col">Proveedor</th>
-                    <th scope="col">Opciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let c of compras | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
-                    <td>{{ i + 1}}</td>
-                    <td>{{ c.fecha}}</td>
-                    <td>{{ c.numeroFactura}}</td>
-                    <td>{{ c.timbrado}}</td>
-                    <td>{{ c.montoTotal}}</td>
-                    <td>{{ c.proveedorId.empresa}}</td>
-                    <td>
-                        <button  class="btn btn-sm btn-info mr-1"  (click)="openBox(content, c.comprasId)">Detalles</button>
-                    </td>
-                    <td>
-                        <button class="btn btn-sm btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
+<div class="card mb-4">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Facturas cargadas</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="compras.length>0" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Fecha</th>
+                        <th scope="col">Factura</th>
+                        <th scope="col">Timbrado</th>
+                        <th scope="col">Monto total</th>
+                        <th scope="col">Proveedor</th>
+                        <th scope="col">Opciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let c of compras | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                        <td>{{ i + 1}}</td>
+                        <td>{{ c.fecha}}</td>
+                        <td>{{ c.numeroFactura}}</td>
+                        <td>{{ c.timbrado}}</td>
+                        <td>{{ c.montoTotal}}</td>
+                        <td>{{ c.proveedorId.empresa}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info mr-1" (click)="openBox(content, c.comprasId)">Detalles</button>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
                         <i class="fas fa-pencil-alt"></i>
                     </button>
-                        <button class="btn btn-sm btn-info mr-1" (click)="borrar(c.comprasId, i)">
+                            <button class="btn btn-sm btn-info mr-1" (click)="borrar(c.comprasId, i)">
                         <i class="fas fa-trash"></i>
                     </button>
-                    </td>
-                </tr>
-            </tbody>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
             <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
-          </div>
         </div>
-      </div>
-    
-    
-      <div *ngIf="compras.length == 0" class="alertalert-warning text-center mt-3">
-        <h4 class="alert-heading">No hay registros</h4>
-        <p>
-            <i class="fa fa-exclamation fa-2x"></i>
-        </p>
     </div>
-    
+</div>
 
 
-    
+<div *ngIf="compras.length == 0" class="alertalert-warning text-center mt-3">
+    <h4 class="alert-heading">No hay registros</h4>
+    <p>
+        <i class="fa fa-exclamation fa-2x"></i>
+    </p>
+</div>
+
+
+
+
 
 <!--Modal para agregar un nuevo Box-->
 <ng-template #content let-modal>
@@ -105,8 +103,8 @@
                 <h4 class="display">Timbrado: {{ cabecera.timbrado}}</h4>
             </div>
         </div>
-        
-        <table  class="table table-hover animated fadedIn faster">
+
+        <table class="table table-hover animated fadedIn faster">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -138,17 +136,11 @@
         <div class="alert alert-info" role="alert">
             <h4 class="display text-right">MontoTotal: {{ cabecera.montoTotal}}</h4>
         </div>
-  
+
 
 
     </div>
     <div class="modal-footer">
-        
+
     </div>
 </ng-template>
-
-
-
-
-
-

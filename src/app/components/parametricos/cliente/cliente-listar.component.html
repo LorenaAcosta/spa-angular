@@ -1,64 +1,62 @@
 <div class="container-fluid">
-  <h2 class="display">Gestión de Clientes</h2>
-  <div class="input-group mb-3">
-    <div class="input-group-prepend">
-      <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
-    </div>
-    <input #termino type="text" class="form-control" placeholder="Buscar cliente..." aria-label="Username"
-      aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
-      
-    <button routerLink="/cliente/registrar" class="btn btn-info mr-1">
+    <h2 class="display">Gestión de Clientes</h2>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
+        </div>
+        <input #termino type="text" class="form-control" placeholder="Buscar cliente..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)">
+
+        <button routerLink="/cliente/registrar" class="btn btn-info mr-1">
       <i class="fas fa-plus"></i> Agregar
     </button>
-  </div>
+    </div>
 
 
 
 
 
-  <div class="card mb-4">
-    <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Usuarios</div>
-    <div class="card-body">
-      <div class="table-responsive">
-        <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="clientes.length>0" width="100%"
-          cellspacing="0">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Documento</th>
-              <th>Nombre</th>
-              <th>Apellido</th>
-              <th>Correo</th>
-              <th>Telefono</th>
-              <th>Opciones</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let item of clientes | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let i = index  ">
-            <tr>
-              <td>{{ i + 1}}</td>
-              <td>{{ item.cedula}}</td>
-              <td>{{ item.nombre}}</td>
-              <td>{{ item.apellido}}</td>
-              <td>{{ item.correo}}</td>
-              <td>{{ item.telefono}}</td>
-              <td>
-                <button class="btn btn-sm btn-info mr-1" [routerLink]="['/cliente/modificar', item.usuarioId ]">
+    <div class="card mb-4">
+        <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Usuarios</div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="clientes.length>0" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Documento</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Correo</th>
+                            <th>Telefono</th>
+                            <th>Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let item of clientes | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let i = index  ">
+                        <tr>
+                            <td>{{ i + 1}}</td>
+                            <td>{{ item.cedula}}</td>
+                            <td>{{ item.nombre}}</td>
+                            <td>{{ item.apellido}}</td>
+                            <td>{{ item.correo}}</td>
+                            <td>{{ item.telefono}}</td>
+                            <td>
+                                <button *ngIf="admin" class="btn btn-sm btn-info mr-1" [routerLink]="['/cliente/modificar', item.usuarioId ]">
                   <i class="fas fa-pencil-alt"></i>
                 </button>
-                <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.usuarioId, i)">
+                                <button *ngIf="admin" class="btn btn-sm btn-info mr-1" (click)="borrar(item.usuarioId, i)">
                   <i class="fas fa-trash"></i>
                 </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
-      </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <div *ngIf="clientes.length == 0" class="alert alert-secondary text-center mt-3">
-  <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
+    <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
 </div>

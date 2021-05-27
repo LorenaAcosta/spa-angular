@@ -1,0 +1,160 @@
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Observable } from 'rxjs';
+import { ClienteService } from 'src/app/services/servicios/cliente.service';
+import { UsuarioService } from 'src/app/services/servicios/usuario.service';
+import Swal from 'sweetalert2';
+import { NavbarService } from './navbar.service';
+
+@Component({
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
+})
+export class NavbarComponent implements OnInit {
+  
+  menuItems: any[] = [];
+  menuCliente: any[] = [];
+  menuCajero: any[] = [];
+  menuRecepcion: any[] = [];
+  menuAdmin: any[] = [];
+  urlUsuario: any = null;
+  usuario: any;
+  closeResult: string;
+  usuarioPerfil: any;
+  constructor(
+    private fbc: FormBuilder,
+    private navbarService: NavbarService,
+    public usuarioService: UsuarioService,
+    public clienteService: ClienteService,
+    private modalService:   NgbModal,
+    public route: Router
+    ) {
+      
+      this.formCliente = this.fbc.group({
+        nombre: ['', Validators.required],
+        username: ['', Validators.required],
+        apellido: ['', Validators.required],
+        email: ['', Validators.required],
+        ruc: ['', Validators.required],
+        telefono: ['', Validators.required],
+        sexo: ['', Validators.required],
+        estado: [1]
+      });
+
+    let roles: any[];
+    roles = JSON.parse(localStorage.getItem('usuario')) || ' ';
+    let band:any = null;
+    localStorage.setItem('admin', 'false');
+    // tslint:disable-next-line: prefer-for-of
+    for ( let i = 0; i < roles.length; i++) {
+        console.log(roles[i]);
+        if (roles[i].nombre === 'ROLE_ADMIN') {
+          localStorage.setItem('admin', 'true');
+          this.menuAdmin = navbarService.menu;
+          console.log(this.menuItems);
+          break;
+        }
+        if (roles[i].nombre === 'ROLE_CLIENTE') {
+          this.menuCliente = navbarService.menu1;
+          console.log(this.menuCliente);
+        }
+        if (roles[i].nombre === 'ROLE_CAJERO') {
+          this.menuCajero = navbarService.menuCaja;
+          console.log(this.menuCajero);
+        }
+        if (roles[i].nombre === 'ROLE_RECEPCION') {
+          this.menuRecepcion = navbarService.menuRecepcion;
+          console.log(this.menuRecepcion);
+        }
+    }
+    //se concatena los menus en caso de tener mas de un rol
+    this.menuItems = [].concat(this.menuCliente, this.menuCajero, this.menuAdmin, this.menuRecepcion);
+    console.log(this.menuItems, this.menuItems.length);
+    
+  }
+
+  formCliente = this.fbc.group({
+    nombre: ['', Validators.required],
+    username: ['', Validators.required],
+    apellido: ['', Validators.required],
+    email: ['', Validators.required],
+    ruc: ['', Validators.required],
+    telefono: ['', Validators.required],
+    sexo: ['', Validators.required],
+    estado: [1]
+    });
+
+  get correo() { return this.formCliente.get('email'); }
+  get telefono() { return this.formCliente.get('telefono'); }
+
+  ngOnInit(): void {
+    this.usuario = this.usuarioService.obtenerUsuarioLogueado();
+    this.urlUsuario = "/cliente/modificar/" + this.usuario;
+    console.log(this.urlUsuario);
+  }
+
+  logout() {
+    this.usuarioService.logout();
+  }
+
+  open(content) {
+    if(this.usuarioService.obtenerUsuarioLogueado()){
+      //cargar los datos del usuario
+      this.usuarioService.obtenerPerfilUsuario(this.usuarioService.obtenerUsuarioLogueado())
+      .subscribe( (resp: any[]) => {
+         this.usuarioPerfil = resp,
+         this.formCliente.controls.username.setValue(this.usuarioPerfil.username);
+         this.formCliente.controls.nombre.setValue(this.usuarioPerfil.nombre);
+         this.formCliente.controls.apellido.setValue(this.usuarioPerfil.apellido);
+         this.formCliente.controls.email.setValue(this.usuarioPerfil.email);
+         this.formCliente.controls.ruc.setValue(this.usuarioPerfil.ruc);
+         this.formCliente.controls.telefono.setValue(this.usuarioPerfil.telefono);
+         this.formCliente.controls.sexo.setValue(this.usuarioPerfil.sexo);
+         this.formCliente.controls.estado.setValue(this.usuarioPerfil.estado);
+      });;
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    } else {
+      Swal.fire('Error', 'No tiene permisos para acceder a esta pagina...', 'error');
+      this.route.navigateByUrl('/');
+    }
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  guardarCliente() {
+    // console.warn(this.form.value);
+      const id = this.usuarioService.obtenerUsuarioLogueado();
+      let peticion: Observable<any>;
+      console.log(this.formCliente.value)
+         peticion = this.clienteService.modificarRecurso(this.formCliente.value, id);
+         peticion.subscribe((result: any) =>  {
+           Swal.fire(
+             'Guardado!',
+             'Se actualizaron los datos!',
+             'success'
+           );
+         });
+         this.modalService.dismissAll();
+         this.ngOnInit();
+  }
+
+  misReservas(){
+    this.route.navigate(['/reserva/mis-reservas/' + this.usuario]);
+  }
+
+}

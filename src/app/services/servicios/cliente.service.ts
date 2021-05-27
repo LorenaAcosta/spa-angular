@@ -10,7 +10,7 @@ import { throwError } from 'rxjs';
 })
 export class ClienteService {
  
-  recurosBaseURL: string = environment.URL_BASE + '/usuario/';
+  recurosBaseURL: string = environment.URL_BASE + '/usuarios/';
   constructor(private http: HttpClient) { }
 
   getResourse() {

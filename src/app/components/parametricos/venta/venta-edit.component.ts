@@ -58,6 +58,7 @@ export class VentaEditComponent implements OnInit {
   subTotalTotal = 0;
   nextComprobante = 0;
   comprobanteActual:any = null;
+  timbrado = 0;
   codigoPuntoExpedicion:any = 0;
   fechaActual: number = Date.now();
   index: 0;
@@ -454,10 +455,11 @@ export class VentaEditComponent implements OnInit {
           this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(localStorage.getItem('punto'))
           .subscribe((resp:any) => {
             /*---------------------Controlamos si el timbrado está vencido--------*/
+            console.log(resp.finVigencia);
             let fecha = new Date(resp.finVigencia);            
             let fechaActual= new Date();
             console.log(fechaActual.getTime());
-            console.log(fecha.getTime() + 86400000);
+            console.log((fecha.getTime() + 86400000));
             console.log(fechaActual.getTime() > (fecha.getTime() + 86400000));
             if(fechaActual.getTime() > (fecha.getTime() + 86400000)){
               console.log(this.nextComprobante);
@@ -470,10 +472,11 @@ export class VentaEditComponent implements OnInit {
             }
             /*----------------------------------------------------------------------*/
             this.comprobanteActual = resp,
+            this.timbrado = resp.timbrado;
             this.codigoPuntoExpedicion = resp.puntoExpedicionCodigo
           });
         }else{
-          this.comprobanteService.getComprobanteActivo()
+          this.comprobanteService.getComprobanteActivoPorPuntoExpedicion(localStorage.getItem('punto'))
           .subscribe((resp:any) => {
             this.comprobanteActual = resp,
             this.codigoPuntoExpedicion = resp.puntoExpedicionCodigo

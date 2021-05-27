@@ -8,6 +8,7 @@ import { Observable, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { PuntosExpedicionService } from '../../../services/servicios/puntos-expedicion.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { UsuarioService } from 'src/app/services/servicios/usuario.service';
 
 @Component({
   selector: 'app-puntos-expedicion',
@@ -26,6 +27,7 @@ export class PuntosExpedicionComponent implements OnInit {
   horarioId: any;
   empleadoId: any;
   closeResult: string;
+  admin: boolean;
 
 
 
@@ -35,7 +37,8 @@ export class PuntosExpedicionComponent implements OnInit {
               private route:          ActivatedRoute,
               private router:         Router,
               private modalService:   NgbModal,
-              private spinnerService: NgxSpinnerService) {
+              private spinnerService: NgxSpinnerService,
+              private usuarioService: UsuarioService) {
 
       this.form = this.fb.group({    
         descripcion: ['', Validators.required], 
@@ -49,6 +52,12 @@ export class PuntosExpedicionComponent implements OnInit {
     this.puntoService.listarRecurso().subscribe( (resp: any[]) => {
         this.puntos = resp ;
     });
+    
+    if(localStorage.getItem('admin') == 'true'){
+      this.admin = true;
+    } else{
+      this.admin = false;
+    }
   }
 
 

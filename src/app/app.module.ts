@@ -40,6 +40,7 @@ import { ServicioEditComponent } from './components/parametricos/servicio/servic
 import { EmpleadoComponent } from './components/parametricos/empleado/empleado.component';
 import { EmpleadoEditComponent } from './components/parametricos/empleado/empleado-edit.component';
 import { EmpleadoListarComponent } from './components/parametricos/empleado/empleado-listar.component';
+
 import { ProveedorComponent } from './components/parametricos/proveedor/proveedor.component';
 import { ProveedorEditComponent } from './components/parametricos/proveedor/proveedor-edit.component';
 import { CompraComponent } from './components/parametricos/compra/compra.component';
@@ -58,6 +59,12 @@ import { VentaReporteComponent } from './components/parametricos/venta/venta-rep
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {NgxSpinnerModule} from 'ngx-spinner';
+
+
+import { LoginComponent } from './login/login.component';
+import { PagesComponent } from './pages.component';
+import { RegisterComponent } from './login/register.component';
+import { NavbarComponent } from './shared/navbar/navbar.component';
 
 
 import { PlanillaComponent } from './components/parametricos/planilla/planilla.component';
@@ -80,6 +87,8 @@ import { ComprobanteListarComponent } from './components/parametricos/comprobant
 import { PuntosExpedicionComponent } from './components/parametricos/puntos-expedicion/puntos-expedicion.component';
 import { ListarComponent } from './components/parametricos/planilla/listar.component';
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
+import { UsuarioSistemaComponent } from './components/parametricos/usuario-sistema/usuario-sistema.component';
+import { RolComponent } from './components/parametricos/rol/rol.component';
 
 
 
@@ -138,8 +147,16 @@ import { DisponibleComponent } from './components/parametricos/disponible/dispon
     ImpuestoComponent,
     ComprobanteComponent,
     ComprobanteListarComponent,
+    PuntosExpedicionComponent,
+    ServicioListar2Component,
+    LoginComponent,
+    RegisterComponent,
+    PagesComponent,
+    NavbarComponent,
     PuntosExpedicionComponent, 
-    ListarComponent
+    ListarComponent,
+    UsuarioSistemaComponent,
+    RolComponent
   ],
   imports: [
     BrowserModule,
@@ -168,7 +185,8 @@ import { DisponibleComponent } from './components/parametricos/disponible/dispon
     MatCardModule,
     MatIconModule,
     MatAutocompleteModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

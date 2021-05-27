@@ -17,4 +17,8 @@ export class PlanillaComponent implements OnInit {
     .subscribe( (resp: any[]) => { this.empleados = resp; console.log(this.empleados); });
   }
 
+  buscarTermino(){
+    
+  }
+
 }

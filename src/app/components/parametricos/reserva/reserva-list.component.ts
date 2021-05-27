@@ -7,7 +7,7 @@ import { ReservaService } from 'src/app/services/servicios/reserva.service';
 import { EmpleadoService } from '../../../services/servicios/empleado.service';
 import Swal from 'sweetalert2';
 import { Observable } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-reserva-list',
@@ -20,6 +20,7 @@ export class ReservaListComponent implements OnInit {
 
   constructor(private reservaService: ReservaService,
               private empleadoService: EmpleadoService,
+              private route: ActivatedRoute,
               private fb: FormBuilder,
               private router: Router) { }
   reservas: any;
@@ -32,9 +33,16 @@ export class ReservaListComponent implements OnInit {
   filtroEmpleado:'';
 
   ngOnInit() {
-    this.reservaService.listarRecursos().subscribe( (resp: any) => { 
-      this.reservas = resp ; 
-      console.log(this.reservas) } );
+    const id = this.route.snapshot.params.id;
+    if (typeof id !== 'undefined') {
+      this.reservaService.misReservas(id).subscribe( (resp: any) => { 
+        this.reservas = resp ; 
+        console.log(this.reservas) } );
+    } else {
+      this.reservaService.listarRecursos().subscribe( (resp: any) => { 
+        this.reservas = resp ; 
+        console.log(this.reservas) } );
+    }
   }
 
   // tslint:disable-next-line:member-ordering

@@ -3,19 +3,19 @@
     <!--Cabecera-->
     <div class="alert alert-info" role="alert">
         <div class="card-header p-4">
-                <div class="row">
-                  <div class="col-sm">
+            <div class="row">
+                <div class="col-sm">
                     <a class="pt-2 d-inline-block" href="/" data-abc="true">KATHY SPA.com</a><br>
                     <a class="pt-2 d-inline-block" href="/" data-abc="true">RUC: 80031970-2</a>
-                  </div>
-                  <div class="col-sm">
-                   </div>
-                  <div class="col-sm float-right">
+                </div>
+                <div class="col-sm">
+                </div>
+                <div class="col-sm float-right">
                     <h2 class="mb-0">Factura # {{'001-' + this.codigoPuntoExpedicion + '-'+ceroIzquierda(this.nextComprobante, 7)}}</h2>
                     <h3>Fecha Emisión: {{currentDate | date:'yyyy-MM-dd' }} </h3>
-                    <h3>Timbrado: {{ this.comprobanteActual.timbrado }}</h3>
-                  </div>
+                    <h3>Timbrado: {{ timbrado }}</h3>
                 </div>
+            </div>
             <hr>
             <div class="form-row">
                 <div class="form-group col-sm-6">
@@ -30,11 +30,10 @@
                             </option>
                           </select>
                         <div class="input-group-prepend">
-                            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top"
-                             title="Agregar cliente"   (click)="openFormCliente(content)">
+                            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar cliente" (click)="openFormCliente(content)">
                                 <i class="fas fa-1x fa-plus-circle"></i>
                                 </button>
-                          </div>
+                        </div>
                     </div>
 
                 </div>
@@ -42,51 +41,50 @@
                 </div>
                 <div class="form-group col-sm-4 ">
 
-                     <div class="input-group input-group-sm mb-3">
+                    <div class="input-group input-group-sm mb-3">
                         <div class="input-group-prepend">
                             <label class="input-group-text" for="inputGroupSelect01">Forma de Pago</label>
                         </div>
-                            <select id="medioPagoId" formControlName="medioPagoId" class="form-control form-control-sm">
+                        <select id="medioPagoId" formControlName="medioPagoId" class="form-control form-control-sm">
                           <option *ngFor="let m of medios" [ngValue]="m.medioPagoId">
                             {{ m.descripcion }}
                           </option>
                         </select>
                         <div class="input-group-prepend">
-                            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top"
-                             title="Agregar Medio Pago"   (click)="openFormMedio(content1)">
+                            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar Medio Pago" (click)="openFormMedio(content1)">
                                 <i class="fas fa-1x fa-plus-circle"></i>
                                 </button>
-                          </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            
 
-<div class="form-group">
-    <div class="input-group input-group-sm mb-3">
-        <div class="input-group-prepend">
-            <label class="input-group-text" for="inputGroupSelect01">Monto Total</label>
-        </div>
-        <input [(ngModel)]="totalVenta" formControlName="montoTotal" type="montoTotal" value="{{ util.numberWithCommas(totalVenta)}}" class="form-control form-control-sm" id="montoTotal" disabled>
-        <div class="input-group-prepend">
-            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Gs.">
+
+            <div class="form-group">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Monto Total</label>
+                    </div>
+                    <input [(ngModel)]="totalVenta" formControlName="montoTotal" type="montoTotal" value="{{ util.numberWithCommas(totalVenta)}}" class="form-control form-control-sm" id="montoTotal" disabled>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Gs.">
                 <i class="fas fa-dollar-sign"></i>
                 </button>
-        </div>
-    </div>
-</div>
+                    </div>
+                </div>
+            </div>
 
 
 
-              
+
             <input [(ngModel)]="fechaActual" formControlName="fecha" type="hidden" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fecha" disabled>
             <input formControlName="numeroComprobante" type="hidden" value="{{'001-' + this.codigoPuntoExpedicion + '-'+ceroIzquierda(this.nextComprobante, 7)}}" class="form-control form-control-sm" id="numeroComprobante" disabled>
 
 
         </div>
     </div>
-    
-</form> 
+
+</form>
 
 
 <!--
@@ -163,27 +161,27 @@
 
 <!--form que recibe parametros para detalle-->
 <div class="contenedor">
-    <section >
+    <section>
         <label>Seleccione el tipo de detalle que desea agregar:  </label>
         <mat-radio-group>
             <mat-radio-button value="after" (click)=cargaProducto() [checked]="true">PRODUCTO</mat-radio-button>
             <mat-radio-button value="before" (click)=cargaServicio()>SERVICIO</mat-radio-button>
         </mat-radio-group>
-    </section> 
+    </section>
 </div>
-    <mat-form-field appearance="fill" style="width:40%;">
-        <mat-label>Seleccione el producto</mat-label>
-        <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
+<mat-form-field appearance="fill" style="width:40%;">
+    <mat-label>Seleccione el producto</mat-label>
+    <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
           <option value="--" selected></option>
           <option *ngFor="let prod of productos " [ngValue]="prod" >
             {{prod.descripcion}}
           </option>
         </select>
-    </mat-form-field>
-    <mat-form-field appearance="fill" style="width:40%;">
-        <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
-    </mat-form-field>
-    <button mat-raised-button class="btn btn-info mr-1" (click)="agregar()" style="height:50px">Agregar</button>
+</mat-form-field>
+<mat-form-field appearance="fill" style="width:40%;">
+    <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
+</mat-form-field>
+<button mat-raised-button class="btn btn-info mr-1" (click)="agregar()" style="height:50px">Agregar</button>
 <!--Fin tabla para detalles-->
 
 
@@ -254,33 +252,33 @@
 <button routerLink="/ventas/listar/{{this.codigoPuntoExpedicion}}" class="btn btn-sm btn-info mr-1">
     <i class="fas fa-arrow-left"></i> Regresar
     </button>
-    <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
+<button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
     " (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
-    
-
-
-
-    <hr>
-
-    <br>
-    <br>
-
-    <br>
-    <br>
 
 
 
 
+<hr>
 
- <!-- Modal Medio de Pago -->
- <ng-template #content1 let-modal>
+<br>
+<br>
+
+<br>
+<br>
+
+
+
+
+
+<!-- Modal Medio de Pago -->
+<ng-template #content1 let-modal>
     <div class="modal-header alert-info">
         <h2 class="modal-title" id="modal-basic-title">Añadir Medio Pago</h2>
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    
+
     <div class="modal-body">
         <div class="container-fluid">
             <form [formGroup]="formMedio">
@@ -301,10 +299,10 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" [disabled]="!this.formMedio.valid" class="btn btn-info mr-1"  (click)="guardarMedio()"> <i class="fas fa-save"></i>Guardar</button>
+        <button type="submit" [disabled]="!this.formMedio.valid" class="btn btn-info mr-1" (click)="guardarMedio()"> <i class="fas fa-save"></i>Guardar</button>
     </div>
 </ng-template>
-    
+
 
 
 
@@ -393,6 +391,6 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button type="submit" [disabled]="!this.formCliente.valid" class="btn btn-info mr-1"  (click)="guardarCliente()"> <i class="fas fa-save"></i>Guardar</button>
+        <button type="submit" [disabled]="!this.formCliente.valid" class="btn btn-info mr-1" (click)="guardarCliente()"> <i class="fas fa-save"></i>Guardar</button>
     </div>
 </ng-template>
