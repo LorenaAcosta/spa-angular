@@ -50,6 +50,9 @@ export class RegisterComponent implements OnInit{
     this.spinnerService.show();
     this.usuarioService.crearUsuario( this.registerForm.value )
       .subscribe( (resp:any) => {
+        setTimeout(() => {
+          this.spinnerService.hide();
+        }, 200);
         usuarioId = resp.usuarioId;
         console.log('usuario creado')
         console.log(resp);
@@ -60,16 +63,13 @@ export class RegisterComponent implements OnInit{
           'Se guardaron los datos!',
           'success'
         );
-        setTimeout(() => {
-          this.spinnerService.hide();
-        }, 200);
         this.router.navigate(['/login']);
       }, (err) => {
         console.log(err);
-        Swal.fire('Error', err.error, 'error');
         setTimeout(() => {
           this.spinnerService.hide();
         }, 200);
+        Swal.fire('Error', err.error, 'error');
       });
   }
 
