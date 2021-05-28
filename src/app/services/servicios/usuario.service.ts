@@ -180,7 +180,7 @@ validaToken(): Observable<boolean> {
   obtenerUsuarioLogueado() {
     if (localStorage.getItem('token')) {
       const payload = JSON.parse( atob( localStorage.getItem('token').split('.')[1] ) );
-      console.log('usuarioId', payload.usuarioId);
+      //console.log('usuarioId', payload.usuarioId);
       return payload.usuarioId;
     }
   }

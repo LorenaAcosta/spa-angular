@@ -24,6 +24,7 @@ export class NavbarComponent implements OnInit {
   usuario: any;
   closeResult: string;
   usuarioPerfil: any;
+  logueado: boolean = false;
   constructor(
     private fbc: FormBuilder,
     private navbarService: NavbarService,
@@ -92,6 +93,11 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.usuario = this.usuarioService.obtenerUsuarioLogueado();
+    if (this.usuarioService.obtenerUsuarioLogueado()){
+      this.logueado = true;
+    }else{
+      this.logueado = false;
+    }
     this.urlUsuario = "/cliente/modificar/" + this.usuario;
     console.log(this.urlUsuario);
   }
