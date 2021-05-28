@@ -25,7 +25,7 @@
             </li>
         </ul>
         <div class=" float-right ">
-            <button *ngIf="!logueado " class="btn btn-outline-info text-white mr-2 mt-lg-0 mt-md-0" [routerLink]="[ '/login'] " type="button ">Login </button>
+            <button *ngIf="!logueado" class="btn btn-outline-info text-white mr-2 mt-lg-0 mt-md-0" [routerLink]="[ '/login'] " type="button ">Login </button>
         </div>
         <div class=" float-right ">
             <button *ngIf="logueado" class="btn btn-outline-info text-white mr-2 mt-lg-0 mt-md-0 " (click)="logout() ">Logout</button>

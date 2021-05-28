@@ -95,7 +95,7 @@ export class NavbarComponent implements OnInit {
     this.usuario = this.usuarioService.obtenerUsuarioLogueado();
     if (this.usuarioService.obtenerUsuarioLogueado()){
       this.logueado = true;
-    } else {
+    }else{
       this.logueado = false;
     }
     this.urlUsuario = "/cliente/modificar/" + this.usuario;
