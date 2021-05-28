@@ -2,12 +2,12 @@
 
     <div class="alert alert-info" role="alert">
         <div class="card-header p-4">
-                <div class="row">
-                  <div class="col-sm">
+            <div class="row">
+                <div class="col-sm">
                     <h2 class="mb-0">Liquidación Salario # </h2>
                     <h3>Fecha Emisión: {{currentDate | date:'yyyy-MM-dd' }} </h3>
-                  </div>
-                  <div class="input-group input-group-sm mb-3">
+                </div>
+                <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="inputGroupSelect01">Empleado</label>
                     </div>
@@ -26,22 +26,21 @@
                     </select>
 
                     <div class="input-group-prepend">
-                       <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top"
-                        title="Procesar Comisiones"   (click)="procesarComisiones()"> Procesar Comisiones
+                        <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Procesar Comisiones" (click)="procesarComisiones()"> Procesar Comisiones
                         </button>
-                      </div>
+                    </div>
                 </div>
             </div>
-    <div class="form-group">
-        <div class="input-group input-group-sm mb-3">
+            <div class="form-group">
+                <div class="input-group input-group-sm mb-3">
+                </div>
+            </div>
         </div>
     </div>
-        </div>
-    </div>
-    <input [(ngModel)]="fechaPago" formControlName="fechaPago" type="hidden" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fechaPago" disabled>
+    <input formControlName="fechaPago" type="hidden" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fechaPago" disabled>
 
 
-</form> 
+</form>
 
 
 <div class="card mb-4">
@@ -71,22 +70,22 @@
                     </tr>
                     <hr>
                     <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td>SubTotal:</td>
-                      <td>
-                        {{ this.subtotal }}
-                      </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>SubTotal:</td>
+                        <td>
+                            {{ this.subtotal }}
+                        </td>
                     </tr>
                     <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                         <td>Salario Base:</td>
                         <td> {{ this.empleado.sueldo }}</td>
                     </tr>
@@ -121,19 +120,18 @@
                         <th></th>
                         <th></th>
                         <th></th>
-                        <td><input [(ngModel)]="item.valor"  type="text" value="{{item.valor}}"
-                            class="form-control form-control-sm" id="valor"  (change)="reCalcularSubtotal()" required>
+                        <td><input [(ngModel)]="item.valor" type="text" value="{{item.valor}}" class="form-control form-control-sm" id="valor" (change)="reCalcularSubtotal()" required>
                         </td>
                     </tr>
                     <hr>
                     <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td>Total:</td>
-                      <td> {{ this.subtotal2 }}</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Total:</td>
+                        <td> {{ this.subtotal2 }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -147,15 +145,14 @@
 
 
 
-    
 
 
-    <button routerLink="/planilla/generar" class="btn btn-sm btn-info mr-1">
+
+<button routerLink="/planilla/generar" class="btn btn-sm btn-info mr-1">
     <i class="fas fa-arrow-left"></i> Regresar
     </button>
-    <button type="submit"  class="btn btn-sm btn-info mr-1"
-     (click)="guardar()"> <i class="fas fa-save"></i> Procesar</button>
-    
+<button type="submit" class="btn btn-sm btn-info mr-1" (click)="guardar()"> <i class="fas fa-save"></i> Procesar</button>
+
 
 
 <br>
