@@ -32,22 +32,29 @@ import Swal from 'sweetalert2';
 export class ListarComponent implements OnInit {
 
   empleados: any[] = [];
+  empleado;
   confirmados: any[] = [];
   conceptos: any[] = [];
   selectedEmpleado;
+  subtotal: number;
+  subtotal2: number;
   selectedMes;
+  closeResult = '';
   articuloselect: PlanillaDetalle = new PlanillaDetalle(0, 0, 0, 0, 0 ,0 );
   datosGuardar: PlanillaDetalle[] = [];
+  currentDate = Date.now();
+  suma: number;
 
   @ViewChild(MatTable) tabla1: MatTable<PlanillaDetalle>;
   @ViewChild(MatTable) tab: MatTable<PlanillaDetalle>;
 
-  constructor(
-    private empleadoService: EmpleadoService,
-    private reservaService: ReservaService,
-    private conceptosService: ConceptosService,
-    private fb: FormBuilder
-    ) {
+  constructor( private empleadoService: EmpleadoService,
+              private reservaService: ReservaService,
+              private conceptosService: ConceptosService,
+              private planillaService: PlanillaService,
+              private fb: FormBuilder,
+              private util: UtilesService,
+              private modalService: NgbModal  ) {
     this.form = this.fb.group({
       numeroPatronal:  ['', Validators.required],
       numeroPatronalips:  ['', Validators.required],
@@ -74,6 +81,11 @@ export class ListarComponent implements OnInit {
     usuarioId: ['', Validators.required]
   });
 
+  form2 = this.fb.group({
+    conceptoId:  ['', Validators.required],
+    descripcion:  ['', Validators.required]
+  });
+
   months = [
     {"cod":1, "mes": "ENERO"},
     {"cod":2, "mes": "FEBRERO"},
@@ -96,26 +108,84 @@ export class ListarComponent implements OnInit {
 
     this.conceptosService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.conceptos = resp  );
+
   }
+
 
   procesarComisiones(){
     this.selectedEmpleado= this.form.controls.empleadoId.value;
     this.selectedMes= this.form.controls.mesPago.value;
     console.log(this.selectedEmpleado);
 
+    this.empleadoService.getRecurso(this.selectedEmpleado)
+    .subscribe( (resp: any[]) =>  this.empleado = resp  );
+
     this.reservaService.getReservasConfirmadasEmpleado(this.selectedEmpleado, this.selectedMes)
-    .subscribe( (resp: any[]) => { this.confirmados = resp; console.log(resp) } );
+    .subscribe( (resp: any[]) => { 
+      
+      this.confirmados = resp; 
+      console.log(resp);
+
+      //Calculamos el TOTAL 
+      this.subtotal = this.confirmados.reduce((sum, value) =>
+      (typeof value.disponibleId.servicioId.costo == "number" ? sum + (value.disponibleId.servicioId.costo * (value.disponibleId.comision/100)) : sum), 0);
+      console.log(this.subtotal);
+
+      this.subtotal2 = this.conceptos.reduce((sum, value) =>
+      (typeof value.valor == "number" ? sum + value.valor : sum), 0);
+      console.log(this.subtotal2);
+
+
+    } );
+
   }
 
-  insertarTabla(){
-
-    this.datosGuardar.push(new PlanillaDetalle(0, this.articuloselect.montoDebe , this.articuloselect.monetoHaber,
-      this.articuloselect.conceptoId , this.articuloselect.reservas, this.articuloselect.planillaId));
-
+  reCalcularSubtotal(){
+    this.subtotal2 = this.conceptos.reduce((sum, value) =>
+    (typeof value.valor == "number" ? sum + value.valor : sum), 0);
+    console.log(this.subtotal2);
   }
 
 
+  guardar(){
+    this.form.controls.numeroPatronal.setValue('12356');
+    this.form.controls.numeroPatronalips.setValue('222333');
+    this.form.controls.fechaPago.setValue(this.currentDate);
+    this.form.controls.mesPago.setValue( this.util.getMonth(this.selectedMes) );
+    this.form.controls.total.setValue(this.obtenerTotal());
+    this.form.controls.descuento.setValue(this.obtenerDescuento());
+   //this.form.controls.saldo.setValue();
+   // this.form.controls.total.value - this.form.controls.descuento.value;
+   // this.form.controls.empleadoId.setValue(1);
+    this.form.controls.usuarioId.setValue(1);
+
+    let peticion: Observable<any>;
+    console.log(this.form.value);
+    peticion = this.planillaService.agregarRecurso(this.form.value);
+    peticion.subscribe((result: any) => {
+      Swal.fire(
+        'Guardado!',
+        'Se guardaron los datos!',
+        'success'
+      );
+
+    });
   
+
+  }
+
+  obtenerTotal(){
+    let total:number;
+    total =  this.subtotal + parseInt(this.empleado.sueldo);
+    return total;
+  }
+ 
+  obtenerDescuento(){
+    let total:number;
+
+    return total;
+  }
+ 
 }
 
 
