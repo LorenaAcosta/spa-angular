@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { BoxesService } from 'src/app/services/servicios/boxes.service';
+import { HttpService } from 'src/app/services/servicios/http.service';
 import { UsuarioService } from '../../../services/servicios/usuario.service';
 import { SendMailService } from 'src/app/services/servicios/send-mail.service';
 
@@ -66,6 +67,7 @@ export class CalendarComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
+              public http: HttpService,
               private calendar: NgbCalendar,
               private usuarioService: UsuarioService,
               private config: NgbDatepickerConfig,
@@ -100,7 +102,7 @@ export class CalendarComponent implements OnInit {
 
   ngOnInit(): void {
 
-  
+    console.log(this.http.test);
 
     /* Obtiene el objeto disponible { disponible_id} */
     this.disponibleId = this.route.snapshot.params.id;
@@ -276,3 +278,6 @@ export class CalendarComponent implements OnInit {
   }
 
 }
+
+
+

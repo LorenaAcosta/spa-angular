@@ -48,6 +48,11 @@ export class RegisterComponent implements OnInit{
       return;
     }
     this.spinnerService.show();
+
+    this.registerForm.controls.username.setValue(this.registerForm.controls.username.value.toLowerCase());
+   
+
+
     this.usuarioService.crearUsuario( this.registerForm.value )
       .subscribe( (resp:any) => {
         setTimeout(() => {

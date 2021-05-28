@@ -37,6 +37,21 @@ import { Injectable } from '@angular/core';
       if (day == 0) return "Domingo";
     }
 
+    getMonth(cod){
+      if (cod == 1) return "ENERO";
+      if (cod == 2) return "FEBRERO";
+      if (cod == 3) return "MARZO";
+      if (cod == 4) return "ABRIL";
+      if (cod == 5) return "MAYO";
+      if (cod == 6) return "JUNIO";
+      if (cod == 7) return "JULIO";
+      if (cod == 8) return "AGOSTO";
+      if (cod == 9) return "SEPTIEMBRE";
+      if (cod == 10) return "OCTUBRE";
+      if (cod == 11) return "NOVIEMBRE";
+      if (cod ==12) return "DICIEMBRE";
+    }
+
     
 
   }
