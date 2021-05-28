@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
+import {NgbCarouselConfig} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
 
-export class DashboardComponent implements OnInit {
 
-  constructor() {
+export class DashboardComponent implements OnInit {
+  ngOnInit(): void {
   }
-  ngOnInit() {
-    document.body.classList.add('bg-img');
-  }
+  
+  images = [444, 100, 900].map((n) => `/assets/img/${n}.jpg`);
+  
 
 }

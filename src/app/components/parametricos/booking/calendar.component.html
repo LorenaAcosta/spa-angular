@@ -19,7 +19,8 @@
           </ngb-datepicker>
 
       </div>
-      <div class="col">
+      <div class="col-sm">
+        <h4>HORARIO:</h4>
           <select class="btn btn-lg btn-outline-primary mr-2" [(ngModel)]="selectedOption" required>
         <option >...</option>
         <option *ngFor="let hora of turnosArray" >
@@ -27,8 +28,9 @@
         </option>
      </select>
       </div>
-      <div class="col">
+      <div class="col-sm">
           <button class="btn btn-lg btn-outline-primary mr-2" (click)="agendar()">Agendar </button>
       </div>
   </div>
 </div>
+

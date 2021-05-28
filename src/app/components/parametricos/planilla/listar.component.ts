@@ -183,8 +183,6 @@ export class ListarComponent implements OnInit {
   obtenerDescuento(){
     let total:number;
 
-  
-
     return total;
   }
  

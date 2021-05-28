@@ -18,14 +18,14 @@ export class ClienteEditComponent implements OnInit {
     apellido: ['', Validators.required],
     email: ['', Validators.required],
     cedula: ['', Validators.required],
-    ruc: ['', Validators.required],
+    ruc: ['' ],
     telefono: ['', Validators.required],
     sexo: ['', Validators.required],
     ciudad: ['', Validators.required],
-    nacionalidad: ['', Validators.required],
+    nacionalidad: [''],
     direccion: ['', Validators.required],
     fechaNac: ['', Validators.required],
-    tarjeta: ['', Validators.required],
+    tarjeta: ['', ],
     estado: [1],
     enabled: true
   });
@@ -49,10 +49,10 @@ export class ClienteEditComponent implements OnInit {
     cedula: ['', Validators.required],
     direccion: ['', Validators.required],
     ciudad: ['', Validators.required],
-    nacionalidad: ['', Validators.required],
-    ruc: ['', Validators.required],
+    nacionalidad: [''],
+    ruc: [''],
     telefono: ['', Validators.required],
-    tarjeta: ['', Validators.required],
+    tarjeta: [''],
     sexo: ['', Validators.required],
     fechaNac: ['', Validators.required],
     estado: [1],
@@ -103,6 +103,10 @@ export class ClienteEditComponent implements OnInit {
   guardar() {
     // console.warn(this.form.value);
     const id = this.route.snapshot.params.id;
+
+    
+    this.form.controls.username.setValue(this.form.controls.username.value.toLowerCase());
+   
     let peticion: Observable<any>;
     if (typeof id === 'undefined') {
       console.log('usuario', this.form.value);

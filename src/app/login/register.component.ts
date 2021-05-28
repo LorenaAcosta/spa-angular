@@ -46,6 +46,10 @@ export class RegisterComponent implements OnInit{
       return;
     }
 
+    this.registerForm.controls.username.setValue(this.registerForm.controls.username.value.toLowerCase());
+   
+
+
     this.usuarioService.crearUsuario( this.registerForm.value )
       .subscribe( (resp:any) => {
         usuarioId = resp.usuarioId;
