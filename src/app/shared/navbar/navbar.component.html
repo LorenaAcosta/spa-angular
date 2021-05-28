@@ -24,18 +24,18 @@
                 </div>
             </li>
         </ul>
-        <div  class=" float-right ">
-            <button *ngIf="!this.usuarioService.obtenerUsuarioLogueado() " class="btn btn-outline-info text-white mr-2 mt-lg-0 mt-md-0" [routerLink]="[ '/login'] " type="button ">Login </button>
+        <div class=" float-right ">
+            <button *ngIf="!logueado " class="btn btn-outline-info text-white mr-2 mt-lg-0 mt-md-0" [routerLink]="[ '/login'] " type="button ">Login </button>
         </div>
         <div class=" float-right ">
-            <button *ngIf="this.usuarioService.obtenerUsuarioLogueado() " class="btn btn-outline-info text-white mr-2 mt-lg-0 mt-md-0 " (click)="logout() ">Logout</button>
+            <button *ngIf="logueado" class="btn btn-outline-info text-white mr-2 mt-lg-0 mt-md-0 " (click)="logout() ">Logout</button>
         </div>
 
 
 
 
-        <ul class="navbar-nav ml-auto ml-md-0" >
-            <li class="nav-item dropdown" >
+        <ul class="navbar-nav ml-auto ml-md-0">
+            <li class="nav-item dropdown">
                 <a *ngIf="this.usuarioService.obtenerUsuarioLogueado() " href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
                     <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
