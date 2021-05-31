@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { FormBuilder, Validators } from '@angular/forms';
 import { UsuarioService } from '../services/servicios/usuario.service';
 import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-register',
@@ -29,6 +30,7 @@ export class RegisterComponent implements OnInit{
 
   constructor( private fb: FormBuilder,
                private usuarioService: UsuarioService,
+               private spinnerService: NgxSpinnerService,
                public router: Router
   ) { }
 
@@ -45,6 +47,7 @@ export class RegisterComponent implements OnInit{
       console.log('no anda');
       return;
     }
+    this.spinnerService.show();
 
     this.registerForm.controls.username.setValue(this.registerForm.controls.username.value.toLowerCase());
    
@@ -52,6 +55,9 @@ export class RegisterComponent implements OnInit{
 
     this.usuarioService.crearUsuario( this.registerForm.value )
       .subscribe( (resp:any) => {
+        setTimeout(() => {
+          this.spinnerService.hide();
+        }, 200);
         usuarioId = resp.usuarioId;
         console.log('usuario creado')
         console.log(resp);
@@ -65,6 +71,9 @@ export class RegisterComponent implements OnInit{
         this.router.navigate(['/login']);
       }, (err) => {
         console.log(err);
+        setTimeout(() => {
+          this.spinnerService.hide();
+        }, 200);
         Swal.fire('Error', err.error, 'error');
       });
   }

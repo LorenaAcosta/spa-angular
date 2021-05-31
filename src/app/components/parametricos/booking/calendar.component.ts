@@ -14,6 +14,7 @@ import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { BoxesService } from 'src/app/services/servicios/boxes.service';
 import { HttpService } from 'src/app/services/servicios/http.service';
 import { UsuarioService } from '../../../services/servicios/usuario.service';
+import { SendMailService } from 'src/app/services/servicios/send-mail.service';
 
 @Component({
   selector: 'app-calendar',
@@ -36,9 +37,11 @@ export class CalendarComponent implements OnInit {
   turnosArray: any[] = [];
   selectedOption: string;
   printedOption: string;
-
-  loading = false;
-  buttionText = "Submit";
+  /*---correo---*/
+  loading: any;
+  buttionText: any;
+  asuntoCorreo: any = '¡Reserva registrada!';
+  cuerpoCorreo: any = '';
 
 
   disabledDates:NgbDateStruct[]=[
@@ -72,6 +75,7 @@ export class CalendarComponent implements OnInit {
               private horarioService: HorarioService,
               private boxesService: BoxesService,
               private reservaService: ReservaService,
+              private sendmailService: SendMailService,
               private empleadoService: EmpleadoService ,
               private disponibleService: DisponibleService,
               public util: UtilesService ) {
@@ -191,10 +195,27 @@ export class CalendarComponent implements OnInit {
             'Se guardaron  los datos!',
             'success'
             );
-          });
 
-          //mandar correo de confirmacion
-          this.mandarCorreo();
+            let r = result;
+            this.reservaService.getRecurso(r.reservaId)
+            .subscribe((r:any)=> {
+              let data = r;
+              let servicio = data.disponibleId.servicioId.descripcion;
+              let fecha = data.fechaReserva;
+              let hora = data.hora;
+              let terapista = data.disponibleId.empleadoId.nombre + ' ' + data.disponibleId.empleadoId.apellido;
+              console.log('servicio', servicio);
+  
+              this.usuarioService.obtenerPerfilUsuario(this.usuarioService.obtenerUsuarioLogueado())
+              .subscribe((resp: any) =>  {
+                let us = resp;  
+                this.cuerpoCorreo = '<html><head><style>table{font-family: arial, sans-serif;border-collapse:collapse;width: 100%;} td,th{border: 1px solid #dddddd; text-align: left;  padding: 8px;} tr{background-color:#D1ECF1;} tr:nth-child(even) {background-color:#FFFFFF;}</style></head><body><h3>Su reserva se ha registrado exitosamente segun el siguiente detalle:</h3><br><table><tr><th>Servicio</th><th>Fecha</th>    <th>Hora</th>    <th>Terapista</th>  </tr><tr><td>' + servicio +'</td><td>' + fecha +'</td><td>' + hora +'</td><td>' + terapista +'</td></tr></table></body><br><div>Katthy Spa S.A.<br>10 DE AGOSTO Y GRAL. CABALLERO<br>TELEFONO 021-498-690<br>SAN LORENZO - PARAGUAY</div></html>';
+                this.mandarCorreo((us.nombre + ' ' + us.apellido), us.email, this.asuntoCorreo, this.cuerpoCorreo);
+              });
+
+            });
+
+          });
 
           this.router.navigateByUrl('booking/categorias');
       
@@ -228,15 +249,16 @@ export class CalendarComponent implements OnInit {
         });
   }
 
-
-  mandarCorreo(){
+  mandarCorreo(nombreUsuario, correo, asunto, cuerpo){
     this.loading = true;
     this.buttionText = "Submiting...";
     let user = {
-      name: 'Lorena' ,
-      email: 'lorena.acosta95@gmail.com'
+      name: nombreUsuario,
+      email: correo,
+      subject: asunto,
+      html: cuerpo
     }
-    this.http.sendEmail("http://localhost:3000/sendmail", user).subscribe(
+    this.sendmailService.sendEmail(user).subscribe(
       data => {
         let res:any = data; 
         console.log(
@@ -256,5 +278,6 @@ export class CalendarComponent implements OnInit {
   }
 
 }
+
 
 
