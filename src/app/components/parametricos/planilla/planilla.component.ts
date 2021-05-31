@@ -16,6 +16,7 @@ import Swal from 'sweetalert2';
 export class PlanillaComponent implements OnInit {
   
   empleados: any[] = [];
+  pageActual: any;
   
   
   fbForm = this.fb.group({
