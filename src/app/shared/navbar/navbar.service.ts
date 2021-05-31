@@ -44,7 +44,7 @@ export class NavbarService {
       url: '',
       submenu: [
         {titulo: 'Empleados', url: '/empleado/listar'},
-        {titulo: 'Pagos a Empleados', url: '/empleado/listar'},
+        {titulo: 'Pagos a Empleados', url: '/planilla/generar'},
         {titulo: 'Mantenimiento Usuarios', url:'/usuarios-sistema/agregar'}
       ]
     }

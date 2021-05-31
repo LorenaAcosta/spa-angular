@@ -44,7 +44,7 @@ export class UsuarioService {
 
                     localStorage.setItem('usuario', JSON.stringify(resp) );
                     this.usuario = JSON.parse( localStorage.getItem('usuario') );
-                    console.log(this.usuario + 'getUsuariostorage');
+                   // console.log(this.usuario + 'getUsuariostorage');
 
                })
               );

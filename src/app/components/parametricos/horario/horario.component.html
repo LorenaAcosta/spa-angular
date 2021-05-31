@@ -1,5 +1,5 @@
 <div class="row">
-  <h5 class="display">Horario del Empleado: </h5>
+  <h2 class="display">Horario del Empleado: </h2>
 </div>
 
 <!-- Tabla que lista el horario del empleado -->
@@ -47,7 +47,7 @@
 
 <button routerLink="/empleado/listar" class="btn btn-sm btn-info mr-1"><i class="fas fa-arrow-left"></i> Regresar
 </button>
-<button class="btn btn-sm btn-info mr-1" (click)="open(content)">Añadir Horario</button>
+<button class="btn btn-sm btn-info " (click)="open(content)">Añadir Horario</button>
 
 <ng-template #content let-modal>
     <div class="modal-header">
@@ -59,7 +59,7 @@
     <div class="modal-body">
         <form [formGroup]="form">
             <div class="form-group row">
-                <label for="inputState" class="col-sm-2 col-form-label">Servicios</label>
+                <label for="inputState" class="col-sm-2 col-form-label">DIA LABORAL</label>
                 <div class="col-sm">
                     <select id="day" formControlName="diaTrabajo" class="form-control">
                        <option *ngFor="let day of weekDays" [ngValue]="day.cod"> {{ day.d }} </option>
@@ -94,7 +94,7 @@
     </div>
    
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="guardar()">Guardar</button>
+        <button type="button" class="btn btn-outline-info" (click)="guardar()">Guardar</button>
     </div>
 </ng-template>
 

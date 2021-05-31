@@ -49,7 +49,7 @@ import { Injectable } from '@angular/core';
       if (cod == 9) return "SEPTIEMBRE";
       if (cod == 10) return "OCTUBRE";
       if (cod == 11) return "NOVIEMBRE";
-      if (cod ==12) return "DICIEMBRE";
+      if (cod == 12) return "DICIEMBRE";
     }
 
     

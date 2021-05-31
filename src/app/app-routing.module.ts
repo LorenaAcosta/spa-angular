@@ -145,8 +145,9 @@ const routes: Routes = [
       {
         path: 'planilla', data: { title: 'Planilla' },
         children: [
-          { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' }, },
-          { path: 'listar-salario', component: ListarComponent , data: { title: 'Listar Planilla' }, }
+          { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' },  canActivate: [ AdminGuard]},
+          { path: 'listar-salario', component: ListarComponent , data: { title: 'Listar Planilla' } , canActivate: [ AdminGuard] }
+      
          ]
       },
       {
