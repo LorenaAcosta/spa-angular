@@ -1,4 +1,13 @@
-<h2 class="display">Gestión de Empleados</h2>
+
+<div class="container-fluid">
+    <div class="row">
+        <h2 class="display">Gestión de Empleados</h2>
+        <div class="col text-right">
+            <button  (click)="openBox(content1)">NUEVO CONCEPTO</button>
+            <button  (click)="openBoxes(content2)">LISTAR CONCEPTOS</button>
+            </div>
+    </div>
+</div>
 
 <div class="input-group mb-3">
 
@@ -27,6 +36,7 @@
                             <th>Nombre</th>
                             <th>Apellido</th>
                             <th>Mes Salario</th>
+                            <th>Año Salario</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -35,7 +45,8 @@
                             <td>{{ i + 1}}</td>
                             <td>{{ item.empleadoId.nombre}}</td>
                             <td>{{ item.empleadoId.apellido}}</td>
-                            <td>{{ item.fechaPago}}</td>
+                            <td>{{ item.mesPago  }}</td>
+                            <td>{{ item.anho  }}</td>
                             <td>
                                 <button class="btn btn-sm btn-info mr-1"  placement="top" ngbTooltip="Resumen"> 
                                     Resumen</button>
@@ -57,3 +68,103 @@
 <div *ngIf="empleados.length == 0" class="alert alert-secondary text-center mt-3">
     <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
 </div>
+
+
+
+
+
+
+
+
+
+
+<!--Modal para agregar un nuevo Box-->
+<ng-template #content1 let-modal>
+    <div class="modal-header alert-info">
+        <h2>Añadir Concepto</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="fbForm">
+                <div class="col-sm">
+                     <label class="col-sm-2 col-form-label" for="inputZip">Descripción</label>
+                    <input formControlName="descripcion" type="string" class="form-control" id="descripcion" placeholder="descripción" required>
+                </div>
+                <div class="col-sm">
+                    <label class="col-sm-2 col-form-label" for="inputZip">Monto</label>
+                    <input formControlName="valor" type="number" class="form-control" id="valor" placeholder="monto" required>
+                </div>
+                <label class="col-sm-2 col-form-label" for="inputZip">Tipo</label>
+                <div class="col-sm-10">
+                    <select  formControlName="tipo" class="form-control" id="tipo" required>
+                            <option value="1">INGRESO</option>
+                            <option value="2">DESCUENTO</option>
+                    </select>
+                </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-info mr-1"  (click)="guardarConcepto()">Guardar</button>
+    </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+<!--Modal para  listar boxes-->
+
+<ng-template #content2 let-modal>
+    <div class="modal-header  alert-info">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="col-md-12" id="htmlData" #htmlData>
+            <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Conceptos</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-bordered display" id="dataTable" *ngIf="conceptos.length>0" width="100%"
+                    cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Descripción</th>
+                        <th>Tipo</th>
+                        <th>Monto</th>
+                        <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let item of conceptos | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                    <tr>
+                        <td>{{ i + 1}}</td>
+                        <td>{{ item.descripcion}}</td>
+                        <td>{{ this.getTipo(item.tipo)}}</td>
+                        <td>{{ item.valor }}</td>
+                        <td>
+                        <button class="btn btn-sm btn-info mr-1" (click)="borrarBox(item.boxesId, i)" placement="top"
+                            ngbTooltip="Eliminar">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+            </div>
+            </div>
+        </div>
+
+
+    </div>
+</ng-template>

@@ -17,7 +17,10 @@ export class ConceptosService {
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
-  
+
+  listarRecursos(tipo) {
+    return this.http.get(this.recurosBaseURL + 'listar-conceptos/' + tipo);
+  }
 
 
   agregarRecurso(recurso) {

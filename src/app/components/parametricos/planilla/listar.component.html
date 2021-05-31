@@ -37,7 +37,8 @@
             </div>
         </div>
     </div>
-    <input formControlName="fechaPago" type="hidden" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fechaPago" disabled>
+    <input [(ngModel)]="fechaPago" formControlName="fechaPago" type="hidden" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fechaPago" disabled>
+    <input [(ngModel)]="anhoPago" formControlName="anhoPago" type="hidden" value="{{currentDate.getFullYear() }}" class="form-control form-control-sm" id="añoPago" disabled>
 
 
 </form>
@@ -70,23 +71,23 @@
                     </tr>
                     <hr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>SubTotal:</td>
-                        <td>
-                            {{ this.subtotal }}
-                        </td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td> <strong>  SubTotal: </strong></td>
+                      <td>
+                        {{ this.subtotal }}
+                      </td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Salario Base:</td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td></td>
+                      <td>  <strong>Salario Base:</strong></td>
                         <td> {{ this.empleado.sueldo }}</td>
                     </tr>
                 </tbody>
@@ -97,52 +98,90 @@
 
 <br><br>
 
+<div class="row">
 
-<div class="card mb-4">
-    <div class="card-body">
-        <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-            <table class="table table-sm table-bordered display" id="dataTable" *ngIf="confirmados.length>0" width="100%" cellspacing="0">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Concepto</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <th>Valor</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let item of conceptos; let i = index  ">
-                        <td>{{ i + 1}}</td>
-                        <td>{{ item.descripcion }}</td>
-                        <th></th>
-                        <th></th>
-                        <th></th>
-                        <td><input [(ngModel)]="item.valor" type="text" value="{{item.valor}}" class="form-control form-control-sm" id="valor" (change)="reCalcularSubtotal()" required>
-                        </td>
-                    </tr>
-                    <hr>
-                    <tr>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                        <td>Total:</td>
-                        <td> {{ this.subtotal2 }}</td>
-                    </tr>
-                </tbody>
-            </table>
+
+<div class="col">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-sm table-bordered display" id="dataTable" *ngIf="confirmados.length>0" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Concepto</th>
+                            <th>Valor</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of conceptosIngreso; let i = index  ">
+                            <td>{{ i + 1}}</td>
+                            <td>{{ item.descripcion }}</td>
+                            <td><input [(ngModel)]="item.valor"  type="text" value="{{item.valor}}"
+                                class="form-control form-control-sm" id="valor"  (change)="reCalcularIngresos()" required>
+                            </td>
+                            <td>
+                                {{item.valor}}
+                            </td>
+                        </tr>
+                        <hr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td text-align="right"> <strong>Total:</strong></td>
+                            <td> {{ this.ingresos }}</td>
+                          </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
 
 
 
+<div class="col">
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-sm table-bordered display" id="dataTable" *ngIf="confirmados.length>0" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Concepto</th>
+                            <th>Valor</th>
+                            <th>Subtotal</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of conceptosDescuento; let i = index  ">
+                            <td>{{ i + 1}}</td>
+                            <td>{{ item.descripcion }}</td>
+                            <td><input [(ngModel)]="item.valor"  type="text" value="{{item.valor}}"
+                                class="form-control form-control-sm" id="valor"  (change)="reCalcularDescuentos()" required>
+                            </td>
+                            <td>
+                                {{item.valor}}
+                            </td>
+                        </tr>
+                        <hr>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td text-align="right"><strong>Total:</strong></td>
+                          <td> {{ this.descuentos }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
 
+    
+</div>
 
 
 
@@ -153,6 +192,21 @@
     </button>
 <button type="submit" class="btn btn-sm btn-info mr-1" (click)="guardar()"> <i class="fas fa-save"></i> Procesar</button>
 
+
+
+<br>
+<br>
+<br>
+
+
+<br>
+<br>
+<br>
+
+
+<br>
+<br>
+<br>
 
 
 <br>

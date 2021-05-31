@@ -1,16 +1,16 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark  me-auto ">
+<nav class="navbar navbar-expand-lg navbar-light bg-light  me-auto ">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-        <a class="navbar-brand" [routerLink]="['']">Kathy Spa</a>
+        <a class="navbar-brand  text-info" [routerLink]="['']">Kathy Spa</a>
 
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/booking/categorias']">SERVICIOS</a>
+                <a class="nav-link  text-info" [routerLink]="['/booking/categorias']">SERVICIOS</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" [routerLink]="['/booking/productos']">PRODUCTOS</a>
+                <a class="nav-link text-info" [routerLink]="['/booking/productos']">PRODUCTOS</a>
             </li>
 
             <li *ngFor="let item of menuItems" class="nav-item dropdown">
@@ -24,11 +24,11 @@
                 </div>
             </li>
         </ul>
-        <div class=" float-right ">
-            <button *ngIf="!logueado" class="btn btn-outline-info text-white mr-2 mt-lg-0 mt-md-0" [routerLink]="[ '/login'] " type="button ">Login </button>
+        <div  class=" float-right ">
+            <button *ngIf="!this.usuarioService.obtenerUsuarioLogueado() " class="btn btn-info text-white mr-2 mt-lg-0 mt-md-0" [routerLink]="[ '/login'] " type="button ">Login </button>
         </div>
         <div class=" float-right ">
-            <button *ngIf="logueado" class="btn btn-outline-info text-white mr-2 mt-lg-0 mt-md-0 " (click)="logout() ">Logout</button>
+            <button *ngIf="this.usuarioService.obtenerUsuarioLogueado() " class="btn btn-info text-white mr-2 mt-lg-0 mt-md-0 " (click)="logout() ">Logout</button>
         </div>
 
 
@@ -37,7 +37,7 @@
         <ul class="navbar-nav ml-auto ml-md-0">
             <li class="nav-item dropdown">
                 <a *ngIf="this.usuarioService.obtenerUsuarioLogueado() " href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-expanded="false">
-                    <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    <img src="assets/img/user.png" alt="mdo" width="32" height="32" class="rounded-circle">
                 </a>
                 <!--<a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button"
              data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a> -->
@@ -93,7 +93,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-4 col-form-label">RUC</label>
                     <div class="col-sm-6">
@@ -114,16 +113,11 @@
                     <div class="row">
                         <legend class="col-form-label col-sm-4 pt-0">Género</legend>
                         <div class="col-sm-6">
-                            <div class="form-check">
-                                <input class="form-check-input" type="radio" name="sexo" id="gridRadios1" value="femenino" formControlName="sexo" checked>
-                                <label class="form-check-label" for="gridRadios1">
-                                  FEMENINO
-                                </label>
-                                <br>
-                                <input class="form-check-input" type="radio" name="sexo" id="gridRadios2" value="masculino" formControlName="sexo">
-                                <label class="form-check-label" for="gridRadios2">
-                                    MASCULINO
-                                </label>
+                            <div class="col-xs-12">
+                                <select id="sexo" class="form-control" formControlName="sexo"  required>
+                                  <option value="MASCULINO" selected>MASCULINO</option>
+                                  <option value="FEMENINO">FEMENINO</option>
+                                </select>
                             </div>
                         </div>
                     </div>

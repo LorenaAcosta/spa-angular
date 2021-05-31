@@ -1,26 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
-import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { exit } from 'process';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
-import { ClienteService } from 'src/app/services/servicios/cliente.service';
-import { ComprasService } from 'src/app/services/servicios/compras.service';
-import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
 import { ConceptosService } from 'src/app/services/servicios/conceptos.service';
-import { DetallesCompraService } from 'src/app/services/servicios/detalles-compra.service';
-import { DetalleVentaService } from 'src/app/services/servicios/detalles-venta.service';
 import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
-import { MediosPagoService } from 'src/app/services/servicios/medios-pago.service';
-import { PlanillaDetalleService } from 'src/app/services/servicios/planilla-detalle.service';
 import { PlanillaService } from 'src/app/services/servicios/planilla.service';
-import { ProductoService } from 'src/app/services/servicios/producto.service';
-import { ProveedorService } from 'src/app/services/servicios/proveedor.service';
 import { ReservaService } from 'src/app/services/servicios/reserva.service';
-import { ServicioService } from 'src/app/services/servicios/servicio.service';
+import { UsuarioService } from 'src/app/services/servicios/usuario.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
-import { VentaService } from 'src/app/services/servicios/venta.service';
 import Swal from 'sweetalert2';
 
 
@@ -35,9 +23,12 @@ export class ListarComponent implements OnInit {
   empleado;
   confirmados: any[] = [];
   conceptos: any[] = [];
+  conceptosIngreso: any[] = [];
+  conceptosDescuento: any[] = [];
   selectedEmpleado;
   subtotal: number;
-  subtotal2: number;
+  ingresos: number;
+  descuentos: number;
   selectedMes;
   closeResult = '';
   articuloselect: PlanillaDetalle = new PlanillaDetalle(0, 0, 0, 0, 0 ,0 );
@@ -52,6 +43,7 @@ export class ListarComponent implements OnInit {
               private reservaService: ReservaService,
               private conceptosService: ConceptosService,
               private planillaService: PlanillaService,
+              private usuarioService: UsuarioService,
               private fb: FormBuilder,
               private util: UtilesService,
               private modalService: NgbModal  ) {
@@ -60,6 +52,7 @@ export class ListarComponent implements OnInit {
       numeroPatronalips:  ['', Validators.required],
       fechaPago:  ['', Validators.required],
       mesPago:  ['', Validators.required],
+      añoPago: ['', Validators.required],
       total:  ['', Validators.required],
       descuento:  ['', Validators.required],
       saldo:  ['', Validators.required],
@@ -74,6 +67,7 @@ export class ListarComponent implements OnInit {
     numeroPatronalips:  ['', Validators.required],
     fechaPago:  ['', Validators.required],
     mesPago:  ['', Validators.required],
+    añoPago: ['', Validators.required],
     total:  ['', Validators.required],
     descuento:  ['', Validators.required],
     saldo:  ['', Validators.required],
@@ -106,10 +100,14 @@ export class ListarComponent implements OnInit {
     this.empleadoService.listarRecurso()
     .subscribe( (resp: any[]) =>  this.empleados = resp  );
 
-    this.conceptosService.listarRecurso()
-    .subscribe( (resp: any[]) =>  this.conceptos = resp  );
 
   }
+
+
+
+
+
+
 
 
   procesarComisiones(){
@@ -117,9 +115,19 @@ export class ListarComponent implements OnInit {
     this.selectedMes= this.form.controls.mesPago.value;
     console.log(this.selectedEmpleado);
 
+    //Datos del empleado
     this.empleadoService.getRecurso(this.selectedEmpleado)
     .subscribe( (resp: any[]) =>  this.empleado = resp  );
+    
+    //datos de ingresos
+    this.conceptosService.listarRecursos(1)
+    .subscribe( (resp: any[]) =>  this.conceptosIngreso = resp  );
 
+    //Daos de descuento
+    this.conceptosService.listarRecursos(2)
+    .subscribe( (resp: any[]) =>  this.conceptosDescuento = resp  );
+
+    //get reservas confirmadas
     this.reservaService.getReservasConfirmadasEmpleado(this.selectedEmpleado, this.selectedMes)
     .subscribe( (resp: any[]) => { 
       
@@ -131,61 +139,91 @@ export class ListarComponent implements OnInit {
       (typeof value.disponibleId.servicioId.costo == "number" ? sum + (value.disponibleId.servicioId.costo * (value.disponibleId.comision/100)) : sum), 0);
       console.log(this.subtotal);
 
-      this.subtotal2 = this.conceptos.reduce((sum, value) =>
+       //Calculamos los INGRESOS 
+      this.ingresos = this.conceptosIngreso.reduce((sum, value) =>
       (typeof value.valor == "number" ? sum + value.valor : sum), 0);
-      console.log(this.subtotal2);
+      console.log(this.ingresos);
 
+       //Calculamos los DESCUENTOS
+      this.descuentos = this.conceptosIngreso.reduce((sum, value) =>
+      (typeof value.valor == "number" ? sum + value.valor : sum), 0);
+      console.log(this.descuentos);
+
+  
 
     } );
 
   }
 
-  reCalcularSubtotal(){
-    this.subtotal2 = this.conceptos.reduce((sum, value) =>
+
+
+
+
+
+
+  reCalcularIngresos(){
+    this.ingresos = this.conceptosIngreso.reduce((sum, value) =>
     (typeof value.valor == "number" ? sum + value.valor : sum), 0);
-    console.log(this.subtotal2);
+    console.log(this.ingresos);
+  }
+  reCalcularDescuentos(){
+    this.descuentos = this.conceptosDescuento.reduce((sum, value) =>
+    (typeof value.valor == "number" ? sum + value.valor : sum), 0);
+    console.log(this.descuentos);
   }
 
 
+
+
+
+
+
+
+
   guardar(){
+    
     this.form.controls.numeroPatronal.setValue('12356');
     this.form.controls.numeroPatronalips.setValue('222333');
     this.form.controls.fechaPago.setValue(this.currentDate);
-    this.form.controls.mesPago.setValue( this.util.getMonth(this.selectedMes) );
-    this.form.controls.total.setValue(this.obtenerTotal());
-    this.form.controls.descuento.setValue(this.obtenerDescuento());
-   //this.form.controls.saldo.setValue();
-   // this.form.controls.total.value - this.form.controls.descuento.value;
-   // this.form.controls.empleadoId.setValue(1);
-    this.form.controls.usuarioId.setValue(1);
+    let mesPago= this.util.getMonth(this.form.controls.mesPago.value);
+    console.log(mesPago); //'mayo'
+    this.form.controls.mesPago.setValue(mesPago);
+    var dateobj = new Date();
+    var B = dateobj.getFullYear();
+    this.form.controls.anhoPago.setValue(B );
+    this.form.controls.total.setValue( this.subtotal + this.empleado.sueldo + this.ingresos );
+    this.form.controls.descuento.setValue(this.descuentos);
+    this.form.controls.saldo.setValue(this.form.controls.total.value - this.form.controls.descuento.value);
+    this.form.controls.empleadoId.setValue(this.empleado.empleadoId);
+    this.form.controls.usuarioId.setValue(this.usuarioService.obtenerUsuarioLogueado());
+
+
 
     let peticion: Observable<any>;
     console.log(this.form.value);
     peticion = this.planillaService.agregarRecurso(this.form.value);
     peticion.subscribe((result: any) => {
+      console.log(result),
       Swal.fire(
         'Guardado!',
         'Se guardaron los datos!',
         'success'
       );
+      /*
+      for (let detalle of this.datosGuardar){
+        console.warn(detalle);
+        detalle.planillaId = planillaId;
+       
+        this.planillaService.agregarRecurso(detalle).subscribe(( res: any) => {
+          console.log(res);
+        });
+      }*/
 
     });
   
 
   }
 
-  obtenerTotal(){
-    let total:number;
-    total =  this.subtotal + parseInt(this.empleado.sueldo);
-    return total;
-  }
- 
-  obtenerDescuento(){
-    let total:number;
-
-    return total;
-  }
- 
 }
 
 
@@ -199,3 +237,5 @@ export class PlanillaDetalle {
       ) {
   }
 }
+
+
