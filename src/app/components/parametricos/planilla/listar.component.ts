@@ -35,6 +35,8 @@ export class ListarComponent implements OnInit {
   datosGuardar: PlanillaDetalle[] = [];
   currentDate = Date.now();
   suma: number;
+  fechaPago: any;
+  anhoPago: any;
 
   @ViewChild(MatTable) tabla1: MatTable<PlanillaDetalle>;
   @ViewChild(MatTable) tab: MatTable<PlanillaDetalle>;
@@ -103,7 +105,9 @@ export class ListarComponent implements OnInit {
 
   }
 
+  getFullYear(){
 
+  }
 
 
 
