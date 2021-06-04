@@ -6,6 +6,7 @@ import { URL_SERVICIOS } from '../../config/config';
 import { retry, map, filter, catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { SendMailService } from './send-mail.service';
 
 
 @Injectable({
@@ -18,9 +19,16 @@ export class UsuarioService {
   token: string;
   headers: HttpHeaders;
 
+    /*---correo---*/
+    loading: any;
+    buttionText: any;
+    asuntoCorreo: any = '';
+    cuerpoCorreo: any = '';
+
   constructor(
     public http: HttpClient,
     private spinnerService: NgxSpinnerService,
+    private sendMailService: SendMailService,
     public router: Router
   ) {
     this.cargarStorage();
@@ -133,11 +141,49 @@ login( formData: any ) {
 
 }
 
+
+confirmacionUsuario( formData: any ) {
+  const url = URL_SERVICIOS + '/oauth/token';
+  const payload = '';
+  let headers1: HttpHeaders;
+  headers1 = new HttpHeaders({
+    Authorization: 'Basic YW5ndWxhcjoxMjM0NQ==',
+    'Content-Type': 'application/x-www-form-urlencoded'
+  });
+  const options = {
+    headers: headers1,
+    body: 'username=' + formData.username + '&password=' + formData.password + '&grant_type=password'
+  };
+  this.spinner();
+  return this.http.post( url, options.body, options )
+  .pipe(
+     map( (resp: any) => {
+       console.log('token', resp);
+       let us = resp;
+       console.log('token', us.access_token);
+       this.cuerpoCorreo = '<html><head><style>.button2 {font-size: 20px;background-color: white;color: black;border: 2px solid #008CBA;}.button2:hover {background-color: #008CBA;color: white;}table{font-family: arial, sans-serif;border-collapse:collapse;width: 100%;} td,th{border: 1px solid #dddddd; text-align: left;  padding: 8px;} tr{background-color:#D1ECF1;} tr:nth-child(even) {background-color:#FFFFFF;}</style></head><body><h3>¡Solo un paso más! <br> Por favor confirma tu correo dando click en el siguiente enlace:</h3><br><a href="http://localhost:4200/confirmacion/user/' + us.access_token +'" title="Pulse Aqui"><button class="button button2"> Pulse Aqui</button></a><br><br><div>Katthy Spa S.A.<br>10 DE AGOSTO Y GRAL. CABALLERO<br>TELEFONO 021-498-690<br>SAN LORENZO - PARAGUAY</div></html>';
+       this.asuntoCorreo = 'Confirmación de cuenta'
+       this.mandarCorreo((us.nombre + ' ' + us.apellido), us.correo, this.asuntoCorreo, this.cuerpoCorreo);
+     })
+   );
+
+}
+
+modificarRecurso(recurso, id) {
+  const url = URL_SERVICIOS + '/usuarios/habilitar-deshabilitar/';
+  return this.http.put(url + id, recurso);
+}
+
+habilitarDeshabilitar(recurso, id, token) {
+  const url = URL_SERVICIOS + '/usuarios/habilitar-deshabilitar/';
+  return this.http.put(url + id + '?access_token=' + token, recurso);
+}
+
 spinner(): void{
   this.spinnerService.show();
   setTimeout(() => {
     this.spinnerService.hide();
-  }, 2000);
+  }, 1000);
 }
 
 validaToken(): Observable<boolean> {
@@ -199,4 +245,36 @@ validaToken(): Observable<boolean> {
     return this.http.get( url);
   }
 
+  mandarCorreo(nombreUsuario, correo, asunto, cuerpo){
+    this.spinnerService.show();
+    this.loading = true;
+    this.buttionText = "Submiting...";
+    let user = {
+      name: nombreUsuario,
+      email: correo,
+      subject: asunto,
+      html: cuerpo
+    }
+    this.sendMailService.sendEmail(user).subscribe(
+      data => {
+        setTimeout(() => {
+          this.spinnerService.hide();
+        }, 2000);
+        let res:any = data; 
+        console.log(
+          `👏 > 👏 > 👏 > 👏 ${user.name} 
+         El correo ha sido enviado y el ID es ${res.messageId}`
+        );
+      },
+      err => {
+        console.log(err);
+        this.loading = false;
+        this.buttionText = "Submit";
+      },() => {
+        this.loading = false;
+        this.buttionText = "Submit";
+      }
+    );
+
+    }
 }

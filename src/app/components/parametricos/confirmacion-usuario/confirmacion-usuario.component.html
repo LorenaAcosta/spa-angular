@@ -1,0 +1,35 @@
+<div>
+    <p *ngIf="expirado">El enlace ha caducado <br><button class="btn btn-sm btn-info mr-1" (click)="open(content)">Solicite Reenvio Aqui</button></p>
+    <p *ngIf="!expirado">Su cuenta se ha comprobado exitosamente <button routerLink="/login" class="btn btn-sm btn-info mr-1">Acceda Aqui</button></p>
+
+</div>
+
+
+<ng-template #content let-modal>
+    <div class="modal-header alert-info">
+        <h4 class="modal-title " id="modal-basic-title">Confirmar cuenta</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="loginForm">
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Nombre de usuario</label>
+                <div class="col-sm">
+                    <input formControlName="username" type="text" class="form-control" id="descripcion" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Contraseña</label>
+                <div class="col-sm">
+                    <input formControlName="password" type="password" class="form-control" id="descripcion1" required>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="enviar()">Enviar</button>
+    </div>
+</ng-template>

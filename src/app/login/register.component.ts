@@ -14,6 +14,11 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class RegisterComponent implements OnInit{
 
   public formSubmitted = false;
+
+  public loginForm = this.fb.group({
+    username: [''],
+    password: ['']
+  });
   
   public registerForm = this.fb.group({
     nombre: ['', Validators.required],
@@ -50,24 +55,34 @@ export class RegisterComponent implements OnInit{
     this.spinnerService.show();
 
     this.registerForm.controls.username.setValue(this.registerForm.controls.username.value.toLowerCase());
-   
+    this.loginForm.controls.username.setValue(this.registerForm.controls.username.value.toLowerCase());
+    this.loginForm.controls.password.setValue(this.registerForm.controls.password.value);
 
 
     this.usuarioService.crearUsuario( this.registerForm.value )
       .subscribe( (resp:any) => {
         setTimeout(() => {
           this.spinnerService.hide();
-        }, 200);
+        }, 2000);
         usuarioId = resp.usuarioId;
         console.log('usuario creado')
-        console.log(resp);
         this.usuarioService.asignarRol(usuarioId, 2 )
         .subscribe( (resp:any) => {});
+        /*-----------generar token de confirmacion------*/
+        //console.log('login', this.loginForm.value)
+        this.usuarioService.confirmacionUsuario(this.loginForm.value).subscribe((r:any) => {
+          let valor = false;
+          this.usuarioService.modificarRecurso(valor, usuarioId).subscribe((resp:any) => {
+            //console.log(resp);
+          });
+        });
+        /*-----------------------------------------------*/
         Swal.fire(
           'Guardado!',
-          'Se guardaron los datos!',
+          'Le hemos enviado un correo para confirmar su cuenta!',
           'success'
         );
+
         this.router.navigate(['/login']);
       }, (err) => {
         console.log(err);

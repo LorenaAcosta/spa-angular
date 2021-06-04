@@ -21,7 +21,7 @@ export class AutenticadoGuard implements CanActivate {
 
       if ( this.usuarioService.getExpiracion() ) {
         Swal.fire('Error', 'Su sesión ha expirado...', 'error');
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/login');
         return false;
       }
 
