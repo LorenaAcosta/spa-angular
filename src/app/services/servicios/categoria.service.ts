@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 })
 export class CategoriaService {
 
+
   recurosBaseURL: string = environment.URL_BASE + '/categoria/';
 
   constructor(private http: HttpClient,
@@ -98,6 +99,11 @@ export class CategoriaService {
     
     return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
     
+    }
+
+
+    getdatos() {
+      return this.http.get(this.recurosBaseURL + 'datos');
     }
 
 }

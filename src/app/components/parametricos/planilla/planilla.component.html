@@ -223,7 +223,13 @@
                     <td> 0  </td>
                 </tr>
             </tbody>
-            <hr>
+            <tbody *ngFor=" let item of detalles ">
+                <tr>
+                    <td> {{ item.descripcion}}</td>
+                    <td> {{ item.debe }}</td>
+                    <td> {{ item.haber }}  </td>
+                </tr>
+            </tbody>
             <tbody>
                 <tr>
                     <td> Subtotal</td>

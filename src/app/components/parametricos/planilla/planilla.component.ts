@@ -129,6 +129,7 @@ export class PlanillaComponent implements OnInit {
 
       this.planillaDetalleService.getDetalles(planillaId).subscribe((result: any) => {
         this.detalles= result;
+        console.log(this.detalles);
       }); 
 
 
