@@ -160,6 +160,7 @@ export class CalendarComponent implements OnInit {
 
 
   agendar() {
+
     if (!this.usuarioService.obtenerUsuarioLogueado()){
       console.log('no está logueado');
       Swal.fire(
@@ -170,66 +171,72 @@ export class CalendarComponent implements OnInit {
       this.router.navigateByUrl('/login');
       return false;
     }
+
     this.printedOption = this.selectedOption;
     this.form.controls.empleado.setValue( this.empleadoId);
     this.form.controls.fechaReserva.setValue( this.selectedDate );
     this.form.controls.hora.setValue(this.selectedOption.toString().substr(-20, 5));
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
     this.form.controls.usuarioId.setValue(this.usuarioService.obtenerUsuarioLogueado());
-    this.form.controls.estado.setValue('pendiente');
+    this.form.controls.estado.setValue('PENDIENTE');
+    
     //setear el box -> disponibilidadBoxId
     let peticion: Observable<any>;
     peticion = this.boxesService.obtenerUnBoxLibre(this.selectedDate, this.selectedOption.toString().substr(-20, 5), 
     this.servicioId); //veo todos los boxes que ya se usaron en esa fecha y hora con el servicio
     peticion.subscribe((result: any) =>  {
+     
       this.box = result;
-      console.log(result);
       if (result!=0){
         //SE GRABA LA RESERVA
         this.form.controls.disponibleBoxesId.setValue(this.box);
-        console.log(this.form);
-        peticion = this.reservaService.agregarRecurso(this.form.value);
-        peticion.subscribe((result: any) =>  {
-          Swal.fire(
-            'Reserva Confirmada!',
-            'Se guardaron  los datos!',
-            'success'
-            );
 
-            let r = result;
-            this.reservaService.getRecurso(r.reservaId)
-            .subscribe((r:any)=> {
-              let data = r;
-              let servicio = data.disponibleId.servicioId.descripcion;
-              let fecha = data.fechaReserva;
-              let hora = data.hora;
-              let terapista = data.disponibleId.empleadoId.nombre + ' ' + data.disponibleId.empleadoId.apellido;
-              console.log('servicio', servicio);
-  
-              this.usuarioService.obtenerPerfilUsuario(this.usuarioService.obtenerUsuarioLogueado())
-              .subscribe((resp: any) =>  {
-                let us = resp;  
-                this.cuerpoCorreo = '<html><head><style>table{font-family: arial, sans-serif;border-collapse:collapse;width: 100%;} td,th{border: 1px solid #dddddd; text-align: left;  padding: 8px;} tr{background-color:#D1ECF1;} tr:nth-child(even) {background-color:#FFFFFF;}</style></head><body><h3>Su reserva se ha registrado exitosamente segun el siguiente detalle:</h3><br><table><tr><th>Servicio</th><th>Fecha</th>    <th>Hora</th>    <th>Terapista</th>  </tr><tr><td>' + servicio +'</td><td>' + fecha +'</td><td>' + hora +'</td><td>' + terapista +'</td></tr></table></body><br><div>Katthy Spa S.A.<br>10 DE AGOSTO Y GRAL. CABALLERO<br>TELEFONO 021-498-690<br>SAN LORENZO - PARAGUAY</div></html>';
-                this.mandarCorreo((us.nombre + ' ' + us.apellido), us.email, this.asuntoCorreo, this.cuerpoCorreo);
-              });
+           Swal.fire({
+            title: 'Desea confirmar y agendar esta reserva?',
+            text: 'Le notificaremos en su correo..',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Si, guardar!'
+            }).then((result) => {
+              if (result.value) {
+                peticion = this.reservaService.agregarRecurso(this.form.value);
+                peticion.subscribe((result: any) =>  {
+        
+                    let r = result;
+                    this.reservaService.getRecurso(r.reservaId)
+                    .subscribe((r:any)=> {
+                      let data = r;
+                      let servicio = data.disponibleId.servicioId.descripcion;
+                      let fecha = data.fechaReserva;
+                      let hora = data.hora;
+                      let terapista = data.disponibleId.empleadoId.nombre + ' ' + data.disponibleId.empleadoId.apellido;
+                      console.log('servicio', servicio);
+          
+                      this.usuarioService.obtenerPerfilUsuario(this.usuarioService.obtenerUsuarioLogueado())
+                      .subscribe((resp: any) =>  {
+                        let us = resp;  
+                        this.cuerpoCorreo = '<html><head><style>table{font-family: arial, sans-serif;border-collapse:collapse;width: 100%;} td,th{border: 1px solid #dddddd; text-align: left;  padding: 8px;} tr{background-color:#D1ECF1;} tr:nth-child(even) {background-color:#FFFFFF;}</style></head><body><h3>Su reserva se ha registrado exitosamente segun el siguiente detalle:</h3><br><table><tr><th>Servicio</th><th>Fecha</th>    <th>Hora</th>    <th>Terapista</th>  </tr><tr><td>' + servicio +'</td><td>' + fecha +'</td><td>' + hora +'</td><td>' + terapista +'</td></tr></table></body><br><div>Katthy Spa S.A.<br>10 DE AGOSTO Y GRAL. CABALLERO<br>TELEFONO 021-498-690<br>SAN LORENZO - PARAGUAY</div></html>';
+                        this.mandarCorreo((us.nombre + ' ' + us.apellido), us.email, this.asuntoCorreo, this.cuerpoCorreo);
+                      });
+        
+                    });
+        
+                  this.router.navigateByUrl('booking/categorias');
+                
+                  Swal.fire(
+                    'Guardado!',
+                    'Su reserva ha sido agendada',
+                    'success',
+                  );
 
+                });
+              }
             });
-
-          });
-
-          this.router.navigateByUrl('booking/categorias');
-      
-        } else{
-        Swal.fire(
-          'Lo siento!',
-          'No hay lugar disponible para este horario!',
-          'error'
-          );
-        }
-      });
-    
-  }
-
+          }
+        });
+      }
 
 
 

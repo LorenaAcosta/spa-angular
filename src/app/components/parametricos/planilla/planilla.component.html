@@ -16,7 +16,12 @@
     </div>
 
     <input #termino type="text" class="form-control" placeholder="Buscar empleado..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscarTermino()"> &nbsp;
-
+    <div class="input-group-prepend"> <label class="input-group-text">Periodo Pago</label></div>
+    <select id="mesPago" [ngModel]="mes" (ngModelChange)="buscarpormes($event)" >
+      <option *ngFor="let m of months" [ngValue]="m.mes">
+        {{ m.mes }}
+      </option>
+    </select>
     <button routerLink="/planilla/listar-salario" class="btn btn-info mr-1">
       <i class="fas fa-plus"></i> Agregar
     </button>
@@ -37,6 +42,7 @@
                             <th>Apellido</th>
                             <th>Mes Salario</th>
                             <th>Año Salario</th>
+                            <th>Sueldo Total</th>
                             <th>Opciones</th>
                         </tr>
                     </thead>
@@ -46,12 +52,11 @@
                             <td>{{ item.empleadoId.nombre}}</td>
                             <td>{{ item.empleadoId.apellido}}</td>
                             <td>{{ item.mesPago  }}</td>
-                            <td>{{ item.anho  }}</td>
+                            <td>{{ item.anhoPago  }}</td>
+                            <td>{{ item.saldo  }}</td>
                             <td>
-                                <button class="btn btn-sm btn-info mr-1"  placement="top" ngbTooltip="Resumen"> 
-                                    Resumen</button>
-                            <button class="btn btn-sm btn-info mr-1" placement="top" ngbTooltip="Detalle"> 
-                                    Detalle</button>
+                            <button class="btn btn-sm btn-info mr-1"  (click)="openDetalle(content3, item.planillaId)"
+                             placement="top" ngbTooltip="Detalle">Detalle</button>
                         </td>
                     </tr>
                 </tbody>
@@ -78,7 +83,7 @@
 
 
 
-<!--Modal para agregar un nuevo Box-->
+<!--Modal para agregar un nuevo CONCEPTO-->
 <ng-template #content1 let-modal>
     <div class="modal-header alert-info">
         <h2>Añadir Concepto</h2>
@@ -119,8 +124,7 @@
 
 
 
-<!--Modal para  listar boxes-->
-
+<!--Modal para  listar CONCEPTO-->
 <ng-template #content2 let-modal>
     <div class="modal-header  alert-info">
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -165,6 +169,78 @@
             </div>
         </div>
 
+
+    </div>
+</ng-template>
+
+
+
+
+
+
+<!--Modal para ver detalle de salario-->
+<ng-template #content3 let-modal>
+    <div class="modal-header modal-header-info">
+        <h4 class="modal-title" id="modal-basic-title">Detalles de Salario</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+        <div class="row">
+            <h4 class="display">Empleado: {{ cabecera.empleadoId.nombre}} {{ cabecera.empleadoId.apellido}}  </h4>
+            <div class="col text-right">
+                <h4 class="display">Periodo: {{ cabecera.mesPago}} - {{ cabecera.anhoPago}}</h4>
+            </div>
+        </div>
+      <!--  <div class="row">
+            <h4 class="display">Numero Patronal: {{ cabecera.numeroPatronal }}</h4>
+            <div class="col text-right">
+                <h4 class="display">Timbrado:  </h4>
+            </div>
+        </div> -->
+
+        <table class="table table-hover animated fadedIn faster">
+            <thead>
+                <tr>
+                    <th scope="col">Concepto</th>
+                    <th scope="col">Acumulativo</th>
+                    <th scope="col">Descuentos</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td> Salario Base:</td>
+                    <td>{{ this.utilService.numberWithCommas(this.salarioBase) }}</td>
+                    <td> 0  </td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td> Comisión:</td>
+                    <td>{{ this.utilService.numberWithCommas(this.totalComision) }}</td>
+                    <td> 0  </td>
+                </tr>
+            </tbody>
+            <hr>
+            <tbody>
+                <tr>
+                    <td> Subtotal</td>
+                    <td>{{ this.utilService.numberWithCommas(cabecera.total)}}</td>
+                    <td>{{ cabecera.descuento}}</td>
+                </tr>
+            </tbody>
+            <tbody class="alert alert-info" >
+                <tr>
+                    <td> Total Final </td>
+                    <td> </td>
+                    <td>{{  this.utilService.numberWithCommas(cabecera.saldo) }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="modal-footer">
 
     </div>
 </ng-template>

@@ -42,10 +42,6 @@ export class ConceptosService {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
 
-  getRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
-  }
-
   getDisponible(id) {
     return this.http.get(this.recurosBaseURL + 'get-boxes-id/' + id);
   }

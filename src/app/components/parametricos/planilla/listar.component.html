@@ -37,10 +37,6 @@
             </div>
         </div>
     </div>
-    <input [(ngModel)]="fechaPago" formControlName="fechaPago" type="hidden" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control form-control-sm" id="fechaPago" disabled>
-    <input [(ngModel)]="anhoPago" formControlName="anhoPago" type="hidden" value="{{currentDate.getFullYear() }}" class="form-control form-control-sm" id="añoPago" disabled>
-
-
 </form>
 
 
@@ -65,9 +61,9 @@
                         <td>{{ item.fechaReserva }}</td>
                         <td>{{ item.disponibleBoxesId.boxesId.nombre}}</td>
                         <td>{{ item.disponibleId.servicioId.nombre}}</td>
-                        <td>{{ item.disponibleId.servicioId.costo}}</td>
-                        <td>{{ item.disponibleId.comision }}</td>
-                        <td>{{ (item.disponibleId.servicioId.costo * (item.disponibleId.comision/100)) }}</td>
+                        <td>{{ this.util.numberWithCommas( item.disponibleId.servicioId.costo ) }}</td>
+                        <td>{{ this.util.formatDecimales( item.disponibleId.comision ) }}</td>
+                        <td>{{ this.util.numberWithCommas( (item.disponibleId.servicioId.costo * ((this.util.formatDecimales(item.disponibleId.comision)/100))) )   }}</td>
                     </tr>
                     <hr>
                     <tr>
@@ -78,17 +74,8 @@
                       <td></td>
                       <td> <strong>  SubTotal: </strong></td>
                       <td>
-                        {{ this.subtotal }}
+                        {{ this.util.formatDecimales( this.subtotal) }}
                       </td>
-                    </tr>
-                    <tr>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td></td>
-                      <td>  <strong>Salario Base:</strong></td>
-                        <td> {{ this.empleado.sueldo }}</td>
                     </tr>
                 </tbody>
             </table>
@@ -96,10 +83,56 @@
     </div>
 </div>
 
-<br><br>
+
 
 <div class="row">
+    <br>
+    <h1 style="text-align:center;"> AGREGADOS </h1>
+    <br>
 
+    <div class="col">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                    <table class="table table-sm table-bordered display" id="dataTable" *ngIf="confirmados.length>0" width="100%" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Concepto</th>
+                                <th>Valor</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of conceptosIngreso; let i = index ">
+                                <td>{{ i + 1}}</td>
+                                <td>{{ item.descripcion }}</td>
+                                <td><input [(ngModel)]="item.valor"  type="number" value="{{item.valor}}"
+                                    class="form-control form-control-sm" id="valor" 
+                                    (ngModelChange)="reCalcularIngresos()" required>
+                                </td>
+                                <td>
+                                    {{ item.valor }}
+                                </td>
+                            </tr>
+                            <hr>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td text-align="right"> <strong> Total Agregados:</strong></td>
+                                <td> {{ this.ingresos }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <br>
+    <h1 style="text-align:center;"> DESCUENTOS </h1>
+    <br>
 
 <div class="col">
     <div class="card mb-4">
@@ -115,62 +148,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let item of conceptosIngreso; let i = index  ">
+                        <tr *ngFor="let item2 of conceptosDescuento; let i = index">
                             <td>{{ i + 1}}</td>
-                            <td>{{ item.descripcion }}</td>
-                            <td><input [(ngModel)]="item.valor"  type="text" value="{{item.valor}}"
-                                class="form-control form-control-sm" id="valor"  (change)="reCalcularIngresos()" required>
+                            <td>{{ item2.descripcion }}</td>
+                            <td><input [(ngModel)]="item2.valor"  type="number" value="{{item2.valor}}"
+                                class="form-control form-control-sm" id="valor2"  (change)="reCalcularDescuentos()" required>
                             </td>
                             <td>
-                                {{item.valor}}
-                            </td>
-                        </tr>
-                        <hr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td text-align="right"> <strong>Total:</strong></td>
-                            <td> {{ this.ingresos }}</td>
-                          </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="col">
-    <div class="card mb-4">
-        <div class="card-body">
-            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
-                <table class="table table-sm table-bordered display" id="dataTable" *ngIf="confirmados.length>0" width="100%" cellspacing="0">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Concepto</th>
-                            <th>Valor</th>
-                            <th>Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let item of conceptosDescuento; let i = index  ">
-                            <td>{{ i + 1}}</td>
-                            <td>{{ item.descripcion }}</td>
-                            <td><input [(ngModel)]="item.valor"  type="text" value="{{item.valor}}"
-                                class="form-control form-control-sm" id="valor"  (change)="reCalcularDescuentos()" required>
-                            </td>
-                            <td>
-                                {{item.valor}}
+                                {{  item2.valor }}
                             </td>
                         </tr>
                         <hr>
                         <tr>
                           <td></td>
                           <td></td>
-                          <td text-align="right"><strong>Total:</strong></td>
-                          <td> {{ this.descuentos }}</td>
+                          <td text-align="right"><strong>Total Descuento:</strong></td>
+                          <td> {{  this.descuentos }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -179,18 +172,46 @@
     </div>
 </div>
 
+</div>
 
+<div class="row" *ngIf="confirmados.length>0">
     
+    <div class="card mb-4">
+        <div class="card-body">
+            <div class="table-responsive table-wrapper-scroll-y my-custom-scrollbar">
+                <table class="table table-sm table-bordered display" id="dataTable" *ngIf="confirmados.length>0" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th width="150px">Sueldo Base</th>
+                            <th width="150px">Comisiones</th>
+                            <th width="150px">Agregados</th>
+                            <th width="150px">Descuento</th>
+                            <th width="150px">TOTAL GENERAL</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>#</td>
+                            <td>{{ this.util.numberWithCommas( this.empleado.sueldo ) }}</td>
+                            <td>{{ this.util.numberWithCommas( this.util.formatDecimales(this.subtotal )) }}</td>
+                            <td>{{ this.util.numberWithCommas( this.ingresos ) }}</td>
+                            <td>{{ this.util.numberWithCommas( this.descuentos ) }}</td>
+                            <td>{{ this.util.numberWithCommas( this.util.formatDecimales( this.empleado.sueldo  + this.subtotal + this.ingresos - this.descuentos))  }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>               
 </div>
-
-
 
 
 
 <button routerLink="/planilla/generar" class="btn btn-sm btn-info mr-1">
-    <i class="fas fa-arrow-left"></i> Regresar
-    </button>
-<button type="submit" class="btn btn-sm btn-info mr-1" (click)="guardar()"> <i class="fas fa-save"></i> Procesar</button>
+    <i class="fas fa-arrow-left"></i> Regresar  </button>
+<button type="button" class="btn btn-sm btn-info mr-1" (click)="guardar()">
+     <i class="fas fa-save"></i> Grabar </button>
 
 
 
@@ -203,12 +224,3 @@
 <br>
 <br>
 
-
-<br>
-<br>
-<br>
-
-
-<br>
-<br>
-<br>

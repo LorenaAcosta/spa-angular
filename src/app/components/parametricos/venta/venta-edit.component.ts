@@ -17,6 +17,7 @@ import { ServicioService } from 'src/app/services/servicios/servicio.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { VentaService } from 'src/app/services/servicios/venta.service';
 import Swal from 'sweetalert2';
+import { ConceptosIngreso } from '../planilla/listar.component';
 
 @Component({
   selector: 'app-venta-edit',
@@ -581,7 +582,7 @@ export class VentaEditComponent implements OnInit {
             'Se actualizaron los datos!',
             'success'
           );
-  
+          
           for (let detalle of this.datosGuardar){
             detalle.ventasId = ventasId;
             this.detallesService.agregarRecurso(detalle).subscribe(( res: any) => {

@@ -1,14 +1,18 @@
 
 <blockquote class="blockquote text-center">
-  <h1>Consulta los Horarios disponibles</h1>
-  <footer class="blockquote-footer">Selecciona el horario que mejor te quede!</footer>
+  <h1>RESERVAR AHORA MISMO</h1>
 </blockquote>
 
 <div class="container">
   <div class="row" *ngIf="horarioEmpleado.length !=0" >
-      <div class="col-sm">
-<!-- [minDate]="minDate" -->
-        <div> Selected Date is: <b>{{selectedDay}}</b> <br></div>
+
+
+    <div class="row">
+      <div class="col">
+        <button  class="btn btn-sm btn-info mr-1"  data-toggle="collapse" data-target="#cuando">CUANDO?</button>
+
+        <div id="cuando" class="collapse">
+          <div> Selected Date is: <b>{{selectedDay}}</b> <br></div>
 
           <ngb-datepicker 
           class="my-datepicker-1"
@@ -17,19 +21,50 @@
           [markDisabled]="isDisabled"
           (click)=getHorariosDisponibles()>
           </ngb-datepicker>
+        </div>
+      </div>
+
+
+      <div class="col">
+        <button   class="btn btn-sm btn-info mr-1" data-toggle="collapse" data-target="#donde">HORARIO?</button>
+
+        <div id="donde" class="collapse">
+          <h4>HORARIO:</h4>
+          <select class="btn btn-lg btn-outline-primary mr-2" [(ngModel)]="selectedOption" required>
+           <option >...</option>
+           <option *ngFor="let hora of turnosArray" >
+             {{util.cortarString(hora, 0, 5)}}
+           </option>
+         </select>
+        </div>
+      </div>
+
+
+      <div class="col">
+        <button   class="btn btn-sm btn-info mr-1" data-toggle="collapse" data-target="#reservar">RESERVAR!</button>
+
+        <div id="reservar" class="collapse">
+          <br>
+          <br>
+          <button class="btn btn-lg btn-outline-primary mr-2" (click)="agendar()">GUARDAR MI RESERVA </button>
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+      <div class="col-sm">
+<!-- [minDate]="minDate" -->
+
 
       </div>
       <div class="col-sm">
-        <h4>HORARIO:</h4>
-          <select class="btn btn-lg btn-outline-primary mr-2" [(ngModel)]="selectedOption" required>
-        <option >...</option>
-        <option *ngFor="let hora of turnosArray" >
-           {{util.cortarString(hora, 0, 5)}}
-        </option>
-     </select>
+       
       </div>
       <div class="col-sm">
-          <button class="btn btn-lg btn-outline-primary mr-2" (click)="agendar()">Agendar </button>
+        
       </div>
   </div>
 </div>
