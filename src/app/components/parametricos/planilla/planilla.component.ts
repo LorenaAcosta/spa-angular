@@ -204,7 +204,6 @@ export class PlanillaComponent implements OnInit {
     this.mes = valor;
     console.log(this.mes);
     //this.m =  this.util.getMonth(this.mes);
-    console.log(this.m);
     this.planillaService.listarpormes( this.mes )
     .subscribe( (resp: any ) =>  {
       this.empleados = resp;
