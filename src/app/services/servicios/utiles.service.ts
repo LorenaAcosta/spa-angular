@@ -23,7 +23,7 @@ import { Injectable } from '@angular/core';
     }
 
     formatDecimales(x){
-      x = x.toFixed(2);
+      x = x.toFixed(0);
       return x;
     }
 

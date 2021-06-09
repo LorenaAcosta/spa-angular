@@ -124,7 +124,7 @@ export class PuntosExpedicionComponent implements OnInit {
 
   btnClick(categoriaId: any) {
     this.router.navigate(['ventas/listar/', categoriaId]);
-    this.spinner();
+    this.spinnerService.show();
   }
 
   spinner(): void{

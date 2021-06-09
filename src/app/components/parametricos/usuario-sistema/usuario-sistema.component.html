@@ -1,7 +1,7 @@
 <div class="row">
     <h5 class="display">Lista de Comprobantes: </h5>
 </div>
-
+<ngx-spinner></ngx-spinner>
 <!-- Tabla que lista el horario del empleado -->
 <!-- array: horario-->
 <div class="col-md-12" id="htmlData" #htmlData>
@@ -22,7 +22,7 @@
                         </tr>
                     </thead>
                     <tbody *ngFor="let item of usuarios; let i = index">
-                        <tr>
+                        <tr *ngIf="usuarioId != item.usuarioId">
                             <td>{{ i + 1}}</td>
                             <td>{{ item.username}}</td>
                             <td>{{ item.nombre}}</td>

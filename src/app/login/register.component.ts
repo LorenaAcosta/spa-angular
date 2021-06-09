@@ -14,10 +14,16 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class RegisterComponent implements OnInit{
 
   public formSubmitted = false;
+
+  public loginForm = this.fb.group({
+    username: [''],
+    password: ['']
+  });
   
   public registerForm = this.fb.group({
     nombre: ['', Validators.required],
     apellido: ['', Validators.required],
+    cedula: [''],
     sexo: ['', Validators.required],
     username: ['', Validators.required],
     email: ['', Validators.compose([
@@ -39,41 +45,44 @@ export class RegisterComponent implements OnInit{
   }
 
   crearUsuario() {
+    this.spinnerService.show();
     let usuarioId;
     this.formSubmitted = true;
     console.log( this.registerForm.value );
 
     if ( this.registerForm.invalid ) {
+      this.spinnerService.hide();
       console.log('no anda');
       return;
     }
-    this.spinnerService.show();
 
     this.registerForm.controls.username.setValue(this.registerForm.controls.username.value.toLowerCase());
-   
+    this.loginForm.controls.username.setValue(this.registerForm.controls.username.value.toLowerCase());
+    this.loginForm.controls.password.setValue(this.registerForm.controls.password.value);
 
 
     this.usuarioService.crearUsuario( this.registerForm.value )
       .subscribe( (resp:any) => {
-        setTimeout(() => {
-          this.spinnerService.hide();
-        }, 200);
+
         usuarioId = resp.usuarioId;
         console.log('usuario creado')
-        console.log(resp);
         this.usuarioService.asignarRol(usuarioId, 2 )
         .subscribe( (resp:any) => {});
-        Swal.fire(
-          'Guardado!',
-          'Se guardaron los datos!',
-          'success'
-        );
+        /*-----------generar token de confirmacion------*/
+        //console.log('login', this.loginForm.value)
+        this.usuarioService.confirmacionUsuario(this.loginForm.value).subscribe((r:any) => {
+          //this.spinnerService.hide();
+          let valor = false;
+          this.usuarioService.modificarRecurso(valor, usuarioId).subscribe((resp:any) => {
+            //console.log(resp);
+          });
+        });
+        /*-----------------------------------------------*/
+
         this.router.navigate(['/login']);
       }, (err) => {
         console.log(err);
-        setTimeout(() => {
-          this.spinnerService.hide();
-        }, 200);
+        this.spinnerService.hide();
         Swal.fire('Error', err.error, 'error');
       });
   }

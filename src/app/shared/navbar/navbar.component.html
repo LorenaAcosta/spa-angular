@@ -14,7 +14,7 @@
             </li>
 
             <li *ngFor="let item of menuItems" class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle text-info" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         {{ item.titulo }}
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -24,7 +24,7 @@
                 </div>
             </li>
         </ul>
-        <div  class=" float-right ">
+        <div class=" float-right ">
             <button *ngIf="!this.usuarioService.obtenerUsuarioLogueado() " class="btn btn-info text-white mr-2 mt-lg-0 mt-md-0" [routerLink]="[ '/login'] " type="button ">Login </button>
         </div>
         <div class=" float-right ">
@@ -94,6 +94,12 @@
                     </div>
                 </div>
                 <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">CEDULA</label>
+                    <div class="col-sm-6">
+                        <input type="text" class="form-control" id="cedula" placeholder="" formControlName="cedula">
+                    </div>
+                </div>
+                <div class="form-group row">
                     <label for="inputEmail3" class="col-sm-4 col-form-label">RUC</label>
                     <div class="col-sm-6">
                         <input type="text" class="form-control" id="ruc" placeholder="000-0000-0000-00" formControlName="ruc">
@@ -114,7 +120,7 @@
                         <legend class="col-form-label col-sm-4 pt-0">Género</legend>
                         <div class="col-sm-6">
                             <div class="col-xs-12">
-                                <select id="sexo" class="form-control" formControlName="sexo"  required>
+                                <select id="sexo" class="form-control" formControlName="sexo" required>
                                   <option value="MASCULINO" selected>MASCULINO</option>
                                   <option value="FEMENINO">FEMENINO</option>
                                 </select>

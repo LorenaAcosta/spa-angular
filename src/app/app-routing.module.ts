@@ -60,6 +60,7 @@ import { ListarComponent } from './components/parametricos/planilla/listar.compo
 import { UsuarioSistemaComponent } from './components/parametricos/usuario-sistema/usuario-sistema.component';
 import { RolComponent } from './components/parametricos/rol/rol.component';
 import { RecepcionGuard } from './guards/recepcion.guard';
+import { ConfirmacionUsuarioComponent } from './components/parametricos/confirmacion-usuario/confirmacion-usuario.component';
 
 const routes: Routes = [
   { path: '',
@@ -193,6 +194,12 @@ const routes: Routes = [
         children: [
           { path: 'agregar', component: UsuarioSistemaComponent , canActivate: [ AutenticadoGuard, AdminGuard], data: { title: 'Crear nuevo usuario' }, },
           { path: 'rol/:id', component: RolComponent , canActivate: [ AutenticadoGuard, AdminGuard], data: { title: 'Asignar roles de usuarios' }, }
+       ]
+      },
+      {
+        path: 'confirmacion', data: { title: 'Confirmación de cuenta' },
+        children: [
+          { path: 'user/:access_token', component: ConfirmacionUsuarioComponent, data: { title: 'Confirmación de cuenta' }, },
        ]
       },
       {

@@ -27,6 +27,7 @@
         "@angular/router": "~9.1.0",
         "@ng-bootstrap/ng-bootstrap": "^6.0.2",
         "@ng-select/ng-select": "^3.7.3",
+        "angular-ng-autocomplete": "^2.0.5",
         "bootstrap": "^4.4.1",
         "datatables.net": "^1.10.20",
         "datatables.net-dt": "^1.10.20",

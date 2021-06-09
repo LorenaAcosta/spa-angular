@@ -57,9 +57,9 @@
                 <td>{{ item.usuarioId.nombre  }}</td>
                 <td >{{ item.estado }}</td>
                 <td>
-                    <button [disabled]="item.estado==='Confirmado'" class="btn btn-info mr-1" placement="top" (click)="confirmarReserva(item.reservaId)" 
+                    <button [disabled]="item.estado==='Confirmado' || item.estado==='ANULADO'" class="btn btn-info mr-1" placement="top" (click)="confirmarReserva(item.reservaId)" 
                     ngbTooltip="Confirmar"> <i class="far fa-check-circle"></i></button>
-                    <button [disabled]="item.estado==='Anulado'" class="btn btn-danger mr-1" placement="top" (click)="anularReserva(item.reservaId, i)" 
+                    <button [disabled]="item.estado==='ANULADO'" class="btn btn-danger mr-1" placement="top" (click)="anularReserva(item.reservaId, i)" 
                     ngbTooltip="Anular"> <i class="fas fa-ban"></i></button>
                 </td>
             </tr>

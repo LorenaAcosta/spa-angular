@@ -53,9 +53,9 @@ export class RolComponent implements OnInit {
       this.spinnerService.show();
       this.rolService.listarRolPorUsuario(this.usuarioId).subscribe( (resp: any[]) => {
           this.rolesUsuario = resp ;
-          setTimeout(() => {
+          //setTimeout(() => {
             this.spinnerService.hide();
-          }, 200);
+          //}, 200);
       });
 
       this.rolService.listarRolNoAsignadosPorUsuario(this.usuarioId).subscribe( (resp: any[]) => {

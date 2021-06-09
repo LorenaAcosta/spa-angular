@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbCalendar, NgbDate, NgbDatepickerConfig, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { ModalDismissReasons, NgbCalendar, NgbDate, NgbDatepickerConfig, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HorarioService } from 'src/app/services/servicios/horario.service';
 
@@ -15,6 +15,8 @@ import { BoxesService } from 'src/app/services/servicios/boxes.service';
 import { HttpService } from 'src/app/services/servicios/http.service';
 import { UsuarioService } from '../../../services/servicios/usuario.service';
 import { SendMailService } from 'src/app/services/servicios/send-mail.service';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ClienteService } from 'src/app/services/servicios/cliente.service';
 
 @Component({
   selector: 'app-calendar',
@@ -28,21 +30,35 @@ export class CalendarComponent implements OnInit {
   empleadoId: any;
   servicioId: number;
   horario: [];
+  clientes: any;
   box: any;
-  selectedDate: any;
+  selectedDate: any = null;
   categoriaId:any;
   //model: NgbDateStruct;
   private _model: NgbDate;
   date: {year: number, month: number, day: number};
   turnosArray: any[] = [];
-  selectedOption: string;
+  selectedOption: string = null;
   printedOption: string;
   /*---correo---*/
   loading: any;
   buttionText: any;
   asuntoCorreo: any = '¡Reserva registrada!';
   cuerpoCorreo: any = '';
+  /*---modal cliente---*/
+  usuario: any;
+  usuarioLogueado: any;
+  closeResult: string;
+  usuarioPerfil: any;
+  logueado: boolean = false;
+  cedula: any;
+  /*-----------filtrado de clientes---- */
+public placeholder: string = 'Buscar';
+public keyword = 'cedula';
+public historyHeading: string = 'Seleccionados recientemente';
 
+
+admin: any;
 
   disabledDates:NgbDateStruct[]=[
     {year:2021,month:4,day:26}, {year:2021,month:4,day:20}
@@ -56,7 +72,7 @@ export class CalendarComponent implements OnInit {
     hora: ['', Validators.required],
     disponibleId: ['',Validators.required],
     usuarioId: ['', Validators.required],
-    estado: ['', Validators.required],
+    estado: ['pendiente', Validators.required],
     disponibleBoxesId:['',Validators.required]
   });
 
@@ -67,6 +83,9 @@ export class CalendarComponent implements OnInit {
 
   constructor(private fb: FormBuilder,
               private router: Router,
+              private modalService:   NgbModal,
+              private fbc: FormBuilder,
+              private clienteService: ClienteService,
               public http: HttpService,
               private calendar: NgbCalendar,
               private usuarioService: UsuarioService,
@@ -77,6 +96,7 @@ export class CalendarComponent implements OnInit {
               private reservaService: ReservaService,
               private sendmailService: SendMailService,
               private empleadoService: EmpleadoService ,
+              private spinnerService: NgxSpinnerService,
               private disponibleService: DisponibleService,
               public util: UtilesService ) {
                //deshabilita los dias desde HOY hacia atras 
@@ -86,6 +106,18 @@ export class CalendarComponent implements OnInit {
                   month: current.getMonth() + 1,
                   day: current.getDate()
                 };
+
+                this.formCliente = this.fbc.group({
+                  nombre: ['', Validators.required],
+                  username: ['', Validators.required],
+                  apellido: ['', Validators.required],
+                  email: ['', Validators.required],
+                  cedula: ['', Validators.required],
+                  ruc: [''],
+                  telefono: ['', Validators.required],
+                  sexo: ['', Validators.required],
+                  estado: [1]
+                });
   }
 
   
@@ -99,8 +131,37 @@ export class CalendarComponent implements OnInit {
     0: 'Domingo'
   }
 
+  formCliente = this.fbc.group({
+    nombre: ['', Validators.required],
+    username: ['', Validators.required],
+    apellido: ['', Validators.required],
+    email: ['', Validators.required],
+    cedula: ['', Validators.required],
+    ruc: [''],
+    telefono: ['', Validators.required],
+    sexo: ['', Validators.required],
+    estado: [1]
+    });
+
+  get correo() { return this.formCliente.get('email'); }
+  get telefono() { return this.formCliente.get('telefono'); }
+
 
   ngOnInit(): void {
+
+    if(localStorage.getItem('admin') == 'true'){
+      this.admin = true;
+    } else{
+      this.admin = false;
+    }
+
+    this.agendar2();
+    this.usuario = this.usuarioService.obtenerUsuarioLogueado();
+    if (this.usuarioService.obtenerUsuarioLogueado()){
+      this.logueado = true;
+    }else{
+      this.logueado = false;
+    }
 
     console.log(this.http.test);
 
@@ -122,7 +183,10 @@ export class CalendarComponent implements OnInit {
        this.selectToday();
      });
 
-
+     this.clienteService.listarRecurso()
+     .subscribe( (resp: any) =>  {
+       this.clientes = resp ; 
+     });
 
   }
 
@@ -160,6 +224,8 @@ export class CalendarComponent implements OnInit {
 
 
   agendar() {
+    
+    this.spinnerService.show()
     if (!this.usuarioService.obtenerUsuarioLogueado()){
       console.log('no está logueado');
       Swal.fire(
@@ -175,8 +241,14 @@ export class CalendarComponent implements OnInit {
     this.form.controls.fechaReserva.setValue( this.selectedDate );
     this.form.controls.hora.setValue(this.selectedOption.toString().substr(-20, 5));
     this.form.controls.disponibleId.setValue(Number(this.disponibleId));
-    this.form.controls.usuarioId.setValue(this.usuarioService.obtenerUsuarioLogueado());
-    this.form.controls.estado.setValue('pendiente');
+    if (this.admin !== true ){
+      this.form.controls.usuarioId.setValue(this.usuarioService.obtenerUsuarioLogueado());
+    }else {
+      this.form.controls.estado.setValue('confirmado');
+    }
+
+    
+    
     //setear el box -> disponibilidadBoxId
     let peticion: Observable<any>;
     peticion = this.boxesService.obtenerUnBoxLibre(this.selectedDate, this.selectedOption.toString().substr(-20, 5), 
@@ -190,11 +262,6 @@ export class CalendarComponent implements OnInit {
         console.log(this.form);
         peticion = this.reservaService.agregarRecurso(this.form.value);
         peticion.subscribe((result: any) =>  {
-          Swal.fire(
-            'Reserva Confirmada!',
-            'Se guardaron  los datos!',
-            'success'
-            );
 
             let r = result;
             this.reservaService.getRecurso(r.reservaId)
@@ -210,16 +277,28 @@ export class CalendarComponent implements OnInit {
               .subscribe((resp: any) =>  {
                 let us = resp;  
                 this.cuerpoCorreo = '<html><head><style>table{font-family: arial, sans-serif;border-collapse:collapse;width: 100%;} td,th{border: 1px solid #dddddd; text-align: left;  padding: 8px;} tr{background-color:#D1ECF1;} tr:nth-child(even) {background-color:#FFFFFF;}</style></head><body><h3>Su reserva se ha registrado exitosamente segun el siguiente detalle:</h3><br><table><tr><th>Servicio</th><th>Fecha</th>    <th>Hora</th>    <th>Terapista</th>  </tr><tr><td>' + servicio +'</td><td>' + fecha +'</td><td>' + hora +'</td><td>' + terapista +'</td></tr></table></body><br><div>Katthy Spa S.A.<br>10 DE AGOSTO Y GRAL. CABALLERO<br>TELEFONO 021-498-690<br>SAN LORENZO - PARAGUAY</div></html>';
-                this.mandarCorreo((us.nombre + ' ' + us.apellido), us.email, this.asuntoCorreo, this.cuerpoCorreo);
+                if (this.admin !== true ){
+                  this.mandarCorreo((us.nombre + ' ' + us.apellido), us.email, this.asuntoCorreo, this.cuerpoCorreo);
+                } else {
+                  this.spinnerService.hide();
+                  Swal.fire(
+                    'Reserva Confirmada!',
+                    'Se guardaron  los datos!',
+                    'success'
+                    );
+                    this.router.navigateByUrl('booking/categorias');
+                  
+                }
+                
               });
 
             });
 
           });
 
-          this.router.navigateByUrl('booking/categorias');
       
         } else{
+          this.spinnerService.hide();
         Swal.fire(
           'Lo siento!',
           'No hay lugar disponible para este horario!',
@@ -260,22 +339,139 @@ export class CalendarComponent implements OnInit {
     }
     this.sendmailService.sendEmail(user).subscribe(
       data => {
+        this.spinnerService.hide();
         let res:any = data; 
         console.log(
           `👏 > 👏 > 👏 > 👏 ${user.name} 
          El correo ha sido enviado y el ID es ${res.messageId}`
         );
+        Swal.fire(
+          'Reserva Confirmada!',
+          'Se guardaron  los datos!',
+          'success'
+          );
+          this.router.navigateByUrl('booking/categorias');
       },
       err => {
+        this.spinnerService.hide();
         console.log(err);
         this.loading = false;
         this.buttionText = "Submit";
       },() => {
+        this.spinnerService.hide();
         this.loading = false;
         this.buttionText = "Submit";
       }
     );
   }
+
+  validaBotonAgendar(){
+    if (this.selectedOption == null || this.selectedOption == '...' || this.selectedOption == '' ){
+      return true;
+    }else{
+      if (this.admin === true && (this.form.controls.usuarioId.value === '')){
+        return true;
+      }
+      return false;
+    }
+  }
+
+  validaHoraNoNula(){
+    if (this.selectedDate != null && (this.selectedOption == null || this.selectedOption == '...' || this.selectedOption == '')){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  agendar2(){
+    if (this.usuarioService.obtenerUsuarioLogueado()){
+    this.usuarioService.obtenerPerfilUsuario(this.usuarioService.obtenerUsuarioLogueado())
+    .subscribe((resp:any) =>{
+      this.usuarioLogueado = resp;
+      this.cedula = this.usuarioLogueado.cedula
+      if (this.usuarioLogueado.cedula == null || this.usuarioLogueado.cedula == '' || this.usuarioLogueado.cedula == 'undefined'){
+        return true;
+      }else{
+        return false;
+      }
+    });
+    }
+  }
+  
+
+
+  /*-----------modal para cliente--------------------*/
+  open(content) {
+    if(this.usuarioService.obtenerUsuarioLogueado()){
+      //cargar los datos del usuario
+      this.usuarioService.obtenerPerfilUsuario(this.usuarioService.obtenerUsuarioLogueado())
+      .subscribe( (resp: any[]) => {
+         this.usuarioPerfil = resp,
+         this.formCliente.controls.username.setValue(this.usuarioPerfil.username);
+         this.formCliente.controls.nombre.setValue(this.usuarioPerfil.nombre);
+         this.formCliente.controls.apellido.setValue(this.usuarioPerfil.apellido);
+         this.formCliente.controls.email.setValue(this.usuarioPerfil.email);
+         this.formCliente.controls.cedula.setValue(this.usuarioPerfil.cedula);
+         this.formCliente.controls.ruc.setValue(this.usuarioPerfil.ruc);
+         this.formCliente.controls.telefono.setValue(this.usuarioPerfil.telefono);
+         this.formCliente.controls.sexo.setValue(this.usuarioPerfil.sexo);
+         this.formCliente.controls.estado.setValue(this.usuarioPerfil.estado);
+      });;
+      this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+      });
+    } else {
+      Swal.fire('Error', 'No tiene permisos para acceder a esta pagina...', 'error');
+      this.router.navigateByUrl('/');
+    }
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  guardarCliente() {
+    // console.warn(this.form.value);
+      const id = this.usuarioService.obtenerUsuarioLogueado();
+      let peticion: Observable<any>;
+      console.log(this.formCliente.value)
+         peticion = this.clienteService.modificarRecurso(this.formCliente.value, id);
+         peticion.subscribe((result: any) =>  {
+           Swal.fire(
+             'Guardado!',
+             'Se actualizaron los datos!',
+             'success'
+           );
+           this.ngOnInit();
+         });
+         this.modalService.dismissAll();
+  }
+
+    //filtrosClientes
+    submitReactiveForm() {
+      if (this.form.valid) {
+        console.log(this.form.value);
+      }
+    }
+
+    filtroCedula(){
+      this.keyword = 'cedula'
+    }
+    filtroNombre(){
+      this.keyword = 'nombres'
+    }
+    filtroRuc(){
+      this.keyword = 'ruc'
+    }
 
 }
 

@@ -89,6 +89,9 @@ import { ListarComponent } from './components/parametricos/planilla/listar.compo
 import { DisponibleComponent } from './components/parametricos/disponible/disponible.component';
 import { UsuarioSistemaComponent } from './components/parametricos/usuario-sistema/usuario-sistema.component';
 import { RolComponent } from './components/parametricos/rol/rol.component';
+import { ConfirmacionUsuarioComponent } from './components/parametricos/confirmacion-usuario/confirmacion-usuario.component';
+import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+
 
 
 
@@ -156,7 +159,8 @@ import { RolComponent } from './components/parametricos/rol/rol.component';
     PuntosExpedicionComponent, 
     ListarComponent,
     UsuarioSistemaComponent,
-    RolComponent
+    RolComponent,
+    ConfirmacionUsuarioComponent
   ],
   imports: [
     BrowserModule,
@@ -186,6 +190,7 @@ import { RolComponent } from './components/parametricos/rol/rol.component';
     MatIconModule,
     MatAutocompleteModule,
     NgxSpinnerModule,
+    AutocompleteLibModule,
     FormsModule
   ],
   providers: [],

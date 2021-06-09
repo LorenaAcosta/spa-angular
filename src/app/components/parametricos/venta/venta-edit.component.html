@@ -1,4 +1,4 @@
-<form [formGroup]="form">
+<form [formGroup]="form" autocomplete="off" (ngSubmit)="submitReactiveForm()">
 
     <!--Cabecera-->
     <div class="alert alert-info" role="alert">
@@ -21,19 +21,46 @@
                 <div class="form-group col-sm-6">
 
                     <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" for="inputGroupSelect01">Cliente</label>
-                        </div>
-                        <select id="usuarioId" formControlName="usuarioId" class="form-control form-control-sm">
+
+
+
+                        <!--<pre>{{ form.controls.usuarioId.value | json }}</pre>-->
+
+                        <label class="input-group-text" for="inputGroupSelect01">Cliente</label>
+
+                        <ng-autocomplete required #ngAutoCompleteStatic [data]="usuarios" formControlName="usuarioId" [initialValue]="" [placeholder]="placeholder" [searchKeyword]="keyword" historyIdentifier="usuariosList" [historyHeading]="historyHeading" historyListMaxNumber="5"
+                            notFoundText="No encontrado" [itemTemplate]="itemTemplateStatic" [notFoundTemplate]="notFoundTemplate">
+                        </ng-autocomplete>
+
+                        <ng-template #itemTemplateStatic let-item>
+                            <!--<a [innerHTML]="item.nombre" ></a>-->
+                            <span [innerHTML]="item.nombre"></span>&nbsp;
+                            <span [innerHTML]="item.apellido"></span>
+                        </ng-template>
+
+                        <ng-template #notFoundTemplate let-notFound>
+                            <div [innerHTML]="notFound"></div>
+                        </ng-template>
+
+                        <!--<button class="btn" type="submit" [disabled]="form.invalid">Submit</button>-->
+                        <!--<select id="usuarioId" formControlName="usuarioId" class="form-control form-control-sm">
                             <option *ngFor="let u of usuarios" [ngValue]="u.usuarioId">
                               {{ u.nombre + ' ' + u.apellido }}
                             </option>
-                          </select>
+                        </select>-->
                         <div class="input-group-prepend">
                             <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar cliente" (click)="openFormCliente(content)">
                                 <i class="fas fa-1x fa-plus-circle"></i>
-                                </button>
+                            </button>
                         </div>
+
+                        <mat-radio-group>
+                            <br> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <mat-label>Filtrar por: </mat-label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <mat-radio-button value="before" (click)=filtroCedula() [checked]="true">Cedula</mat-radio-button>&nbsp;
+                            <mat-radio-button (click)=filtroNombre()>Nombre</mat-radio-button>&nbsp;
+                            <mat-radio-button (click)=filtroRuc()>Ruc</mat-radio-button>&nbsp;
+                        </mat-radio-group>
                     </div>
 
                 </div>
@@ -162,14 +189,36 @@
 <!--form que recibe parametros para detalle-->
 <div class="contenedor">
     <section>
-        <label>Seleccione el tipo de detalle que desea agregar:  </label>
+        <label>Seleccione el tipo de detalle que desea agregar:  </label>&nbsp;
         <mat-radio-group>
-            <mat-radio-button value="after" (click)=cargaProducto() [checked]="true">PRODUCTO</mat-radio-button>
+            <mat-radio-button value="after" (click)=cargaProducto() [checked]="true">PRODUCTO</mat-radio-button>&nbsp;&nbsp;
             <mat-radio-button value="before" (click)=cargaServicio()>SERVICIO</mat-radio-button>
         </mat-radio-group>
     </section>
 </div>
-<mat-form-field appearance="fill" style="width:40%;">
+<!--filtro producto-->
+<mat-form-field appearance="fill" style="width:40%;" [hidden]="!esProducto">
+    <mat-label>Seleccione un producto</mat-label>
+    <input type="text" placeholder="Seleccione un producto" matNativeControl [(ngModel)]="valor" aria-label="Seleccione un producto" matInput [formControl]="myControl" [matAutocomplete]="auto">
+    <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.descripcion">
+            {{option.descripcion}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+<!--fin filtro producto-->
+<!--filtro servicios-->
+<mat-form-field appearance="fill" style="width:40%;" [hidden]="esProducto">
+    <mat-label>Seleccione un servicio</mat-label>
+    <input type="text" placeholder="Seleccione un servico" matNativeControl [(ngModel)]="valor1" aria-label="Seleccione un servicio" matInput [formControl]="myControl1" [matAutocomplete]="auto1">
+    <mat-autocomplete #auto1="matAutocomplete">
+        <mat-option *ngFor="let option1 of filteredOptions1 | async" [value]="option1.servicio">
+            {{option1.servicio}}
+        </mat-option>
+    </mat-autocomplete>
+</mat-form-field>
+
+<!--<mat-form-field appearance="fill" style="width:40%;">
     <mat-label>Seleccione el producto</mat-label>
     <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
           <option value="--" selected></option>
@@ -177,11 +226,12 @@
             {{prod.descripcion}}
           </option>
         </select>
-</mat-form-field>
+</mat-form-field>-->
 <mat-form-field appearance="fill" style="width:40%;">
+    <mat-label>Cantidad</mat-label>
     <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
-</mat-form-field>
-<button mat-raised-button class="btn btn-info mr-1" (click)="agregar()" style="height:50px">Agregar</button>
+</mat-form-field>&nbsp;
+<button mat-raised-button class="btn btn-info mr-2 mb-1" (click)="agregar()" style="height:40px">Agregar</button>
 <!--Fin tabla para detalles-->
 
 

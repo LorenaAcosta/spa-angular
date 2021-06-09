@@ -20,6 +20,10 @@ export class ServicioService {
     return this.http.get(this.recurosBaseURL + 'listar');
     }
 
+    getBusquedaPorNombre(nombre) {
+      return this.http.get(this.recurosBaseURL + 'servicio-por-nombre/' + nombre);
+    }
+
     listarRecursosActivos() {
       return this.http.get(this.recurosBaseURL + 'listarActivos');
       }
@@ -79,6 +83,10 @@ export class ServicioService {
           return throwError(e);
         })
       );
+    }
+
+    getServiciosReservadosPorUsuarioFecha(id) {
+      return this.http.get(environment.URL_BASE + '/reserva-detalle/servicios-re-by-usuario/'  + id);
     }
 
     eliminarRecurso(id) {

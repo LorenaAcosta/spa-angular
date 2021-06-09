@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { MatTable } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { exit } from 'process';
 import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
 import { ClienteService } from 'src/app/services/servicios/cliente.service';
 import { ComprasService } from 'src/app/services/servicios/compras.service';
 import { ComprobanteService } from 'src/app/services/servicios/comprobante.service';
@@ -13,10 +14,13 @@ import { DetalleVentaService } from 'src/app/services/servicios/detalles-venta.s
 import { MediosPagoService } from 'src/app/services/servicios/medios-pago.service';
 import { ProductoService } from 'src/app/services/servicios/producto.service';
 import { ProveedorService } from 'src/app/services/servicios/proveedor.service';
+import { ReservaService } from 'src/app/services/servicios/reserva.service';
 import { ServicioService } from 'src/app/services/servicios/servicio.service';
+import { UsuarioService } from 'src/app/services/servicios/usuario.service';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { VentaService } from 'src/app/services/servicios/venta.service';
 import Swal from 'sweetalert2';
+import { ConceptosIngreso } from '../planilla/listar.component';
 
 @Component({
   selector: 'app-venta-edit',
@@ -31,11 +35,30 @@ export class VentaEditComponent implements OnInit {
               public servicioId: any, public usuarioId: any
       )
   */
+/*-----------filtrado de productos---- */
+      myControl = new FormControl();
+      options: string[] = ['One', 'Two', 'Three'];
+      filteredOptions: Observable<any[]>;
+      valor : any;
+      /*-----------filtrado de servicios---- */
+      myControl1 = new FormControl();
+      options1: string[] = ['One', 'Two', 'Three'];
+      filteredOptions1: Observable<any[]>;
+      valor1 : any;
+/*-----------filtrado de clientes---- */
+public placeholder: string = 'Buscar';
+public keyword = 'cedula';
+public historyHeading: string = 'Seleccionados recientemente';
+/*----------------------------------- */
+
+reservasCobradas: any[] = [];
+
  model: NgbDateStruct;
   proveedores: any[] = [];
   medios: any[] = [];
   usuarios: any[] = [];
   productos: any[] = [];
+  servicios: any[] = [];
   productoId: number;
   datos: DetalleVenta[] = [];
   datosGuardar: DetalleVenta[] = [];
@@ -80,10 +103,13 @@ export class VentaEditComponent implements OnInit {
     private productoService: ProductoService,
     private servicioService: ServicioService,
     private detallesService: DetalleVentaService,
+    private reservaService: ReservaService,
     private medioService: MediosPagoService,
     private usuarioService: ClienteService,
+    private userService: UsuarioService,
     private medioPagoService: MediosPagoService,
     private clienteService: ClienteService,
+    private cdRef:ChangeDetectorRef,
     private router: Router,
     public util: UtilesService) { 
       this.formMedio = this.fmp.group({
@@ -159,16 +185,38 @@ export class VentaEditComponent implements OnInit {
     medioPago: any[] = [];
 
     currentDate: number = Date.now();
-    articuloselect: DetalleVenta = new DetalleVenta(0, 1, 0, 0, 0, 0, 0);
+    articuloselect: DetalleVenta = new DetalleVenta(0, 1, 0, 0, 0, 'Buscar', 0);
 
     @ViewChild(MatTable) tabla1: MatTable<DetalleVenta>;
     @ViewChild(MatTable) tab: MatTable<DetalleVenta>;
 
     cargaServicio(){
       console.log('cargaServicio funciona');
+
       this.esServicio = true;
-      this.servicioService.listarRecursosActivos()
-      .subscribe( (resp: any[]) =>  this.productos = resp  );
+      this.esProducto = false;
+      let cliente = this.form.controls.usuarioId.value;
+
+      if (!cliente.usuarioId){
+        //console.log('debe seleccionar');
+        Swal.fire(
+          'Cliente no seleccionado',
+          'Debe proporcionar un valor para cliente',
+          'warning'
+        );
+        return;
+      }
+      
+      this.servicioService.getServiciosReservadosPorUsuarioFecha(cliente.usuarioId)
+      .subscribe( (resp: any[]) =>  {
+        this.servicios = resp ,
+          //filtro servicios
+          this.filteredOptions1 = this.myControl1.valueChanges
+          .pipe(
+            startWith(''),
+            map(value1 => this._filter1(value1))
+          ); 
+      });
     }
 
     cargaProducto(){
@@ -236,6 +284,18 @@ export class VentaEditComponent implements OnInit {
           
         } else {
           this.selectedProd = this.datos[cod].servicioId;
+          let indice = 0;
+          for (let r of this.servicios){
+            //console.log('valor 1', this.valor1);
+            //console.log('this.selectedProd.nombre', this.selectedProd.nombre);
+            if (this.selectedProd.nombre == r.servicio){
+              this.reservasCobradas.splice(indice);
+              console.log(this.reservasCobradas)
+              //console.log('se agregó este servicio', r.servicio)
+            }
+            indice++;
+          }
+
           if (this.selectedProd.impuestoId.impuestoId == 1){
             console.log('impuesto 10');
             this.ivaDiez = this.ivaDiez - Math.round( this.datos[cod].monto/(((Math.round(this.datos[cod].monto * this.selectedProd.impuestoId.valor)/100) + this.datos[cod].monto)/Math.round((this.datos[cod].monto *this.selectedProd.impuestoId.valor)/100 )));
@@ -275,131 +335,281 @@ export class VentaEditComponent implements OnInit {
 
     agregar() {
       /* controlar que se seleccione el producto para agregar fila a la tabla */
-      if (this.selectedProd === 0 ||  this.selectedProd === '--' || this.selectedProd === undefined) {
-        console.log('hay que validar');
-        console.log(this.articuloselect.productoId);
-        Swal.fire(
-          '',
-          'Debe selecionar un producto o servicio!',
-          'warning'
-        );
-        exit();
-      }
-      /***/
-
-      /* controlar que no se dupliquen productos antes de agregar fila a la tabla */
-      for (let detalle of this.datos) {
-        console.log('articulo seleccionado');
-        console.log(detalle);
-        if (!this.esServicio) {
-            if (detalle.productoId.productoId === this.selectedProd.productoId) {
-                    console.log('hay que validar producto');
-                    console.log(this.articuloselect.productoId);
-                    Swal.fire(
-                      'Duplicado',
-                      'Debes seleccionar otro producto o servicio!',
-                      'warning'
-                    );
-                    exit();
+      //.subscribe( (resp: any[]) =>  this.proveedores = resp  );
+      if(this.esProducto){
+        this.productoService.getBusquedaPorNombre(this.valor).subscribe( (resp: any) =>{
+              this.selectedProd = resp;
+              this.articuloselect.productoId = resp;
+            
+            console.log('valor selectedProd', this.selectedProd);
+            if (this.selectedProd === 0 ||  this.selectedProd === '--' || this.selectedProd === undefined) {
+              console.log('hay que validar');
+              console.log(this.articuloselect.productoId);
+              Swal.fire(
+                '',
+                'Debe selecionar un producto o servicio!',
+                'warning'
+              );
+              exit();
             }
-        } else {
-          if (detalle.servicioId.servicioId === this.selectedProd.servicioId) {
-            console.log('hay que validar servicio');
-            console.log(this.articuloselect.productoId);
-            Swal.fire(
-              'Duplicado',
-              'Debes seleccionar otro producto o servicio!',
-              'warning'
-            );
-            exit();
+            /***/
+      
+            /* controlar que no se dupliquen productos antes de agregar fila a la tabla */
+            for (let detalle of this.datos) {
+              console.log('articulo seleccionado');
+              console.log(detalle);
+              if (!this.esServicio) {
+                  if (detalle.productoId.productoId === this.selectedProd.productoId) {
+                          console.log('hay que validar producto');
+                          console.log(this.articuloselect.productoId);
+                          Swal.fire(
+                            'Duplicado',
+                            'Debes seleccionar otro producto o servicio!',
+                            'warning'
+                          );
+                          exit();
+                  }
+              } else {
+                if (detalle.servicioId.servicioId === this.selectedProd.servicioId) {
+                  console.log('hay que validar servicio');
+                  console.log(this.articuloselect.productoId);
+                  Swal.fire(
+                    'Duplicado',
+                    'Debes seleccionar otro producto o servicio!',
+                    'warning'
+                  );
+                  exit();
+                }
+              }
+            }
+            /***/
+      
+            console.log('producto seleccionado' + this.selectedProd);
+            if (this.esServicio) {
+              //this.articuloselect.precio = this.articuloselect.productoId.costo * this.articuloselect.cantidad;
+              this.articuloselect.precio = this.articuloselect.productoId.costo;
+              this.articuloselect.monto = this.articuloselect.precio * this.articuloselect.cantidad;
+              this.articuloselect.servicioId = this.articuloselect.productoId;
+              console.log('asfsf' + this.articuloselect.monto);
+              this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId,
+                this.articuloselect.precio, this.articuloselect.monto, null,
+                this.articuloselect.servicioId));
+            } else {
+              // controlar existencia del producto
+              const stock = this.articuloselect.productoId.stockActual - this.articuloselect.cantidad;
+              console.log(stock < this.articuloselect.productoId.stockActual);
+              if (stock < 0) {
+                  Swal.fire(
+                    'Existencia insuficiente',
+                    'La cantidad supera el stock actual : ' + this.articuloselect.productoId.stockActual,
+                    'warning'
+                  );
+                  exit();
+              }
+      
+              this.articuloselect.precio = this.articuloselect.productoId.precioVenta;
+              this.articuloselect.monto = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad;
+              (this.selectedProd.impuestoId.impuestoId == 1) ? console.log('impuesto 10'): console.log('impuesto 5');
+              this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId,
+                this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
+                null));
+            }
+      
+            /*-----------calculo de impuestos y subtotales------------ */
+            if (this.selectedProd.impuestoId.impuestoId == 1){
+              console.log('impuesto 10');
+              this.ivaDiez = this.ivaDiez + Math.round( this.articuloselect.monto/(((Math.round(this.articuloselect.monto * this.selectedProd.impuestoId.valor)/100) + this.articuloselect.monto)/Math.round((this.articuloselect.monto *this.selectedProd.impuestoId.valor)/100 )));
+              this.form.controls.ivaDiez.setValue(this.ivaDiez);
+              console.log(this.ivaDiez);
+              this.subTotalDiez = this.subTotalDiez + this.articuloselect.monto;
+              this.form.controls.subTotalDiez.setValue(this.subTotalDiez);
+            } else if (this.selectedProd.impuestoId.impuestoId == 2){
+              console.log('iva 5');
+              this.ivaCinco = this.ivaCinco + Math.round( this.articuloselect.monto/(((Math.round(this.articuloselect.monto * this.selectedProd.impuestoId.valor)/100) + this.articuloselect.monto)/Math.round((this.articuloselect.monto *this.selectedProd.impuestoId.valor)/100 )));
+              this.form.controls.ivaCinco.setValue(this.ivaCinco);
+              console.log(this.ivaCinco);
+              this.subTotalCinco = this.subTotalCinco + this.articuloselect.monto;
+              this.form.controls.subTotalCinco.setValue(this.subTotalCinco);
+            } else {
+              console.log('exenta');
+              this.subTotalExenta = this.subTotalExenta + this.articuloselect.monto;
+              this.form.controls.subTotalExenta.setValue(this.subTotalExenta);
+            }
+            this.ivaTotal = this.ivaCinco + this.ivaDiez;
+            this.form.controls.ivaTotal.setValue(this.ivaTotal);
+            this.subTotalTotal = this.subTotalCinco + this.subTotalDiez + this.subTotalExenta;
+            this.form.controls.subTotalTotal.setValue(this.subTotalTotal);
+      
+            
+            // this.articuloselect.subtotal = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad
+            this.totalVenta = this.totalVenta + this.articuloselect.monto;
+            console.log('this.totalVenta');
+            console.log(this.totalVenta);
+           /* this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
+              this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
+              this.articuloselect.servicioId));*/
+            // this.articuloselect.productoId = this.selectedProd.descripcion;
+            this.datos.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
+              this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
+              this.articuloselect.servicioId));
+            this.datosTemporal.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
+                this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
+                this.articuloselect.servicioId));
+            console.log(this.datos);
+            console.log(this.datosGuardar);
+            if (this.esServicio){
+              this.tabla1.renderRows();
+            } else {
+              this.tabla1.renderRows();
+            }
+            // this.articuloselect = new DetalleVenta(0, 1, 0, 0, 0, 0, 0, 0 , 0);
+        }); 
+      } else if (this.esServicio){ 
+
+        for (let r of this.servicios){
+          //console.log('valor 1', this.valor1);
+          console.log('r.servicos', r.servicio);
+          if (this.valor1 == r.servicio){
+            this.reservasCobradas.push(r.reserva);
+            //console.log(this.reservasCobradas.length)
+            //console.log('se agregó este servicio', r.servicio)
           }
         }
-      }
-      /***/
-
-      console.log('producto seleccionado' + this.selectedProd);
-      if (this.esServicio) {
-        //this.articuloselect.precio = this.articuloselect.productoId.costo * this.articuloselect.cantidad;
-        this.articuloselect.precio = this.articuloselect.productoId.costo;
-        this.articuloselect.monto = this.articuloselect.precio * this.articuloselect.cantidad;
-        this.articuloselect.servicioId = this.articuloselect.productoId;
-        console.log('asfsf' + this.articuloselect.monto);
-        this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId,
-          this.articuloselect.precio, this.articuloselect.monto, null,
-          this.articuloselect.servicioId));
-      } else {
-        // controlar existencia del producto
-        const stock = this.articuloselect.productoId.stockActual - this.articuloselect.cantidad;
-        console.log(stock < this.articuloselect.productoId.stockActual);
-        if (stock < 0) {
-            Swal.fire(
-              'Existencia insuficiente',
-              'La cantidad supera el stock actual : ' + this.articuloselect.productoId.stockActual,
-              'warning'
-            );
-            exit();
+        
+        this.servicioService.getBusquedaPorNombre(this.valor1).subscribe( (resp: any) =>{
+          this.selectedProd = resp;
+          this.articuloselect.productoId = resp;
+        
+        console.log('valor selectedProd', this.selectedProd);
+        if (this.selectedProd === 0 ||  this.selectedProd === '--' || this.selectedProd === undefined) {
+          console.log('hay que validar');
+          console.log(this.articuloselect.productoId);
+          Swal.fire(
+            '',
+            'Debe selecionar un producto o servicio!',
+            'warning'
+          );
+          exit();
         }
-
-        this.articuloselect.precio = this.articuloselect.productoId.precioVenta;
-        this.articuloselect.monto = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad;
-        (this.selectedProd.impuestoId.impuestoId == 1) ? console.log('impuesto 10'): console.log('impuesto 5');
-        this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId,
+        /***/
+  
+        /* controlar que no se dupliquen productos antes de agregar fila a la tabla */
+        for (let detalle of this.datos) {
+          console.log('articulo seleccionado');
+          console.log(detalle);
+          if (!this.esServicio) {
+              if (detalle.productoId.productoId === this.selectedProd.productoId) {
+                      console.log('hay que validar producto');
+                      console.log(this.articuloselect.productoId);
+                      Swal.fire(
+                        'Duplicado',
+                        'Debes seleccionar otro producto o servicio!',
+                        'warning'
+                      );
+                      exit();
+              }
+          } else {
+            if (detalle.servicioId.servicioId === this.selectedProd.servicioId) {
+              console.log('hay que validar servicio');
+              console.log(this.articuloselect.productoId);
+              Swal.fire(
+                'Duplicado',
+                'Debes seleccionar otro producto o servicio!',
+                'warning'
+              );
+              exit();
+            }
+          }
+        }
+        /***/
+  
+        console.log('producto seleccionado' + this.selectedProd);
+        if (this.esServicio) {
+          //this.articuloselect.precio = this.articuloselect.productoId.costo * this.articuloselect.cantidad;
+          this.articuloselect.precio = this.articuloselect.productoId.costo;
+          this.articuloselect.monto = this.articuloselect.precio * this.articuloselect.cantidad;
+          this.articuloselect.servicioId = this.articuloselect.productoId;
+          console.log('asfsf' + this.articuloselect.monto);
+          this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId,
+            this.articuloselect.precio, this.articuloselect.monto, null,
+            this.articuloselect.servicioId));
+        } else {
+          // controlar existencia del producto
+          const stock = this.articuloselect.productoId.stockActual - this.articuloselect.cantidad;
+          console.log(stock < this.articuloselect.productoId.stockActual);
+          if (stock < 0) {
+              Swal.fire(
+                'Existencia insuficiente',
+                'La cantidad supera el stock actual : ' + this.articuloselect.productoId.stockActual,
+                'warning'
+              );
+              exit();
+          }
+  
+          this.articuloselect.precio = this.articuloselect.productoId.precioVenta;
+          this.articuloselect.monto = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad;
+          (this.selectedProd.impuestoId.impuestoId == 1) ? console.log('impuesto 10'): console.log('impuesto 5');
+          this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId,
+            this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
+            null));
+        }
+  
+        /*-----------calculo de impuestos y subtotales------------ */
+        if (this.selectedProd.impuestoId.impuestoId == 1){
+          console.log('impuesto 10');
+          this.ivaDiez = this.ivaDiez + Math.round( this.articuloselect.monto/(((Math.round(this.articuloselect.monto * this.selectedProd.impuestoId.valor)/100) + this.articuloselect.monto)/Math.round((this.articuloselect.monto *this.selectedProd.impuestoId.valor)/100 )));
+          this.form.controls.ivaDiez.setValue(this.ivaDiez);
+          console.log(this.ivaDiez);
+          this.subTotalDiez = this.subTotalDiez + this.articuloselect.monto;
+          this.form.controls.subTotalDiez.setValue(this.subTotalDiez);
+        } else if (this.selectedProd.impuestoId.impuestoId == 2){
+          console.log('iva 5');
+          this.ivaCinco = this.ivaCinco + Math.round( this.articuloselect.monto/(((Math.round(this.articuloselect.monto * this.selectedProd.impuestoId.valor)/100) + this.articuloselect.monto)/Math.round((this.articuloselect.monto *this.selectedProd.impuestoId.valor)/100 )));
+          this.form.controls.ivaCinco.setValue(this.ivaCinco);
+          console.log(this.ivaCinco);
+          this.subTotalCinco = this.subTotalCinco + this.articuloselect.monto;
+          this.form.controls.subTotalCinco.setValue(this.subTotalCinco);
+        } else {
+          console.log('exenta');
+          this.subTotalExenta = this.subTotalExenta + this.articuloselect.monto;
+          this.form.controls.subTotalExenta.setValue(this.subTotalExenta);
+        }
+        this.ivaTotal = this.ivaCinco + this.ivaDiez;
+        this.form.controls.ivaTotal.setValue(this.ivaTotal);
+        this.subTotalTotal = this.subTotalCinco + this.subTotalDiez + this.subTotalExenta;
+        this.form.controls.subTotalTotal.setValue(this.subTotalTotal);
+  
+        
+        // this.articuloselect.subtotal = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad
+        this.totalVenta = this.totalVenta + this.articuloselect.monto;
+        console.log('this.totalVenta');
+        console.log(this.totalVenta);
+       /* this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
           this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
-          null));
-      }
-
-      /*-----------calculo de impuestos y subtotales------------ */
-      if (this.selectedProd.impuestoId.impuestoId == 1){
-        console.log('impuesto 10');
-        this.ivaDiez = this.ivaDiez + Math.round( this.articuloselect.monto/(((Math.round(this.articuloselect.monto * this.selectedProd.impuestoId.valor)/100) + this.articuloselect.monto)/Math.round((this.articuloselect.monto *this.selectedProd.impuestoId.valor)/100 )));
-        this.form.controls.ivaDiez.setValue(this.ivaDiez);
-        console.log(this.ivaDiez);
-        this.subTotalDiez = this.subTotalDiez + this.articuloselect.monto;
-        this.form.controls.subTotalDiez.setValue(this.subTotalDiez);
-      } else if (this.selectedProd.impuestoId.impuestoId == 2){
-        console.log('iva 5');
-        this.ivaCinco = this.ivaCinco + Math.round( this.articuloselect.monto/(((Math.round(this.articuloselect.monto * this.selectedProd.impuestoId.valor)/100) + this.articuloselect.monto)/Math.round((this.articuloselect.monto *this.selectedProd.impuestoId.valor)/100 )));
-        this.form.controls.ivaCinco.setValue(this.ivaCinco);
-        console.log(this.ivaCinco);
-        this.subTotalCinco = this.subTotalCinco + this.articuloselect.monto;
-        this.form.controls.subTotalCinco.setValue(this.subTotalCinco);
-      } else {
-        console.log('exenta');
-        this.subTotalExenta = this.subTotalExenta + this.articuloselect.monto;
-        this.form.controls.subTotalExenta.setValue(this.subTotalExenta);
-      }
-      this.ivaTotal = this.ivaCinco + this.ivaDiez;
-      this.form.controls.ivaTotal.setValue(this.ivaTotal);
-      this.subTotalTotal = this.subTotalCinco + this.subTotalDiez + this.subTotalExenta;
-      this.form.controls.subTotalTotal.setValue(this.subTotalTotal);
-
-      
-      // this.articuloselect.subtotal = this.articuloselect.productoId.precioVenta * this.articuloselect.cantidad
-      this.totalVenta = this.totalVenta + this.articuloselect.monto;
-      console.log('this.totalVenta');
-      console.log(this.totalVenta);
-     /* this.datosGuardar.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
-        this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
-        this.articuloselect.servicioId));*/
-      // this.articuloselect.productoId = this.selectedProd.descripcion;
-      this.datos.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
-        this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
-        this.articuloselect.servicioId));
-      this.datosTemporal.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
+          this.articuloselect.servicioId));*/
+        // this.articuloselect.productoId = this.selectedProd.descripcion;
+        this.datos.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
           this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
           this.articuloselect.servicioId));
-      console.log(this.datos);
-      console.log(this.datosGuardar);
-      if (this.esServicio){
-        this.tabla1.renderRows();
-      } else {
-        this.tabla1.renderRows();
+        this.datosTemporal.push(new DetalleVenta(0, this.articuloselect.cantidad, this.articuloselect.ventasId, 
+            this.articuloselect.precio, this.articuloselect.monto, this.articuloselect.productoId,
+            this.articuloselect.servicioId));
+        console.log(this.datos);
+        console.log(this.datosGuardar);
+        if (this.esServicio){
+          this.tabla1.renderRows();
+        } else {
+          this.tabla1.renderRows();
+        }
+        // this.articuloselect = new DetalleVenta(0, 1, 0, 0, 0, 0, 0, 0 , 0);
+        });
       }
-      // this.articuloselect = new DetalleVenta(0, 1, 0, 0, 0, 0, 0, 0 , 0); 
     }
 
 
     ngOnInit(): void {
+
+      this.cargaProducto();
 
       const id = this.route.snapshot.params.id;
       console.log(id);
@@ -484,10 +694,33 @@ export class VentaEditComponent implements OnInit {
         }
 
       this.usuarioService.listarRecurso()
-      .subscribe( (resp: any[]) =>  this.usuarios = resp  );
+      .subscribe( (resp: any[]) =>  {
+        this.usuarios = resp ; 
+      });
 
       this.productoService.listarRecursosActivos()
-      .subscribe( (resp: any[]) =>  this.productos = resp  );
+      .subscribe( (resp: any[]) =>  {
+        this.productos = resp,            
+        //filtro productos
+        this.filteredOptions = this.myControl.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter(value))
+        ); 
+      });
+
+      this.servicioService.getServiciosReservadosPorUsuarioFecha(this.userService.obtenerUsuarioLogueado())
+      .subscribe( (resp: any[]) =>  {
+        this.servicios = resp,            
+        //filtro productos
+        this.filteredOptions1 = this.myControl1.valueChanges
+        .pipe(
+          startWith(''),
+          map(value => this._filter1(value))
+        ); 
+      });
+
+
 
       //const id = this.route.snapshot.params.id;
       if (typeof id !== 'undefined') {
@@ -530,6 +763,12 @@ export class VentaEditComponent implements OnInit {
     }
 
     guardar() {
+      
+        let usuario = this.form.controls.usuarioId.value
+        this.usuarioService.getRecurso(usuario.usuarioId).subscribe((resp:any) => {
+
+
+      
       const id = this.route.snapshot.params.id;
       let peticion: Observable<any>;
       let ventasId: number;
@@ -563,6 +802,11 @@ export class VentaEditComponent implements OnInit {
             });
           }
 
+          for (let r of this.reservasCobradas){
+            console.log('reserva actualizar', r)
+            this.reservaService.cambiarEstadoPagado(r).subscribe((resp:any) =>{});
+          }
+
           /*this.ventaService.actualizarCabecera(ventasId).subscribe(( res: any) => {
             console.log(res);
             peticion = this.ventaService.modificarRecurso(res, ventasId);
@@ -581,11 +825,12 @@ export class VentaEditComponent implements OnInit {
             'Se actualizaron los datos!',
             'success'
           );
-  
+          
           for (let detalle of this.datosGuardar){
             detalle.ventasId = ventasId;
             this.detallesService.agregarRecurso(detalle).subscribe(( res: any) => {
               console.log(res);
+
             });
           }
   
@@ -597,7 +842,10 @@ export class VentaEditComponent implements OnInit {
       }
       
       this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
-
+    }, (err) => {
+      console.log(err);
+      Swal.fire('Error', 'Debe seleccionar un cliente', 'error');
+    });
     }
 
     borrarDetalle(cod: number) {
@@ -674,6 +922,40 @@ export class VentaEditComponent implements OnInit {
     }
   }
 
+
+  //filtros productos
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.productos.filter(option => option.descripcion.toLowerCase().includes(filterValue));
+  }
+
+  //filtros servicios
+  private _filter1(value: string): string[] {
+    const filterValue1 = value.toLowerCase();
+    return this.servicios.filter(option1 => option1.servicio.toLowerCase().includes(filterValue1));
+  }
+
+  //filtrosClientes
+  submitReactiveForm() {
+    if (this.form.valid) {
+      console.log(this.form.value);
+    }
+  }
+
+  filtroCedula(){
+    this.keyword = 'cedula'
+  }
+  filtroNombre(){
+    this.keyword = 'nombres'
+  }
+  filtroRuc(){
+    this.keyword = 'ruc'
+  }
+
+  ngAfterViewInit() {
+
+    this.cdRef.detectChanges();
+  }
 
 
 }

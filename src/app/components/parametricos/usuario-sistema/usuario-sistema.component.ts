@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
 export class UsuarioSistemaComponent implements OnInit {
 
   public formSubmitted = false;
+  usuarioId: any;
   
   public registerForm = this.fb.group({
     nombre: ['', Validators.required],
@@ -62,17 +63,22 @@ export class UsuarioSistemaComponent implements OnInit {
 
   ngOnInit() {
     this.spinnerService.show();
+
     this.clienteService.listarRecurso().subscribe( (resp: any[]) => {
       this.usuarios = resp ;
-      setTimeout(() => {
-        this.spinnerService.hide();
-      }, 200);
+      //setTimeout(() => {
+      //}, 200);
     });
 
     this.rolService.listarRecurso().subscribe( (resp: any[]) => {
+      this.spinnerService.hide();
       this.roles = resp ;
       console.log('roles', resp)
     });
+
+    this.usuarioId = this.usuarioService.obtenerUsuarioLogueado();
+      
+    
     
     /*this.tipoComprobanteService.listarRecurso().subscribe( (resp: any[]) => {
       this.tipos = resp ;

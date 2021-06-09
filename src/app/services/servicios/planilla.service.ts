@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class PlanillaService {
+
   recurosBaseURL: string = environment.URL_BASE + '/planilla/';
   constructor(private http: HttpClient) { }
 
@@ -14,7 +15,7 @@ export class PlanillaService {
   }
 
   getRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar-detalles/' + id);
+    return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
   }
 
   agregarRecurso(recurso) {
@@ -27,6 +28,10 @@ export class PlanillaService {
 
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
+  }
+
+  listarpormes(id) {
+    return this.http.get(this.recurosBaseURL + 'listarpormes/' + id);
   }
 
 }

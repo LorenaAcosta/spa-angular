@@ -39,7 +39,8 @@ export class NavbarComponent implements OnInit {
         username: ['', Validators.required],
         apellido: ['', Validators.required],
         email: ['', Validators.required],
-        ruc: ['', Validators.required],
+        cedula: ['', Validators.required],
+        ruc: [''],
         telefono: ['', Validators.required],
         sexo: ['', Validators.required],
         estado: [1]
@@ -82,7 +83,8 @@ export class NavbarComponent implements OnInit {
     username: ['', Validators.required],
     apellido: ['', Validators.required],
     email: ['', Validators.required],
-    ruc: ['', Validators.required],
+    cedula: ['', Validators.required],
+    ruc: [''],
     telefono: ['', Validators.required],
     sexo: ['', Validators.required],
     estado: [1]
@@ -116,6 +118,7 @@ export class NavbarComponent implements OnInit {
          this.formCliente.controls.nombre.setValue(this.usuarioPerfil.nombre);
          this.formCliente.controls.apellido.setValue(this.usuarioPerfil.apellido);
          this.formCliente.controls.email.setValue(this.usuarioPerfil.email);
+         this.formCliente.controls.cedula.setValue(this.usuarioPerfil.cedula);
          this.formCliente.controls.ruc.setValue(this.usuarioPerfil.ruc);
          this.formCliente.controls.telefono.setValue(this.usuarioPerfil.telefono);
          this.formCliente.controls.sexo.setValue(this.usuarioPerfil.sexo);

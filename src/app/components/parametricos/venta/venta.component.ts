@@ -52,6 +52,7 @@ export class VentaComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.spinnerService.hide();
     const id = this.route.snapshot.params.id;
     console.log(id);
 

@@ -82,6 +82,10 @@ export class ProductoService {
       return this.http.get(this.recurosBaseURL + 'busqueda-productos/' + id);
     }
 
+    getBusquedaPorNombre(nombre) {
+      return this.http.get(this.recurosBaseURL + 'producto-por-nombre/' + nombre);
+    }
+
     getProductoReport() {
       return this.http.get(this.recurosBaseURL + 'reporte');
     }
