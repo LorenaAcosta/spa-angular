@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { URL_SERVICIOS } from 'src/app/config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -93,6 +94,11 @@ export class ReservaService {
  
     misReservas(id) {
       return this.http.get(this.recurosBaseURL + 'mis-reservas/' + id);
+    }
+
+    cambiarEstadoPagado(reservaId: any) {
+      const url = URL_SERVICIOS + '/reserva-detalle/cambiar-estado-pagado/' + reservaId;
+      return this.http.get( url);
     }
 
 

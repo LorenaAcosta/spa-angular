@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgxSpinnerService } from 'ngx-spinner';
 import Swal from 'sweetalert2';
 import { UsuarioService } from '../../../services/servicios/usuario.service';
 
@@ -25,10 +26,12 @@ export class ConfirmacionUsuarioComponent implements OnInit {
               private usuarioService: UsuarioService,
               private modalService:   NgbModal,
               private fb: FormBuilder,
+              private spinnerService: NgxSpinnerService,
               public router: Router
     ) { }
 
   ngOnInit(): void {
+    this.spinnerService.show();
     const access_token = this.route.snapshot.params.access_token;
     console.log(access_token);
     let payload = JSON.parse( atob( access_token.split('.')[1] ) );
@@ -36,9 +39,10 @@ export class ConfirmacionUsuarioComponent implements OnInit {
     console.log('usuario', payload.usuarioId);
     this.usId = payload.usuarioId;
     let valor = true;
-    /*this.usuarioService.habilitarDeshabilitar(valor, payload.usuarioId, access_token).subscribe((resp:any) => {
+    this.usuarioService.habilitarDeshabilitar(valor, payload.usuarioId, access_token).subscribe((resp:any) => {
       //console.log('resp', resp);
-    })*/
+      this.spinnerService.hide();
+    })
     
     const ahora = new Date().getTime()
     this.expirado = (ahora > payload.exp * 1000) ? true: false;

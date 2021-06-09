@@ -7,6 +7,7 @@ import { retry, map, filter, catchError, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { SendMailService } from './send-mail.service';
+import Swal from 'sweetalert2';
 
 
 @Injectable({
@@ -126,10 +127,11 @@ login( formData: any ) {
     headers: headers1,
     body: 'username=' + formData.username + '&password=' + formData.password + '&grant_type=password'
   };
-  this.spinner();
+  
   return this.http.post( url, options.body, options )
   .pipe(
      map( (resp: any) => {
+      
        localStorage.setItem('usuario', JSON.stringify(resp.roles) );
        localStorage.setItem( 'token', resp.access_token );
        localStorage.setItem( 'refresh_token', resp.refresh_token);
@@ -154,10 +156,11 @@ confirmacionUsuario( formData: any ) {
     headers: headers1,
     body: 'username=' + formData.username + '&password=' + formData.password + '&grant_type=password'
   };
-  this.spinner();
+  
   return this.http.post( url, options.body, options )
   .pipe(
      map( (resp: any) => {
+      //this.spinnerService.hide();
        console.log('token', resp);
        let us = resp;
        console.log('token', us.access_token);
@@ -257,20 +260,26 @@ validaToken(): Observable<boolean> {
     }
     this.sendMailService.sendEmail(user).subscribe(
       data => {
-        setTimeout(() => {
-          this.spinnerService.hide();
-        }, 2000);
+        
+        this.spinnerService.hide();
         let res:any = data; 
         console.log(
           `👏 > 👏 > 👏 > 👏 ${user.name} 
          El correo ha sido enviado y el ID es ${res.messageId}`
         );
+        Swal.fire(
+          'Guardado!',
+          'Le hemos enviado un correo para confirmar su cuenta!',
+          'success'
+        );
       },
       err => {
+        this.spinnerService.hide();
         console.log(err);
         this.loading = false;
         this.buttionText = "Submit";
       },() => {
+        this.spinnerService.hide();
         this.loading = false;
         this.buttionText = "Submit";
       }

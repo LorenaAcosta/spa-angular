@@ -118,6 +118,9 @@ export class ClienteEditComponent implements OnInit {
           'success'
         );
         this.router.navigate(['/cliente/listar']);
+      }, (err) => {
+        console.log(err);
+        Swal.fire('Error', err.error, 'error');
       });
     } else {
       peticion = this.clienteService.modificarRecurso(this.form.value, id);

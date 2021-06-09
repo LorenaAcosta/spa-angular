@@ -10,7 +10,11 @@ export class AppComponent implements OnInit {
   constructor(private spinnerService: NgxSpinnerService) { }
 
   ngOnInit() {
-    this.spinner();
+    this.spinnerService.show();  
+  }
+
+  ngAfterViewInit(){
+    this.spinnerService.hide();
   }
   
 

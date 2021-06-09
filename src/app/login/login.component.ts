@@ -28,18 +28,22 @@ export class LoginComponent {
     public router: Router,
     // tslint:disable-next-line: variable-name
     public _usuarioService: UsuarioService,
+    private spinnerService: NgxSpinnerService,
     private fb: FormBuilder
   ) { }
 
   login() {
+    this.spinnerService.show();
     this._usuarioService.login( this.loginForm.value)
     .subscribe( resp => {
+      this.spinnerService.hide();
       if ( this.loginForm.get('remember').value ) {
         localStorage.setItem('username', this.loginForm.get('username').value);
       } else {
         localStorage.removeItem('username');
       }
     }, (err) => {
+      this.spinnerService.hide();
       console.log(err);
       Swal.fire('Error', err.error.error === 'invalid_grant' || 'unauthorized' ? 'Usuario o contraseña incorrectos' : ' ', 'error');
     });
