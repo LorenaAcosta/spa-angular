@@ -17,6 +17,8 @@ import Swal from 'sweetalert2';
 })
 export class PlanillaComponent implements OnInit {
   
+  getTipo: any;
+  pageActual:any;
   empleados: any[] = [];
   cabecera: any;
   detalles: any[] = [];
