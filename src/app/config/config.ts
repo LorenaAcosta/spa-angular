@@ -1,2 +1,2 @@
 
-export const URL_SERVICIOS = 'http://localhost:8084/api';
+export const URL_SERVICIOS = 'https://spa-2021-springboot.herokuapp.com/api';
