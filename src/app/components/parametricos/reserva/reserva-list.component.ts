@@ -55,7 +55,7 @@ export class ReservaListComponent implements OnInit {
 
   buscarFecha(valor) {
     this.lado = valor;
-    console.log(this.lado);
+    console.log('lado' + this.lado);
 
     // tslint:disable-next-line:prefer-const
     let dateString = (this.model.year + '-'  + this.model.month + '-' + this.model.day as string);
@@ -95,28 +95,55 @@ getReservaReport(fecha) {
 }
 
 confirmarReserva(id) {
-  let peticion: Observable<any>;
-  peticion = this.reservaService.modificarRecurso( id, 'Confirmado');
-  peticion.subscribe((result: any) =>  {
-    Swal.fire(
-      'Reserva Confirmada!',
-      'success'
-    );
-    this.ngOnInit();
-  });
+
+  Swal.fire({
+    title: 'Estas seguro de confirmar?',
+    text: 'No podrás revertir esta operación!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, confirmar!'
+    }).then((result) => {
+      if (result.value) {
+        let peticion: Observable<any>;
+        peticion = this.reservaService.modificarRecurso( id, 'Confirmado');
+        peticion.subscribe((result: any) =>  {
+          Swal.fire(
+            'Reserva Confirmada!',
+          );
+          this.ngOnInit();
+        });
+      }
+    });
+
+
+
 }
 
 anularReserva(id: any, pos: any) {
-  let peticion: Observable<any>;
-  peticion = this.reservaService.modificarRecurso( id, 'ANULADO');
-  peticion.subscribe((result: any) =>  {
-    Swal.fire(
-      'Reserva Anulada!',
-      '',
-      'success'
-    );
-    this.ngOnInit();
-  });
+  Swal.fire({
+    title: 'Estas seguro de anular la reserva?',
+    text: 'No podrás revertir esta operación!',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, anular!'
+    }).then((result) => {
+      if (result.value) {
+        let peticion: Observable<any>;
+        peticion = this.reservaService.modificarRecurso( id, 'ANULADO');
+        peticion.subscribe((result: any) =>  {
+          Swal.fire(
+            'Reserva Anulada!',
+            '',
+            'success'
+          );
+          this.ngOnInit();
+        });
+      }
+    });
 }
 
 //obtiene el pdf generado
