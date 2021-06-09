@@ -1,10 +1,12 @@
 <div class="container-fluid">
     <div class="row">
-        <h1 class="display">Habilitar box para {{this.disponibles[0].servicioId.nombre}}</h1>
+        <h1 class="display">Habilitar box}}
+            <!--para {{this.disponibles[0].servicioId.nombre}}-->
+        </h1>
         <div class="col text-right">
-            <button  (click)="openBox(content1)">NUEVO BOX</button>
-            <button  (click)="openBoxes(content2)">VER BOXES</button>
-            </div>
+            <button (click)="openBox(content1)">NUEVO BOX</button>
+            <button (click)="openBoxes(content2)">VER BOXES</button>
+        </div>
     </div>
 </div>
 
@@ -34,43 +36,42 @@
 <div class="card mb-4">
     <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de boxes habilitados</div>
     <div class="card-body">
-      <div class="table-responsive">
-        <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="disponibles.length>0" width="100%"
-          cellspacing="0">
-          <thead>
-            <tr>
-                <th>#</th>
-                <th>Box</th>
-                <th>Servicio</th>
-                <th>Opciones</th>
-            </tr>
-          </thead>
-          <tbody *ngFor="let item of disponibles| paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index">
-            <tr>
-                <td>{{ i + 1}}</td>
-                <td>{{ item.boxesId.nombre}}</td>
-                <td>{{ item.servicioId.nombre}}</td>
-                <td>
-                    <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.boxesId.boxesId, i)" placement="top" ngbTooltip="Eliminar">
+        <div class="table-responsive">
+            <table class="table  table-sm table-bordered display" id="dataTable" *ngIf="disponibles.length>0" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Box</th>
+                        <th>Servicio</th>
+                        <th>Opciones</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let item of disponibles| paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index">
+                    <tr>
+                        <td>{{ i + 1}}</td>
+                        <td>{{ item.boxesId.nombre}}</td>
+                        <td>{{ item.servicioId.nombre}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-info mr-1" (click)="borrar(item.boxesId.boxesId, i)" placement="top" ngbTooltip="Eliminar">
             <i class="fas fa-trash"></i>
           </button>
-                </td>
-            </tr>
-        </tbody>
-        </table>
-        <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
-      </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+        </div>
     </div>
-  </div>
+</div>
 
 
 
 <div *ngIf="disponibles.length == 0" class="alertalert-warning text-center mt-3">
-    <h4 class="alert-heading">No hay registros</h4>  
+    <h4 class="alert-heading">No hay registros</h4>
     <p>
-      <i class="fa fa-exclamation fa-2x"></i>
+        <i class="fa fa-exclamation fa-2x"></i>
     </p>
-  </div>
+</div>
 
 
 
@@ -85,20 +86,20 @@
     </div>
     <div class="modal-body">
         <form [formGroup]="boxForm">
-                <div class="col-sm">
-                    <input formControlName="nombre" type="string" class="form-control" id="nombre" placeholder="nombre del box" required>
-                </div>
-                <label class="col-sm-2 col-form-label" for="inputZip">Estado</label>
-                <div class="col-sm-10">
-                    <select  formControlName="estado" class="form-control" id="estado" required>
+            <div class="col-sm">
+                <input formControlName="nombre" type="string" class="form-control" id="nombre" placeholder="nombre del box" required>
+            </div>
+            <label class="col-sm-2 col-form-label" for="inputZip">Estado</label>
+            <div class="col-sm-10">
+                <select formControlName="estado" class="form-control" id="estado" required>
                             <option value="ACTIVO">ACTIVO</option>
                             <option value="INACTIVO">INACTIVO</option>
                     </select>
-                </div>
+            </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-info mr-1"  (click)="guardarBox()">Guardar</button>
+        <button type="button" class="btn btn-info mr-1" (click)="guardarBox()">Guardar</button>
     </div>
 </ng-template>
 
@@ -116,42 +117,37 @@
     <div class="modal-body">
         <div class="col-md-12" id="htmlData" #htmlData>
             <div class="card mb-4">
-            <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Boxes</div>
-            <div class="card-body">
-                <div class="table-responsive">
-                <table class="table table-bordered display" id="dataTable" *ngIf="boxes.length>0" width="100%"
-                    cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Estado</th>
-                        <th>Opciones</th>
-                    </tr>
-                    </thead>
-                    <tbody *ngFor="let item of boxes | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
-                    <tr>
-                        <td>{{ i + 1}}</td>
-                        <td>{{ item.nombre}}</td>
-                        <td>{{ item.estado}}</td>
-                        <td>
-                        <button class="btn btn-sm btn-info mr-1" (click)="borrarBox(item.boxesId, i)" placement="top"
-                            ngbTooltip="Eliminar">
+                <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Boxes</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered display" id="dataTable" *ngIf="boxes.length>0" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Nombre</th>
+                                    <th>Estado</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of boxes | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                                <tr>
+                                    <td>{{ i + 1}}</td>
+                                    <td>{{ item.nombre}}</td>
+                                    <td>{{ item.estado}}</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info mr-1" (click)="borrarBox(item.boxesId, i)" placement="top" ngbTooltip="Eliminar">
                             <i class="fas fa-trash"></i>
                         </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
                 </div>
-                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
-            </div>
             </div>
         </div>
 
 
     </div>
 </ng-template>
-
-
-
