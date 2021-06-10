@@ -48,7 +48,7 @@ export class VentaReporteComponent implements OnInit {
 
   constructor(
     private ventaDetalleService: DetalleVentaService,
-    private util: UtilesService
+    public util: UtilesService
   ) {
     // Create 100 users
     const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
