@@ -11,8 +11,14 @@ import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 
 export class DashboardComponent implements OnInit {
   datos: any;
+  cantservicios: number;
+  desservicios: string;
+  cantproductos: number;
+  desproductos: string;
+  cantreservas: number;
+  desreservas: string;
 
-  
+
   constructor( private categoriaService: CategoriaService, ){
 
     }
@@ -21,6 +27,14 @@ export class DashboardComponent implements OnInit {
     this.categoriaService.getdatos().subscribe((result: any) => {
       this.datos= result;
       console.log(this.datos);
+
+      this.cantservicios =  this.datos[2].data ;
+      this.desservicios  =  this.datos[2].descripcion;
+      this.cantproductos  = this.datos[0].data ;
+      this.desproductos   = this.datos[0].descripcion;
+      this.cantreservas   = this.datos[1].data;
+      this.desreservas   =  this.datos[1].descripcion;
+      
     }); 
     
   }

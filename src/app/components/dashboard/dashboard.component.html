@@ -121,25 +121,24 @@
 <h1 class="card-title">Experiencias de bienestar para disfrutar</h1><br>
 
 <div class="row">
-    <div class="card-deck">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="assets/img/servicios.png" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title"> 12300 SERVICIOS</h5>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="assets/img/productos.png" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">1500 PRODUCTOS</h5>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img text-center" src="assets/img/reserva.png" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">5400 RESERVAS</h5>
-            </div>
-        </div>
+  <div class="card-deck">
+    <div class="card">
+      <img class="card-img-top" src="assets/img/servicios.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title"> {{  this.cantservicios }} - {{ this.desservicios  }}</h5>
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-img-top" src="assets/img/productos.png" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{   this.cantproductos }} - {{  this.desproductos }}</h5>
+      </div>
+    </div>
+    <div class="card">
+      <img class="card-img-top" src="assets/img/reserva.png"alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{  this.cantreservas  }} - {{  this.desreservas  }}</h5>
+      </div>
     </div>
 
 </div>
