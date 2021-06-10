@@ -152,10 +152,12 @@
                     <tr>
                         <td>{{ i + 1}}</td>
                         <td>{{ item.descripcion}}</td>
-                        <td>{{ this.getTipo(item.tipo)}}</td>
+                        <td *ngIf="item.tipo==1; else no">AGREGADO</td>
+                            <ng-template #no>
+                                <td>DESCUENTO</td>
+                            </ng-template>
                         <td>{{ item.valor }}</td>
-                        <td>
-                        <button class="btn btn-sm btn-info mr-1" (click)="borrarBox(item.boxesId, i)" placement="top"
+                        <td><button class="btn btn-sm btn-info mr-1" (click)="borrarBox(item.boxesId, i)" placement="top"
                             ngbTooltip="Eliminar">
                             <i class="fas fa-trash"></i>
                         </button>

@@ -26,6 +26,7 @@ export class DisponibleBoxComponent implements OnInit {
   servicioId;
   closeResult = '';
   boxesDiponibles: any[] = [];
+  servicio: string;
 
   form = this.fb.group({
     servicioId: [''],
@@ -49,6 +50,7 @@ export class DisponibleBoxComponent implements OnInit {
 
     const id = this.route.snapshot.params.id;
     this.servicioId = parseInt(this.route.snapshot.params.id);
+
  
     this.disponibleboxService.listarByServicioV2(this.servicioId).
       subscribe((resp: any[]) =>{
@@ -56,8 +58,11 @@ export class DisponibleBoxComponent implements OnInit {
         this.disponibles = resp;
         console.log('disponible');
         console.log(resp);
+        
+        this.servicios= this.disponibles[0].servicioId.nombre;
       } 
     );
+    
 
     this.boxesService.listarBoxesDisponibles(this.servicioId).
       subscribe((resp: any[]) => {
