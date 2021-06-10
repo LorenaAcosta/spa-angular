@@ -122,28 +122,27 @@
 
 <div class="row">
     <div class="card-deck">
-        <div class="card" style="width: 18rem;">
+        <div class="card">
             <img class="card-img-top" src="assets/img/servicios.png" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title"> 12300 SERVICIOS</h5>
+                <h5 class="card-title"> {{ this.cantservicios }} - {{ this.desservicios }}</h5>
             </div>
         </div>
         <div class="card">
             <img class="card-img-top" src="assets/img/productos.png" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">1500 PRODUCTOS</h5>
+                <h5 class="card-title">{{ this.cantproductos }} - {{ this.desproductos }}</h5>
             </div>
         </div>
         <div class="card">
-            <img class="card-img text-center" src="assets/img/reserva.png" alt="Card image cap">
+            <img class="card-img-top" src="assets/img/reserva.png" alt="Card image cap">
             <div class="card-body">
-                <h5 class="card-title">5400 RESERVAS</h5>
+                <h5 class="card-title">{{ this.cantreservas }} - {{ this.desreservas }}</h5>
             </div>
         </div>
+
     </div>
-
 </div>
-
 
 
 <br>
@@ -159,6 +158,7 @@
 <div class="row justify-content-center">
     <h1 class="card-title">¿Dónde estamos?<br></h1>
 </div>
+<br>
 <div class="row justify-content-center" style="text-align: center;">
     <iframe src="https://www.google.com/maps/embed?pb=!1m23!1m12!1m3!1d7211.290484680905!2d-57.511147081932506!3d-25.349682729535996!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m8!3e6!4m0!4m5!1s0x945dae81685dfcdd%3A0xb46a37a3f5faabe8!2sMarcelina%20Insfran%2C%20San%20Lorenzo!3m2!1d-25.3497924!2d-57.5128634!5e0!3m2!1ses!2spy!4v1622162643766!5m2!1ses!2spy"
         width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy">
