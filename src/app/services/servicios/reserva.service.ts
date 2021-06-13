@@ -30,7 +30,10 @@ export class ReservaService {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, valorEstado).pipe(
       catchError( e=> {
         this.router.navigate(['/reserva/listar']);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         return throwError(e);
       })
     );

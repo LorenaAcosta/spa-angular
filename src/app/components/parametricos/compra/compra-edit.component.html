@@ -23,7 +23,8 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" id="inputGroup-sizing-sm">TIMBRADO</label>
                         </div>
-                        <input formControlName="timbrado" type="timbrado" class="form-control" id="timbrado" placeholder="timbrado">
+                        <input formControlName="timbrado" type="number" class="form-control" id="timbrado"
+                        oninput="validity.valid||(value='');" max="99999999"placeholder="timbrado">
                     </div>
                 </div>
                 <div class="form-group">

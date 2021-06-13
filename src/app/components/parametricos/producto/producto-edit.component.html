@@ -22,12 +22,14 @@
             <div class="form-row">
                 <div class="form-group col-sm-6">
                 <label for="inputPassword3" >Costo del Producto</label>
-                    <input formControlName="costo" type="number" class="form-control form-control-sm"id="costo" pattern="^[0-9]*$" [(ngModel)]="costo" placeholder="0" required>
+                    <input formControlName="costo" type="number" class="form-control form-control-sm" id="costo" 
+                    oninput="validity.valid||(value='');" [(ngModel)]="costo" placeholder="0" max="9999999999" required>
                 </div>
                 
                 <div class="form-group col-sm-6">
                     <label for="inputPassword3" >Precio de Venta</label>
-                        <input formControlName="precioVenta" type="number" class="form-control form-control-sm" id="precioVenta" pattern="^[0-9]*$" [(ngModel)]="precioVenta" placeholder="0" required>
+                        <input formControlName="precioVenta" type="number" class="form-control form-control-sm"
+                         id="precioVenta" oninput="validity.valid||(value='');" [(ngModel)]="precioVenta" max="9999999999" placeholder="0" required>
                 </div>
                 <div class="row">
                     <div class="col text-danger">
@@ -40,7 +42,8 @@
             <div class="form-row">
                 <div class="form-group col-sm-6">
                 <label for="inputPassword3" >Stock Actual</label>
-                    <input formControlName="stockActual" type="number" class="form-control form-control-sm" id="stockActual" pattern="^[0-9]*$" required>
+                    <input formControlName="stockActual" type="number" class="form-control form-control-sm" 
+                    oninput="validity.valid||(value='');" id="stockActual" max="999999" required>
                 </div>
 
                 <div class="form-group col-sm-6">

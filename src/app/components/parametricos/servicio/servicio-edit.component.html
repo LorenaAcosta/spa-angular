@@ -37,19 +37,20 @@
           </div>
           <div class="form-group col-sm-6">
             <label for="inputPassword4">Duración</label>
-            <input formControlName="duracion" type="time" class="form-control form-control-sm" id="duracion" min="01:00" max="03:00"
-          required> <span class="validity"></span>
+            <input formControlName="duracion" type="time" class="form-control form-control-sm" id="duracion"
+              step='3600' max='06:00' required> <span class="validity"></span>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-sm-6">
           <label for="inputAddress">Costo</label>
-          <input formControlName="costo" type="number" max="1500000" class="form-control form-control-sm" placeholder="numeros"  id="costo" required>
+          <input formControlName="costo" type="number" 
+           class="form-control form-control-sm" placeholder="numeros"   max="99999999"
+           oninput="validity.valid||(value='');" id="costo" required>
         </div>
           <div class="form-group col-sm-6">
             <label>Estado</label>
             <select id="estado" formControlName="estado" class="form-control form-control-sm" placeholder="seleccionar"  required>
-              <option selected>...</option>
               <option value="ACTIVO">Activo</option>
               <option value="INACTIVO">Inactivo</option>
               <option value="PROMO">Promoción</option>

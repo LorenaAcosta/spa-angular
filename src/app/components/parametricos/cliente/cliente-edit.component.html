@@ -37,14 +37,15 @@
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="inputPassword4">Cedula</label>
-                        <input formControlName="cedula" placeholder="cedula" type="cedula" class="form-control form-control-sm" pattern="^[0-9]*$" id="cedula" required>
+                        <input formControlName="cedula" [(ngModel)]="cedula" placeholder="cedula" type="number" max="99999999"
+                        class="form-control form-control-sm"  oninput="validity.valid||(value='');" id="cedula" required>
                         <div *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)" class="alert alert-danger">Introduzca sólo dígitos.
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddress">Dirección</label>
-                    <input formControlName="direccion" placeholder="dirección" type="direccion" maxlength="60" class="form-control form-control-sm" id="direccion" required>
+                    <input formControlName="direccion" placeholder="dirección" type="direccion" max="60" class="form-control form-control-sm" id="direccion" required>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-sm-6">
@@ -67,15 +68,15 @@
         <div class="col-6">
             <div class="bd-content">
                 <div class="form-row form-group col-sm-6">
-                    <label for="inputCity">Telefono</label>
-                    <input formControlName="telefono" placeholder="telefono" type="telefono" class="form-control form-control-sm" pattern="^[0-9]*$" id="telefono" required>
+                    <label for="inputCity">Teléfono</label>
+                    <input formControlName="telefono" placeholder="telefono" type="number" class="form-control form-control-sm" 
+                    oninput="validity.valid||(value='');" id="telefono" max="999999999" required>
                     <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">Introduzca sólo dígitos.
                     </div>
                 </div>
                 <div class="form-row form-group col-sm-6">
                     <label for="inputState">Sexo</label>
                     <select id="sexo" formControlName="sexo" class="form-control form-control-sm">
-            <option selected>Choose...</option>
             <option value="femenino">FEMENINO</option>
             <option value="masculino">MASCULINO</option>
           </select>
@@ -96,7 +97,14 @@
 
                 <div class="form-row form-group col-sm-6">
                     <label for="inputZip">FechaNac</label>
-                    <input formControlName="fechaNac" type="date" class="form-control form-control-sm" id="fechaNac" required>
+                    <input formControlName="fechaNac" type="date" class="form-control form-control-sm" 
+                    id="fechaNac" min="1930-01-01" max="2010-01-01" 
+                    [(ngModel)]="fechaNac"  required>
+                </div>
+                <div class="row">
+                    <div class="col text-danger">
+                      <p *ngIf="fechaNac>'2010-01-01' || fechaNac<'1930-01-01' "> * Fecha de nacimiento no válido</p>
+                    </div>
                 </div>
 
             </div>

@@ -30,6 +30,8 @@ export class HorarioComponent implements OnInit {
   horarioId: any;
   empleadoId: any;
   closeResult: string;
+  horaentrada: any;
+  horasalida: any;
 
   weekDays = [
     {"d": "Lunes", "cod": 1},
@@ -39,7 +41,6 @@ export class HorarioComponent implements OnInit {
     {"d": "Viernes", "cod":5},
     {"d": "Sábado", "cod":6},
     {"d": "Domingo", "cod":0}]
-
 
 
   constructor(private fb:             FormBuilder,
@@ -72,6 +73,7 @@ export class HorarioComponent implements OnInit {
 
   guardar() {
     this.form.controls.empleadoId.setValue(parseInt(this.empleadoId));
+    console.log(this.form.value);
     let peticion: Observable<any>;
     peticion = this.horarioService.agregarRecurso(this.form.value);
     peticion.subscribe((result: any) => {
@@ -83,6 +85,7 @@ export class HorarioComponent implements OnInit {
       this.ngOnInit();
     });
     this.modalService.dismissAll();
+    this.form.reset(this.form.controls.horarioId );
     this.ngOnInit();
   }
 
@@ -106,7 +109,7 @@ export class HorarioComponent implements OnInit {
   }
 
   
-  borrar(id: any, pos: any) {
+ borrar(id: any, pos: any) {
     Swal.fire({
       title: 'Estas seguro?',
       text: 'No podrás revertir esta operación!',
@@ -128,8 +131,21 @@ export class HorarioComponent implements OnInit {
       });
   }
 
+  horaSalida() {
+    var horaEntrada: String = this.form.get('horaInicio').value;
+    var horaSalida:String = this.form.get('horaFin').value;
+    console.log('horaEntrada' + horaEntrada.substr(0,2));
+    console.log('horaSalida' + horaSalida.substr(0,2));
 
+    if (horaSalida.substr(0,2) <= horaEntrada.substr(0,2)  ) {
+      return true;
+    } else {
+      return false;
+    }  
+  }
   
+
 }
+
 
 
