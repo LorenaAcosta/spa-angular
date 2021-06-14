@@ -28,7 +28,10 @@ export class ConceptosService {
       catchError( e=> {
        // this.router.navigate(['/categoria/listar']);
         console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         return throwError(e);
       })
     );

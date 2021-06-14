@@ -87,7 +87,7 @@ export class ClienteEditComponent implements OnInit {
         this.form.controls.password.setValue(data.password);
         this.form.controls.apellido.setValue(data.apellido);
         this.form.controls.email.setValue(data.email);
-        this.form.controls.cedula.setValue(data.cedula);
+        this.form.controls.cedula.setValue(data.cedula.toString());
         this.form.controls.direccion.setValue(data.direccion);
         this.form.controls.ciudad.setValue(data.ciudad);
         this.form.controls.nacionalidad.setValue(data.nacionalidad);

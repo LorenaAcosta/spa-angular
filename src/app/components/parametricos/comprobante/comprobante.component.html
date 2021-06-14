@@ -73,27 +73,32 @@
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Timbrado</label>
                 <div class="col-sm-6">
-                    <input formControlName="timbrado" placeholder="timbrado" type="timbrado" maxlength="30" class="form-control form-control-sm" id="timbrado" required></div>
+                    <input formControlName="timbrado" placeholder="timbrado" type="number" oninput="validity.valid||(value='');"
+                     max="99999999" class="form-control form-control-sm" id="timbrado" required></div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Inicio Vigencia</label>
                 <div class="col-sm-6">
-                    <input formControlName="inicioVigencia" placeholder="inicioVigencia" type="date" maxlength="30" class="form-control form-control-sm" id="inicioVigencia" required></div>
+                    <input formControlName="inicioVigencia" placeholder="inicioVigencia" type="date" max="30" 
+                   class="form-control form-control-sm" id="inicioVigencia" required></div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Fin Vigencia</label>
                 <div class="col-sm-6">
-                    <input formControlName="finVigencia" placeholder="finVigencia" type="date" maxlength="30" class="form-control form-control-sm" id="finVigencia" required></div>
+                    <input formControlName="finVigencia" placeholder="finVigencia" type="date" max="30" 
+                     class="form-control form-control-sm" id="finVigencia" required></div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Numero Inicial</label>
                 <div class="col-sm-6">
-                    <input formControlName="numeroInicial" placeholder="numeroInicial" type="number" maxlength="30" class="form-control form-control-sm" id="numeroInicial" required></div>
+                    <input formControlName="numeroInicial" placeholder="numeroInicial" type="number" max="9999" 
+                    oninput="validity.valid||(value='');" class="form-control form-control-sm" id="numeroInicial" required></div>
             </div>
             <div class="form-group row">
                 <label class="col-sm-4 col-form-label">Numero Final</label>
                 <div class="col-sm-6">
-                    <input formControlName="numeroFinal" placeholder="numeroFinal" type="number" maxlength="30" class="form-control form-control-sm" id="numeroFinal" required>
+                    <input formControlName="numeroFinal" placeholder="numeroFinal" type="number" max="9999"
+                    oninput="validity.valid||(value='');"  class="form-control form-control-sm" id="numeroFinal" required>
                 </div>
             </div>
             <div class="form-group row">

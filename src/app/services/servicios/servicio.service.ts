@@ -31,16 +31,22 @@ export class ServicioService {
     agregarRecurso(recurso) {
       return this.http.post(this.recurosBaseURL + 'agregar', recurso).pipe(
         catchError( e=> {
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
+          var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
+        return throwError(e);
         })
       );
     }
     modificarRecurso(recurso, id) {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso).pipe(
       catchError( e=> {
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
         this.router.navigate(['/servicio/listar']);
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         return throwError(e);
       })
     );
@@ -49,8 +55,11 @@ export class ServicioService {
       return this.http.get(this.recurosBaseURL + 'getServciosByCategoriaId/' +  id ).pipe(
         catchError( e=> {
           this.router.navigate(['/servicio/listar']);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
+          var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
+        return throwError(e);
         })
       );
     }
@@ -59,8 +68,11 @@ export class ServicioService {
       return this.http.get(this.recurosBaseURL + 'getServiciosByEstado/' +  estado ).pipe(
         catchError( e=> {
           this.router.navigate(['/servicio/listar']);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
+          var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
+        return throwError(e);
         })
       );
     }
@@ -69,8 +81,11 @@ export class ServicioService {
       return this.http.get(this.recurosBaseURL + 'getServiciosActivos/' +  categoriaId  ).pipe(
         catchError( e=> {
           this.router.navigate(['/servicio/listar']);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
+          var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
+        return throwError(e);
         })
       );
     }
@@ -79,8 +94,11 @@ export class ServicioService {
       return this.http.get(this.recurosBaseURL + 'encontrar/' + id).pipe(
         catchError( e=> {
           this.router.navigate(['/servicio/listar']);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
+          var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
+        return throwError(e);
         })
       );
     }
@@ -93,7 +111,10 @@ export class ServicioService {
       return this.http.delete(this.recurosBaseURL + 'eliminar/' + id).pipe(
         catchError( e=> {
           this.router.navigate(['/servicio/listar']);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
+          var cadena =  e.error.error.toString();
+          var divisiones = cadena.split("Detail:", 2);
+          console.log('divisiones'  + divisiones);
+          Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
           return throwError(e);
         })
       );
@@ -103,8 +124,11 @@ export class ServicioService {
       return this.http.get(this.recurosBaseURL + 'get-servicios-disponibles/' +  id ).pipe(
         catchError( e=> {
           this.router.navigate(['/empleado/listar']);
-          Swal.fire(e.error.mensaje, e.error.error, 'error');
-          return throwError(e);
+          var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
+        return throwError(e);
         })
       );
     }
