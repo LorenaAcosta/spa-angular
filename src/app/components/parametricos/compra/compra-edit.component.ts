@@ -281,6 +281,46 @@ export class CompraEditComponent implements OnInit {
     }
   }
 
+  
+  plainNumber(number) {
+    return number.split('-').join('');  //2  
+  }
+ 
+  cant:number=0;
+  formatFactura(input) {
+    var value = input.target.value, 
+        value = this.plainNumber(value);
+       
+
+      if (value.length > 7) {
+          value = value.substring(0, value.length - 3) + '-' + value.substring(value.length - 3, value.length);
+     
+      }
+      if (value.length > 3) {
+        value = value.substring(0, value.length - 7) + '-' + value.substring(value.length - 7, value.length);
+     
+      }
+    console.log(value);
+    input.target.value = value;
+  }
+
+  plainNumber2(number) {
+    return number.split('.').join('');
+  }
+ 
+   oneDot(input) {
+    var value = input.target.value,
+        value = this.plainNumber2(value);
+    
+    if (value.length > 3 ) {
+      value = value.substring(0, value.length - 3) + '.' + value.substring(value.length - 3, value.length);
+    }
+    if (value.length > 8 ) {
+      value = value.substring(0, value.length - 3) + '.' + value.substring(value.length - 3, value.length);
+    }
+    console.log(value);
+    input.target.value = value;
+  }
 
 
 

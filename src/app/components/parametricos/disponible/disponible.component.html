@@ -18,15 +18,20 @@
         </div>
         <div class="form-group col-md-2">
             <label>Comision %</label>
-            <div class="col-sm"> <input formControlName="comision" type="float" class="form-control" id="comision" required>
+            <div class="col-sm"> 
+
+              <input type="number" formControlName="comision"  placeholder="0.00"  type="number"  class="form-control"  
+              max="999" step="0.25" #input (keyup)="oneDot($event)"  oninput="validity.valid||(value='');" required/>
+            <!-- <input formControlName="comision" placeholder="0.00" type="number"
+               min="0" max="50000" step="0.25" value="0.00"  onkeyup="oneDot(this)"
+              class="form-control" id="comision"   required>-->
             </div>
         </div>
     </div>
     <button routerLink="/empleado/listar" class="btn btn-sm btn-info mr-1">
         <i class="fas fa-arrow-left"></i> Regresar
     </button>
-    <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
-    " (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
+    <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1" (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
 </form>
 
 <br>
@@ -53,7 +58,7 @@
                 <td>{{ i + 1}}</td>
                 <td>{{ item.empleadoId.nombre}}</td>
                 <td>{{ item.servicioId.nombre}}</td>
-                <td>{{ item.comision }} %</td>
+                <td>{{ this.utilService.formatDecimales2( item.comision) }} %</td>
                 <td>
                     <button class="btn btn-info mr-1" (click)="borrar(item.disponibleId, i)" placement="top" ngbTooltip="Eliminar"><i class="fas fa-trash"></i></button>
                 </td>
