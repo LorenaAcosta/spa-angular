@@ -10,3 +10,359 @@
      border-top-left-radius: 5px;
      border-top-right-radius: 5px;
 }
+
+img {
+    width: 100px;
+    height: 100px;
+}
+
+.marcaEstado {
+    width: 7em;
+    margin: 2em;
+    font-size: 130px;
+    font-family: sans-serif;
+    font-weight: bold;
+    background-color: transparent;
+    opacity: 0.7;
+    color: black;
+    position: absolute;
+    display: inline-block;
+    border: 0;
+    left: -90px;
+    top: 180px;
+    width: 0px;
+    height: 0px;
+    z-index: 100;
+    -webkit-touch-callout: none;
+    -webkit-transform: rotate(-45deg);
+    -moz-transform: rotate(-45deg);
+    -o-transform: rotate(-45deg);
+    transform: rotate(-45deg);
+    motion-rotation: 50% 50%;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    pointer-events: none;
+}
+
+.etiqueta {
+    font-family: Verdana, Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    font-size: 9px;
+    text-align: left;
+    background: #E4E4E4;
+    color: #000066;
+}
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+td,
+th {
+    padding: 0;
+}
+
+*,
+*:before,
+*:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.columns {
+    padding-left: 0.9375rem;
+    padding-right: 0.9375rem;
+    width: 100%;
+    float: left;
+}
+
+@media only screen {
+    .columns {
+        position: relative;
+        padding-left: 0.9375rem;
+        padding-right: 0.9375rem;
+        float: left;
+    }
+    .small-4 {
+        width: 33.33333%;
+    }
+    .small-offset-4 {
+        margin-left: 33.33333% !important;
+    }
+}
+
+@media only screen and (min-width: 40.063em) {
+    .columns {
+        position: relative;
+        padding-left: 0.9375rem;
+        padding-right: 0.9375rem;
+        float: left;
+    }
+}
+
+@media only screen and (min-width: 64.063em) {
+    .columns {
+        position: relative;
+        padding-left: 0.9375rem;
+        padding-right: 0.9375rem;
+        float: left;
+    }
+}
+
+button::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+table {
+    background: #fff;
+    margin-bottom: 1.25rem;
+    border: solid 1px #ddd;
+    table-layout: auto;
+}
+
+table thead {
+    background: #f5f5f5;
+}
+
+table thead tr th {
+    padding: 0.5rem 0.625rem 0.625rem;
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: #222;
+}
+
+table tr th,
+table tr td {
+    padding: 0.5625rem 0.625rem;
+    font-size: 0.875rem;
+    color: #222;
+    text-align: left;
+}
+
+table tr:nth-of-type(even) {
+    background: #f9f9f9;
+}
+
+table thead tr th,
+table tbody tr td,
+table tr td {
+    display: table-cell;
+    line-height: 1.125rem;
+}
+
+
+/* Image Thumbnails */
+
+
+/* Tooltips */
+
+
+/* Wrapped around .top-bar to contain to grid width */
+
+.text-center {
+    text-align: center !important;
+}
+
+
+/* Typography resets */
+
+#td1 #td2 #td3 div,
+p,
+th,
+td {
+    margin: 0;
+    padding: 0;
+}
+
+
+/* Default Link Styles */
+
+
+/* Default paragraph styles */
+
+p {
+    font-family: inherit;
+    font-weight: normal;
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 1.25rem;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* Default header styles */
+
+
+/* Helpful Typography Defaults */
+
+i {
+    font-style: italic;
+    line-height: inherit;
+}
+
+strong {
+    font-weight: bold;
+    line-height: inherit;
+}
+
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important;
+        /* Black prints faster: h5bp.com/s */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+    thead {
+        display: table-header-group;
+        /* h5bp.com/t */
+    }
+    tr {
+        page-break-inside: avoid;
+    }
+    @page {
+        margin: 0.5cm;
+    }
+    p {
+        orphans: 3;
+        widows: 3;
+    }
+}
+
+.negrita {
+    font-weight: 700;
+}
+
+.icono-error {
+    color: #c0392b;
+}
+
+#td1 #td2 #td3 td {
+    padding: 2px;
+}
+
+#td1 #td2 #td3 th {
+    border: 1px solid #000;
+    text-align: center;
+    padding: 2px;
+}
+
+.titulo1 {
+    font-weight: 700;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+}
+
+.titulo2 {
+    font-weight: 700;
+    font-size: 1.1em;
+    text-transform: uppercase;
+}
+
+.titulo5 {
+    font-weight: 700;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+#myRow {
+    font-weight: 700;
+    font-size: 1.1em;
+    text-align: center;
+}
+
+#myP {
+    font-weight: 400;
+    font-size: 1.1em;
+    margin: 0;
+    padding: 0.2rem 0;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+#myP2 {
+    font-weight: 400;
+    font-size: 1.1em;
+    padding: 0.2rem 0;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.titulo5 p {
+    font-weight: 400;
+    font-size: 1.1em;
+    margin: 0;
+    padding: 0.2rem 0;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.bloque-parrafos p {
+    font-size: 0.875rem;
+    margin: 0;
+    padding: 0.2rem 0;
+    line-height: normal;
+    text-transform: uppercase;
+}
+
+.numerico {
+    text-align: right;
+}
+
+table thead tr th,
+table tbody tr td,
+table tr td {
+    display: table-cell;
+    line-height: normal;
+}
+
+table tr th,
+table tr td {
+    padding: 0 0.1rem;
+    font-size: 0.875rem;
+    color: #222;
+    text-align: left;
+}
+
+#td1 #td2 #td3 table tr:nth-of-type(even) {
+    background: 0 0;
+}
+
+#td1 #td2 #td3 table thead tr th {
+    padding: 0.3rem 0.425rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #222;
+}
+
+.tabla-bordes {
+    margin: 5px 0;
+    border: 1px solid #000;
+    vertical-align: top;
+}
+
+.tabla-bordes td {
+    border: 1px solid #000;
+    vertical-align: top;
+}
+
+.contenedor-qr {
+    text-align: center;
+    padding: 4px 2px;
+}

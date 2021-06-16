@@ -1,5 +1,9 @@
 <div class="row">
     <h5 class="display">Lista de Comprobantes: </h5>
+    <div class="col text-right">
+        <button  (click)="openBox(content1)">NUEVO TIPO</button>
+        <button  (click)="openBoxes(content2)">VER TIPOS</button>
+        </div>
 </div>
 
 <!-- Tabla que lista el horario del empleado -->
@@ -117,3 +121,96 @@
         <button type="button" class="btn btn-outline-dark" (click)="guardar()">Guardar</button>
     </div>
 </ng-template>
+
+
+
+
+
+
+
+
+
+
+
+<!--Modal para agregar un nuevo Box-->
+<ng-template #content1 let-modal>
+    <div class="modal-header alert-info">
+        <h2>Añadir Box</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="boxForm">
+            <label class="col-sm-2 col-form-label" for="inputZip">Descripción</label>
+                <div class="col-sm">
+                    <input formControlName="descripcion" type="string" class="form-control"
+                     id="descripcion" placeholder="tipo de comprobante" required>
+                </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-info mr-1"  (click)="guardarTipo()">Guardar</button>
+    </div>
+</ng-template>
+
+
+
+
+<!--Modal para  listar boxes-->
+
+<ng-template #content2 let-modal>
+    <div class="modal-header  alert-info">
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="col-md-12" id="htmlData" #htmlData>
+            <div class="card mb-4">
+            <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Tipo de comprobantes</div>
+            <div class="card-body">
+                <div class="table-responsive">
+                <table class="table table-bordered display" id="dataTable" *ngIf="boxes.length>0" width="100%"
+                    cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Descricpcion</th>
+                        <th>Opciones</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngFor="let item of boxes | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                    <tr>
+                        <td>{{ i + 1}}</td>
+                        <td>{{ item.descripcion}}</td>
+                        <td>
+                        <button class="btn btn-sm btn-info mr-1" (click)="borrarBox(item.tipoComprobanteId, i)" placement="top"
+                            ngbTooltip="Eliminar">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                </div>
+                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+            </div>
+            </div>
+        </div>
+
+
+    </div>
+</ng-template>
+
+
+
+
+
+
+
+
+
+
+
+

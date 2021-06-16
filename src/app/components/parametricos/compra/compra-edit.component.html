@@ -14,34 +14,26 @@
                     <div class="form-group">
                         <div class="input-group input-group-sm mb-3">
                             <div class="input-group-prepend">
-                                <label class="input-group-text" style="width: 125px;">N° FACTURA</label>
+                                <label class="input-group-text" style="width: 100px;">N° FACTURA</label>
                             </div>
                             <input formControlName="numeroFactura"  placeholder="000-000-0000000"
                             class="form-control" #input  (keyup)="formatFactura($event)" 
                              oninput="validity.valid||(value='');" autofocus  required>
-                            </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width: 125px;">TIMBRADO</label>
+
+
+                             <div class="input-group-prepend">
+                                <label class="input-group-text" style="width: 100px;">TIMBRADO</label>
                             </div>
                             <input formControlName="timbrado" type="number" class="form-control" id="timbrado"
                             oninput="validity.valid||(value='');" max="99999999"placeholder="timbrado" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group input-group-sm mb-3">
-                            <div class="input-group-prepend">
-                                <label class="input-group-text" style="width: 125px;">FECHA EMISIÓN</label>
+
+
                             </div>
-                            <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true required>
-                        </div>
                     </div>
                     <div class="form-group">
                         <div class="input-group input-group-sm mb-3">
                             <div class="input-group-prepend">
-                                <label class="input-group-text" style="width: 125px;">Proveeedor</label>
+                                <label class="input-group-text" style="width: 100px;">PROVEEDOR</label>
                             </div>
                             <select id="proveedorId" formControlName="proveedorId" class="form-control form-control-sm">
                                 <option value="" selected disabled>Seleccionar...</option>
@@ -58,12 +50,20 @@
                     </div>
                 </div>
             </div>
+            <div class="form-group">
+                <div class="input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" style="width: 100px;">FECHA EMI:</label>
+                    </div>
+                    <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true required>
+                </div>
+            </div>
           
 
             <div class="form-group">
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text"  style="width: 125px;">Monto Total</label>
+                        <label class="input-group-text"  style="width: 100px;">TOTAL </label>
                     </div>
                     <input [(ngModel)]="totalCompra" formControlName="montoTotal" type="montoTotal" 
                     value="{{ util.numberWithCommas(totalCompra)}}" class="form-control form-control-sm" 
@@ -81,13 +81,8 @@
 
 
 
-</div>
-<div class="col">
 
-
-<h3 style="text-align: center;">DETALLES</h3>
-
-<!--Inicio tabla para detalles-->
+    <!--Inicio tabla para detalles-->
 <div class="example-container" >
 
     <div class="row">
@@ -123,6 +118,16 @@
         </div>
     </div>
 </div>
+
+
+
+
+</div>
+<div class="col">
+
+
+<h3 style="text-align: center;">DETALLES</h3>
+
 
 
 
@@ -232,3 +237,6 @@
         <button type="submit" [disabled]="!this.proveedorForm.valid" class="btn btn-outline-dark" (click)="guardarProveedor()"> <i class="fas fa-save"></i>Guardar</button>
     </div>
 </ng-template>
+
+
+

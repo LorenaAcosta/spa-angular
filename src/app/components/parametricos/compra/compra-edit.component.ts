@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { exit } from 'process';
 import { ComprasService } from 'src/app/services/servicios/compras.service';
@@ -48,6 +48,7 @@ export class CompraEditComponent implements OnInit {
     private route: ActivatedRoute,
     public util: UtilesService,
     private fmp: FormBuilder,
+    private router: Router,
     private modalService: NgbModal,
     private compraService: ComprasService,
     private proveedorService: ProveedorService,
@@ -185,27 +186,38 @@ export class CompraEditComponent implements OnInit {
     const id = this.route.snapshot.params.id;
     let peticion: Observable<any>;
     let compraId: number;
+
     if (typeof id === 'undefined') {
-      peticion = this.compraService.agregarRecurso(this.form.value);
-      console.warn(this.form.value);
-      peticion.subscribe((result: any) =>  {
-        console.log(result),
-        compraId = result.compras.comprasId,
-        console.log(compraId);
+      if (this.form.controls.montoTotal.value>0){
+        peticion = this.compraService.agregarRecurso(this.form.value);
+        console.warn(this.form.value);
+        peticion.subscribe((result: any) =>  {
+          console.log(result),
+          compraId = result.compras.comprasId,
+          console.log(compraId);
+
+          for (let detalle of this.datosGuardar){
+            detalle.comprasId = compraId;
+            this.detallesService.agregarRecurso(detalle).subscribe(( res: any) => {
+              console.log(res);
+            });
+          }
+          Swal.fire(
+            'Factura registrada!',
+            'Se actualizaron los productos!',
+            'success'
+          );
+          this.router.navigate(['/compras/listar']);
+  
+        });
+      }else{
         Swal.fire(
-          'Guardado!',
-          'Se guardaron  los datos!',
-          'success'
+          '',
+          'Debe ingresar al menos un producto!',
+          'warning'
         );
+      }      
 
-        for (let detalle of this.datosGuardar){
-          detalle.comprasId = compraId;
-          this.detallesService.agregarRecurso(detalle).subscribe(( res: any) => {
-            console.log(res);
-          });
-        }
-
-      });
     } else {
 
       peticion = this.compraService.modificarRecurso(this.form.value, id);
@@ -304,25 +316,7 @@ export class CompraEditComponent implements OnInit {
     input.target.value = value;
   }
 
-  plainNumber2(number) {
-    return number.split('.').join('');
-  }
- 
-   oneDot(input) {
-    var value = input.target.value,
-        value = this.plainNumber2(value);
-    
-    if (value.length > 3 ) {
-      value = value.substring(0, value.length - 3) + '.' + value.substring(value.length - 3, value.length);
-    }
-    if (value.length > 8 ) {
-      value = value.substring(0, value.length - 3) + '.' + value.substring(value.length - 3, value.length);
-    }
-    console.log(value);
-    input.target.value = value;
-  }
-
-
+  
 
 }
 

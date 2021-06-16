@@ -22,12 +22,13 @@ export class EmpleadoService {
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso).pipe(
       catchError( e=> {
-        this.router.navigate(['/empleado/listar']);
         var cadena =  e.error.error.toString();
         var divisiones = cadena.split("Detail:", 2);
         console.log('divisiones'  + divisiones);
         Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
+        this.router.navigate(['/empleado/listar']);
         return throwError(e);
+       
       })
     );
   }
