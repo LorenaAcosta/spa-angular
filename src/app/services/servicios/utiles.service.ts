@@ -27,6 +27,14 @@ import { Injectable } from '@angular/core';
       return x;
     }
 
+    formatDecimales2(x){
+      x = x.toFixed(2);
+      return x;
+    }
+
+
+    
+
     getDayOfTheWeek(day){
       if (day == 1) return "Lunes";
       if (day == 2) return "Martes";

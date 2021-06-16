@@ -1,96 +1,95 @@
-<form [formGroup]="form">
 
-    <!--Cabecera-->
-    <div class="alert alert-info" role="alert">
-        <div class="row">
-            <div class="col-sm">
-                <a class="pt-2 d-inline-block" href="/" data-abc="true">FACTURA</a><br>
-                <a class="pt-2 d-inline-block" href="/" data-abc="true"></a>
-            </div>
-            <div class="col-sm">
-            </div>
-            <div class="col-sm float-right">
-                <div class="form-group">
-                    <div class="input-group input-group-sm mb-3">
+<div class="row">
+<div class="col">
+
+
+    <form [formGroup]="form">
+
+        <!--Cabecera-->
+        <div class="alert alert-info" role="alert">
+            <h3 style="text-align: center;">FACTURA DE COMPRA</h3>
+            <hr>
+            <div class="row">
+                <div class="col-sm">
+                    <div class="form-group">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width: 100px;">N° FACTURA</label>
+                            </div>
+                            <input formControlName="numeroFactura"  placeholder="000-000-0000000"
+                            class="form-control" #input  (keyup)="formatFactura($event)" 
+                             oninput="validity.valid||(value='');" autofocus  required>
+
+
+                             <div class="input-group-prepend">
+                                <label class="input-group-text" style="width: 100px;">TIMBRADO</label>
+                            </div>
+                            <input formControlName="timbrado" type="number" class="form-control" id="timbrado"
+                            oninput="validity.valid||(value='');" max="99999999"placeholder="timbrado" required>
+
+
+                            </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group input-group-sm mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text" style="width: 100px;">PROVEEDOR</label>
+                            </div>
+                            <select id="proveedorId" formControlName="proveedorId" class="form-control form-control-sm">
+                                <option value="" selected disabled>Seleccionar...</option>
+                                <option *ngFor="let p of proveedores" [ngValue]="p.proveedorId">
+                                    {{ p.empresa }}
+                                </option>
+                            </select>
                         <div class="input-group-prepend">
-                            <label class="input-group-text">N° FACTURA</label>
+                            <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar proveedor" (click)="openFormProveedor(content)">
+                                    <i class="fas fa-1x fa-plus-circle"></i>
+                                    </button>
                         </div>
-                        <input formControlName="numeroFactura" type="text" class="form-control" id="numeroFactura" placeholder="00-000-000000 -numero">
+                        </div>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text" id="inputGroup-sizing-sm">TIMBRADO</label>
-                        </div>
-                        <input formControlName="timbrado" type="number" class="form-control" id="timbrado"
-                        oninput="validity.valid||(value='');" max="99999999"placeholder="timbrado">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text">FECHA EMISIÓN</label>
-                        </div>
-                        <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true>
-                    </div>
-                </div>
             </div>
-        </div>
-        <hr>
-        <div class="form-row">
-            <div class="form-group col-sm-6">
+            <div class="form-group">
                 <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Proveeedor</label>
+                        <label class="input-group-text" style="width: 100px;">FECHA EMI:</label>
                     </div>
-                    <select id="proveedorId" formControlName="proveedorId" class="form-control form-control-sm">
-                            <option selected>Seleccionar...</option>
-                            <option *ngFor="let p of proveedores" [ngValue]="p.proveedorId">
-                                {{ p.empresa }}
-                            </option>
-                        </select>
+                    <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true required>
+                </div>
+            </div>
+          
+
+            <div class="form-group">
+                <div class="input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Agregar proveedor" (click)="openFormProveedor(content)">
-                                <i class="fas fa-1x fa-plus-circle"></i>
-                                </button>
+                        <label class="input-group-text"  style="width: 100px;">TOTAL </label>
+                    </div>
+                    <input [(ngModel)]="totalCompra" formControlName="montoTotal" type="montoTotal" 
+                    value="{{ util.numberWithCommas(totalCompra)}}" class="form-control form-control-sm" 
+                    id="montoTotal" disabled required>
+                    <div class="input-group-prepend">
+                        <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Gs.">
+                            <i class="fas fa-dollar-sign"></i> </button>
                     </div>
                 </div>
             </div>
-            <div class="form-group col-sm-2 ">
-            </div>
+    
+    
         </div>
-        <div class="form-group">
-            <div class="input-group input-group-sm mb-3">
-                <div class="input-group-prepend">
-                    <label class="input-group-text" for="inputGroupSelect01">Monto Total</label>
-                </div>
-                <input [(ngModel)]="totalCompra" formControlName="montoTotal" type="montoTotal" value="{{ util.numberWithCommas(totalCompra)}}" class="form-control form-control-sm" id="montoTotal" disabled>
-                <div class="input-group-prepend">
-                    <button class="btn btn-sm btn-info mr-1" data-toggle="tooltip" data-placement="top" title="Gs.">
-                        <i class="fas fa-dollar-sign"></i> </button>
-
-                </div>
-            </div>
-        </div>
-
-
-    </div>
-</form>
+    </form>
 
 
 
-<hr>
-<h3 style="text-align: center;">DETALLES</h3>
 
-
-
-<!--Inicio tabla para detalles-->
-<div class="example-container">
+    <!--Inicio tabla para detalles-->
+<div class="example-container" >
 
     <div class="row">
-        <mat-form-field appearance="fill" style="width:30%; margin-left:10px;">
-            <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
+        <mat-form-field appearance="fill" style="width:30%;">
+            <mat-label>Introduzca la cantidad</mat-label>
+            <input matInput [(ngModel)]="articuloselect.cantidad" type="number" oninput="validity.valid||(value='');" 
+            max="9999999999" placeholder="Sólo digitos"   required>
         </mat-form-field>
 
         <!--<mat-form-field>
@@ -98,28 +97,42 @@
         </mat-form-field>-->
 
         <mat-form-field appearance="fill" style="width:30%;">
-            <input matInput [(ngModel)]="articuloselect.precioCompra" type="number" placeholder="Ingrese precio">
+            <mat-label>Introduzca el precio</mat-label>
+            <input matInput [(ngModel)]="articuloselect.precioCompra" type="number" 
+            max="9999999999" placeholder="Sólo digitos"  oninput="validity.valid||(value='');"  required>
         </mat-form-field>
 
         <mat-form-field appearance="fill" style="width:30%">
             <mat-label>Seleccione el producto</mat-label>
             <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
-            <option value="" selected></option>
+            <option value="" selected disabled></option>
             <option *ngFor="let prod of productos" [ngValue]="prod" >
                 {{prod.descripcion}}
             </option>
             </select>
         </mat-form-field>
-        <button mat-raised-button class="btn btn-info mr-1" (click)="agregar()" style="height:50px">Agregar</button>
+        <div class="input-group-prepend">
+            <button mat-mini-fab  data-toggle="tooltip" (click)="agregar()" 
+            data-placement="top" title="Gs.">
+                <i class="fa fa-plus"></i> </button>
+        </div>
     </div>
 </div>
 
 
 
 
+</div>
+<div class="col">
+
+
+<h3 style="text-align: center;">DETALLES</h3>
+
+
+
+
 <!--Agregar tabla para detalles-->
 
-<strong><p class="text-center">Productos</p></strong>
 <table mat-table [dataSource]="datos" class="mat-elevation-z8" #tabla1>
 
     <ng-container matColumnDef="cantidad">
@@ -156,11 +169,21 @@
 
 
 
-
 <button routerLink="/compras/listar" class="btn btn-sm btn-info mr-1">
     <i class="fas fa-arrow-left"></i> Regresar
     </button>
 <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1" (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
+
+
+
+</div>
+</div>
+
+
+
+
+
+
 
 
 <br><br><br><br><br><br><br><br><br>
@@ -214,3 +237,6 @@
         <button type="submit" [disabled]="!this.proveedorForm.valid" class="btn btn-outline-dark" (click)="guardarProveedor()"> <i class="fas fa-save"></i>Guardar</button>
     </div>
 </ng-template>
+
+
+

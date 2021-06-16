@@ -73,7 +73,8 @@
                             <label class="input-group-text" for="inputGroupSelect01">Forma de Pago</label>
                         </div>
                         <select id="medioPagoId" formControlName="medioPagoId" class="form-control form-control-sm">
-                          <option *ngFor="let m of medios" [ngValue]="m.medioPagoId">
+                            <option selected disabled> ...</option>
+                            <option *ngFor="let m of medios" [ngValue]="m.medioPagoId">
                             {{ m.descripcion }}
                           </option>
                         </select>
@@ -229,7 +230,7 @@
 </mat-form-field>-->
 <mat-form-field appearance="fill" style="width:40%;">
     <mat-label>Cantidad</mat-label>
-    <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad">
+    <input matInput [(ngModel)]="articuloselect.cantidad" type="number" placeholder="Cantidad" required>
 </mat-form-field>&nbsp;
 <button mat-raised-button class="btn btn-info mr-2 mb-1" (click)="agregar()" style="height:40px">Agregar</button>
 <!--Fin tabla para detalles-->

@@ -49,26 +49,32 @@
                         <td>{{ c.numeroFactura}}</td>
                         <td>{{ c.timbrado}}</td>
                         <td>{{ c.montoTotal}}</td>
-                        <td>{{ c.proveedorId.empresa}}</td>
+                        <td>{{ c.proveedorId.empresa }}</td>
                         <td>
-                            <button class="btn btn-sm btn-info mr-1" (click)="openBox(content, c.comprasId)">Detalles</button>
+                            <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getCabecera(c.comprasId)" (click)="getDetallesDetalles( c.comprasId)">
+                                Detalles
+                            </button>
+                     
                         </td>
-                        <td>
-                            <button class="btn btn-sm btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
-                        <i class="fas fa-pencil-alt"></i>
-                    </button>
-                            <button class="btn btn-sm btn-info mr-1" (click)="borrar(c.comprasId, i)">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                        </td>
+                        <div class="container-fluid">
+                            <td>
+                                <!--<button class="btn btn-sm btn-info mr-1 " [routerLink]="['/ventas/modificar', v.ventasId ]">
+                                        <i class="fas fa-pencil-alt "></i>
+                                    </button>-->
+
+                                <button class="btn btn-sm btn-danger mr-1 " data-toggle="tooltip" data-type="warning" data-placement="top" title="Anular" (click)="anularFactura(v.ventasId, i)">
+                                        Anular  <i class="fas fa-trash" ></i>
+                                    </button>
+                            </td>
+                        </div>
                     </tr>
                 </tbody>
             </table>
             <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
         </div>
     </div>
-</div>
 
+</div>
 
 <div *ngIf="compras.length == 0" class="alertalert-warning text-center mt-3">
     <h4 class="alert-heading">No hay registros</h4>
@@ -141,3 +147,154 @@
 
     </div>
 </ng-template>
+
+
+
+
+
+
+
+       <!-- Modal -->
+       <div id="myModal" class="modal fade " role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <table id="td1" width="650px" class="tabla-bordes table-responsive" border="0">
+                        <tbody>
+                            <tr>
+                                <td width="60%">
+                                    <div class="row container-fluid justify-content-center" id="myRow">
+                                        <p id="myP"><strong>Factura Nº {{numeroFactura}}</strong></p><br>
+                                        <p id="myP"><strong>Timbrado Nº {{timbrado}}</strong></p><br>
+                                        <p id="myP">Fecha de Factura  {{ fecha | date:'dd-MM-yyyy' }}</p>
+                                    </div>
+                                </td>
+                                <td width="50%">
+                                    <div class="titulo1">{{ proveedorId.empresa}}</div>
+                                    <div class="titulo2"></div>
+                                    <div class="titulo2">{{ proveedorId.direccion}}</div>
+                                    <div class="titulo2">Telefono{{proveedorId.telefono}}}</div>
+                                    <div class="titulo2"> {{proveedorId.ciudad}} - Paraguay</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td width="50%">
+                                    <div class="bloque-parrafos">
+                                        <p><span class="negrita">Fecha de Emision:</span><span> {{fecha}}</span></p>
+                                    </div>
+                                </td>
+                                <td width="50%">
+                                    <div class="bloque-parrafos">
+                                        <p><strong>Condicion de Venta:</strong><br><span class="negrita">CONTADO</span><span class="negrita"> [ X ] </span><span>     CREDITO</span><span class=""> [  ] </span></p>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <div class="bloque-parrafos">
+                                    <p><span class="negrita">RUC / Cedula de Identidad:</span><span>{{' ' + proveedorId.ruc}}</span></p>
+                                    <p><span class="negrita">Nombre o Razon Social:</span>{{' ' + proveedorId.empresa}}</p>
+                                    <p><span class="negrita">Direccion:</span><span>{{' ' + (proveedorId.direccion != null) ? proveedorId.direccion : " "}}</span></p>
+                                </div>
+                            </tr>
+                        </tbody>
+
+                    </table>
+
+                </div>
+                <div class="modal-body  container-fluid ">
+                    <table id="td2" width="650px" class="tabla-bordes table-responsive" border="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center" rowspan="2" width="10%">Cantidad</th>
+                                <th class="text-center" rowspan="2" width="40%">Descripcion</th>
+                                <th class="text-center" rowspan="2" width="10%">Precio Unitario</th>
+                                <th class="text-center" colspan="3" width="40%">Valor Venta</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center" width="13%">Subtotal</th>
+                                <th class="text-center" width="13%">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index">
+                                <td class="numerico text-center">{{d.cantidad}}</td>
+                                <td *ngIf="d.productoId !== null; else servicio">
+                                    {{d.productoId.descripcion}}
+                                </td>
+                                <ng-template #servicio>
+                                    <td>{{d.productoId.descripcion}}</td>
+                                </ng-template>
+                                <td class="numerico"> {{d.precioCompra}}</td>
+                                <td class="numerico">
+                                0
+                                </td>
+                                <td class="numerico">0
+                                </td>
+                                <ng-template #servicio2>
+                                    <td>  {{util.numberWithCommas(d.cantidad * d.precioCompra)}}
+                                    </td> 
+                                </ng-template>
+                                <td  class="numerico">
+                                    {{util.numberWithCommas(d.cantidad * d.precioCompra)}}
+                                </td>
+                                <ng-template #servicio1>
+                                    <td>{{0}}</td>
+                                </ng-template>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <table id="td3" width="650px" class="tabla-bordes table-responsive" border="0">
+                        <tbody>
+
+                            <tr>
+                                <td width="40%">Descuento</td>
+                                <td style="border-left: hidden" class="numerico" width="13%"></td>
+                                <td style="border-left: hidden" class="numerico" width="13%"></td>
+                                <td style="border-left: hidden" class="numerico" width="14%"></td>
+                                <td class="numerico" width="25%">0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="border-bottom: hidden">Total a Pagar:&nbsp;</td>
+                                <td class="numerico" rowspan="3" style="text-align: center; 
+                                vertical-align:middle;"> <strong> {{montoTotal}}</strong></td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+
+                            </tr>
+                            <!--<tr>
+                                    <td colspan="4">&nbsp;</td>
+                                </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info text-dark" (click)="clickEvent()">Imprimir</button>
+                    <!--<button type="button" class="btn btn-info text-dark" onclick="return xepOnline.Formatter.Format('myModal',
+                        {pageWidth:'200mm', pageHeight:'250mm'});"><strong>Imprimir</strong></button>-->
+                </div>
+            </div>
+
+        </div>
+    </div>

@@ -30,11 +30,17 @@ export class ComprobanteComponent implements OnInit {
     estado: ['', Validators.required],
   });
 
+  boxForm = this.fb.group({
+    descripcion: ['', Validators.required]
+  });
+
+
   horario: any[] = [];
   tipos: any[] = [];
   puntos: any[] = [];
   horarioId: any;
   timbradoActivo: any;
+  boxes: any;
   get timbrado() { return this.form.get('timbrado'); }
   closeResult: string;
 
@@ -136,6 +142,71 @@ export class ComprobanteComponent implements OnInit {
         this.ngOnInit();
       });
   }
+
+
+
+  
+  //open modal, add box
+  openBox(content1) {
+    this.modalService.open(content1, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      console.log(this.boxForm.value);
+      this.tipoComprobanteService.agregarRecurso(this.boxForm.value)
+      .subscribe((result: any) => {
+          Swal.fire(
+            'Guardado!',
+            'Se guardaron los datos!',
+            'success'
+          );
+        }); 
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+
+
+  //open modal, Listar Boxes
+  openBoxes(content2) {
+    this.tipoComprobanteService.listarRecurso()
+    .subscribe((result: any) => {
+      this.boxes=result;
+      }); 
+
+    this.modalService.open(content2, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+     
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  
+
+
+  
+  guardarTipo() {
+    const id = this.route.snapshot.params.id;
+    let peticion: Observable<any>;
+    console.log(id);
+    console.log(typeof id);
+    if (typeof id === 'undefined') {
+      peticion = this.tipoComprobanteService.agregarRecurso(this.boxForm.value);
+      console.log(this.form.value);
+      peticion.subscribe((result: any) =>  {
+        Swal.fire(
+          'Guardado!',
+          'Se guardaron los datos!',
+          'success'
+        );
+        this.ngOnInit();
+      });
+      this.form.reset(this.form.controls.value);
+    }
+    this.ngOnInit();
+  }
+
+
 
 
 }
