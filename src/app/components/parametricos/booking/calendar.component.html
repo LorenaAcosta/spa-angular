@@ -66,8 +66,8 @@
 
         <div class="col-sm">
             <button *ngIf="this.cedula != null && this.cedula != '' && this.cedula != 'undefined'" class="btn btn-lg btn-outline-primary mr-2" (click)="agendar()" [disabled]="validaBotonAgendar()">Agendar </button>
-            <p *ngIf="!logueado" [hidden]="!selectedOption" class="text-info">Para continuar debes iniciar sesión</p>
-            <button routerLink="/login" *ngIf="!logueado" class="btn btn-lg btn-outline-primary mr-2" [hidden]="!selectedOption">
+            <p *ngIf="!logueado" [hidden]="!selectedOption" class="text-danger">Para continuar debes iniciar sesión</p>
+            <button (click)="open2(content2)" *ngIf="!logueado" class="btn btn-lg btn-outline-primary mr-2" [hidden]="!selectedOption">
                 Login
             </button>
             <p *ngIf="logueado && (this.cedula == null || this.cedula == '' || this.cedula == 'undefined')" [hidden]="!selectedOption" class="text-info">Antes de continuar necesitamos que completes tus datos</p>
@@ -176,4 +176,163 @@
     <div class="modal-footer">
         <button type="submit" [disabled]="!this.formCliente.valid" class="btn btn-info mr-1" (click)="guardarCliente()"> <i class="fas fa-save"></i>Guardar</button>
     </div>
+</ng-template>
+
+<!--*********************Registro*******************************-->
+<ng-template #content3 let-modal>
+    <div class="modal-header alert-info">
+        <div class="col-sm mb-0">
+            <a href="javascript:void(0)" class="text-center db mb-0 mb-0"><img src="../assets/img/kathy-spa2.jpg" alt="home" style="height: 70px;" /></a>
+            <h3 class="mb-0 mt-0"><strong>Regístrate ahora!</strong></h3>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="" id="loginform" autocomplete="off" [formGroup]="registerForm" (ngSubmit)="crearUsuario(content2)">
+        <div class="modal-body mt-0 mb-0">
+            <p class="text-sm"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;En este formulario hay campos obligatorios <span class="text-danger mb-0">*</span></p>
+
+            <div class="row mb-2 ml-0" style="margin-left: 10px !important; margin-right: 2px !important;">
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" formControlName="nombre" type="text" placeholder="Nombres">
+                    <span class="text-danger col-sm-1">*</span>
+                    <p *ngIf="campoNoValido('nombre')" class="text-danger"> * El nombre es obligatorio</p>
+                </div>
+
+
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="text" formControlName="apellido" placeholder="Apellidos">
+                    <span class="text-danger d-inline col-sm-1">*</span>
+                    <p *ngIf="campoNoValido('apellido')" class="text-danger"> * El apellido es obligatorio</p>
+                </div>
+            </div>
+            <div class="row mb-2 ml-0" style="margin-left: 10px !important; margin-right: 2px !important;">
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="text" formControlName="cedula" placeholder="Cedula">
+                    <span class="text-danger col-sm-1">*</span>
+                    <p *ngIf="campoNoValido('cedula')" class="text-danger"> * La cédula es obligatoria</p>
+                </div>
+
+                <div class="md-form mb-2 col-sm">
+                    <input formControlName="fechaNac" type="date" value="Fecha de Nacimiento" placeholder="Fecha de Nacimiento" class="form-control form-control-sm d-inline col-sm-9" id="fechaNac" min="1930-01-01" max="2010-01-01" required>
+                    <span class="text-danger d-inline col-sm-1">*</span>
+                    <p *ngIf="campoNoValido('fechaNac')" class="text-danger"> * La fecha de nacimiento es obligatoria</p>
+                </div>
+            </div>
+            <div class="row mb-2 ml-0" style="margin-left: 10px !important; margin-right: 2px !important;">
+                <div class="md-form mb-2 col-sm">
+                    <select id="sexo" class="form-control form-control-sm col-sm-9 d-inline" placeholder="Sexo" formControlName="sexo" required>
+                        <option class="bg-light" value="" selected disabled>Seleccione su sexo</option>
+                        <option value="MASCULINO" >MASCULINO</option>
+                        <option value="FEMENINO">FEMENINO</option>
+                    </select>
+                    <span class="text-danger d-inline col-sm-1">*</span>
+                    <p *ngIf="campoNoValido('sexo')" class="text-danger"> * La dato del sexo es obligatorio</p>
+                </div>
+
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="text" formControlName="telefono" placeholder="Telefono">
+                    <span class="text-danger d-inline col-sm-1">*</span>
+                    <p *ngIf="campoNoValido('telefono')" class="text-danger"> * El número de teléfono es obligatorio</p>
+                </div>
+            </div>
+            <div class="row mb-2 ml-0" style="margin-left: 10px !important; margin-right: 2px !important;">
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="text" formControlName="username" placeholder="Nombre Usuario">
+                    <span class="text-danger col-sm-1">*</span>
+                    <p *ngIf="campoNoValido('username')" class="text-danger"> * El nombre de usuario es obligatorio</p>
+                </div>
+
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="text" formControlName="email" placeholder="Correo">
+                    <span class="text-danger d-inline col-sm-1">*</span>
+                    <p *ngIf="campoNoValido('email')" class="text-danger"> * El correo es obligatorio y debe ser un correo valido</p>
+                </div>
+            </div>
+            <div class="row mb-2 ml-0" style="margin-left: 10px !important; margin-right: 2px !important;">
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="password" formControlName="password" placeholder="Contraseña">
+                    <span class="text-danger col-sm-1">*</span>
+                </div>
+
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="password" formControlName="password2" placeholder="Confirmar contraseña">
+                    <span class="text-danger d-inline col-sm-1">*</span>
+                </div>
+            </div>
+            <p *ngIf="passwordNoValido() " class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * La contraseña debe tener un minimo de 3 caracteres</p>
+            <p *ngIf="passwordIguales()" class="text-danger">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; * Las contraseñas deben ser iguales</p>
+            <p class="text-sm"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Datos opcionales</p>
+
+            <div class="row mb-2 ml-0" style="margin-left: 10px !important; margin-right: 2px !important;">
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="text" formControlName="nacionalidad" placeholder="Nacionalidad">
+                </div>
+
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="text" formControlName="ciudad" placeholder="Ciudad">
+                </div>
+            </div>
+            <div class="row mb-2 ml-0" style="margin-left: 10px !important; margin-right: 2px !important;">
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="text" formControlName="direccion" placeholder="Direccion">
+                </div>
+
+                <div class="md-form mb-2 col-sm">
+                    <input class="form-control form-control-sm validate d-inline col-sm-9" type="text" formControlName="ruc" placeholder="Ruc">
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer d-flex justify-content-center">
+            <button class="btn btn-sm btn-info " type="submit" [disabled]="this.registerForm.invalid">Crear Cuenta</button>
+        </div>
+    </form>
+</ng-template>
+
+
+<!--**********************Login*************************-->
+<ng-template #content2 let-modal>
+    <div class="modal-header alert-info">
+        <div class="col-sm">
+            <a href="" class="text-center db"><img src="../assets/img/kathy-spa2.jpg" alt="Home" /></a>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="form-group" autocomplete="off" [formGroup]="loginForm" (ngSubmit)="login()" id='loginForm'>
+        <div class="modal-body ">
+
+            <div class="md-form mb-2 col-sm">
+                <input class="form-control validate col-sm-11 d-inline" type="text" placeholder="Usuario" formControlName="username">
+                <span class="text-danger d-inline col-sm-1">*</span>
+            </div>
+
+            <div class="md-form mb-2 col-sm">
+                <input class="form-control validate col-sm-11 d-inline" type="password" placeholder="Contraseña" formControlName="password">
+                <span class="text-danger d-inline col-sm-1">*</span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-10">
+                    <div class="checkbox checkbox-primary pull-left p-t-0">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue" formControlName="remember"> &nbsp;
+                        <label for="checkbox-signup"> Recuerdame </label>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Olvido su contraseña?</a> </div>
+            </div>
+        </div>
+
+        <div class="modal-footer d-flex justify-content-center">
+            <button [disabled]="this.loginForm.invalid" class="btn btn-info " type="submit" data-dismiss="modal" (click)="login()">Ingresar</button>
+        </div>
+
+        <div class="form-group m-b-0">
+            <div class="col-sm-12 text-center">
+                No tienes una cuenta? <a (click)="open3(content3)" class="text-primary m-l-5 manito"><b>Crear cuenta</b></a>
+            </div>
+        </div>
+    </form>
 </ng-template>
