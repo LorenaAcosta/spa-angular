@@ -1,9 +1,9 @@
 <div class="row">
     <h5 class="display">Lista de Comprobantes: </h5>
     <div class="col text-right">
-        <button  (click)="openBox(content1)">NUEVO TIPO</button>
-        <button  (click)="openBoxes(content2)">VER TIPOS</button>
-        </div>
+        <button (click)="openBox(content1)">NUEVO TIPO</button>
+        <button (click)="openBoxes(content2)">VER TIPOS</button>
+    </div>
 </div>
 
 <!-- Tabla que lista el horario del empleado -->
@@ -60,55 +60,58 @@
 
 <ng-template #content let-modal>
     <div class="modal-header bg-info">
-        <h4 class="modal-title" id="modal-basic-title">Añadir Comprobante</h4>
+        <h2 class="modal-title" id="modal-basic-title">Añadir Comprobante</h2><br>
+
         <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
           <span aria-hidden="true">&times;</span> </button>
     </div>
     <div class="modal-body">
+        <p class="text-sm"> &nbsp;En este formulario hay campos obligatorios <span class="text-danger mb-0">*</span></p>
         <form [formGroup]="form">
             <div class="form-group row">
-                <label for="inputState" class="col-sm-4 col-form-label">Tipo Comprobante&nbsp;</label>
+                <label for="inputState" class="col-sm-4 col-form-label">Tipo Comprobante<span class="text-danger">*</span>&nbsp;</label>
                 <div class="col-sm-6 float-right">
-                    <select id="tipoComprobanteId" formControlName="tipoComprobanteId" class="form-control">
+                    <select id="tipoComprobanteId" formControlName="tipoComprobanteId" class="form-control form-control-sm">
                        <option *ngFor="let tipo of tipos" [ngValue]="tipo.tipoComprobanteId"> {{ tipo.descripcion }} </option>
                    </select>
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Timbrado</label>
+                <label class="col-sm-4 col-form-label">Timbrado<span class="text-danger">*</span></label>
                 <div class="col-sm-6">
-                    <input formControlName="timbrado" placeholder="timbrado" type="number" oninput="validity.valid||(value='');"
-                     max="99999999" class="form-control form-control-sm" id="timbrado" required></div>
+                    <input formControlName="timbrado" placeholder="timbrado" type="text" oninput="validity.valid||(value='');" max="99999999" class="form-control form-control-sm" id="timbrado" required></div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Inicio Vigencia</label>
+                <label class="col-sm-4 col-form-label">Inicio Vigencia<span class="text-danger">*</span></label>
                 <div class="col-sm-6">
-                    <input formControlName="inicioVigencia" placeholder="inicioVigencia" type="date" max="30" 
-                   class="form-control form-control-sm" id="inicioVigencia" required></div>
+                    <input formControlName="inicioVigencia" placeholder="inicioVigencia" type="date" class="form-control form-control-sm" id="inicioVigencia" required></div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Fin Vigencia</label>
+                <label class="col-sm-4 col-form-label">Fin Vigencia<span class="text-danger">*</span></label>
                 <div class="col-sm-6">
-                    <input formControlName="finVigencia" placeholder="finVigencia" type="date" max="30" 
-                     class="form-control form-control-sm" id="finVigencia" required></div>
+                    <input formControlName="finVigencia" placeholder="finVigencia" type="date" class="form-control form-control-sm" id="finVigencia" required>
+                    <p *ngIf="fechaFinNoValida()" class="text-danger text-sm">* La fecha de fin de vigencia es menor a la fecha de inicio de vigencia</p>
+                </div>
+
             </div>
             <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Numero Inicial</label>
+                <label class="col-sm-4 col-form-label">Numero Inicial<span class="text-danger">*</span></label>
                 <div class="col-sm-6">
-                    <input formControlName="numeroInicial" placeholder="numeroInicial" type="number" max="9999" 
-                    oninput="validity.valid||(value='');" class="form-control form-control-sm" id="numeroInicial" required></div>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-4 col-form-label">Numero Final</label>
-                <div class="col-sm-6">
-                    <input formControlName="numeroFinal" placeholder="numeroFinal" type="number" max="9999"
-                    oninput="validity.valid||(value='');"  class="form-control form-control-sm" id="numeroFinal" required>
+                    <input formControlName="numeroInicial" type="number" min="1" max="999999" oninput="validity.valid||(value='');" class="form-control form-control-sm" id="numeroInicial" required>
+                    <p *ngIf="campoNoValido('numeroInicial')" class="text-danger"> * El numero inicial es obligatorio</p>
                 </div>
             </div>
             <div class="form-group row">
-                <label for="inputState" class="col-sm-4 col-form-label">Puntos de expedicion</label>
+                <label class="col-sm-4 col-form-label">Numero Final<span class="text-danger">*</span></label>
                 <div class="col-sm-6">
-                    <select id="puntoExpedicionId" formControlName="puntoExpedicionId" class="form-control">
+                    <input formControlName="numeroFinal" type="number" min="1" max="999999" oninput="validity.valid||(value='');" class="form-control form-control-sm" id="numeroFinal" required>
+                    <p *ngIf="campoNoValido('numeroFinal')" class="text-danger"> * El numero final es obligatorio</p>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputState" class="col-sm-4 col-form-label">Ventanilla de cobro<span class="text-danger">*</span></label>
+                <div class="col-sm-6">
+                    <select id="puntoExpedicionId" formControlName="puntoExpedicionId" class="form-control form-control-sm">
                        <option *ngFor="let p of puntos" [ngValue]="p.puntoExpedicionId"> {{ p.descripcion }} 
                        </option>
                    </select>
@@ -118,7 +121,7 @@
     </div>
 
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-dark" (click)="guardar()">Guardar</button>
+        <button type="button" class="btn btn-info" (click)="guardar()" [disabled]="this.form.invalid || fechaFinNoValida()">Guardar</button>
     </div>
 </ng-template>
 
@@ -143,14 +146,13 @@
     <div class="modal-body">
         <form [formGroup]="boxForm">
             <label class="col-sm-2 col-form-label" for="inputZip">Descripción</label>
-                <div class="col-sm">
-                    <input formControlName="descripcion" type="string" class="form-control"
-                     id="descripcion" placeholder="tipo de comprobante" required>
-                </div>
+            <div class="col-sm">
+                <input formControlName="descripcion" type="string" class="form-control" id="descripcion" placeholder="tipo de comprobante" required>
+            </div>
         </form>
     </div>
     <div class="modal-footer">
-        <button type="button" class="btn btn-info mr-1"  (click)="guardarTipo()">Guardar</button>
+        <button type="button" class="btn btn-info mr-1" (click)="guardarTipo()">Guardar</button>
     </div>
 </ng-template>
 
@@ -168,49 +170,36 @@
     <div class="modal-body">
         <div class="col-md-12" id="htmlData" #htmlData>
             <div class="card mb-4">
-            <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Tipo de comprobantes</div>
-            <div class="card-body">
-                <div class="table-responsive">
-                <table class="table table-bordered display" id="dataTable" *ngIf="boxes.length>0" width="100%"
-                    cellspacing="0">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Descricpcion</th>
-                        <th>Opciones</th>
-                    </tr>
-                    </thead>
-                    <tbody *ngFor="let item of boxes | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
-                    <tr>
-                        <td>{{ i + 1}}</td>
-                        <td>{{ item.descripcion}}</td>
-                        <td>
-                        <button class="btn btn-sm btn-info mr-1" (click)="borrarBox(item.tipoComprobanteId, i)" placement="top"
+                <div class="card-header"><i class="fas fa-table mr-1"></i>Lista de Tipo de comprobantes</div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered display" id="dataTable" *ngIf="boxes.length>0" width="100%" cellspacing="0">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Descricpcion</th>
+                                    <th>Opciones</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngFor="let item of boxes | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
+                                <tr>
+                                    <td>{{ i + 1}}</td>
+                                    <td>{{ item.descripcion}}</td>
+                                    <td>
+                                        <!--<button class="btn btn-sm btn-info mr-1" (click)="borrarBox(item.tipoComprobanteId, i)" placement="top"
                             ngbTooltip="Eliminar">
                             <i class="fas fa-trash"></i>
-                        </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </button>-->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--<pagination-controls (pageChange)="pageActual = $event"></pagination-controls>-->
                 </div>
-                <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
-            </div>
             </div>
         </div>
 
 
     </div>
 </ng-template>
-
-
-
-
-
-
-
-
-
-
-
-

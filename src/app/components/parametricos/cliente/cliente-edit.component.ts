@@ -11,6 +11,9 @@ import { ClienteService } from 'src/app/services/servicios/cliente.service';
   styleUrls: ['./cliente-edit.component.scss']
 })
 export class ClienteEditComponent implements OnInit {
+  fechaNac:any;
+  
+
   form = this.fb.group({
     nombre: ['', Validators.required],
     username: ['', Validators.required],
@@ -21,11 +24,11 @@ export class ClienteEditComponent implements OnInit {
     ruc: ['' ],
     telefono: ['', Validators.required],
     sexo: ['', Validators.required],
-    ciudad: ['', Validators.required],
+    ciudad: [''],
     nacionalidad: [''],
-    direccion: ['', Validators.required],
+    direccion: [''],
     fechaNac: ['', Validators.required],
-    tarjeta: ['', ],
+    tarjeta: ['' ],
     estado: [1],
     enabled: true
   });
@@ -47,8 +50,8 @@ export class ClienteEditComponent implements OnInit {
     apellido: ['', Validators.required],
     email: ['', Validators.required],
     cedula: ['', Validators.required],
-    direccion: ['', Validators.required],
-    ciudad: ['', Validators.required],
+    direccion: [''],
+    ciudad: [''],
     nacionalidad: [''],
     ruc: [''],
     telefono: ['', Validators.required],
@@ -71,12 +74,12 @@ export class ClienteEditComponent implements OnInit {
         apellido: ['', Validators.required],
         email: ['', Validators.required],
         cedula: ['', Validators.required],
-        direccion: ['', Validators.required],
-        ciudad: ['', Validators.required],
-        nacionalidad: ['', Validators.required],
-        ruc: ['', Validators.required],
+        direccion: [''],
+        ciudad: [''],
+        nacionalidad: [''],
+        ruc: [''],
         telefono: ['', Validators.required],
-        tarjeta: ['', Validators.required],
+        tarjeta: [''],
         sexo: ['', Validators.required],
         fechaNac: ['', Validators.required],
         estado: ['']
@@ -132,6 +135,22 @@ export class ClienteEditComponent implements OnInit {
         );
         this.router.navigate(['/cliente/listar']);
       });
+    }
+  }
+
+  campoNoValido( campo: string ): boolean {
+    if (this.form.get(campo).invalid && (this.form.get(campo).touched || this.form.get(campo).dirty)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  campoNoValidoSexo( campo: string ): boolean {
+    if (this.form.get(campo).invalid && (this.form.get(campo).touched || this.form.get(campo).dirty) || ((this.form.get('ruc').touched) && this.form.get(campo).invalid)) {
+      return true;
+    } else {
+      return false;
     }
   }
 }

@@ -36,7 +36,7 @@ export class DisponibleComponent implements OnInit {
   constructor(private servicioService: ServicioService,
     private disponibleService: DisponibleService,
     private empleadoService: EmpleadoService,
-    private utilService: UtilesService,
+    public utilService: UtilesService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private modalService: NgbModal) { }

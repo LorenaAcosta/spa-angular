@@ -104,5 +104,10 @@ export class ReservaService {
       return this.http.get( url);
     }
 
+    asignarVenta(reservaId: any, ventasId: any) {
+      const url = URL_SERVICIOS + '/reserva-detalle/asignar-venta/' + reservaId + '/' + ventasId;
+      return this.http.get( url);
+    }
+
 
 }

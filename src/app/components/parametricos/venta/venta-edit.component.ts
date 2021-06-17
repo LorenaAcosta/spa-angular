@@ -771,7 +771,7 @@ reservasCobradas: any[] = [];
       
       const id = this.route.snapshot.params.id;
       let peticion: Observable<any>;
-      let ventasId: number;
+      let ventasId: any;
       console.log(this.form.get('fecha').value);
 
       if (typeof id === 'undefined') {
@@ -784,6 +784,7 @@ reservasCobradas: any[] = [];
           peticion.subscribe((result: any) =>  {
             console.log(result),
             ventasId = result.ventasId;
+            localStorage.setItem('ventasId', ventasId);
            
             /*Se inserta el detalle*/
           for (let detalle of this.datosGuardar){
@@ -811,6 +812,11 @@ reservasCobradas: any[] = [];
             this.reservaService.cambiarEstadoPagado(r).subscribe((resp:any) =>{});
           }
         });
+        for (let r of this.reservasCobradas){
+          console.log('reserva actualizar', r)
+          this.reservaService.asignarVenta(r, localStorage.getItem('ventasId')).subscribe((resp:any) =>{});
+        }
+        localStorage.removeItem('ventasId');
         this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
           /*this.ventaService.actualizarCabecera(ventasId).subscribe(( res: any) => {
             console.log(res);

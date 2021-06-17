@@ -23,13 +23,13 @@ export class ComprobanteComponent implements OnInit {
     timbrado: ['', Validators.required, Validators.maxLength(8), Validators.minLength(8)],
     inicioVigencia: ['', Validators.required],
     finVigencia: ['', Validators.required],
-    numeroInicial: ['', Validators.required],
-    numeroFinal: ['', Validators.required],
+    numeroInicial: ['1', Validators.required],
+    numeroFinal: ['1', Validators.required],
     puntoExpedicionId: ['', Validators.required],
-    puntoExpedicionCodigo: ['', Validators.required],
-    estado: ['', Validators.required],
+    puntoExpedicionCodigo: [''],
+    estado: ['ACTIVO', Validators.required],
   });
-
+  get finVigencia() { return this.form.get('finVigencia'); }
   boxForm = this.fb.group({
     descripcion: ['', Validators.required]
   });
@@ -43,6 +43,7 @@ export class ComprobanteComponent implements OnInit {
   boxes: any;
   get timbrado() { return this.form.get('timbrado'); }
   closeResult: string;
+  pageActual:any;
 
 
   constructor(private fb:             FormBuilder,
@@ -62,7 +63,7 @@ export class ComprobanteComponent implements OnInit {
         numeroInicial: ['', Validators.required],
         numeroFinal: ['', Validators.required],
         puntoExpedicionId: ['', Validators.required],
-        puntoExpedicionCodigo: ['', Validators.required],
+        puntoExpedicionCodigo: [''],
         estado: ['ACTIVO', Validators.required],
       });
 }
@@ -201,12 +202,30 @@ export class ComprobanteComponent implements OnInit {
         );
         this.ngOnInit();
       });
+      this.modalService.dismissAll();
       this.form.reset(this.form.controls.value);
     }
     this.ngOnInit();
   }
 
+  fechaFinNoValida() {
+    const fin = this.form.get('finVigencia').value;
+    const inicio = this.form.get('inicioVigencia').value;
+    
+    if ((inicio > fin) && (this.finVigencia.touched || this.finVigencia.dirty) ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
+  campoNoValido( campo: string ): boolean {
+    if (this.form.get(campo).invalid && (this.form.get(campo).touched || this.form.get(campo).dirty)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 
 
 }

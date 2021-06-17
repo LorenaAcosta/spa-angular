@@ -1,109 +1,109 @@
-
-<h2 class="display">Nuevo Categoria</h2>
+<h2 class="display">Nueva Categoria</h2>
+<p class="text-sm">En este formulario hay campos obligatorios <span class="text-danger mb-0">*</span></p>
 <hr>
 
-  <form [formGroup]="form">
+<form [formGroup]="form">
     <div class="row">
-      <div class="col-6">
-        <div class="bd-content">
+        <div class="col-6">
+            <div class="bd-content">
 
-            <div class="form-row">
-                <div class="form-group col-sm-5">
-                  <label id="myLabel">Nombre de la categoria</label>
-                  <input formControlName="descripcion" type="descripcion" class="form-control" id="descripcion" required>
+                <div class="form-row">
+                    <div class="form-group col-sm-5">
+                        <label id="myLabel">Nombre de la categoria<span class="text-danger">*</span></label>
+                        <input formControlName="descripcion" type="descripcion" class="form-control form-control-sm" id="descripcion" required>
 
-                </div>
-                <div class="form-group col-sm-5">
-                  <label id="myLabel">Tipo de Categoria</label>
-                  <select id="dataType" formControlName="dataType" class="form-control" required>
+                    </div>
+                    <div class="form-group col-sm-5">
+                        <label id="myLabel">Tipo de Categoria<span class="text-danger">*</span></label>
+                        <select id="dataType" formControlName="dataType" class="form-control form-control-sm" required>
                     <option value="SERVICIO O PRODUCTO" selected disabled> ... </option>
                     <option value="PRODUCTO">Producto</option>
                     <option value="SERVICIO">Servicio</option>
                   </select>
-                </div>
-                <div class="form-group  row">
-                    <div class="form-group col-sm-5">
-                    <label for="inputPassword3" >Imagen</label>
-                    
-                        <button id="selectButton-" class="btn btn-sm btn-info mr-1" mat-raised-button (click)="fileInput.click()">Selecciona una imagen</button>
-                        <button id="uploadButton-" class="btn btn-sm btn-info mr-1" mat-raised-button *ngIf="selectedFiles" [disabled]="!selectedFiles" (click)="uploadFiles()">
+                    </div>
+                    <div class="form-group  row">
+                        <div class="form-group col-sm-5">
+                            <label for="inputPassword3">Imagen</label>
+
+                            <button id="selectButton-" class="btn btn-sm btn-info mr-1" mat-raised-button (click)="fileInput.click()">Selecciona una imagen</button>
+                            <button id="uploadButton-" class="btn btn-sm btn-info mr-1" mat-raised-button *ngIf="selectedFiles" [disabled]="!selectedFiles" (click)="uploadFiles()">
                             Subir Archivo</button>
-        
-                </div>
-                </div>
-                
-              </div>
 
-              
-        <div class="form-group row">
-            <label for="inputPassword3" class="col-sm-2 col-form-label"></label>
-            <div class="col-sm-4">
-                <mat-card class="card-container-">
-                    <div class="" *ngFor="let file of fileInfos | async">
-                        <div class="row row-6 text-right" *ngIf="file.name == imagen">
-                            <img class="center" id="img" src="http://localhost:8084/api/files/{{imagen}}">
                         </div>
                     </div>
-                    <mat-card-content>
-                    </mat-card-content>
-                </mat-card>
-            </div>
-        </div>
 
-        <div class="form-group row">
-            <div id="titulo" style="display: none">
-                <h1>Subir múltiples archivos Angular y Java</h1>
-            </div>
-            <div id="wrap">
-                <div style="display: none">
-                    <mat-card id="box1">
-                        <div mode="buffer" *ngFor="let progress of progressInfo" style="display: none">
-                            <span>{{progress.fileName}}</span>
-                            <span>{{progress.value}}%</span>
-                            <div id="progressbar" style="display: none">
-                                <mat-progress-bar mode="buffer" value={{progress.value}}>
-                                </mat-progress-bar>
+                </div>
+
+
+                <div class="form-group row">
+                    <label for="inputPassword3" class="col-sm-2 col-form-label"></label>
+                    <div class="col-sm-4">
+                        <mat-card class="card-container-">
+                            <div class="" *ngFor="let file of fileInfos | async">
+                                <div class="row row-6 text-right" *ngIf="file.name == imagen">
+                                    <img class="center" id="img" src="http://localhost:8084/api/files/{{imagen}}">
+                                </div>
                             </div>
-                        </div>
-                    </mat-card>
-                </div>
-                <div>
-                    <!--  Lista las categorias -->
-
-                </div>
-                <div>
-                    <div class="card-img">
+                            <mat-card-content>
+                            </mat-card-content>
+                        </mat-card>
                     </div>
-                    <input #fileInput type="file" hidden (change)="selectFiles($event)" />
-                    <span *ngIf="fileName"><!--{{fileName}}-->
+                </div>
+
+                <div class="form-group row">
+                    <div id="titulo" style="display: none">
+                        <h1>Subir múltiples archivos Angular y Java</h1>
+                    </div>
+                    <div id="wrap">
+                        <div style="display: none">
+                            <mat-card id="box1">
+                                <div mode="buffer" *ngFor="let progress of progressInfo" style="display: none">
+                                    <span>{{progress.fileName}}</span>
+                                    <span>{{progress.value}}%</span>
+                                    <div id="progressbar" style="display: none">
+                                        <mat-progress-bar mode="buffer" value={{progress.value}}>
+                                        </mat-progress-bar>
+                                    </div>
+                                </div>
+                            </mat-card>
+                        </div>
+                        <div>
+                            <!--  Lista las categorias -->
+
+                        </div>
+                        <div>
+                            <div class="card-img">
+                            </div>
+                            <input #fileInput type="file" hidden (change)="selectFiles($event)" />
+                            <span *ngIf="fileName"><!--{{fileName}}-->
 
                     </span>
 
-                    <div [hidden]="!imagenValida">
-                        <p class="text-danger">El archivo seleccionado no es válido</p>
+                            <div [hidden]="!imagenValida">
+                                <p class="text-danger">El archivo seleccionado no es válido</p>
+                            </div>
+
+                        </div>
+
+                        <div id="box3">
+                            <span>{{message}}</span>
+                        </div>
+
+
+
                     </div>
-
                 </div>
 
-                <div id="box3">
-                    <span>{{message}}</span>
+                <div class="form-row">
+                    <button routerLink="/categoria/listar" class="btn btn-sm btn-info mr-1">
+            <i class="fas fa-arrow-left"></i> Regresar
+          </button>
+                    <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
+          " (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
                 </div>
-
 
 
             </div>
         </div>
-
-        <div class="form-row">
-         <button routerLink="/categoria/listar" class="btn btn-sm btn-info mr-1">
-            <i class="fas fa-arrow-left"></i> Regresar
-          </button>
-          <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
-          " (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
-        </div>
-     
-
-        </div>
-      </div>
     </div>
 </form>

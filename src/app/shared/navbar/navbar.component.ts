@@ -78,6 +78,9 @@ export class NavbarComponent implements OnInit {
         email: ['', Validators.required],
         cedula: ['', Validators.required],
         ruc: [''],
+        ciudad: [''],
+        nacionalidad: [''],
+        direccion: [''],
         telefono: ['', Validators.required],
         sexo: ['', Validators.required],
         estado: [1]
@@ -173,6 +176,7 @@ export class NavbarComponent implements OnInit {
   }
 
   open2(content) {
+    this.modalService.dismissAll();
     this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {

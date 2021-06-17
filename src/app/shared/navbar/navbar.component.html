@@ -65,30 +65,31 @@
         </button>
     </div>
     <div class="modal-body">
+        <p class="text-sm">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;En este formulario hay campos obligatorios <span class="text-danger mb-0">*</span></p>
         <div class="container-fluid">
             <form [formGroup]="formCliente">
-                <div class="form-group row">
+                <div class="form-group row " style="margin-left: 5px !important;">
                     <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre de Usuario</label>
                     <div class="col-sm-6">
-                        <input type="text" autocomplete="username" class="form-control" id="username" formControlName="username">
+                        <input type="text" autocomplete="username" class="form-control form-control-sm" id="username" disabled formControlName="username">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre</label>
+                <div class="form-group row" style="margin-left: 5px !important;">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Nombre<span class="text-danger">*</span></label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="nombre" placeholder="Nombre" formControlName="nombre">
+                        <input type="text" class="form-control form-control-sm" id="nombre" placeholder="Nombre" formControlName="nombre">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">Apellido</label>
+                <div class="form-group row" style="margin-left: 5px !important;">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Apellido<span class="text-danger">*</span></label>
                     <div class="col-sm-6">
-                        <input type="apellido" class="form-control" id="apellido" placeholder="Apellido" formControlName="apellido">
+                        <input type="apellido" class="form-control form-control-sm" id="apellido" placeholder="Apellido" formControlName="apellido">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">Correo electrónico</label>
+                <div class="form-group row" style="margin-left: 5px !important;">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Correo electrónico<span class="text-danger">*</span></label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="correo" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email">
+                        <input type="text" class="form-control form-control-sm" id="correo" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email">
 
                         <div *ngIf="correo.invalid && (correo.dirty || correo.touched)" class="">
                             <br>
@@ -96,22 +97,22 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">CEDULA</label>
+                <div class="form-group row" style="margin-left: 5px !important;">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">CEDULA<span class="text-danger">*</span></label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="cedula" placeholder="" formControlName="cedula">
+                        <input type="text" class="form-control form-control-sm" id="cedula" placeholder="" formControlName="cedula">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">RUC</label>
+                <div class="form-group row" style="margin-left: 5px !important;">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">RUC<span class="text-danger">*</span></label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="ruc" placeholder="000-0000-0000-00" formControlName="ruc">
+                        <input type="text" class="form-control form-control-sm" id="ruc" placeholder="000-0000-0000-00" formControlName="ruc">
                     </div>
                 </div>
-                <div class="form-group row">
-                    <label for="inputEmail3" class="col-sm-4 col-form-label">Teléfono</label>
+                <div class="form-group row" style="margin-left: 5px !important;">
+                    <label for="inputEmail3" class="col-sm-4 col-form-label">Teléfono<span class="text-danger">*</span></label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" id="telefono" placeholder="(0986) 111-555" pattern="^[0-9]*$" formControlName="telefono">
+                        <input type="text" class="form-control form-control-sm" id="telefono" placeholder="(0986) 111-555" pattern="^[0-9]*$" formControlName="telefono">
 
                         <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">
                             Introduzca sólo dígitos. </div>
@@ -119,11 +120,11 @@
                 </div>
 
                 <fieldset class="form-group">
-                    <div class="row">
-                        <legend class="col-form-label col-sm-4 pt-0">Género</legend>
+                    <div class="row" style="margin-left: 5px !important;">
+                        <legend class="col-form-label col-sm-4 pt-0">Género<span class="text-danger">*</span></legend>
                         <div class="col-sm-6">
                             <div class="col-xs-12">
-                                <select id="sexo" class="form-control" formControlName="sexo" required>
+                                <select id="sexo" class="form-control form-control-sm" formControlName="sexo" required>
                                   <option value="MASCULINO" selected>MASCULINO</option>
                                   <option value="FEMENINO">FEMENINO</option>
                                 </select>
@@ -131,6 +132,27 @@
                         </div>
                     </div>
                 </fieldset>
+                <p class="text-sm"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Datos opcionales</p>
+
+                <div class="row mb-2 ml-0" style="margin-left: 5px !important; margin-right: 2px !important;">
+                    <div class="md-form mb-2 col-sm">
+                        <input class="form-control form-control-sm validate d-inline col-sm-12" type="text" formControlName="nacionalidad" placeholder="Nacionalidad">
+                    </div>
+
+                    <div class="md-form mb-2 col-sm">
+                        <input class="form-control form-control-sm validate d-inline col-sm-12" type="text" formControlName="ciudad" placeholder="Ciudad">
+                    </div>
+                </div>
+                <div class="row mb-2 ml-0" style="margin-left: 5px !important; margin-right: 2px !important;">
+                    <div class="md-form mb-2 col-sm">
+                        <input class="form-control form-control-sm validate d-inline col-sm-12" type="text" formControlName="direccion" placeholder="Direccion">
+                    </div>
+
+                    <div class="md-form mb-2 col-sm">
+                        <input class="form-control form-control-sm validate d-inline col-sm-12" type="text" formControlName="ruc" placeholder="Ruc">
+                    </div>
+                </div>
+
             </form>
         </div>
     </div>
@@ -177,7 +199,7 @@
                 </div>
 
                 <div class="md-form mb-2 col-sm">
-                    <input formControlName="fechaNac" type="date" value="Fecha de Nacimiento" placeholder="Fecha de Nacimiento" class="form-control form-control-sm d-inline col-sm-10" id="fechaNac" min="1930-01-01" max="2010-01-01" [(ngModel)]="fechaNac" required>
+                    <input formControlName="fechaNac" type="date" value="Fecha de Nacimiento" placeholder="Fecha de Nacimiento" class="form-control form-control-sm d-inline col-sm-10" id="fechaNac" min="1930-01-01" max="2010-01-01" required>
                     <span class="text-danger d-inline col-sm-1">*</span>
                     <p *ngIf="campoNoValido('fechaNac')" class="text-danger"> * La fecha de nacimiento es obligatoria</p>
                 </div>
@@ -248,6 +270,7 @@
 
         </div>
         <div class="modal-footer d-flex justify-content-center">
+            <a (click)="open2(content2)" class="text-secondary text-left m-l-5 manito"><b>Prefiero iniciar sesión</b></a>
             <button class="btn btn-sm btn-info " type="submit" [disabled]="this.registerForm.invalid">Crear Cuenta</button>
         </div>
     </form>
