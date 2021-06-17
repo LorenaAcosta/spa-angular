@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class ComprasService {
+
   
   recurosBaseURL: string = environment.URL_BASE + '/compras/';
 
@@ -53,6 +54,18 @@ export class ComprasService {
   listarporfecha(fecha) {
       return this.http.get(this.recurosBaseURL + 'listarporfecha/' + fecha);
   }
+
+  getPDF(){
+    //const url = `${this.serviceUrl}/pdf`;
+    const archivo = 'factura.pdf';
+    const httpOptions = {
+      'responseType'  : 'arraybuffer' as 'json'
+       //'responseType'  : 'blob' as 'json'        //This also worked
+    };
+    
+    return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
+    
+    }
 
 
 }

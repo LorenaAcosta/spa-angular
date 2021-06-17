@@ -4,27 +4,70 @@
 
 <!--Lista las categorias de productos-->
 <div>
-    <button *ngFor="let cat of categorias" type="button" class="btn btn-light btn-mg alert alert-primary" role="alert" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
+    <button *ngFor="let cat of categorias" type="button" class="btn btn-sm btn light alert alert-primary" role="alert" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
 </div>
 
-<!--Lista los servicios dependiendo de la categoria-->
-<!--Lista los servicios dependiendo de la categoria-->
-<div class="row row-cols-1 row-cols-md-2s">
-    <div class="card" *ngFor="let item of productos">
-        <img src="{{urlImagen}}{{item.imageName}}" style="width: 100px; height: 100px;">
-        <div class="card-body">
-            <h5 class="card-title">{{item.nombre}}</h5>
-            <p class="card-text">{{item.descripcion}} </p>
+
+
+<div class="row">
+    <!--  Lista las servicios -->
+    <div class="p-3" *ngFor="let item of productos">
+        <div class="">
+            <div class="card">
+                <button class="btn btn-sm btn-light">
+                    <div class="card-body">
+                        <img src="{{urlImagen}}{{item.imageName}}" 
+                class="card-img-top" alt="..." style="width: 50px; height: 50px;">
+                        <h5 class="card-title">{{item.nombre}}</h5>
+                        <p class="card-text">{{item.descripcion}}</p>
+                        <blockquote class="blockquote text-center">
+                            <strong> <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong>
+                        </blockquote>
+                    </div>
+                </button>
+            </div>
         </div>
-        <div class="card-footer">
-            <small class="text-muted">
-                    <strong> 
-                    <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong></small>
+    </div>
+
+</div>
+
+<!--
+<div class="card-columns">
+    <div class="col mb-4">
+        <div class="card btn btn-light" *ngFor="let item of productos">
+            <a class="card-body"> 
+                <img src="{{urlImagen}}{{item.imageName}}" 
+                class="card-img-top" alt="..." style="width: 50px; height: 50px;">
+                <h5 class="card-title">{{item.nombre}}</h5>
+                <p class="card-text">{{item.descripcion}}</p>
+                <small class="text-muted">
+                    <strong> <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong></small>
+                </a>
         </div>
     </div>
 </div>
+-->
+
+ 
 
 
 <div *ngIf="productos.length == 0" class="alert alert-secondary text-center mt-3">
     <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
 </div>
+
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>
+
+<br>

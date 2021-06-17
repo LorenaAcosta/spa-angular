@@ -172,7 +172,7 @@
                                     </div>
                                 </td>
                                 <td width="50%">
-                                    <div class="titulo1">{{ proveedorId.empresa}}</div>
+                                    <div class="titulo1">{{ proveedorId.empresa }}</div>
                                     <div class="titulo2"></div>
                                     <div class="titulo2">{{ proveedorId.direccion}}</div>
                                     <div class="titulo2">Telefono{{proveedorId.telefono}}}</div>
@@ -193,8 +193,8 @@
                             </tr>
                             <tr>
                                 <div class="bloque-parrafos">
-                                    <p><span class="negrita">RUC / Cedula de Identidad:</span><span>{{' ' + proveedorId.ruc}}</span></p>
-                                    <p><span class="negrita">Nombre o Razon Social:</span>{{' ' + proveedorId.empresa}}</p>
+                                    <p><span class="negrita">RUC / Cedula de Identidad:</span><span>{{ proveedorId.ruc}}</span></p>
+                                    <p><span class="negrita">Nombre o Razon Social:</span>{{ proveedorId.empresa }}</p>
                                     <p><span class="negrita">Direccion:</span><span>{{' ' + (proveedorId.direccion != null) ? proveedorId.direccion : " "}}</span></p>
                                 </div>
                             </tr>

@@ -107,12 +107,13 @@ export class DisponibleComponent implements OnInit {
         }
       });
   }
-   plainNumber(number) {
+  
+  plainNumber(number) {
     return number.split('.').join('');
   }
  
 
-   oneDot(input) {
+  oneDot(input) {
     var value = input.target.value,
         value = this.plainNumber(value);
     
