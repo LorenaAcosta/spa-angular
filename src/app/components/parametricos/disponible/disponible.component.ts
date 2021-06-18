@@ -24,6 +24,7 @@ export class DisponibleComponent implements OnInit {
   empleadoId;
   closeResult = '';
   pageActual: 1;
+  input=0;
   
 
   form = this.fb.group({
@@ -35,7 +36,7 @@ export class DisponibleComponent implements OnInit {
   constructor(private servicioService: ServicioService,
     private disponibleService: DisponibleService,
     private empleadoService: EmpleadoService,
-    private utilService: UtilesService,
+    public utilService: UtilesService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private modalService: NgbModal) { }
@@ -106,6 +107,20 @@ export class DisponibleComponent implements OnInit {
         }
       });
   }
+  
+  plainNumber(number) {
+    return number.split('.').join('');
+  }
+ 
 
-
+  oneDot(input) {
+    var value = input.target.value,
+        value = this.plainNumber(value);
+    
+    if (value.length > 2) {
+      value = value.substring(0, value.length - 2) + '.' + value.substring(value.length - 2, value.length);
+    }
+    console.log(value);
+    input.target.value = value;
+  }
 }

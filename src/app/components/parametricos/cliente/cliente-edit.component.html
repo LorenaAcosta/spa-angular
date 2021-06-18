@@ -1,59 +1,61 @@
-<!--class="col-12 col-md-9 col-xl-6 py-md-3 pl-md-5 bd-content"-->
-
-
 <h2 class="display">Nuevo Cliente</h2>
+<p class="text-sm">En este formulario hay campos obligatorios <span class="text-danger mb-0">*</span></p>
 <hr>
 
 <form [formGroup]="form">
     <div class="row">
         <div class="col-6">
             <div class="bd-content">
-                <div class="form-row">
+                <div class="form-row mb-2">
                     <div class="form-group col-sm-6">
-                        <label id="myLabel">Nombres</label>
+                        <label id="myLabel">Nombres<span class="text-danger mb-0">*</span></label>
                         <input formControlName="nombre" placeholder="nombre" type="nombre" maxlength="30" class="form-control form-control-sm" id="nombre" required>
+                        <p *ngIf="campoNoValido('nombre')" class="text-danger"> * El nombre es obligatorio</p>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label id="myLabel">Apellidos</label>
+                        <label id="myLabel">Apellidos<span class="text-danger mb-0">*</span></label>
                         <input formControlName="apellido" placeholder="apellido" type="apellido" maxlength="30" class="form-control form-control-sm" id="apellido" required>
+                        <p *ngIf="campoNoValido('apellido')" class="text-danger"> * El apellido es obligatorio</p>
                     </div>
                 </div>
-                <div class="form-row">
+                <div class="form-row mb-2">
                     <div class="form-group col-sm-6">
-                        <label id="myLabel">Nombre de Usuario</label>
+                        <label id="myLabel">Nombre de Usuario<span class="text-danger mb-0">*</span></label>
                         <input type="text" autocomplete="username" class="form-control form-control-sm" id="username" placeholder="username" formControlName="username">
+                        <p *ngIf="campoNoValido('username')" class="text-danger"> * El nombre de usuario es obligatorio</p>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label id="myLabel">Contraseña</label>
+                        <label id="myLabel">Contraseña<span class="text-danger mb-0">*</span></label>
                         <input type="password" autocomplete="current-password" class="form-control form-control-sm" id="password" formControlName="password">
+                        <p *ngIf="campoNoValido('password')" class="text-danger"> * La contraseña es obligatoria</p>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-sm-6">
-                        <label id="myLabel">Email</label>
+                        <label id="myLabel">Email<span class="text-danger mb-0">*</span></label>
                         <input type="text" class="form-control form-control-sm" id="correo" placeholder="Email" pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" formControlName="email">
-                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="alert alert-danger">
-                            Correo inválido.</div>
+                        <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+                            * Correo inválido.</div>
                     </div>
                     <div class="form-group col-sm-6">
-                        <label for="inputPassword4">Cedula</label>
-                        <input formControlName="cedula" placeholder="cedula" type="cedula" class="form-control form-control-sm" pattern="^[0-9]*$" id="cedula" required>
-                        <div *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)" class="alert alert-danger">Introduzca sólo dígitos.
+                        <label for="inputPassword4">Cedula<span class="text-danger mb-0">*</span></label>
+                        <input formControlName="cedula" placeholder="cedula" type="number" min="0" max="99999999" class="form-control form-control-sm" oninput="validity.valid||(value='');" id="cedula" required>
+                        <div *ngIf="cedula.invalid && (cedula.dirty || cedula.touched)" class="text-danger">* La cédula es obligatoria
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputAddress">Dirección</label>
-                    <input formControlName="direccion" placeholder="dirección" type="direccion" maxlength="60" class="form-control form-control-sm" id="direccion" required>
+                    <input formControlName="direccion" placeholder="dirección" type="direccion" max="60" class="form-control form-control-sm" id="direccion">
                 </div>
                 <div class="form-row">
                     <div class="form-group col-sm-6">
                         <label>Ciudad</label>
-                        <input formControlName="ciudad" placeholder="ciudad" type="ciudad" maxlength="30" class="form-control form-control-sm" id="ciudad" required>
+                        <input formControlName="ciudad" placeholder="ciudad" type="ciudad" maxlength="30" class="form-control form-control-sm" id="ciudad">
                     </div>
                     <div class="form-group col-sm-6">
                         <label for="inputState">Nacionalidad</label>
-                        <input formControlName="nacionalidad" type="nacionalidad" maxlength="30" placeholder="nacionalidad" class="form-control form-control-sm" id="nacionalidad" >
+                        <input formControlName="nacionalidad" type="nacionalidad" maxlength="30" placeholder="nacionalidad" class="form-control form-control-sm" id="nacionalidad">
                     </div>
                 </div>
 
@@ -67,18 +69,18 @@
         <div class="col-6">
             <div class="bd-content">
                 <div class="form-row form-group col-sm-6">
-                    <label for="inputCity">Telefono</label>
-                    <input formControlName="telefono" placeholder="telefono" type="telefono" class="form-control form-control-sm" pattern="^[0-9]*$" id="telefono" required>
-                    <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-danger">Introduzca sólo dígitos.
+                    <label for="inputCity">Teléfono<span class="text-danger mb-0">*</span></label>
+                    <input formControlName="telefono" placeholder="telefono" type="number" class="form-control form-control-sm" oninput="validity.valid||(value='');" id="telefono" max="999999999" required>
+                    <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="text-danger">* Introduzca sólo dígitos.
                     </div>
                 </div>
                 <div class="form-row form-group col-sm-6">
-                    <label for="inputState">Sexo</label>
+                    <label for="inputState">Sexo<span class="text-danger mb-0">*</span></label>
                     <select id="sexo" formControlName="sexo" class="form-control form-control-sm">
-            <option selected>Choose...</option>
-            <option value="femenino">FEMENINO</option>
-            <option value="masculino">MASCULINO</option>
-          </select>
+                        <option value="femenino">FEMENINO</option>
+                        <option value="masculino">MASCULINO</option>
+                    </select>
+                    <p *ngIf="campoNoValidoSexo('sexo')" class="text-danger"> * El dato del sexo es obligatorio</p>
                 </div>
 
                 <div class="form-row form-group col-md-6">
@@ -89,14 +91,19 @@
 
                 <div class="form-row form-group col-sm-6">
                     <label>Tarjeta de TC/TD</label>
-                    <input type="tarjeta" formControlName="tarjeta" class="form-control form-control-sm" id="tarjeta" formControlName="tarjeta" pattern="^[0-9]*$" id="tarjeta" placeholder="tarjeta" >
+                    <input type="tarjeta" formControlName="tarjeta" class="form-control form-control-sm" id="tarjeta" formControlName="tarjeta" pattern="^[0-9]*$" id="tarjeta" placeholder="tarjeta">
                     <div *ngIf="tarjeta.invalid && (tarjeta.dirty || tarjeta.touched)" class="alert alert-danger">Introduzca sólo dígitos.
                     </div>
                 </div>
 
                 <div class="form-row form-group col-sm-6">
-                    <label for="inputZip">FechaNac</label>
-                    <input formControlName="fechaNac" type="date" class="form-control form-control-sm" id="fechaNac" required>
+                    <label for="inputZip">FechaNac<span class="text-danger mb-0">*</span></label>
+                    <input formControlName="fechaNac" type="date" class="form-control form-control-sm" id="fechaNac" min="1930-01-01" max="2010-01-01" required>
+                </div>
+                <div class="row">
+                    <div class="col text-danger">
+                        <p *ngIf="campoNoValido('fechaNac')"> &nbsp;&nbsp;&nbsp;* Fecha de nacimiento es obligatoria</p>
+                    </div>
                 </div>
 
             </div>
@@ -112,3 +119,4 @@
     </div>
 
 </form>
+<br><br><br><br><br><br><br><br>

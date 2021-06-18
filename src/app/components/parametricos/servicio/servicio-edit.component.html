@@ -1,19 +1,20 @@
 <h2 class="display">Nuevo Servicio</h2>
+<p class="text-sm">En este formulario hay campos obligatorios <span class="text-danger mb-0">*</span></p>
 <hr>
 
 
 <form [formGroup]="form">
-  <div class="row">
-    <div class="col-6">
-      <div class="bd-content">
-        <div class="form-row">
-          <div class="form-group col-sm-6">
-            <label id="myLabel">Nombre del Servicio</label>
-            <input formControlName="nombre" type="nombre" maxlength="30" class="form-control form-control-sm" placeholder="nombre del servicio"  id="nombre" required>
-          </div>
-          <div class="form-group col-sm-6">
-            <label id="myLabel">Impuesto</label>
-            <select id="impuestoId" formControlName="impuestoId" class="form-control form-control-sm">
+    <div class="row">
+        <div class="col-6">
+            <div class="bd-content">
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label id="myLabel">Nombre del Servicio<span class="text-danger">*</span></label>
+                        <input formControlName="nombre" type="nombre" maxlength="30" class="form-control form-control-sm" placeholder="nombre del servicio" id="nombre" required>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label id="myLabel">Impuesto<span class="text-danger">*</span></label>
+                        <select id="impuestoId" formControlName="impuestoId" class="form-control form-control-sm">
               <option *ngFor="let imp of impuestos" [ngValue]="imp.impuestoId">
                 {{ imp.descripcion }}
               </option>
@@ -22,55 +23,48 @@
         </div>
         <div class="form-row">
           <div class="form-group col-sm-12">
-            <label id="myLabel">Características del servicio</label>
+            <label id="myLabel">Características del servicio<span class="text-danger">*</span></label>
             <input formControlName="descripcion" type="descripcion" maxlength="60" class="form-control form-control-sm" placeholder="caracteristicas del servicio"  id="descripcion" required>
           </div>
         </div>
         <div class="form-row">
           <div class="form-group col-sm-6">
-            <label id="myLabel">Categoria</label>
+            <label id="myLabel">Categoria<span class="text-danger">*</span></label>
             <select id="categoriaId" formControlName="categoriaId" class="form-control form-control-sm">
               <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
                 {{ cat.descripcion }}
               </option>
             </select>
-          </div>
-          <div class="form-group col-sm-6">
-            <label for="inputPassword4">Duración</label>
-            <input formControlName="duracion" type="time" class="form-control form-control-sm" id="duracion" min="01:00" max="03:00"
-          required> <span class="validity"></span>
-          </div>
-        </div>
-        <div class="form-row">
-          <div class="form-group col-sm-6">
-          <label for="inputAddress">Costo</label>
-          <input formControlName="costo" type="number" max="1500000" class="form-control form-control-sm" placeholder="numeros"  id="costo" required>
-        </div>
-          <div class="form-group col-sm-6">
-            <label>Estado</label>
-            <select id="estado" formControlName="estado" class="form-control form-control-sm" placeholder="seleccionar"  required>
-              <option selected>...</option>
-              <option value="ACTIVO">Activo</option>
-              <option value="INACTIVO">Inactivo</option>
-              <option value="PROMO">Promoción</option>
-            </select>
-          </div>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label for="inputPassword4">Duración<span class="text-danger">*</span></label>
+                        <input formControlName="duracion" type="time" class="form-control form-control-sm" id="duracion" step='3600' max='06:00' required> <span class="validity"></span>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-sm-6">
+                        <label for="inputAddress">Costo<span class="text-danger">*</span></label>
+                        <input formControlName="costo" type="number" class="form-control form-control-sm" placeholder="costo" min="0" max="99999999" oninput="validity.valid||(value='');" id="costo" required>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label>Estado<span class="text-danger">*</span></label>
+                        <select id="estado" formControlName="estado" class="form-control form-control-sm" placeholder="seleccionar" required>
+                          <option value="ACTIVO">Activo</option>
+                          <option value="INACTIVO">Inactivo</option>
+                          <option value="PROMO">Promoción</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-      </div>
     </div>
 
-  </div>
-
-  <button routerLink="/servicio/listar" class="btn btn-sm btn-info mr-1">
+    <button routerLink="/servicio/listar" class="btn btn-sm btn-info mr-1">
     <i class="fas fa-arrow-left"></i> Regresar
   </button>
-  <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
+    <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1
   " (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
 
 </form>
-
-
-
-
-

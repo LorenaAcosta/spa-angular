@@ -45,17 +45,17 @@
       
               <div class="form-row">
                 <div class="form-group col-sm-6">
-                  <label>Telefono</label>
-                  <input formControlName="telefono" placeholder="021xxx" type="telefono" class="form-control form-control-sm"
-                    pattern="^[0-9]*$" id="telefono" required>
+                  <label>Teléfono</label>
+                  <input formControlName="telefono" placeholder="021xxx" type="number" class="form-control form-control-sm"
+                    max="9999999999" oninput="validity.valid||(value='');" id="telefono" required>
                     <div *ngIf="telefono.invalid && (telefono.dirty || telefono.touched)" class="alert alert-sm alert-danger">
                       Introduzca sólo dígitos. 
                     </div>
                 </div>
                 <div class="form-group col-sm-6">
                   <label>Celular</label>
-                  <input formControlName="celular" placeholder="098xxx" type="celular" class="form-control form-control-sm"
-                    pattern="^[0-9]*$" id="celular">
+                  <input formControlName="celular" placeholder="098xxx" type="number" class="form-control form-control-sm"
+                    max="9999999999" oninput="validity.valid||(value='');" id="celular">
                   <div *ngIf="celular.invalid && (celular.dirty || celular.touched)" class="alert alert-sm alert-danger">
                     Introduzca sólo dígitos.
                    </div>
@@ -97,8 +97,8 @@
               </div>
               <div class="form-group col-sm-6">
                 <label>Telefono/Celular</label>
-                <input formControlName="telefonoContacto" placeholder="021xxx" type="telefonoContacto" class="form-control form-control-sm"
-                  pattern="^[0-9]*$" id="telefono">
+                <input formControlName="telefonoContacto" placeholder="021xxx" type="number" class="form-control form-control-sm"
+                  max="9999999999" oninput="validity.valid||(value='');" id="telefono">
                   <div *ngIf="telefonoContacto.invalid && (telefonoContacto.dirty || telefonoContacto.touched)" class="alert alert-sm alert-danger">
                     Introduzca sólo dígitos. 
                   </div>
@@ -106,7 +106,7 @@
               <div class="form-group col-sm-6">
                 <label>Estado</label>
                 <select id="estado" formControlName="estado" class="form-control form-control-sm" required>
-                  <option selected>...</option>
+                  <option selected disabled>...</option>
                   <option value="activo">ACTIVO</option>
                   <option value="inactivo">INACTIVO</option>
                 </select>

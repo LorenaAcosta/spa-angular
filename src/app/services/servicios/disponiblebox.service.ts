@@ -17,9 +17,11 @@ export class DisponibleBoxService {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso).pipe(
       catchError( e=> {
        // this.router.navigate(['/categoria/listar']);
-        console.error(e.error.mensaje);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
-        return throwError(e);
+       var cadena =  e.error.error.toString();
+       var divisiones = cadena.split("Detail:", 2);
+       console.log('divisiones'  + divisiones);
+       Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
+       return throwError(e);
       })
     );
   }

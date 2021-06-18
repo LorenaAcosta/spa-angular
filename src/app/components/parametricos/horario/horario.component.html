@@ -58,46 +58,90 @@
     </div>
     <div class="modal-body">
         <form [formGroup]="form">
+
             <div class="form-group row">
-                <label for="inputState" class="col-sm-2 col-form-label">DIA LABORAL</label>
+                <label for="inputState" class="col-sm-6 col-form-label">DIA LABORAL</label>
                 <div class="col-sm">
                     <select id="day" formControlName="diaTrabajo" class="form-control">
                        <option *ngFor="let day of weekDays" [ngValue]="day.cod"> {{ day.d }} </option>
                    </select>
                 </div>
             </div>
+
+
             <div class="form-group row">
-                <label for="inputCity" class="col-sm-2 col-form-label">HORA ENTRADA</label>
+                <label for="inputCity" class="col-sm-6  col-form-label">HORA ENTRADA</label>
                 <div class="col-sm">
                   <input formControlName="horaInicio" type="time" class="form-control" id="horaInicio"
-                required></div>
+                  min="06:00" max="11:00" step='3600' [(ngModel)]="horaInicio"  required></div>
+                  <span class="validity"></span>
             </div>
-            <div class="form-group row">
-              <label for="inputCity" class="col-sm-2 col-form-label">HORA SALIDA</label>
+            <div class="row">
+              <div class="col text-danger">
+                <p *ngIf="horaInicio<'06:00' || horaInicio > '12:00' "> * Hora de  entrada 07:00 a 12:00 hs </p>
+              </div>
+           </div>
+
+
+
+
+
+
+          <div class="form-group row">
+              <label for="inputCity" class="col-sm-6  col-form-label">HORA SALIDA</label>
               <div class="col-sm">
                 <input formControlName="horaFin" type="time" class="form-control" id="horaFin" 
-                required>    </div>
+                 min="14:00" max="21:00"  step='3600'  [(ngModel)]="horaFin"  required >    </div>
           </div>
+          <div class="row">
+              <div class="col text-danger">
+                <p *ngIf="horaFin<=horaInicio"> * Hora de salida debe ser mayor a hora de Entrada</p>
+              </div>
+           </div>
+           <div class="row">
+            <div class="col text-danger">
+              <p *ngIf="horaFin<='12:00' || horaFi>='22:00'"> * Hora de  Salida 12:00 a 22:00 hs </p>
+            </div>
+         </div>
+
+
+
           <div class="form-group row">
-            <label for="inputCity" class="col-sm-2 col-form-label">INICIO HORA DESCANSO </label>
+            <label for="inputCity" class="col-sm-6 col-form-label">HORA INICIO DE DESCANSO </label>
             <div class="col-sm">
-              <input formControlName="horaInicioDescanso" type="time" class="form-control" id="horaInicioDescanso"
-            required>   </div>
+              <input formControlName="horaInicioDescanso" type="time" class="form-control" 
+              id="horaInicioDescanso"   min="14:00" max="21:00"  step='3600'
+               [(ngModel)]="horaInicioDescanso"  required>   </div>
+          </div> 
+          <div class="row">
+            <div class="col text-danger">
+              <p *ngIf="horaInicioDescanso>horaFin || horaInicioDescanso<horaInicio"> * Hora No Válida</p>
+            </div>
         </div>
+
+
+
+
         <div class="form-group row">
-          <label for="inputCity" class="col-sm-2 col-form-label">FIN HORA DESCANSO</label>
+          <label for="inputCity" class="col-sm-6  col-form-label">HORA FIN DE DESCANSO</label>
           <div class="col-sm">
-            <input formControlName="horaFinDescanso" type="time" class="form-control" id="horaFinDescanso" 
-            required>   </div>
+            <input formControlName="horaFinDescanso" type="time" class="form-control"
+             id="horaFinDescanso"  step='3600' [(ngModel)]="horaFinDescanso" required>   </div>
       </div>
+      <div class="row">
+        <div class="col text-danger">
+          <p *ngIf="horaFinDescanso>horaFin || horaFinDescanso< horaInicio  "> * Hora No Válida</p>
+        </div>
+    </div>
+
+
         </form>
     </div>
    
     <div class="modal-footer">
-        <button type="button" class="btn btn-outline-info" (click)="guardar()">Guardar</button>
+        <button type="submit" class="btn btn-outline-info"  
+        [disabled]="  this.form.invalid && validaciones()" 
+        (click)="guardar()">Guardar</button>
     </div>
 </ng-template>
-
-
-
 

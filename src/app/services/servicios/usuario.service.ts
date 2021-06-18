@@ -100,7 +100,7 @@ export class UsuarioService {
     localStorage.removeItem('punto');
     localStorage.removeItem('admin');*/
     this.limpiarStorage();
-    this.router.navigate(['/login']);
+    this.router.navigate(['/']);
   }
 
 

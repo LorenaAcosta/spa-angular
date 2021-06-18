@@ -1,20 +1,40 @@
 <div class="row">
-    <h1 class="display">Puntos de Expedición: </h1>
+    <h1 class="display">Ventanillas de cobro:</h1>
 </div>
 <div>
     <button routerLink="/" class="btn btn-sm btn-info mr-1"><i class="fas fa-arrow-left"></i> Regresar</button>
-    <button *ngIf="admin" class="btn btn-sm btn-info mr-1" (click)="open(content)">Habilitar nuevo punto</button>
+    <button *ngIf="admin" class="btn btn-sm btn-info mr-1" (click)="open(content)">Habilitar nueva ventanilla</button>
 </div>
 
 <br>
 <!-- Tabla que lista los puntos de expedición -->
 <!-- array: horario-->
+
 <div class="row">
-    <div class="col-lg-12" id="htmlData" #htmlData>
+    <!--  Lista las servicios -->
+    <div class="p-3" *ngFor="let p of puntos" >
+            <div class="card">
+                <button class="btn btn-sm btn-light"
+                (click)="btnClick(p.puntoExpedicionId)"  ngbTooltip="Acceder">
+                    <div class="card-body">
+                       <img  src="./assets/img/caja.jpg" width="200px" height="200px">
+                        <h5 class="card-title text-center">{{p.descripcion}}</h5>
+                    </div>
+                </button>
+            </div>
+    </div>
+</div>
+
+
+<!-- #region
+<div class="row">
+    <div class="col-sm-4" id="htmlData" #htmlData>
         <div class="card-deck">
             <div *ngFor="let p of puntos" class="card">
                 <div class="card-body">
-                    <a (click)="btnClick(p.puntoExpedicionId)" placement="top" ngbTooltip="Acceder"><img class="card-img-top" src="./assets/img/caja.jpg" alt="Card image cap"></a>
+                    <a (click)="btnClick(p.puntoExpedicionId)" placement="top" ngbTooltip="Acceder">
+                        <img class="card-img-top" src="./assets/img/caja.jpg" alt="Card image cap"
+                        width="50px" height="200px"></a>
                     <h5 class="card-title text-center">{{p.descripcion}}</h5>
                 </div>
             </div>
@@ -22,7 +42,7 @@
     </div>
 </div>
 
-
+ -->
 
 
 

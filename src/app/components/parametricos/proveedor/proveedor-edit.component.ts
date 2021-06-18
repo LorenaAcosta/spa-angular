@@ -95,10 +95,10 @@ export class ProveedorEditComponent implements OnInit {
       peticion.subscribe((result: any) =>  {
         Swal.fire(
           'Guardado!',
-          'Se actualizaron los datos!',
+          'Se agregaron los datos!',
           'success'
         );
-        this.router.navigate(['/proveedores/listar']);
+        this.router.navigate(['/proveedor/listar']);
       });
     } else {
       peticion = this.proveedorService.modificarRecurso(this.form.value, id);
@@ -108,7 +108,7 @@ export class ProveedorEditComponent implements OnInit {
           'Se actualizaron los datos!',
           'success'
         );
-        this.router.navigate(['/proveedores/listar']);
+        this.router.navigate(['/proveedor/listar']);
       });
     }
   }

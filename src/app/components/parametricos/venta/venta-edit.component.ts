@@ -771,22 +771,22 @@ reservasCobradas: any[] = [];
       
       const id = this.route.snapshot.params.id;
       let peticion: Observable<any>;
-      let ventasId: number;
+      let ventasId: any;
       console.log(this.form.get('fecha').value);
 
       if (typeof id === 'undefined') {
-        this.form.controls.comprobanteId.setValue(this.comprobanteActual.comprobanteId);
-        peticion = this.ventaService.agregarRecurso(this.form.value);
-        console.warn(this.form.value);
-        peticion.subscribe((result: any) =>  {
-          console.log(result),
-          ventasId = result.ventasId,
-          Swal.fire(
-            'Guardado!',
-            'Se guardaron  los datos!',
-            'success'
-          );
-  
+        //Verifica que se gregue al menos un detalle
+        if (this.form.controls.montoTotal.value>0){
+
+          this.form.controls.comprobanteId.setValue(this.comprobanteActual.comprobanteId);
+          peticion = this.ventaService.agregarRecurso(this.form.value);
+          console.warn(this.form.value);
+          peticion.subscribe((result: any) =>  {
+            console.log(result),
+            ventasId = result.ventasId;
+            localStorage.setItem('ventasId', ventasId);
+           
+            /*Se inserta el detalle*/
           for (let detalle of this.datosGuardar){
             console.warn(detalle);
             detalle.ventasId = ventasId;
@@ -801,19 +801,37 @@ reservasCobradas: any[] = [];
               console.log(res);
             });
           }
+          Swal.fire(
+            'Guardado!',
+            'Se guardaron  los datos!',
+            'success'
+          );
 
           for (let r of this.reservasCobradas){
             console.log('reserva actualizar', r)
             this.reservaService.cambiarEstadoPagado(r).subscribe((resp:any) =>{});
           }
-
+        });
+        for (let r of this.reservasCobradas){
+          console.log('reserva actualizar', r)
+          this.reservaService.asignarVenta(r, localStorage.getItem('ventasId')).subscribe((resp:any) =>{});
+        }
+        localStorage.removeItem('ventasId');
+        this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
           /*this.ventaService.actualizarCabecera(ventasId).subscribe(( res: any) => {
             console.log(res);
             peticion = this.ventaService.modificarRecurso(res, ventasId);
             peticion.subscribe((result: any) =>  {});
           });*/
+        }else{
+          Swal.fire(
+            '',
+            'Debe ingresar al menos un producto!',
+            'warning'
+          );
+        }  
 
-        });
+      
       } else {
         this.form.controls.numeroComprobante.setValue(id);
         peticion = this.ventaService.modificarRecurso(this.form.value, id);
@@ -841,7 +859,7 @@ reservasCobradas: any[] = [];
         });
       }
       
-      this.router.navigate(['/ventas/listar/' + localStorage.getItem('punto')]);
+     
     }, (err) => {
       console.log(err);
       Swal.fire('Error', 'Debe seleccionar un cliente', 'error');

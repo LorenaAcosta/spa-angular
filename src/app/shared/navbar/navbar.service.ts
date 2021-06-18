@@ -23,7 +23,7 @@ export class NavbarService {
       submenu: [
         {titulo: 'Cobranza', url: '/ventas/listar'},
         {titulo: 'Ventas Reporte', url: '/ventas/reporte'},
-        {titulo: 'Puntos de Expedición', url: '/puntos-expedicion/listar'},
+        {titulo: 'Ventanillas de cobro', url: '/puntos-expedicion/listar'},
         {titulo: 'Comprobante', url: '/config/comprobante/agregar'},
         {titulo: 'Tipo-comprobante', url: '/config/tipo-comprobante/agregar'},
         {titulo: 'Medios de Pago', url: '/config/medios-pago/agregar'}
@@ -59,7 +59,7 @@ export class NavbarService {
       titulo: 'TESORERIA',
       url: '',
       submenu: [
-        {titulo: 'Puntos de Expedición', url: '/puntos-expedicion/listar'},
+        {titulo: 'Ventanillas de cobro', url: '/puntos-expedicion/listar'},
         {titulo: 'Medios de Pago', url: '/config/medios-pago/agregar'},
         {titulo: 'Clientes', url: '/cliente/listar'},
         {titulo: 'Comprobante', url: '/config/comprobante/agregar'},

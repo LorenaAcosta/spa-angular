@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ModalDismissReasons, NgbDateStruct, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ComprasService } from 'src/app/services/servicios/compras.service';
 import { DetallesCompraService } from 'src/app/services/servicios/detalles-compra.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import Swal from 'sweetalert2';
 import { CompraEditComponent } from './compra-edit.component';
 
@@ -22,11 +23,17 @@ export class CompraComponent implements OnInit {
   closeResult: string;
   lado: any;
   model: NgbDateStruct;
+  fecha: any;
+  montoTotal: any;
+  numeroFactura: any;
+  timbrado: any;
+  proveedorId: any;
 
   constructor(
     private compraService: ComprasService,
     private detallesCompraService: DetallesCompraService,
     private route: ActivatedRoute,
+    public util: UtilesService,
     private modalService: NgbModal
     ) { }
 
@@ -40,6 +47,8 @@ export class CompraComponent implements OnInit {
     this.compraService.getRecurso(id)
     .subscribe( (resp: any[]) =>  this.compra = resp  );
   }
+
+
   getDetalles(id) {
     this.detallesCompraService.getRecurso(id)
     .subscribe( (resp: any[]) => this.detalles = resp);
@@ -133,6 +142,65 @@ export class CompraComponent implements OnInit {
 
    // this.getReservaReport(dateString.toString());
    // this.arrayObject = this.reservas as string[];
+  }
+
+
+
+
+  getDetallesDetalles(id) {
+    this.detallesCompraService.getRecurso(id)
+    .subscribe( (resp: any[]) => this.detalles = resp);
+    console.log(this.detalles);
+    //this.getFacturaReport(id);
+  }
+
+
+  getCabecera(id){
+    /*this.ventasService.actualizarCabecera(id)
+      .subscribe( (resp:any) => {console.log(resp)} );*/
+    this.compraService.getRecurso(id)
+    .subscribe( (resp: any) => {
+      this.fecha = resp.fecha,
+      this.montoTotal = resp.montoTotal,
+      this.numeroFactura = resp.numeroFactura,
+      this.timbrado = resp.timbrado,
+      this.proveedorId = resp.proveedorId;
+    });
+  }
+
+
+  clickEvent(){
+    this.compraService.getPDF().subscribe((response)=>{
+  
+    let file = new Blob([response], { type: 'application/pdf' });            
+    var fileURL = URL.createObjectURL(file);
+    window.open(fileURL, "popup","width=600,height=600");
+  })
+  }
+
+
+  anularFactura( id: any, pos: any, c: any) {
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: 'No podrás revertir esta operación!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, anular!'
+      }).then((result) => {
+        if (result.value) {
+          this.compras.splice(pos, 1);
+          -//this.ventasService.eliminarRecurso(id).subscribe();
+          this.compraService.modificarRecurso(id, c ).subscribe();
+          Swal.fire(
+            'Anulado!',
+            'Los datos han sido anulados.',
+            'success'
+          );
+        }
+      });
+      this.ngOnInit();
   }
 
 

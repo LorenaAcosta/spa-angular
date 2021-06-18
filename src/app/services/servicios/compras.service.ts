@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   providedIn: 'root'
 })
 export class ComprasService {
+
   
   recurosBaseURL: string = environment.URL_BASE + '/compras/';
 
@@ -31,15 +32,17 @@ export class ComprasService {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso).pipe(
       catchError( e=> {
         this.router.navigate(['/compras/listar']);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         return throwError(e);
       })
     );
   }
 
-  modificarRecurso(recurso, id) {
-    console.log(recurso);
-    return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
+  modificarRecurso(id, estado) {
+    return this.http.put(this.recurosBaseURL + 'modificar/' + id, estado);
   }
 
   eliminarRecurso(id) {
@@ -50,6 +53,18 @@ export class ComprasService {
   listarporfecha(fecha) {
       return this.http.get(this.recurosBaseURL + 'listarporfecha/' + fecha);
   }
+
+  getPDF(){
+    //const url = `${this.serviceUrl}/pdf`;
+    const archivo = 'factura.pdf';
+    const httpOptions = {
+      'responseType'  : 'arraybuffer' as 'json'
+       //'responseType'  : 'blob' as 'json'        //This also worked
+    };
+    
+    return this.http.get<any>(this.recurosBaseURL + 'files/' + archivo, httpOptions);
+    
+    }
 
 
 }

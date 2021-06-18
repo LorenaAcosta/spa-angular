@@ -29,10 +29,14 @@ export class RegisterComponent implements OnInit{
     email: ['', Validators.compose([
       Validators.required,
       Validators.pattern('^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@' + '[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$')])],
-    password: ['', [ Validators.minLength(3) ]],
-    password2: ['', [ Validators.minLength(3) ]],
+    password: ['', [ Validators.minLength(3), Validators.required ]],
+    password2: ['', [ Validators.minLength(3), Validators.required ]],
     enabled: true,
   });
+
+  get username() { return this.registerForm.get('username'); }
+  get password() { return this.registerForm.get('password'); }
+  get password2() { return this.registerForm.get('password2'); }
 
   constructor( private fb: FormBuilder,
                private usuarioService: UsuarioService,
@@ -88,7 +92,24 @@ export class RegisterComponent implements OnInit{
   }
 
   campoNoValido( campo: string ): boolean {
-    if (this.registerForm.get(campo).invalid && this.formSubmitted ) {
+    if (this.registerForm.get(campo).invalid && (this.registerForm.get(campo).touched || this.registerForm.get(campo).dirty)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  campoNoValidoSexo( campo: string ): boolean {
+    if (this.registerForm.get(campo).invalid && (this.registerForm.get(campo).touched || this.registerForm.get(campo).dirty) || ((this.registerForm.get('username').touched) && this.registerForm.get(campo).invalid)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  userNoValido() {
+    const user = this.registerForm.get('username').value;
+    if (user.length < 3 && (this.username.touched || this.username.dirty) ) {
       return true;
     } else {
       return false;
@@ -98,7 +119,7 @@ export class RegisterComponent implements OnInit{
   passwordNoValido() {
     const pass1 = this.registerForm.get('password').value;
     const pass2 = this.registerForm.get('password2').value;
-    if (pass1.length < 3 && this.formSubmitted ) {
+    if (pass1.length < 3 && (this.password.touched || this.password.dirty) ) {
       return true;
     } else {
       return false;
@@ -107,7 +128,7 @@ export class RegisterComponent implements OnInit{
   passwordIguales() {
     const pass1 = this.registerForm.get('password').value;
     const pass2 = this.registerForm.get('password2').value;
-    if ( pass1 !== pass2 && this.formSubmitted ) {
+    if ( pass1 !== pass2 && (this.password2.touched || this.password2.dirty) ) {
       return true;
     } else {
       return false;

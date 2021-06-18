@@ -7,19 +7,53 @@
 <br>
 <br>
 
-
-<div class="card-columns">
-    <div class="col mb-4">
-        <!--  Lista las categorias -->
-        <div class="card btn btn-light" *ngFor="let item of categorias; let i= index"
-            (click)="btnClick(item.categoriaId)" ngbTooltip="{{item.descripcion}}">
-            <a class="card-body"> <img src="{{urlImagen}}{{item.imageName}}" width="300px" height="300px"> </a>
+<div class="row">
+    <!--  Lista las servicios -->
+    <div class="p-3" *ngFor="let item of categorias; let i= index">
+        <div class="">
+            <div class="card">
+                <button class="btn btn-sm btn-light"
+                (click)="btnClick(item.categoriaId)" ngbTooltip="{{item.descripcion}}">
+                    <div class="card-body">
+                        <img src="{{urlImagen}}{{item.imageName}}" width="250px" height="250px">
+                    </div>
+                </button>
+            </div>
         </div>
     </div>
 </div>
 
 
+
+
+<!--
+
+
+
+<div class="card-columns">
+    <div class="col mb-4">
+
+        <div class="card btn btn-light" *ngFor="let item of categorias; let i= index"
+            (click)="btnClick(item.categoriaId)" ngbTooltip="{{item.descripcion}}">
+           
+                <img src="{{urlImagen}}{{item.imageName}}" width="100px" height="100px">
+         
+        </div>
+    </div>
+</div>
+
+-->
+
 <div *ngIf="categorias.length == 0" class="alert alert-secondary text-center mt-3">
     <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
 </div>
 </div>
+
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>

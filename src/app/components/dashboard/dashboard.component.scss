@@ -1,10 +1,23 @@
-html,body{height:100%;}
-.ngb-carousel,.item,.active{height:100%;}
-.ngb-carousel-inner{height:100%;}
+html,
+body {
+    height: 100%;
+}
 
+.ngb-carousel,
+.item,
+.active {
+    height: 100%;
+}
 
+.ngb-carousel-inner {
+    height: 100%;
+}
 
 .carousel-caption {
     top: 200px;
     bottom: auto;
+}
+
+.manito {
+    cursor: pointer;
 }

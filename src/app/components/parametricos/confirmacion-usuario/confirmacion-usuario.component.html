@@ -1,6 +1,6 @@
 <div>
     <p *ngIf="expirado">El enlace ha caducado <br><button class="btn btn-sm btn-info mr-1" (click)="open(content)">Solicite Reenvio Aqui</button></p>
-    <p *ngIf="!expirado">Su cuenta se ha comprobado exitosamente <button routerLink="/login" class="btn btn-sm btn-info mr-1">Acceda Aqui</button></p>
+    <p *ngIf="!expirado">Su cuenta se ha comprobado exitosamente <button class="btn btn-sm btn-info mr-1" (click)="open2(content2)">Acceda Aqui</button></p>
 
 </div>
 
@@ -32,4 +32,50 @@
     <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" (click)="enviar()">Enviar</button>
     </div>
+</ng-template>
+
+
+<!--**********************Login*************************-->
+<ng-template #content2 let-modal>
+    <div class="modal-header alert-info">
+        <div class="col-sm">
+            <a href="" class="text-center db"><img src="../assets/img/kathy-spa2.jpg" alt="Home" /></a>
+        </div>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <form class="form-group" autocomplete="off" [formGroup]="loginForm2" (ngSubmit)="login2()" id='loginForm2'>
+        <div class="modal-body ">
+
+            <div class="md-form mb-2 col-sm">
+                <input class="form-control validate col-sm-11 d-inline" type="text" placeholder="Usuario" formControlName="username">
+                <span class="text-danger d-inline col-sm-1">*</span>
+            </div>
+
+            <div class="md-form mb-2 col-sm">
+                <input class="form-control validate col-sm-11 d-inline" type="password" placeholder="Contraseña" formControlName="password">
+                <span class="text-danger d-inline col-sm-1">*</span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-10">
+                    <div class="checkbox checkbox-primary pull-left p-t-0">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="checkbox-signup" type="checkbox" class="filled-in chk-col-light-blue" formControlName="remember"> &nbsp;
+                        <label for="checkbox-signup"> Recuerdame </label>
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="javascript:void(0)" id="to-recover" class="text-dark pull-right"><i class="fa fa-lock m-r-5"></i> Olvido su contraseña?</a> </div>
+            </div>
+        </div>
+
+        <div class="modal-footer d-flex justify-content-center">
+            <button [disabled]="this.loginForm2.invalid" class="btn btn-info " type="submit" data-dismiss="modal" (click)="login()">Ingresar</button>
+        </div>
+
+        <!--<div class="form-group m-b-0">
+            <div class="col-sm-12 text-center">
+                No tienes una cuenta? <a (click)="open3(content3)" class="text-primary m-l-5 manito"><b>Crear cuenta</b></a>
+            </div>
+        </div>-->
+    </form>
 </ng-template>

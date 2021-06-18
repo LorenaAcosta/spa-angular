@@ -22,9 +22,13 @@ export class EmpleadoService {
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso).pipe(
       catchError( e=> {
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         this.router.navigate(['/empleado/listar']);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
         return throwError(e);
+       
       })
     );
   }
@@ -37,7 +41,10 @@ export class EmpleadoService {
     return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso).pipe(
       catchError( e=> {
         this.router.navigate(['/empleado/clientes']);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         return throwError(e);
       })
     );
@@ -47,7 +54,10 @@ export class EmpleadoService {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id).pipe(
       catchError( e=> {
         this.router.navigate(['/empleado/listar']);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         return throwError(e);
       })
     );
@@ -56,7 +66,10 @@ export class EmpleadoService {
   getRecursoByCedula(id) {
     return this.http.get(this.recurosBaseURL + 'encontrar-por-cedula/' + id).pipe(
       catchError( e=> {
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         return throwError(e);
       })
     );
@@ -66,7 +79,10 @@ export class EmpleadoService {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id).pipe(
       catchError( e=> {
         this.router.navigate(['/empleado/listar']);
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         return throwError(e);
       })
     );
@@ -76,7 +92,10 @@ export class EmpleadoService {
   obtenerTurnos(id, fecha) {
     return this.http.get(this.recurosBaseURL + 'obtener-turnos/' + id + fecha ).pipe(
       catchError( e=> {
-        Swal.fire(e.error.mensaje, e.error.error, 'error');
+        var cadena =  e.error.error.toString();
+        var divisiones = cadena.split("Detail:", 2);
+        console.log('divisiones'  + divisiones);
+        Swal.fire(e.error.mensaje, divisiones[1].toString() , 'error');
         return throwError(e);
       })
     );

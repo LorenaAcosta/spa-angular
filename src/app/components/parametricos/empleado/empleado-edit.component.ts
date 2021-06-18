@@ -11,7 +11,7 @@ import { EmpleadoService } from 'src/app/services/servicios/empleado.service';
   styleUrls: ['./empleado-edit.component.scss']
 })
 export class EmpleadoEditComponent implements OnInit {
-
+  
   form = this.fb.group({
     nombre: ['', Validators.required],
     apellido: ['', Validators.required],
@@ -36,6 +36,8 @@ export class EmpleadoEditComponent implements OnInit {
   get celular() { return this.form.get('celular'); }
   get sueldo() { return this.form.get('sueldo'); }
   get correo() { return this.form.get('correo'); }
+  get fechaNac() { return this.form.get('fechaNac') || 'yyyy-mm-dd'; }
+  get fechaNac2() { return this.form.get('fechaNac') }
 
   empleadoId;
 
@@ -142,4 +144,21 @@ export class EmpleadoEditComponent implements OnInit {
         });
       }
     }
+
+    campoNoValido( campo: string ): boolean {
+      if (this.form.get(campo).invalid && (this.form.get(campo).touched || this.form.get(campo).dirty)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
+    campoNoValidoFuncion( campo: string ): boolean {
+      if (this.form.get(campo).invalid && (this.form.get(campo).touched || this.form.get(campo).dirty) || ((this.form.get('sueldo').touched ) && this.form.get(campo).invalid)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
 }

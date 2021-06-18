@@ -1,5 +1,5 @@
-<h2 class="display">
-    Nuevo Categoria</h2>
+<h2 class="display">Nueva Categoria</h2>
+<p class="text-sm">En este formulario hay campos obligatorios <span class="text-danger mb-0">*</span></p>
 <hr>
 
 <form [formGroup]="form">
@@ -9,15 +9,15 @@
 
                 <div class="form-row">
                     <div class="form-group col-sm-5">
-                        <label id="myLabel">Nombre de la categoria</label>
-                        <input formControlName="descripcion" type="descripcion" class="form-control" id="descripcion" required>
+                        <label id="myLabel">Nombre de la categoria<span class="text-danger">*</span></label>
+                        <input formControlName="descripcion" type="descripcion" class="form-control form-control-sm" id="descripcion" required>
 
                     </div>
                     <div class="form-group col-sm-5">
-                        <label id="myLabel">Tipo de Categoria</label>
-                        <select id="dataType" formControlName="dataType" class="form-control" required>
-                    <option selected>...</option>
-                    <option value="PRODUCTO">Productos</option>
+                        <label id="myLabel">Tipo de Categoria<span class="text-danger">*</span></label>
+                        <select id="dataType" formControlName="dataType" class="form-control form-control-sm" required>
+                    <option value="SERVICIO O PRODUCTO" selected disabled> ... </option>
+                    <option value="PRODUCTO">Producto</option>
                     <option value="SERVICIO">Servicio</option>
                   </select>
                     </div>
@@ -41,7 +41,7 @@
                         <mat-card class="card-container-">
                             <div class="" *ngFor="let file of fileInfos | async">
                                 <div class="row row-6 text-right" *ngIf="file.name == imagen">
-                                    <img class="center" id="img" src="{{urlImagen}}{{imagen}}">
+                                    <img class="center" id="img" src="http://localhost:8084/api/files/{{imagen}}">
                                 </div>
                             </div>
                             <mat-card-content>
