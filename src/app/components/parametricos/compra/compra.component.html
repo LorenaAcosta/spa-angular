@@ -54,19 +54,10 @@
                             <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getCabecera(c.comprasId)" (click)="getDetallesDetalles( c.comprasId)">
                                 Detalles
                             </button>
-                     
+                            <button class="btn btn-sm btn-danger mr-1 " data-toggle="tooltip" data-type="warning" data-placement="top" title="Anular" (click)="anularFactura(c.comprasId, i, c)">
+                                Anular  <i class="fas fa-trash" ></i>
+                            </button>
                         </td>
-                        <div class="container-fluid">
-                            <td>
-                                <!--<button class="btn btn-sm btn-info mr-1 " [routerLink]="['/ventas/modificar', v.ventasId ]">
-                                        <i class="fas fa-pencil-alt "></i>
-                                    </button>-->
-
-                                <button class="btn btn-sm btn-danger mr-1 " data-toggle="tooltip" data-type="warning" data-placement="top" title="Anular" (click)="anularFactura(v.ventasId, i)">
-                                        Anular  <i class="fas fa-trash" ></i>
-                                    </button>
-                            </td>
-                        </div>
                     </tr>
                 </tbody>
             </table>

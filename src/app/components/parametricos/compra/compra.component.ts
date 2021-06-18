@@ -178,4 +178,30 @@ export class CompraComponent implements OnInit {
   })
   }
 
+
+  anularFactura( id: any, pos: any, c: any) {
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: 'No podrás revertir esta operación!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, anular!'
+      }).then((result) => {
+        if (result.value) {
+          this.compras.splice(pos, 1);
+          -//this.ventasService.eliminarRecurso(id).subscribe();
+          this.compraService.modificarRecurso(id, c ).subscribe();
+          Swal.fire(
+            'Anulado!',
+            'Los datos han sido anulados.',
+            'success'
+          );
+        }
+      });
+      this.ngOnInit();
+  }
+
+
 }

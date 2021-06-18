@@ -41,9 +41,8 @@ export class ComprasService {
     );
   }
 
-  modificarRecurso(recurso, id) {
-    console.log(recurso);
-    return this.http.put(this.recurosBaseURL + 'modificar/' + id, recurso);
+  modificarRecurso(id, estado) {
+    return this.http.put(this.recurosBaseURL + 'modificar/' + id, estado);
   }
 
   eliminarRecurso(id) {

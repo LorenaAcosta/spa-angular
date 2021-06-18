@@ -143,6 +143,27 @@ export class HorarioComponent implements OnInit {
       return false;
     }  
   }
+
+
+  validaciones(){
+    const horaInicio = this.form.get('horaInicio').value;
+    const horaFin= this.form.get('horaFin').value;
+    const horaInicioDescanso= this.form.get('horaInicioDescanso').value;
+    const horaFinDescanso= this.form.get('horaFinDescanso').value;
+    console.log(horaInicio);
+    if (
+      horaInicio>'06:00:' && horaInicio < '12:00' 
+      &&  horaFin>='12:00' && horaFin<='22:00' 
+      && horaInicioDescanso<horaFin && horaInicioDescanso>horaInicio
+      && horaFinDescanso>horaInicioDescanso  && horaFinDescanso> horaInicio 
+      && horaFinDescanso<horaFin 
+    ){
+      console.log('es false');
+     return false 
+    }else{ 
+      console.log('es true');
+      return true};
+  }
   
 
 }
