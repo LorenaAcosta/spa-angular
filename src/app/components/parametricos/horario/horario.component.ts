@@ -15,7 +15,11 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./horario.component.scss']
 })
 export class HorarioComponent implements OnInit {
-
+  horaInicio:any;
+  horaFin: any;
+  horaFi: any;
+  horaInicioDescanso: any;
+  horaFinDescanso: any;
   
   form = this.fb.group({
     diaTrabajo: ['', Validators.required],
