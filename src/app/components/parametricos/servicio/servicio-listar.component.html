@@ -35,7 +35,7 @@
                             <th>Opciones</th>
                         </tr>
                     </thead>
-                    <tbody *ngFor="let item of servicios | paginate: {itemsPerPage: 4 , currentPage: pageActual};let i = index  ">
+                    <tbody *ngFor="let item of servicios | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                         <tr>
                             <td>{{ i + 1}}</td>
                             <td>{{ item.nombre}}</td>

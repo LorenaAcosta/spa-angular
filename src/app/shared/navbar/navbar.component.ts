@@ -223,6 +223,13 @@ export class NavbarComponent implements OnInit {
   misReservas(){
     this.route.navigate(['/reserva/mis-reservas/' + this.usuario]);
   }
+  misPedidos(){
+    this.route.navigate(['/pedidos/listar/']);
+  }
+
+  miPedido(){
+    this.route.navigate(['/pedidos']);
+  }
 
 /************************Login************************************ */  
   login() {

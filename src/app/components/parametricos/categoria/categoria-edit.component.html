@@ -23,8 +23,7 @@
                     </div>
                     <div class="form-group  row">
                         <div class="form-group col-sm-5">
-                            <label for="inputPassword3">Imagen</label>
-
+                            <label for="inputPassword3">Imagen: <p class="text-danger">  No olvide subir el archivo. </p></label>
                             <button id="selectButton-" class="btn btn-sm btn-info mr-1" mat-raised-button (click)="fileInput.click()">Selecciona una imagen</button>
                             <button id="uploadButton-" class="btn btn-sm btn-info mr-1" mat-raised-button *ngIf="selectedFiles" [disabled]="!selectedFiles" (click)="uploadFiles()">
                             Subir Archivo</button>
@@ -107,3 +106,11 @@
         </div>
     </div>
 </form>
+
+
+
+<br>
+<br>
+<br>
+<br>
+

@@ -1,11 +1,15 @@
 <blockquote class="blockquote text-center">
-    <h1>Explora nuestra linea de productos</h1>
+    <h1  class="fw-light">Explora nuestra linea de productos</h1>
 </blockquote>
 
 <!--Lista las categorias de productos-->
-<div>
+  <p>
+    <a *ngFor="let cat of categorias"  class="btn btn-sm btn light alert alert-primary" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}}</a>
+  </p>
+
+<!--<div>
     <button *ngFor="let cat of categorias" type="button" class="btn btn-sm btn light alert alert-primary" role="alert" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
-</div>
+</div>-->
 
 
 
@@ -14,10 +18,10 @@
     <div class="p-3" *ngFor="let item of productos">
         <div class="">
             <div class="card">
-                <button class="btn btn-sm btn-light">
+                <button class="btn btn-sm btn-light" (click)="agregarCarrito(item.productoId)">
                     <div class="card-body">
                         <img src="{{urlImagen}}{{item.imageName}}" 
-                class="card-img-top" alt="..." style="width: 50px; height: 50px;">
+                          class="card-img-top" alt="..." style="width: 200px; height: 200px;">
                         <h5 class="card-title">{{item.nombre}}</h5>
                         <p class="card-text">{{item.descripcion}}</p>
                         <blockquote class="blockquote text-center">

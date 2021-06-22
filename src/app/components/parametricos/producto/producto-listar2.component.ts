@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { exit } from 'process';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 import { ProductoService } from 'src/app/services/servicios/producto.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-producto-listar2',
@@ -11,6 +13,8 @@ import { ProductoService } from 'src/app/services/servicios/producto.service';
 export class ProductoListar2Component implements OnInit {
 
   productos: any[] = [];
+  productosLista: Producto[] = [];
+  listaProductos: any[] = [];
   detalle: any[] = [];
   categorias: any[] = [];
   arrayList: any [] = [];
@@ -52,4 +56,34 @@ getDetalle(servicioId) {
   console.log(this.detalle);
 }
 
+agregarCarrito(cod: number){
+  let p = new Producto(this.productos[cod].productoId, this.productos[cod].nombre, 1 , this.productos[cod].precioVenta, this.productos[cod].precioVenta);
+  console.log(p.productoId);
+  for (let detalle of this.productos) {
+        if (detalle.productoId.productoId === p.productoId) {
+                Swal.fire(
+                  'Producto duplicado',
+                  'Puedes definir cantidad en tu carrito!',
+                  'warning'
+                );
+                exit();
+        }
+  }
+   this.productosLista.push(new Producto(this.productos[cod].productoId, this.productos[cod].nombre, 1 , this.productos[cod].precioVenta, this.productos[cod].precioVenta));
+   
+   Swal.fire({
+    position: 'top-end',
+    title: 'Producto agregado al carrito',
+    timer: 1500
+  })
+  console.log(this.productosLista);
+  localStorage.setItem('carrito',  JSON.stringify(this.productosLista));
+}
+
+}
+
+
+export class Producto {
+  constructor(public productoId: number, public nombre: string, public cant: number, public precio: number,  public subtotal:number) {
+  }
 }
