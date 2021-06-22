@@ -10,9 +10,10 @@ import { ProveedorService } from 'src/app/services/servicios/proveedor.service';
 import Swal from 'sweetalert2';
 import { MatTable } from '@angular/material/table';
 import { DetallesCompraService } from 'src/app/services/servicios/detalles-compra.service';
-import { MediosPagoService } from 'src/app/services/servicios/medios-pago.service';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UtilesService } from 'src/app/services/servicios/utiles.service';
+import { CategoriaService } from 'src/app/services/servicios/categoria.service';
+import { ImpuestoService } from 'src/app/services/servicios/impuesto.service';
 
 @Component({
   selector: 'app-compra-edit',
@@ -41,6 +42,11 @@ export class CompraEditComponent implements OnInit {
   selectedProd: any;
   esProducto: false;
   closeResult: string;
+  datePickerId: any;
+  hoy: any;
+  categorias: any[];
+  impuestos: any[];
+
 
 
   constructor(
@@ -49,15 +55,20 @@ export class CompraEditComponent implements OnInit {
     public util: UtilesService,
     private fmp: FormBuilder,
     private router: Router,
+    public datepipe: DatePipe,
     private modalService: NgbModal,
     private compraService: ComprasService,
+    private impuestoService: ImpuestoService,
+    private categoriaService: CategoriaService,
     private proveedorService: ProveedorService,
     private productoService: ProductoService,
     private detallesService: DetallesCompraService
-  ) { }
+  ) {
+
+  }
 
   form = this.fb.group({
-    fecha: [this.fechaActual],
+    fecha: ['', Validators.required ],
     numeroFactura: ['', Validators.required],
     timbrado: ['', Validators.required],
     montoTotal: [this.totalCompra, Validators.required],
@@ -72,6 +83,17 @@ export class CompraEditComponent implements OnInit {
     ruc: ['', Validators.required]
   });
 
+  productoForm = this.fb.group({
+    codigo: ['', Validators.required],
+    descripcion: ['', Validators.required],
+    costo: ['', Validators.required],
+    precioVenta: ['', Validators.required],
+    stockActual: ['', Validators.required],
+    impuestoId: ['', Validators.required],
+    imageName: [''],
+    estado: ['', Validators.required]
+  });
+
   formMedio = this.fmp.group({
     codigo: ['', Validators.required],
     descripcion: ['', Validators.required]
@@ -80,8 +102,12 @@ export class CompraEditComponent implements OnInit {
 
   currentDate: number = Date.now();
   articuloselect: Detalle = new Detalle(0, 0, 0, 0, 0);
-
+  
   @ViewChild(MatTable) tabla1: MatTable<Detalle>;
+
+
+ 
+
 
   borrarFila(cod: number) {
     if (confirm('Realmente quiere borrarlo?')) {
@@ -95,6 +121,9 @@ export class CompraEditComponent implements OnInit {
     console.log(this.datos);
   }
  
+
+
+  
   agregar() {
      /* controlar que se seleccione el producto para agregar fila a la tabla */
     if (this.selectedProd === 0 ||  this.selectedProd === '--' || this.selectedProd === undefined) {
@@ -150,7 +179,11 @@ export class CompraEditComponent implements OnInit {
 
 
   ngOnInit(): void {
-    let currentDate = Date.now();
+    let date=new Date();
+    this.hoy =this.datepipe.transform(date, 'yyyy-MM-dd');
+
+    this.categoriaService.obtenerPorTipo('producto').subscribe( (resp: any[]) =>  this.categorias = resp );
+    this.impuestoService.listarRecurso().subscribe( (resp: any[]) =>  this.impuestos = resp );
     this.proveedorService.listarRecurso()
     .subscribe( (resp: any[]) =>  {
       this.proveedores = resp 
@@ -180,6 +213,19 @@ export class CompraEditComponent implements OnInit {
          console.log(this.datos);
        });
     }
+
+    this.productoForm = this.fb.group({
+      codigo: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      costo: ['', Validators.required],
+      precioVenta: ['', Validators.required],
+      stockActual: ['', Validators.required],
+      categoriaId: ['', Validators.required],
+      impuestoId: ['', Validators.required],
+      imageName: [''],
+      estado: [1]
+    });
+
   }
 
   guardar() {
@@ -282,6 +328,23 @@ export class CompraEditComponent implements OnInit {
     
   }
 
+  guardarProducto() {
+    console.log(this.productoForm.value);
+    let peticion: Observable<any>;
+    peticion = this.productoService.agregarRecurso(this.productoForm.value);
+    peticion.subscribe((result: any) => {
+      Swal.fire(
+        'Guardado!',
+        'Se guardaron los datos!',
+        'success'
+      );
+      this.proveedorService.listarRecurso()
+      .subscribe( (resp: any[]) =>  this.proveedores = resp  );
+    });
+    this.productoForm.reset(this.productoForm.controls.codigo );
+    this.modalService.dismissAll();
+  }
+
  
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -315,6 +378,30 @@ export class CompraEditComponent implements OnInit {
     console.log(value);
     input.target.value = value;
   }
+
+
+
+
+
+   
+  //open modal, add box
+  openProducto(content1) {
+    this.modalService.open(content1, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+      console.log(this.productoForm.value);
+      this.productoService.agregarRecurso(this.productoForm.value)
+      .subscribe((result: any) => {
+          Swal.fire(
+            'Guardado!',
+            'Se guardaron los datos!',
+            'success'
+          );
+        }); 
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
 
   
 

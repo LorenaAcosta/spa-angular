@@ -32,6 +32,7 @@
         "datatables.net": "^1.10.20",
         "datatables.net-dt": "^1.10.20",
         "jquery": "^3.5.1",
+        "js-datepicker": "^5.18.0",
         "jspdf": "^2.1.1",
         "ng": "0.0.0",
         "ng2-search-filter": "^0.5.1",

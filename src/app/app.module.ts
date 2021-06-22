@@ -91,6 +91,9 @@ import { UsuarioSistemaComponent } from './components/parametricos/usuario-siste
 import { RolComponent } from './components/parametricos/rol/rol.component';
 import { ConfirmacionUsuarioComponent } from './components/parametricos/confirmacion-usuario/confirmacion-usuario.component';
 import {AutocompleteLibModule} from 'angular-ng-autocomplete';
+import { DatePipe } from '@angular/common';
+import { PedidosListarComponent } from './components/parametricos/pedidos/pedidos-listar.component';
+import { PedidosComponent } from './components/parametricos/pedidos/pedidos.component';
 
 
 
@@ -160,7 +163,9 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
     ListarComponent,
     UsuarioSistemaComponent,
     RolComponent,
-    ConfirmacionUsuarioComponent
+    ConfirmacionUsuarioComponent,
+    PedidosListarComponent,
+    PedidosComponent
   ],
   imports: [
     BrowserModule,
@@ -193,7 +198,7 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
     AutocompleteLibModule,
     FormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

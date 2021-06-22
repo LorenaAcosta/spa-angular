@@ -1,12 +1,21 @@
+
+
 <div class="row">
+
     <div class="col">
-
-
         <form [formGroup]="form">
-
             <!--Cabecera-->
             <div class="alert alert-info" role="alert">
-                <h3 style="text-align: center;">FACTURA DE COMPRA</h3>
+                <div class="row">
+                    <div class="col text-center">
+                        <h3 style="text-align: center;">FACTURA DE COMPRA</h3>
+                    </div>
+                    <div class="col text-right">
+                        <button  (click)="openProducto(content1)" class="btn btn-info sm-1">
+                            <i class="fas fa-plus"></i> Nuevo Producto
+                          </button>
+                        </div>
+                </div>
                 <hr>
                 <div class="row">
                     <div class="col-sm">
@@ -53,7 +62,8 @@
                         <div class="input-group-prepend">
                             <label class="input-group-text" style="width: 100px;">FECHA EMI:</label>
                         </div>
-                        <input [(ngModel)]="fechaActual" formControlName="fecha" type="date" value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" id="fecha" disabled:true required>
+                        <input [(ngModel)]="fechaActual" formControlName="fecha" [max]="hoy" type="date" 
+                        value="{{currentDate | date:'yyyy-MM-dd' }}" class="form-control" required>
                     </div>
                 </div>
 
@@ -79,17 +89,11 @@
 
 
         <!--Inicio tabla para detalles-->
-        <div class="example-container">
-
-            <div class="row">
+        <div class="row">
                 <mat-form-field appearance="fill" style="width:30%;">
                     <mat-label>Introduzca la cantidad</mat-label>
                     <input matInput [(ngModel)]="articuloselect.cantidad" type="number" oninput="validity.valid||(value='');" max="9999999999" min="1" placeholder="Sólo digitos" required>
                 </mat-form-field>
-
-                <!--<mat-form-field>
-            <input matInput [(ngModel)]="articuloselect.comprasId" type="number" placeholder="CompraId">
-        </mat-form-field>-->
 
                 <mat-form-field appearance="fill" style="width:30%;">
                     <mat-label>Introduzca el precio</mat-label>
@@ -99,33 +103,25 @@
                 <mat-form-field appearance="fill" style="width:30%">
                     <mat-label>Seleccione el producto</mat-label>
                     <select matNativeControl [(ngModel)]="selectedProd" [(ngModel)]="articuloselect.productoId" name="prod">
-            <option value="" selected disabled></option>
-            <option *ngFor="let prod of productos" [ngValue]="prod" >
-                {{prod.descripcion}}
-            </option>
-            </select>
+                        <option value="" selected disabled></option>
+                        <option *ngFor="let prod of productos" [ngValue]="prod" >
+                            {{prod.descripcion}}
+                        </option>
+                    </select>
                 </mat-form-field>
+                
                 <div class="input-group-prepend">
-                    <button mat-mini-fab data-toggle="tooltip" (click)="agregar()" data-placement="top" title="Gs.">
-                <i class="fa fa-plus"></i> </button>
+                    <button mat-raised-button mat-mini-fab data-toggle="tooltip" (click)="agregar()" title="Gs.">
+                   <i class="fa fa-plus"></i> </button>
                 </div>
-            </div>
+    
         </div>
 
 
 
-
-    </div>
-    <div class="col">
-
-
         <h3 style="text-align: center;">DETALLES</h3>
 
-
-
-
         <!--Agregar tabla para detalles-->
-
         <table mat-table [dataSource]="datos" class="mat-elevation-z8" #tabla1>
 
             <ng-container matColumnDef="cantidad">
@@ -163,10 +159,9 @@
 
 
         <button routerLink="/compras/listar" class="btn btn-sm btn-info mr-1">
-    <i class="fas fa-arrow-left"></i> Regresar
-    </button>
+            <i class="fas fa-arrow-left"></i> Regresar
+        </button>
         <button type="submit" [disabled]="!this.form.valid" class="btn btn-sm btn-info mr-1" (click)="guardar()"> <i class="fas fa-save"></i> Guardar</button>
-
 
 
     </div>
@@ -230,3 +225,88 @@
         <button type="submit" [disabled]="!this.proveedorForm.valid" class="btn btn-outline-dark" (click)="guardarProveedor()"> <i class="fas fa-save"></i>Guardar</button>
     </div>
 </ng-template>
+
+
+
+<!--     Modal para agregar un nuevo Proveedor-->
+<ng-template #content1 let-modal>
+    <div class="modal-header alert-info">
+        <h2 class="modal-title" id="modal-basic-title">Añadir Producto</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="productoForm">
+            <div class="row">
+                <div class="bd-content">
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <label for="inputEmail3">Codigo<span class="text-danger">*</span></label>
+                            <input formControlName="codigo" type="codigo" class="form-control form-control-sm" id="codigo" required>    
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="inputPassword3">Nombre del Producto<span class="text-danger">*</span></label>
+                            <input formControlName="descripcion" type="descripcion" class="form-control form-control-sm" id="descripcion" required>
+                       
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <label for="inputPassword3">Costo del Producto<span class="text-danger">*</span></label>
+                            <input formControlName="costo" type="number" class="form-control form-control-sm number" id="costo" oninput="validity.valid||(value='');" [(ngModel)]="costo" placeholder="0" min="0" max="9999999999" required>
+                       
+                        </div>
+                        <div class="form-group col-sm-6">
+                        <label for="inputPassword3">Precio de Venta<span class="text-danger">*</span></label>
+                        <input formControlName="precioVenta" type="number" class="form-control form-control-sm" id="precioVenta" oninput="validity.valid||(value='');" [(ngModel)]="precioVenta" min="0" max="9999999999" placeholder="0" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <label for="inputPassword3">Stock Actual<span class="text-danger">*</span></label>
+                            <input formControlName="stockActual" type="number" class="form-control form-control-sm" oninput="validity.valid||(value='');" id="stockActual" placeholder="0" min="0" max="999999" required>
+                       
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="inputState">Categoria<span class="text-danger">*</span></label>
+                            <select id="categoriaId" formControlName="categoriaId" class="form-control form-control-sm">
+                                <option *ngFor="let cat of categorias" [ngValue]="cat.categoriaId">
+                                {{ cat.descripcion }}
+                                </option>
+                            </select >
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-sm-6">
+                            <label for="inputState" >Impuesto<span class="text-danger">*</span></label>
+                            <select id="impuestoId" formControlName="impuestoId" class="form-control form-control-sm">
+                            <option *ngFor="let imp of impuestos" [ngValue]="imp.impuestoId">
+                            {{ imp.descripcion }}
+                            </option>
+                            </select >
+                        </div>
+                        <div class="form-group col-sm-6">
+                            <label for="inputState" >Estado<span class="text-danger">*</span></label>
+                            <select id="estado" formControlName="estado" class="form-control form-control-sm" required>
+                                <option value="ACTIVO" selected>Activo</option>
+                                <option value="INACTIVO">Inactivo</option>
+                            </select >
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" [disabled]="!this.productoForm.valid" class="btn btn-outline-dark" (click)="guardarProducto()"> <i class="fas fa-save"></i>Guardar</button>
+    </div>
+</ng-template>
+
+
+
+
+
+

@@ -61,6 +61,8 @@ import { UsuarioSistemaComponent } from './components/parametricos/usuario-siste
 import { RolComponent } from './components/parametricos/rol/rol.component';
 import { RecepcionGuard } from './guards/recepcion.guard';
 import { ConfirmacionUsuarioComponent } from './components/parametricos/confirmacion-usuario/confirmacion-usuario.component';
+import { PedidosListarComponent } from './components/parametricos/pedidos/pedidos-listar.component';
+import { PedidosComponent } from './components/parametricos/pedidos/pedidos.component';
 
 const routes: Routes = [
   { path: '',
@@ -148,6 +150,14 @@ const routes: Routes = [
         children: [
           { path: 'generar', component: PlanillaComponent , data: { title: 'Generar Planilla' },  canActivate: [ AdminGuard]},
           { path: 'listar-salario', component: ListarComponent , data: { title: 'Listar Planilla' } , canActivate: [ AdminGuard] }
+      
+         ]
+      },
+      {
+        path: 'pedidos', data: { title: 'Pedido' },
+        children: [
+          { path: 'carrito', component: PedidosComponent , data: { title: 'Mis pedidos' },  canActivate: [ AutenticadoGuard]},
+          { path: 'listar', component: PedidosListarComponent , data: { title: 'Listar Pedidos' } , canActivate: [ AutenticadoGuard] }
       
          ]
       },

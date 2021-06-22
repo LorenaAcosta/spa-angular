@@ -1,0 +1,47 @@
+<div class="card mb-4">
+    <div class="card-header"><i class="fas fa-table mr-1"></i>Revisar orden</div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-sm table-bordered display" id="dataTable" *ngIf="carrito.length>0" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="b-0">Item</th>
+                        <th class="b-0">Nombre</th>
+                        <th class="b-0">Precio</th>
+                        <th class="b-0">Cantidad</th>
+                        <th class="b-0">Sub Total </th>
+                        <th class="b-0 text-right"> Opción </th>
+                    </tr>
+                </thead>
+                <tr *ngFor="let item of carrito; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ item.nombre }}</td>
+                    <td>{{ item.precio }}</td>
+                    <td>
+                        <button class="btn btn-primary btn-sm" (click)="incrementar(i)"> + </button> {{ item.cant }}
+                        <button class="btn btn-primary btn-sm" (click)="disminuir(i)"> - </button>
+                    </td>
+                    <td class="text-right">
+                        <h5 class="font-medium m-b-30">{{ this.utilService.numberWithCommas( item.subtotal ) }}</h5>
+                    </td>
+                    <td colspan="4" style="text-align:right;">
+                        <button class="btn btn-danger" (click)="borrar(i)">
+                            <i class="fas fa-trash"></i>
+                          </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:right;">Monto Total : {{ this.utilService.numberWithCommas( this.total ) }}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<button class="btn btn-danger" (click)="vaciar()">
+    <i class="fas fa-trash"></i>Vaciar carrito
+  </button>
+<button type="submit" class="btn btn-outline-info" (click)="guardar()">
+    Guardar
+  </button>
