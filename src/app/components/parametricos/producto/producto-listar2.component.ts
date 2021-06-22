@@ -57,7 +57,7 @@ getDetalle(servicioId) {
 }
 
 agregarCarrito(cod: number){
-  let p = new Producto(this.productos[cod].productoId, this.productos[cod].nombre, 1 , this.productos[cod].precioVenta, this.productos[cod].precioVenta);
+  let p = new Producto(this.productos[cod].productoId, this.productos[cod].descripcion, 1 , this.productos[cod].precioVenta, this.productos[cod].precioVenta);
   console.log(p.productoId);
   for (let detalle of this.productos) {
         if (detalle.productoId.productoId === p.productoId) {
@@ -69,7 +69,7 @@ agregarCarrito(cod: number){
                 exit();
         }
   }
-   this.productosLista.push(new Producto(this.productos[cod].productoId, this.productos[cod].nombre, 1 , this.productos[cod].precioVenta, this.productos[cod].precioVenta));
+   this.productosLista.push(new Producto(this.productos[cod].productoId, this.productos[cod].descripcion, 1 , this.productos[cod].precioVenta, this.productos[cod].precioVenta));
    
    Swal.fire({
     position: 'top-end',

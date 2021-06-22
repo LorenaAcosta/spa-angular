@@ -29,16 +29,16 @@
             <a *ngIf="!this.usuarioService.obtenerUsuarioLogueado()" class="btn btn-info text-white mr-2 mt-lg-0 mt-md-0" type="button " (click)="open2(content2)">Login</a>
         </div>
 
-    
+
         <div class=" float-right ">
             <button *ngIf="this.usuarioService.obtenerUsuarioLogueado() " class="btn btn-info text-white mr-2 mt-lg-0 mt-md-0 " (click)="logout() ">Logout</button>
         </div>
         <div class=" float-right ">
-            <a *ngIf="this.usuarioService.obtenerUsuarioLogueado() "  (click)="miPedido()" class="button fancy-button" >
-                <img src="assets/img/cart.png" alt="mdo" width="32" height="32" >
+            <a *ngIf="this.usuarioService.obtenerUsuarioLogueado() " (click)="miPedido()" class="manito button fancy-button">
+                <img src="assets/img/cart.png" alt="mdo" width="32" height="32">
             </a>
-         </div>
-    
+        </div>
+
 
 
 

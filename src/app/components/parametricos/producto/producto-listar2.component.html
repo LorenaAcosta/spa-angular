@@ -1,11 +1,11 @@
 <blockquote class="blockquote text-center">
-    <h1  class="fw-light">Explora nuestra linea de productos</h1>
+    <h1 class="fw-light">Explora nuestra linea de productos</h1>
 </blockquote>
 
 <!--Lista las categorias de productos-->
-  <p>
-    <a *ngFor="let cat of categorias"  class="btn btn-sm btn light alert alert-primary" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}}</a>
-  </p>
+<p>
+    <a *ngFor="let cat of categorias" class="btn btn-sm btn light alert alert-primary" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}}</a>
+</p>
 
 <!--<div>
     <button *ngFor="let cat of categorias" type="button" class="btn btn-sm btn light alert alert-primary" role="alert" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
@@ -15,10 +15,10 @@
 
 <div class="row">
     <!--  Lista las servicios -->
-    <div class="p-3" *ngFor="let item of productos">
+    <div class="p-3" *ngFor="let item of productos; let i = index">
         <div class="">
             <div class="card">
-                <button class="btn btn-sm btn-light" (click)="agregarCarrito(item.productoId)">
+                <button class="btn btn-sm btn-light" (click)="agregarCarrito(i)">
                     <div class="card-body">
                         <img src="{{urlImagen}}{{item.imageName}}" 
                           class="card-img-top" alt="..." style="width: 200px; height: 200px;">
@@ -52,7 +52,7 @@
 </div>
 -->
 
- 
+
 
 
 <div *ngIf="productos.length == 0" class="alert alert-secondary text-center mt-3">

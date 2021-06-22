@@ -228,7 +228,7 @@ export class NavbarComponent implements OnInit {
   }
 
   miPedido(){
-    this.route.navigate(['/pedidos']);
+    this.route.navigate(['/pedidos/carrito']);
   }
 
 /************************Login************************************ */  
