@@ -65,6 +65,9 @@ export class PedidosComponent implements OnInit {
   borrar(pos:number){
     this.carrito.splice(pos, 1);
     localStorage.setItem('carrito',  JSON.stringify(this.carrito));
+    for (let cat of this.carrito) {
+      this.total =  this.total + cat.subtotal;
+    }
     //sessionStorage.removeItem(this.carrito[productoId]); 
   }
 
