@@ -146,6 +146,7 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.usuarioService.logout();
+    this.menuItems = this.menuCliente;
   }
 
   open(content) {
@@ -339,7 +340,7 @@ export class NavbarComponent implements OnInit {
         this.registerForm.reset(this.registerForm.controls.password2 );
         this.modalService.dismissAll();
         this.open2(content);
-
+        this.spinnerService.hide();
       }, (err) => {
         console.log(err);
         this.spinnerService.hide();
