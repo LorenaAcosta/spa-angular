@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { exit } from 'process';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 import { ProductoService } from 'src/app/services/servicios/producto.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,7 +27,8 @@ export class ProductoListar2Component implements OnInit {
 
   constructor(private categoriaService: CategoriaService,
               private productoService: ProductoService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, 
+              public util: UtilesService) {
                }
 
   ngOnInit(): void {
@@ -35,17 +37,12 @@ export class ProductoListar2Component implements OnInit {
     .subscribe( (resp: any[]) =>  this.categorias = resp );
     /*Mostrar los producto */
     const id = this.route.snapshot.params.id;
-    if (typeof id !== 'undefined') {
-    this.productoService.listarRecursoPorCategoria(id)
+    this.productoService.listarRecursosActivos()
      .subscribe( (resp: any[]) =>  this.productos = resp );
-    } else {
-      this.productoService.listarRecursoPorCategoria(1)
-      .subscribe( (resp: any[]) =>  this.productos = resp );
-    }
   }
 
 
-recargar(id: any) {
+   recargar(id: any) {
    this.productoService.listarRecursoPorCategoria(id)
    .subscribe( (resp: any[]) =>  this.productos = resp );
  }

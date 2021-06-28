@@ -157,6 +157,7 @@ const routes: Routes = [
         path: 'pedidos', data: { title: 'Pedido' },
         children: [
           { path: 'carrito', component: PedidosComponent , data: { title: 'Mis pedidos' },  canActivate: [ AutenticadoGuard]},
+          { path: 'listar/:id', component: PedidosListarComponent , data: { title: 'Listar Pedidos' } , canActivate: [ AutenticadoGuard] },
           { path: 'listar', component: PedidosListarComponent , data: { title: 'Listar Pedidos' } , canActivate: [ AutenticadoGuard] }
       
          ]

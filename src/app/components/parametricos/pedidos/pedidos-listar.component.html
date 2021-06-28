@@ -2,22 +2,6 @@
 
 <h2 class="display">Mis Pedidos</h2>
 
-    <div class="input-group mb-3">
-
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1"> <i class="fa fa-search" aria-hidden="true"></i></span>
-        </div>
-
-        <input #termino type="text" class="form-control" placeholder="Buscar empleado..." aria-label="Username" aria-describedby="basic-addon1" (keyup.enter)="buscar(termino.value)"> &nbsp;
-
-        <button (click)="getEmpleadoReport()" class="btn btn-danger mr-1" data-toggle="tooltip" data-placement="top" title="Exportar a pdf">
-        <i class="fas fa-file-pdf"></i>
-      </button>
-
-    </div>
-
-
-
 
     <div class="card mb-4">
         <div class="card-header"><i class="fas fa-table mr-1"></i> Mis ordenes y pedidos</div>
@@ -36,20 +20,13 @@
                     <tbody *ngFor="let item of carrito | paginate: {itemsPerPage: 5 , currentPage: pageActual};let i = index  ">
                         <tr>
                             <td>{{ i + 1}}</td>
-                            <td>{{ item.orden }}</td>
-                            <td>{{ item.fecha}}</td>
-                            <td>{{ item.total}}</td>
-                            <td>{{ item.direccion}}</td>
-                            <td>{{ item.telefono}}</td>
+                            <td>{{ item.orden }} </td>
+                            <td>{{ item.fecha}}  </td>
+                            <td><b> {{  utilService.numberWithCommas(item.total) }} </b></td>
                             <td>
-                                <button class="btn btn-sm btn-info mr-1" [routerLink]="['/empleado/modificar', item.empleadoId ]" placement="top" ngbTooltip="Editar">
-                  <i class="fas fa-pencil-alt"></i></button>
-                                <button type="button" class="btn btn-sm btn-info mr-1" (click)="borrar(item.empleadoId, i)" placement="top" ngbTooltip="Eliminar">
-                  <i class="fas fa-trash"></i> </button>
-                                <button class="btn btn-sm  btn-info mr-1" [routerLink]="['/empleado/asignar-horario/', item.empleadoId ]" placement="top" ngbTooltip="Asignar Horarios">
-                  <i class="fas fa-clock"></i> </button>
-                                <button class="btn btn-sm  btn-info mr-1" [routerLink]="['/empleado/asignar-disponibilidad/', item.empleadoId ]" placement="top" ngbTooltip="Ver Especialidades">
-                  <i class="fas fa-clipboard-list"></i> </button>
+                                <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getCabecera(item.carritoCabeceraId)" (click)="getDetallesDetalles( item.carritoCabeceraId)">
+                                    Detalles
+                                </button>
                             </td>
                         </tr>
                     </tbody>
@@ -63,6 +40,87 @@
 
 
 
-    <div *ngIf="empleados.length == 0" class="alert alert-secondary text-center mt-3">
+    <div *ngIf="carrito.length == 0" class="alert alert-secondary text-center mt-3">
         <h4 class="alert-heading">No hay registros <i class="fa fa-exclamation"></i> </h4>
+    </div>
+
+
+
+    
+       <!-- Modal -->
+       <div id="myModal" class="modal fade " role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content ">
+                <div class="modal-header ">
+                    <table id="td1" width="650px" class="tabla-bordes table-responsive" border="0">
+                        <tbody>
+                            <tr>
+                                <td width="60%">
+                                    <div class="row container-fluid justify-content-center" id="myRow">
+                                        <p id="myP"><strong> Orden Nº {{ orden}}</strong></p>
+                                    </div>
+                                </td>
+                                <td width="60%">
+                                    <div class="row container-fluid justify-content-center" id="myRow">
+                                        <p id="myP">Fecha de Pedido:  {{ fecha | date:'dd-MM-yyyy' }}</p>
+                                    </div>
+                                </td>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-body  container-fluid ">
+                    <table id="td2" width="650px" class="tabla-bordes table-responsive" border="0">
+                        <thead>
+                            <tr>
+                                <th class="text-center" rowspan="2" width="10%">Cantidad</th>
+                                <th class="text-center" rowspan="2" width="40%">Descripcion</th>
+                            </tr>
+                            <tr>
+                                <th class="text-center" width="13%">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let d of detalles; let j = index">
+                                <td class="numerico text-center">{{ utilService.numberWithCommas(d.cant)}}</td>
+                                <td class="numerico text-center">{{d.nombre}}</td>
+                                <td class="numerico text-center">{{ utilService.numberWithCommas( d.subtotal) }}</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                    <table id="td3" width="650px" class="tabla-bordes table-responsive" border="0">
+                        <tbody>
+
+                            <tr>
+                                <td width="40%">Descuento</td>
+                                <td style="border-left: hidden" class="numerico" width="13%"></td>
+                                <td style="border-left: hidden" class="numerico" width="13%"></td>
+                                <td style="border-left: hidden" class="numerico" width="14%"></td>
+                                <td class="numerico" width="25%">0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" style="border-bottom: hidden">Total a Pagar:&nbsp;</td>
+                                <td class="numerico" rowspan="3" style="text-align: center; 
+                                vertical-align:middle;"> <strong> {{utilService.numberWithCommas(total)}}</strong></td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="4">&nbsp;</td>
+
+                            </tr>
+                            <!--<tr>
+                                    <td colspan="4">&nbsp;</td>
+                                </tr>-->
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-info text-dark" (click)="clickEvent()">Imprimir</button>
+                </div>
+            </div>
+
+        </div>
     </div>
