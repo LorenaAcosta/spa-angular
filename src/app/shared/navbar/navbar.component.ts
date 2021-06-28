@@ -235,6 +235,7 @@ export class NavbarComponent implements OnInit {
 /************************Login************************************ */  
   login() {
     this.spinnerService.show();
+    console.log('logueo', this.loginForm.value);
     this.usuarioService.login( this.loginForm.value)
     .subscribe( resp => {
       this.spinnerService.hide();

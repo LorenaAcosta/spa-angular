@@ -61,7 +61,7 @@
                                     <!-- Modal content-->
                                     <div class="modal-content ">
                                         <div class="modal-header ">
-                                            <table id="td1" width="650px" class="tabla-bordes table-responsive" border="0">
+                                            <table id="td1" width="650px" class="tabla-bordes table-responsive">
                                                 <tbody>
                                                     <tr>
                                                         <td width="60%">
@@ -109,7 +109,7 @@
 
                                         </div>
                                         <div class="modal-body  container-fluid ">
-                                            <table id="td2" width="650px" class="tabla-bordes table-responsive" border="0">
+                                            <table id="td2" width="650px" class="tabla-bordes table-responsive">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center" rowspan="2" width="10%">Cantidad</th>
@@ -124,7 +124,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index">
+                                                    <tr *ngFor="let d of detalles  let j = index">
                                                         <td class="numerico text-center">{{d.cantidad}}</td>
                                                         <td *ngIf="d.productoId !== null; else servicio">
                                                             {{d.productoId.descripcion}}
@@ -232,10 +232,9 @@
                     </tr>
                 </tbody>
             </table>
-            <pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
         </div>
+        <pagination-controls (pageChange)="pageActual = $event" class="my-pagination"></pagination-controls>
     </div>
-
 </div>
 
 <div *ngIf="ventas.length == 0" class="alertalert-warning text-center mt-3">

@@ -12,39 +12,17 @@
 
 <div class="row">
     <!--  Lista las servicios -->
-    <div class="p-3" *ngFor="let p of puntos" >
-            <div class="card">
-                <button class="btn btn-sm btn-light"
-                (click)="btnClick(p.puntoExpedicionId)"  ngbTooltip="Acceder">
+    <div class="p-3" *ngFor="let p of puntos">
+        <div class="card">
+            <button class="btn btn-sm btn-light" (click)="btnClick(p.puntoExpedicionId)" ngbTooltip="Acceder">
                     <div class="card-body">
                        <img  src="./assets/img/caja.jpg" width="200px" height="200px">
                         <h5 class="card-title text-center">{{p.descripcion}}</h5>
                     </div>
                 </button>
-            </div>
-    </div>
-</div>
-
-
-<!-- #region
-<div class="row">
-    <div class="col-sm-4" id="htmlData" #htmlData>
-        <div class="card-deck">
-            <div *ngFor="let p of puntos" class="card">
-                <div class="card-body">
-                    <a (click)="btnClick(p.puntoExpedicionId)" placement="top" ngbTooltip="Acceder">
-                        <img class="card-img-top" src="./assets/img/caja.jpg" alt="Card image cap"
-                        width="50px" height="200px"></a>
-                    <h5 class="card-title text-center">{{p.descripcion}}</h5>
-                </div>
-            </div>
         </div>
     </div>
 </div>
-
- -->
-
-
 
 <ng-template #content let-modal>
     <div class="modal-header">
@@ -59,6 +37,16 @@
                 <label for="inputCity" class="col-sm-2 col-form-label">Descripción</label>
                 <div class="col-sm">
                     <input formControlName="descripcion" type="text" class="form-control" id="descripcion" required>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm">
+                    <label for="inputState">Cajero asignado<span class="text-danger">*</span></label>
+                    <select id="categoriaId" formControlName="usuarioId" class="form-control">
+                        <option *ngFor="let c of cajeros" [ngValue]="c.usuario">
+                            {{ c.nombres }}
+                        </option>
+                </select >
                 </div>
             </div>
         </form>

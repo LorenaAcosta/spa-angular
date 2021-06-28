@@ -97,8 +97,8 @@ getReservaReport(fecha) {
 confirmarReserva(id) {
 
   Swal.fire({
-    title: 'Estas seguro de confirmar?',
-    text: 'No podrás revertir esta operación!',
+    title: 'Confirmación de Reserva',
+    text: 'Estas seguro de confirmar?',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',

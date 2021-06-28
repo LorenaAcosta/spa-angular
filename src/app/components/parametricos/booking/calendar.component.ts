@@ -322,7 +322,7 @@ admin: any;
                 } else {
                   this.spinnerService.hide();
                   Swal.fire(
-                    'Reserva Confirmada!',
+                    'Reserva Registrada!',
                     'Se guardaron  los datos!',
                     'success'
                     );
@@ -386,7 +386,7 @@ admin: any;
          El correo ha sido enviado y el ID es ${res.messageId}`
         );
         Swal.fire(
-          'Reserva Confirmada!',
+          'Reserva Registrada!',
           'Se guardaron  los datos!',
           'success'
           );

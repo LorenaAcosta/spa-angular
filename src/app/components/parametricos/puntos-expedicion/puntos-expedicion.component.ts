@@ -21,9 +21,11 @@ export class PuntosExpedicionComponent implements OnInit {
   
   form = this.fb.group({
     descripcion: ['', Validators.required],
+    usuarioId: ['', Validators.required]
   });
 
   puntos: any[] = [];
+  cajeros: any[] = [];
   horarioId: any;
   empleadoId: any;
   closeResult: string;
@@ -42,6 +44,7 @@ export class PuntosExpedicionComponent implements OnInit {
 
       this.form = this.fb.group({    
         descripcion: ['', Validators.required], 
+        usuarioId: ['', Validators.required], 
       });
 }
 
@@ -51,6 +54,10 @@ export class PuntosExpedicionComponent implements OnInit {
     this.empleadoId= id;*/
     this.puntoService.listarRecurso().subscribe( (resp: any[]) => {
         this.puntos = resp ;
+    });
+
+    this.puntoService.getCajeros().subscribe( (resp: any[]) => {
+      this.cajeros = resp ;
     });
     
     if(localStorage.getItem('admin') == 'true'){
