@@ -52,7 +52,7 @@ export class CompraComponent implements OnInit {
   getDetalles(id) {
     this.detallesCompraService.getRecurso(id)
     .subscribe( (resp: any[]) => this.detalles = resp);
-    console.log(this.detalles);
+    console.log("LISTA COMPRAS",this.compras);
   }
 
   borrar( id: any, pos: any) {

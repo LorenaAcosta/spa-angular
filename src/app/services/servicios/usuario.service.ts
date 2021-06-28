@@ -85,9 +85,12 @@ export class UsuarioService {
   }
 
   limpiarStorage(){
+    this.usuario=null;
     localStorage.removeItem('token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('usuarioList');
+    localStorage.removeItem('carrito');
     localStorage.removeItem('punto');
     localStorage.removeItem('admin');
   }

@@ -35,17 +35,12 @@ export class ProductoListar2Component implements OnInit {
     .subscribe( (resp: any[]) =>  this.categorias = resp );
     /*Mostrar los producto */
     const id = this.route.snapshot.params.id;
-    if (typeof id !== 'undefined') {
-    this.productoService.listarRecursoPorCategoria(id)
+    this.productoService.listarRecursosActivos()
      .subscribe( (resp: any[]) =>  this.productos = resp );
-    } else {
-      this.productoService.listarRecursoPorCategoria(1)
-      .subscribe( (resp: any[]) =>  this.productos = resp );
-    }
   }
 
 
-recargar(id: any) {
+   recargar(id: any) {
    this.productoService.listarRecursoPorCategoria(id)
    .subscribe( (resp: any[]) =>  this.productos = resp );
  }

@@ -9,11 +9,9 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class CarritoService {
- 
+export class CarritoCabeceraService {
 
-
-  recurosBaseURL: string = environment.URL_BASE + '/carrito/';
+  recurosBaseURL: string = environment.URL_BASE + '/carrito-cabecera/';
 
   constructor(private http: HttpClient,
               private router: Router) { }
@@ -22,14 +20,16 @@ export class CarritoService {
   listarRecurso() {
     return this.http.get(this.recurosBaseURL + 'listar');
   }
-
+  misOrdenes(id: any) {
+    return this.http.get(this.recurosBaseURL + 'mis-ordenes/'+ id);
+  }
+ 
   listarRecursobyUser(usuario:number) {
      return this.http.get(this.recurosBaseURL + 'listarbyuser/' + usuario);
   }
   getMaxId(){
     return this.http.get(this.recurosBaseURL + 'getmaxid');
   }
-
 
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso ).pipe(
@@ -47,7 +47,7 @@ export class CarritoService {
 
 
   getRecurso(id) {
-    return this.http.get(this.recurosBaseURL + 'encontrar-detalles/' + id).pipe(
+    return this.http.get(this.recurosBaseURL + 'encontrar/' + id).pipe(
       catchError( e=> {
         this.router.navigate(['/pedido/listar']);
         var cadena =  e.error.error.toString();
@@ -58,7 +58,6 @@ export class CarritoService {
       })
     );
   }
-
 
   eliminarRecurso(id) {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id).pipe(

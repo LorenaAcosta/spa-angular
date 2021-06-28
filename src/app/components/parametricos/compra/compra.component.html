@@ -78,68 +78,6 @@
 
 
 
-<!--Modal para agregar un nuevo Box-->
-<ng-template #content let-modal>
-    <div class="modal-header modal-header-info">
-        <h4 class="modal-title" id="modal-basic-title">Detalles de Factura</h4>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-    <div class="modal-body">
-
-        <div class="row">
-            <h4 class="display">Fecha: {{ cabecera.fecha}}</h4>
-            <div class="col text-right">
-                <h4 class="display">Nro Factura: {{ cabecera.numeroFactura}}</h4>
-            </div>
-        </div>
-        <div class="row">
-            <h4 class="display">Proveedor: {{ cabecera.proveedorId.empresa}}</h4>
-            <div class="col text-right">
-                <h4 class="display">Timbrado: {{ cabecera.timbrado}}</h4>
-            </div>
-        </div>
-
-        <table class="table table-hover animated fadedIn faster">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio compra</th>
-                    <th scope="col">Producto</th>
-                    <th scope="col">Total</th>
-                    <!--<th scope="col">Opciones</th>-->
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index  ">
-                    <td>{{ j + 1}}</td>
-                    <td>{{ d.cantidad}}</td>
-                    <td>{{ d.precioCompra}}</td>
-                    <td>{{ d.productoId.descripcion}}</td>
-                    <td>{{ d.precioCompra * d.cantidad}}</td>
-                    <!--<td>
-                    <button class="btn btn-info mr-1" [routerLink]="['/compras/modificar', c.comprasId ]">
-                        <i class="fas fa-pencil-alt"></i>
-                    </button>
-                    <button class="btn btn-info mr-1" (click)="borrar(c.comprasId, i)">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>-->
-                </tr>
-            </tbody>
-        </table>
-        <div class="alert alert-info" role="alert">
-            <h4 class="display text-right">MontoTotal: {{ cabecera.montoTotal}}</h4>
-        </div>
-    </div>
-    <div class="modal-footer">
-
-    </div>
-</ng-template>
-
-
 
 
 
@@ -150,9 +88,10 @@
         <div class="modal-dialog modal-lg">
 
             <!-- Modal content-->
-            <div class="modal-content ">
+            <div class="modal-content " *ngIf="proveedorId">
                 <div class="modal-header ">
                     <table id="td1" width="650px" class="tabla-bordes table-responsive" border="0">
+                        
                         <tbody>
                             <tr>
                                 <td width="60%">
