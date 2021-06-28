@@ -22,7 +22,7 @@
                             <td>{{ i + 1}}</td>
                             <td>{{ item.orden }} </td>
                             <td>{{ item.fecha}}  </td>
-                            <td><b> {{ item.total }} </b></td>
+                            <td><b> {{  utilService.numberWithCommas(item.total) }} </b></td>
                             <td>
                                 <button type="button" class="btn btn-sm btn-info btn-lg" data-toggle="modal" data-target="#myModal" (click)="getCabecera(item.carritoCabeceraId)" (click)="getDetallesDetalles( item.carritoCabeceraId)">
                                     Detalles
@@ -82,10 +82,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index">
-                                <td class="numerico text-center">{{d.cant}}</td>
+                            <tr *ngFor="let d of detalles; let j = index">
+                                <td class="numerico text-center">{{ utilService.numberWithCommas(d.cant)}}</td>
                                 <td class="numerico text-center">{{d.nombre}}</td>
-                                <td class="numerico text-center">{{d.subtotal}}</td>
+                                <td class="numerico text-center">{{ utilService.numberWithCommas( d.subtotal) }}</td>
                             </tr>
 
                         </tbody>
@@ -103,7 +103,7 @@
                             <tr>
                                 <td colspan="4" style="border-bottom: hidden">Total a Pagar:&nbsp;</td>
                                 <td class="numerico" rowspan="3" style="text-align: center; 
-                                vertical-align:middle;"> <strong> {{total}}</strong></td>
+                                vertical-align:middle;"> <strong> {{utilService.numberWithCommas(total)}}</strong></td>
 
                             </tr>
                             <tr>

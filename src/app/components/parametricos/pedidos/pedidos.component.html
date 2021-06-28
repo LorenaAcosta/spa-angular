@@ -16,13 +16,13 @@
                 <tr *ngFor="let item of carrito; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ item.nombre }}</td>
-                    <td>{{ item.precio }}</td>
+                    <td>{{ utilService.numberWithCommas(item.precio) }}</td>
                     <td>
                         <button class="btn btn-primary btn-sm" (click)="incrementar(i)"> + </button> {{ item.cant }}
                         <button class="btn btn-primary btn-sm" (click)="disminuir(i)"> - </button>
                     </td>
                     <td>
-                        <h5 class="font-medium m-b-30">{{ this.utilService.numberWithCommas( item.subtotal ) }}</h5>
+                        <h5 class="font-medium m-b-30">{{ utilService.numberWithCommas( item.subtotal ) }}</h5>
                     </td>
                     <td colspan="4" style="text-align:right;">
                         <button class="btn btn-danger" (click)="borrar(i)">
@@ -32,7 +32,7 @@
                 </tr>
                 <tr>
                    <td></td><td></td><td></td><td class="b-0">Monto Total :</td>
-                    <td class="b-0"> {{ this.utilService.numberWithCommas( this.total ) }}</td>
+                    <td class="b-0"> {{ utilService.numberWithCommas( this.total ) }}</td>
                 </tr>
             </table>
         </div>

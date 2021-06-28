@@ -148,7 +148,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr *ngFor="let d of detalles | paginate: {itemsPerPage: 5 , currentPage: pageActual}; let j = index">
+                            <tr *ngFor="let d of detalles; let j = index">
                                 <td class="numerico text-center">{{d.cantidad}}</td>
                                 <td *ngIf="d.productoId !== null; else servicio">
                                     {{d.productoId.descripcion}}

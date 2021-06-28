@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { exit } from 'process';
 import { CategoriaService } from 'src/app/services/servicios/categoria.service';
 import { ProductoService } from 'src/app/services/servicios/producto.service';
+import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -26,7 +27,8 @@ export class ProductoListar2Component implements OnInit {
 
   constructor(private categoriaService: CategoriaService,
               private productoService: ProductoService,
-              private route: ActivatedRoute) {
+              private route: ActivatedRoute, 
+              public util: UtilesService) {
                }
 
   ngOnInit(): void {

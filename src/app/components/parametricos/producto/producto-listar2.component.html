@@ -24,7 +24,7 @@
                                 <h5 class="card-title">{{item.nombre}}</h5>
                                 <p class="card-text">{{item.descripcion}}</p>
                                 <blockquote class="blockquote text-center">
-                                    <strong> <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong>
+                                    <strong> <i class="fas fa-money-bill-alt"></i> {{util.numberWithCommas(item.costo)}} Gs. </strong>
                                 </blockquote>
                                 <button class="btn btn-sm btn-light"ngbTooltip="Agregar al carrito" (click)="agregarCarrito(i)"> 
                                     <img src="assets/img/cart.png" alt="mdo" width="16" height="16"></button>
