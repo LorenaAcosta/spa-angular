@@ -11,12 +11,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./pedidos-listar.component.scss']
 })
 export class PedidosListarComponent implements OnInit {
+  pageActual = 1;
   carrito: any[] = [];
   cabecera: any;
   detalles: any[] = [];
   fecha: any;
   orden: any;
-  total: any;
+  total: 0;
   usuarioId: any;
   constructor( private carritoService: CarritoCabeceraService, public utilService: UtilesService,
     private carritodetallesService: CarritoService, private route: ActivatedRoute,) { }

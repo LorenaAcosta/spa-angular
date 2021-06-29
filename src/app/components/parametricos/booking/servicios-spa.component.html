@@ -5,15 +5,14 @@
 
 
 <div class="row">
-<!--Lista las categorias-->
-<div class="col-2"> 
-    <nav class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-    <h3 class="dropdown-header ">Categoría Servicios</h3>
-    <a  class="nav-link" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false"
-    *ngFor="let cat of categorias" (click)="recargar(cat.categoriaId)">{{cat.descripcion}}</a>
-    </nav>
-</div>
-<!--
+    <!--Lista las categorias-->
+    <div class="col-2">
+        <nav class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <h3 class="dropdown-header ">Categoría Servicios</h3>
+            <a class="nav-link manito" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false" *ngFor="let cat of categorias" (click)="recargar(cat.categoriaId)">{{cat.descripcion}}</a>
+        </nav>
+    </div>
+    <!--
 <div>
     <button *ngFor="let cat of categorias" type="button" class="btn btn-sm btn-light btn-mg alert alert-primary"
         role="alert" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
@@ -25,8 +24,7 @@
             <div class="p-3" *ngFor="let item of servicios; let i = index">
                 <div class="">
                     <div class="card">
-                        <button class="btn btn-sm btn-light"
-                        [routerLink]="['/booking/categorias/servicios/terapista', item.servicioId ]">
+                        <button class="btn btn-sm btn-light" [routerLink]="['/booking/categorias/servicios/terapista', item.servicioId ]">
                             <div class="card-body">
                                 <h5 class="card-title">{{item.nombre}}</h5>
                                 <p class="card-text">{{item.descripcion}}</p>

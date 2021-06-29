@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
 import jsPDF from 'jspdf';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -47,6 +47,7 @@ export class VentaComponent implements OnInit {
     private detallesVentaService: DetalleVentaService,
     private comprobanteService: ComprobanteService,
     private route: ActivatedRoute,
+    private router: Router,
     public util: UtilesService,
     private spinnerService: NgxSpinnerService
   ) { }
@@ -194,7 +195,7 @@ export class VentaComponent implements OnInit {
 
   buscar(termino: String){
     if (termino == ''){
-      this.ventasService.listarRecurso()
+      this.ventasService.listarRecursoPorPuntoExpedicion(this.route.snapshot.params.id)
       .subscribe( (resp: any ) =>  {
         console.log(resp);
         this.ventas = resp;
@@ -225,6 +226,11 @@ export class VentaComponent implements OnInit {
 
    // this.getReservaReport(dateString.toString());
    // this.arrayObject = this.reservas as string[];
+  }
+
+  cierreCaja(){
+    this.spinnerService.show();
+    this.router.navigate(['arqueo/apertura/' + localStorage.getItem('punto') ]);    
   }
 
 }

@@ -147,6 +147,10 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.usuarioService.logout();
     this.menuItems = this.menuCliente;
+    this.menuCliente = [];
+    this.menuAdmin = [];
+    this.menuCajero = [];
+    this.menuRecepcion = [];
   }
 
   open(content) {
@@ -222,10 +226,10 @@ export class NavbarComponent implements OnInit {
   }
 
   misReservas(){
-    this.route.navigate(['/reserva/mis-reservas/' + this.usuario]);
+    this.route.navigate(['/reserva/mis-reservas/' + this.usuarioService.obtenerUsuarioLogueado()]);
   }
   misPedidos(){
-    this.route.navigate(['/pedidos/listar/' + this.usuario]);
+    this.route.navigate(['/pedidos/listar/' + this.usuarioService.obtenerUsuarioLogueado()]);
   }
 
   miPedido(){

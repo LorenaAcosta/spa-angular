@@ -136,7 +136,7 @@ export class PedidosComponent implements OnInit {
     );
 
     this.vaciar();
-    this.router.navigate(['/pedidos/listar']);
+    this.router.navigate(['/']);
      
         }
       });

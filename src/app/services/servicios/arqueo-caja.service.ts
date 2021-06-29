@@ -28,4 +28,8 @@ export class ArqueoCajaService {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
 
+  getCajaActiva(id) {
+    return this.http.get(this.recurosBaseURL + 'obtener-caja-activa/' + id);
+  }
+
 }

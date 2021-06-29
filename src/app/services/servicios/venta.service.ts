@@ -26,6 +26,10 @@ export class VentaService {
     return this.http.get(this.recurosBaseURL + 'encontrar/' + id);
   }
 
+  getTotalArqueo(id) {
+    return this.http.get(this.recurosBaseURL + 'get-total/' + id);
+  }
+
   agregarRecurso(recurso) {
     return this.http.post(this.recurosBaseURL + 'agregar', recurso);
   }

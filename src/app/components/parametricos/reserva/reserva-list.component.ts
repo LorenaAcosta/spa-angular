@@ -23,7 +23,7 @@ export class ReservaListComponent implements OnInit {
               private route: ActivatedRoute,
               private fb: FormBuilder,
               private router: Router) { }
-  reservas: any;
+  reservas: any[] = [];
   model: NgbDateStruct;
   fecha;
   arrayObject: any[] = [];

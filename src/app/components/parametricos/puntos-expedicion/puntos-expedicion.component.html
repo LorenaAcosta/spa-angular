@@ -13,7 +13,7 @@
 <div class="row">
     <!--  Lista las servicios -->
     <div class="p-3" *ngFor="let p of puntos">
-        <div class="card">
+        <div *ngIf="p.usuarioId.usuarioId == usuarioLogueado || admin" class="card">
             <button class="btn btn-sm btn-light" (click)="btnClick(p.puntoExpedicionId)" ngbTooltip="Acceder">
                     <div class="card-body">
                        <img  src="./assets/img/caja.jpg" width="200px" height="200px">

@@ -30,7 +30,7 @@ export class PuntosExpedicionComponent implements OnInit {
   empleadoId: any;
   closeResult: string;
   admin: boolean;
-
+  usuarioLogueado: any = null;
 
 
   constructor(private fb:             FormBuilder,
@@ -56,6 +56,8 @@ export class PuntosExpedicionComponent implements OnInit {
         this.puntos = resp ;
     });
 
+    this.usuarioLogueado = this.usuarioService.obtenerUsuarioLogueado();
+
     this.puntoService.getCajeros().subscribe( (resp: any[]) => {
       this.cajeros = resp ;
     });
@@ -78,13 +80,13 @@ export class PuntosExpedicionComponent implements OnInit {
         'Se guardaron los datos!',
         'success'
       );
+      this.puntoService.listarRecurso().subscribe( (resp: any[]) => {
+        this.puntos = resp ;
+      });
       this.form.reset(this.form.controls.descripcion );
     });
     
     this.modalService.dismissAll();
-    this.puntoService.listarRecurso().subscribe( (resp: any[]) => {
-      this.puntos = resp ;
-    });
   }
 
 
@@ -129,8 +131,8 @@ export class PuntosExpedicionComponent implements OnInit {
       });
   }
 
-  btnClick(categoriaId: any) {
-    this.router.navigate(['ventas/listar/', categoriaId]);
+  btnClick(puntoId: any) {
+    this.router.navigate(['arqueo/apertura/', puntoId]);
     this.spinnerService.show();
   }
 

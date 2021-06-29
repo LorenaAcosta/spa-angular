@@ -63,6 +63,7 @@ import { RecepcionGuard } from './guards/recepcion.guard';
 import { ConfirmacionUsuarioComponent } from './components/parametricos/confirmacion-usuario/confirmacion-usuario.component';
 import { PedidosListarComponent } from './components/parametricos/pedidos/pedidos-listar.component';
 import { PedidosComponent } from './components/parametricos/pedidos/pedidos.component';
+import { ArqueoCajaComponent } from './components/parametricos/arqueo-caja/arqueo-caja.component';
 
 const routes: Routes = [
   { path: '',
@@ -205,6 +206,13 @@ const routes: Routes = [
         children: [
           { path: 'agregar', component: UsuarioSistemaComponent , canActivate: [ AutenticadoGuard, AdminGuard], data: { title: 'Crear nuevo usuario' }, },
           { path: 'rol/:id', component: RolComponent , canActivate: [ AutenticadoGuard, AdminGuard], data: { title: 'Asignar roles de usuarios' }, }
+       ]
+      },
+      {
+        path: 'arqueo', data: { title: 'Arqueo de caja' },
+        children: [
+          { path: 'apertura/:id', component: ArqueoCajaComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Apertura de caja' }, },
+          { path: 'cierre/:id', component: ArqueoCajaComponent , canActivate: [ AutenticadoGuard, CajeroGuard], data: { title: 'Cierre de caja' }, }
        ]
       },
       {

@@ -21,6 +21,7 @@ import { UtilesService } from 'src/app/services/servicios/utiles.service';
 import { VentaService } from 'src/app/services/servicios/venta.service';
 import Swal from 'sweetalert2';
 import { ConceptosIngreso } from '../planilla/listar.component';
+import { ArqueoCajaService } from '../../../services/servicios/arqueo-caja.service';
 
 @Component({
   selector: 'app-venta-edit',
@@ -56,6 +57,7 @@ reservasCobradas: any[] = [];
  model: NgbDateStruct;
   proveedores: any[] = [];
   medios: any[] = [];
+  arqueoActivo: any = null;
   usuarios: any[] = [];
   productos: any[] = [];
   servicios: any[] = [];
@@ -111,6 +113,7 @@ reservasCobradas: any[] = [];
     private clienteService: ClienteService,
     private cdRef:ChangeDetectorRef,
     private router: Router,
+    private arqueoService: ArqueoCajaService,
     public util: UtilesService) { 
       this.formMedio = this.fmp.group({
         codigo: ['', Validators.required],
@@ -141,6 +144,7 @@ reservasCobradas: any[] = [];
         subTotalTotal: [this.subTotalTotal],
         medioPagoId: ['', Validators.required],
         usuarioId: [ Validators.required],
+        arqueoId: [],
         estado: ['Activo']
       });
     }
@@ -159,6 +163,7 @@ reservasCobradas: any[] = [];
       subTotalTotal: [this.subTotalTotal],
       medioPagoId: ['', Validators.required],
       usuarioId: [ Validators.required],
+      arqueoId: [],
       estado: ['Activo']
     });
 
@@ -624,6 +629,11 @@ reservasCobradas: any[] = [];
 
       /*this.ventaService.getNextId()
       .subscribe( (resp: any) =>  this.nextComprobante = resp + 1);*/
+      this.arqueoService.getCajaActiva(localStorage.getItem('punto')).subscribe( (resp: any[]) => {
+        if (resp){
+          this.arqueoActivo = resp;
+        }
+      });
 
       this.comprobanteService.getNumeroActual(localStorage.getItem('punto'))
         .subscribe( (resp: any) => 
@@ -767,12 +777,13 @@ reservasCobradas: any[] = [];
         let usuario = this.form.controls.usuarioId.value
         this.usuarioService.getRecurso(usuario.usuarioId).subscribe((resp:any) => {
 
-
+      this.form.controls.arqueoId.setValue(this.arqueoActivo.arqueoId);
       
       const id = this.route.snapshot.params.id;
       let peticion: Observable<any>;
       let ventasId: any;
       console.log(this.form.get('fecha').value);
+      
 
       if (typeof id === 'undefined') {
         //Verifica que se gregue al menos un detalle
