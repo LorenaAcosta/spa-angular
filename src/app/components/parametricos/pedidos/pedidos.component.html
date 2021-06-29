@@ -2,7 +2,7 @@
     <div class="card-header"><i class="fas fa-table mr-1"></i>Revisar orden</div>
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-sm table-bordered display" id="dataTable" *ngIf="carrito.length>0" width="100%" cellspacing="0">
+            <table class="table  display" id="dataTable" *ngIf="carrito.length>0" width="100%" cellspacing="0">
                 <thead>
                     <tr>
                         <th class="b-0">Item</th>
@@ -16,13 +16,13 @@
                 <tr *ngFor="let item of carrito; let i = index">
                     <td>{{ i + 1 }}</td>
                     <td>{{ item.nombre }}</td>
-                    <td>{{ item.precio }}</td>
+                    <td>{{ utilService.numberWithCommas(item.precio) }}</td>
                     <td>
                         <button class="btn btn-primary btn-sm" (click)="incrementar(i)"> + </button> {{ item.cant }}
                         <button class="btn btn-primary btn-sm" (click)="disminuir(i)"> - </button>
                     </td>
-                    <td class="text-right">
-                        <h5 class="font-medium m-b-30">{{ this.utilService.numberWithCommas( item.subtotal ) }}</h5>
+                    <td>
+                        <h5 class="font-medium m-b-30">{{ utilService.numberWithCommas( item.subtotal ) }}</h5>
                     </td>
                     <td colspan="4" style="text-align:right;">
                         <button class="btn btn-danger" (click)="borrar(i)">
@@ -31,17 +31,20 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="3" style="text-align:right;">Monto Total : {{ this.utilService.numberWithCommas( this.total ) }}</td>
+                   <td></td><td></td><td></td><td class="b-0">Monto Total :</td>
+                    <td class="b-0"> {{ utilService.numberWithCommas( this.total ) }}</td>
                 </tr>
             </table>
         </div>
     </div>
 </div>
 
-
-<button class="btn btn-danger" (click)="vaciar()">
+<button routerLink="/booking/productos" class="btn btn-sm btn-outline-info mr-1">
+    <i class="fas fa-arrow-left"></i>  Seguir comprando
+  </button>
+<button class="btn btn-sm btn-danger" (click)="vaciar()">
     <i class="fas fa-trash"></i>Vaciar carrito
   </button>
-<button type="submit" class="btn btn-outline-info" (click)="guardar()">
-    Guardar
+<button type="submit" class="btn btn-sm btn-outline-info" (click)="guardar()">
+    Guardar Orden  <i class="fas fa-arrow-right"></i>
   </button>

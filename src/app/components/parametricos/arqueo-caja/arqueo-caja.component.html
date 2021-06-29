@@ -1,0 +1,126 @@
+<div class="row">
+    <h1 class="display">Caja Habilitadas:</h1>
+</div>
+<div>
+    <button routerLink="/puntos-expedicion/listar" class="btn btn-sm btn-info mr-1"><i class="fas fa-arrow-left"></i> Regresar</button>
+    <button *ngIf="arqueoActivo" class="btn btn-sm btn-info mr-1" (click)="open(content2)">Cierre de caja</button>
+    <button *ngIf="!arqueoActivo" class="btn btn-sm btn-info mr-1" (click)="open(content)">Habilitar caja</button>
+</div>
+
+<br>
+<!-- Tabla que lista los puntos de expedición -->
+<!-- array: horario-->
+
+<div class="row">
+    <!--  Lista las servicios -->
+    <div class="p-3">
+        <div class="card" *ngIf="arqueoActivo">
+            <div class="card-title alert-info text-center">
+                <br>
+                <h2>Caja Activa</h2>
+            </div>
+            <button class="btn btn-sm" (click)="btnClick(arqueoActivo.puntoExpedicionId.puntoExpedicionId)" ngbTooltip="Acceder">
+                <div class="card-body bg-light mb-2">
+                        <h5 class="text-center">Fecha Apertura: {{arqueoActivo.fechaApertura}}</h5>
+                        <h5 class="text-center">Hora Apertura: {{arqueoActivo.horaApertura}}</h5>
+                        <h5 class="text-center">Hora Apertura: {{arqueoActivo.estado}}</h5>
+                    </div>
+            </button>
+        </div>
+        <div class="bg-light" *ngIf="!arqueoActivo">
+            <h3>No posee caja habilitada</h3>
+        </div>
+    </div>
+
+    <div *ngIf="arqueoActivo" class="p-3">
+        <button class="btn btn-info mr-1" (click)="btnClick(arqueoActivo.puntoExpedicionId.puntoExpedicionId)"><i class="fas fa-file-invoice"></i> Ver facturas</button>
+    </div>
+</div>
+
+<ng-template #content let-modal>
+    <div class="modal-header alert-info">
+        <h4 class="modal-title" id="modal-basic-title">Apertura de caja</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="form">
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Fecha de Apertura</label>
+                <div class="col-sm">
+                    <input formControlName="fechaApertura" type="text" placeholder="{{currentDate | date:'dd-MM-yyyy'}}" value="{{currentDate | date:'yyyy-MM-dd'}}" class="form-control" id="fechaApertura" [disabled]>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Hora de Apertura</label>
+                <div class="col-sm">
+                    <input formControlName="horaApertura" type="time" placeholder="{{hora}}" value="{{hora}}" class="form-control" id="horaApertura" [disabled]>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardar()">Guardar</button>
+    </div>
+</ng-template>
+
+<ng-template #content2 let-modal>
+    <div class="modal-header alert-info">
+        <h3 class="modal-title" id="modal-basic-title">Cierre de caja</h3>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="formCierre">
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Fecha de Apertura</label>
+                <div class="col-sm">
+                    <input formControlName="fechaApertura" type="text" class="form-control" id="fechaApertura" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Hora de Apertura</label>
+                <div class="col-sm">
+                    <input formControlName="horaApertura" type="time" class="form-control" id="horaApertura" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Fecha de Cierre</label>
+                <div class="col-sm">
+                    <input formControlName="fechaCierre" type="text" class="form-control" id="fechaCierre" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Hora de Cierre</label>
+                <div class="col-sm">
+                    <input formControlName="horaCierre" type="time" class="form-control" id="horaCierre" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Total Ventas</label>
+                <div class="col-sm">
+                    <input formControlName="totalVentas" value="{{ util.numberWithCommas(total) + ' Gs.'}}" type="text" class="form-control" id="totalVentas" disabled>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Total en caja</label>
+                <div class="col-sm">
+                    <input formControlName="totalCaja" [(ngModel)]=totalCaja type="text" class="form-control" id="totalCaja">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label for="inputCity" class="col-sm-4 col-form-label">Saldo al cierre</label>
+                <div class="col-sm">
+                    <input formControlName="saldoCierre" type="text" value="{{util.numberWithCommas(totalCaja-total)}}" [ngClass]="getClases()" id="saldoCierre" disabled>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="guardarCierre()">Guardar</button>
+    </div>
+</ng-template>

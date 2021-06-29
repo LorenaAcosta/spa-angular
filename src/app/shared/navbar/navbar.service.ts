@@ -14,7 +14,8 @@ export class NavbarService {
         {titulo: 'Clientes', url: '/cliente/listar'},
         {titulo: 'Servicios', url: '/servicio/listar'},
         {titulo: 'Categorias', url: '/categoria/listar'},
-        {titulo: 'Reservas', url: '/reserva/listar'}
+        {titulo: 'Reservas', url: '/reserva/listar'},
+        {titulo: 'Ordenes', url: '/pedidos/listar'}
       ]
     },
     {

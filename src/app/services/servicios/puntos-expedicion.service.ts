@@ -40,4 +40,10 @@ export class PuntosExpedicionService {
     return this.http.delete(this.recurosBaseURL + 'eliminar/' + id);
   }
 
+  getCajeros() {
+    return this.http.get(this.recurosBaseURL + 'obtener-cajeros');
+  }
+
 }
+
+

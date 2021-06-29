@@ -86,11 +86,15 @@ export class UsuarioService {
   }
 
   limpiarStorage(){
+    this.usuario=null;
     localStorage.removeItem('token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('usuario');
+    localStorage.removeItem('usuariosList');
+    localStorage.removeItem('carrito');
     localStorage.removeItem('punto');
     localStorage.removeItem('admin');
+    localStorage.removeItem('ventasId');
   }
 
   logout() {
@@ -119,6 +123,7 @@ asignarRol( usuarioId: any, rolId: any ) {
 login( formData: any ) {
   const url = this.recurosBaseURL + '/oauth/token';
   const payload = '';
+  let usuario: string = formData.username;
   let headers1: HttpHeaders;
   headers1 = new HttpHeaders({
     Authorization: 'Basic YW5ndWxhcjoxMjM0NQ==',
@@ -126,7 +131,7 @@ login( formData: any ) {
   });
   const options = {
     headers: headers1,
-    body: 'username=' + formData.username + '&password=' + formData.password + '&grant_type=password'
+    body: 'username=' + usuario.toLocaleLowerCase() + '&password=' + formData.password + '&grant_type=password'
   };
   
   return this.http.post( url, options.body, options )

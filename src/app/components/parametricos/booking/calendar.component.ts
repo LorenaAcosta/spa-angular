@@ -302,17 +302,15 @@ admin: any;
         console.log(this.form);
         peticion = this.reservaService.agregarRecurso(this.form.value);
         peticion.subscribe((result: any) =>  {
-
             let r = result;
             this.reservaService.getRecurso(r.reservaId)
             .subscribe((r:any)=> {
               let data = r;
-              let servicio = data.disponibleId.servicioId.descripcion;
+              let servicio = data.disponibleId.servicioId.nombre;
               let fecha = data.fechaReserva;
               let hora = data.hora;
               let terapista = data.disponibleId.empleadoId.nombre + ' ' + data.disponibleId.empleadoId.apellido;
               console.log('servicio', servicio);
-  
               this.usuarioService.obtenerPerfilUsuario(this.usuarioService.obtenerUsuarioLogueado())
               .subscribe((resp: any) =>  {
                 let us = resp;  
@@ -322,21 +320,15 @@ admin: any;
                 } else {
                   this.spinnerService.hide();
                   Swal.fire(
-                    'Reserva Confirmada!',
+                    'Reserva Registrada!',
                     'Se guardaron  los datos!',
                     'success'
                     );
-                    this.router.navigateByUrl('booking/categorias');
-                  
+                    this.router.navigateByUrl('booking/categorias'); 
                 }
-                
               });
-
             });
-
           });
-
-      
         } else{
           this.spinnerService.hide();
         Swal.fire(
@@ -346,7 +338,6 @@ admin: any;
           );
         }
       });
-    
   }
 
 
@@ -386,7 +377,7 @@ admin: any;
          El correo ha sido enviado y el ID es ${res.messageId}`
         );
         Swal.fire(
-          'Reserva Confirmada!',
+          'Reserva Registrada!',
           'Se guardaron  los datos!',
           'success'
           );

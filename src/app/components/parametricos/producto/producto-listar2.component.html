@@ -2,10 +2,40 @@
     <h1 class="fw-light">Explora nuestra linea de productos</h1>
 </blockquote>
 
+
 <!--Lista las categorias de productos-->
-<p>
-    <a *ngFor="let cat of categorias" class="btn btn-sm btn light alert alert-primary" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}}</a>
-</p>
+
+<div class="row">
+    <div class="col-3">
+        <nav class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <h3 class="dropdown-header ">Categoría de productos</h3>
+            <a class="nav-link manito" id="v-pills-profile-tab" data-toggle="pill" role="tab" aria-controls="v-pills-profile" aria-selected="false" *ngFor="let cat of categorias" (click)="recargar(cat.categoriaId)">{{cat.descripcion}}</a>
+        </nav>
+    </div>
+    <div class="col-9">
+        <div class="row">
+            <div class="p-3" *ngFor="let item of productos; let i = index">
+                <div class="">
+                    <div class="card">
+                        <div class="card-body">
+                            <img src="{{urlImagen}}{{item.imageName}}" class="card-img-top" alt="..." style="width: 200px; height: 200px;">
+                            <h5 class="card-title">{{item.nombre}}</h5>
+                            <p class="card-text">{{item.descripcion}}</p>
+                            <blockquote class="blockquote text-center">
+                                <strong> <i class="fas fa-money-bill-alt"></i> {{util.numberWithCommas(item.costo)}} Gs. </strong>
+                            </blockquote>
+                            <button class="btn btn-sm btn-light" ngbTooltip="Agregar al carrito" (click)="agregarCarrito(i)"> 
+                                    <img src="assets/img/cart.png" alt="mdo" width="16" height="16"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
 
 <!--<div>
     <button *ngFor="let cat of categorias" type="button" class="btn btn-sm btn light alert alert-primary" role="alert" (click)="recargar(cat.categoriaId)"> {{cat.descripcion}} </button>
@@ -15,23 +45,6 @@
 
 <div class="row">
     <!--  Lista las servicios -->
-    <div class="p-3" *ngFor="let item of productos; let i = index">
-        <div class="">
-            <div class="card">
-                <button class="btn btn-sm btn-light" (click)="agregarCarrito(i)">
-                    <div class="card-body">
-                        <img src="{{urlImagen}}{{item.imageName}}" 
-                          class="card-img-top" alt="..." style="width: 200px; height: 200px;">
-                        <h5 class="card-title">{{item.nombre}}</h5>
-                        <p class="card-text">{{item.descripcion}}</p>
-                        <blockquote class="blockquote text-center">
-                            <strong> <i class="fas fa-money-bill-alt"></i> {{item.costo}} Gs. </strong>
-                        </blockquote>
-                    </div>
-                </button>
-            </div>
-        </div>
-    </div>
 
 </div>
 

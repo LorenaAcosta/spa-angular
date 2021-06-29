@@ -146,6 +146,11 @@ export class NavbarComponent implements OnInit {
 
   logout() {
     this.usuarioService.logout();
+    this.menuItems = this.menuCliente;
+    this.menuCliente = [];
+    this.menuAdmin = [];
+    this.menuCajero = [];
+    this.menuRecepcion = [];
   }
 
   open(content) {
@@ -221,10 +226,10 @@ export class NavbarComponent implements OnInit {
   }
 
   misReservas(){
-    this.route.navigate(['/reserva/mis-reservas/' + this.usuario]);
+    this.route.navigate(['/reserva/mis-reservas/' + this.usuarioService.obtenerUsuarioLogueado()]);
   }
   misPedidos(){
-    this.route.navigate(['/pedidos/listar/']);
+    this.route.navigate(['/pedidos/listar/' + this.usuarioService.obtenerUsuarioLogueado()]);
   }
 
   miPedido(){
@@ -234,6 +239,7 @@ export class NavbarComponent implements OnInit {
 /************************Login************************************ */  
   login() {
     this.spinnerService.show();
+    console.log('logueo', this.loginForm.value);
     this.usuarioService.login( this.loginForm.value)
     .subscribe( resp => {
       this.spinnerService.hide();
@@ -339,7 +345,7 @@ export class NavbarComponent implements OnInit {
         this.registerForm.reset(this.registerForm.controls.password2 );
         this.modalService.dismissAll();
         this.open2(content);
-
+        this.spinnerService.hide();
       }, (err) => {
         console.log(err);
         this.spinnerService.hide();

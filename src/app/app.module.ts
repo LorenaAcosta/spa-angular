@@ -94,6 +94,7 @@ import {AutocompleteLibModule} from 'angular-ng-autocomplete';
 import { DatePipe } from '@angular/common';
 import { PedidosListarComponent } from './components/parametricos/pedidos/pedidos-listar.component';
 import { PedidosComponent } from './components/parametricos/pedidos/pedidos.component';
+import { ArqueoCajaComponent } from './components/parametricos/arqueo-caja/arqueo-caja.component';
 
 
 
@@ -165,7 +166,8 @@ import { PedidosComponent } from './components/parametricos/pedidos/pedidos.comp
     RolComponent,
     ConfirmacionUsuarioComponent,
     PedidosListarComponent,
-    PedidosComponent
+    PedidosComponent,
+    ArqueoCajaComponent
   ],
   imports: [
     BrowserModule,
