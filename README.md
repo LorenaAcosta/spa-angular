@@ -13,7 +13,8 @@ Project is created with:
 * Displayed on Heroku 
 	
 ## Setup
-To run this project, install it locally using npm:
+To run this project, install it locally using npm: 
+Use branch: desarrollo_pre_actual
 
 ```
 $ cd ../spa-angular
