@@ -1,4 +1,4 @@
-# proyecto-base-angular
+# Reservation Web Aplication
 
 ## General info
 This project is a versatil web application for making reservation in a spa with an 
